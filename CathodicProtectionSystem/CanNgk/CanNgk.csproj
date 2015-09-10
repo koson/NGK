@@ -1,0 +1,242 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{95234605-221A-41A5-A9BA-ED933C75C30E}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>NGK</RootNamespace>
+    <AssemblyName>canngk</AssemblyName>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="NLog, Version=2.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Design" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Drawing.Design" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="vcinet2, Version=3.4.1.3080, Culture=neutral, PublicKeyToken=1fb9dc3563e138e2, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>CAN\DataLinkLayer\CanPort\IXXAT\Driver\vcinet2.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CAN\ApplicationLayer\Network\Devices\Collections\DevicesCollection.cs" />
+    <Compile Include="CAN\ApplicationLayer\Network\Devices\Device.cs" />
+    <Compile Include="CAN\ApplicationLayer\Network\Devices\DeviceStatus.cs" />
+    <Compile Include="CAN\ApplicationLayer\Network\Devices\DeviceStatusComparer.cs" />
+    <Compile Include="CAN\ApplicationLayer\Network\Devices\DeviceType.cs" />
+    <Compile Include="CAN\ApplicationLayer\Network\Devices\IDevice.cs" />
+    <Compile Include="CAN\ApplicationLayer\Network\Devices\ObjectDictionary\Category.cs" />
+    <Compile Include="CAN\ApplicationLayer\Network\Devices\ObjectDictionary\Collections\ObjectCollection.cs" />
+    <Compile Include="CAN\ApplicationLayer\Network\Devices\ObjectDictionary\ComponentModel\VisitingCardTypeConverter.cs" />
+    <Compile Include="CAN\ApplicationLayer\Network\Devices\ObjectDictionary\VisitingCard.cs" />
+    <Compile Include="CAN\ApplicationLayer\Network\Devices\ObjectDictionary\ObjectStatus.cs" />
+    <Compile Include="CAN\ApplicationLayer\Network\Devices\Profiles\KIP9811v1.cs" />
+    <Compile Include="CAN\ApplicationLayer\Network\Devices\Profiles\ObjectDictionary\Collections\ObjectInfoCollection.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="CAN\ApplicationLayer\Network\Devices\ObjectDictionary\DataObject.cs" />
+    <Compile Include="CAN\ApplicationLayer\Network\Devices\Profiles\IProfile.cs" />
+    <Compile Include="CAN\ApplicationLayer\Network\Devices\Profiles\KIP9810v1.cs" />
+    <Compile Include="CAN\ApplicationLayer\Network\Devices\Profiles\ObjectDictionary\ObjectInfo.cs" />
+    <Compile Include="CAN\ApplicationLayer\Network\Devices\Profiles\Prototype.cs" />
+    <Compile Include="CAN\ApplicationLayer\Network\Devices\StatusUSIKPST.cs" />
+    <Compile Include="CAN\ApplicationLayer\Network\Devices\TransmitPdoEnable.cs" />
+    <Compile Include="CAN\ApplicationLayer\Network\Master\Collections\NetworkControllersCollection.cs" />
+    <Compile Include="CAN\ApplicationLayer\Network\Master\INetworkController.cs" />
+    <Compile Include="CAN\ApplicationLayer\Network\Master\NetworkController.cs" />
+    <Compile Include="CAN\ApplicationLayer\Network\Master\NetworksManager.cs" />
+    <Compile Include="CAN\ApplicationLayer\Network\Master\Services\Collections\NetworkServicesCollection.cs" />
+    <Compile Include="CAN\ApplicationLayer\Network\Master\Services\ErrorMessageContext.cs" />
+    <Compile Include="CAN\ApplicationLayer\Network\Master\Services\ServiceBootUp.cs" />
+    <Compile Include="CAN\ApplicationLayer\Network\Master\Services\Context.cs" />
+    <Compile Include="CAN\ApplicationLayer\Network\Master\Services\ServiceNmt.cs" />
+    <Compile Include="CAN\ApplicationLayer\Network\Master\Services\ServiceNodeGuard.cs" />
+    <Compile Include="CAN\ApplicationLayer\Network\Master\Services\ServicePdoReceive.cs" />
+    <Compile Include="CAN\ApplicationLayer\Network\Master\Services\ServicePdoTransmit.cs" />
+    <Compile Include="CAN\ApplicationLayer\Network\Master\Services\ServiceSync.cs" />
+    <Compile Include="CAN\ApplicationLayer\Network\Master\Services\ServiceType.cs" />
+    <Compile Include="CAN\ApplicationLayer\Network\Master\Services\Service.cs" />
+    <Compile Include="CAN\ApplicationLayer\Network\Master\Services\DeviceContext.cs" />
+    <Compile Include="CAN\ApplicationLayer\Network\Master\Services\ServiceSdoUpload.cs" />
+    <Compile Include="CAN\DataLinkLayer\CanPort\CanPortBase.cs" />
+    <Compile Include="CAN\DataLinkLayer\CanPort\Design\Controls\FastwelNIM351PortTuner.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CAN\DataLinkLayer\CanPort\Design\Controls\FastwelNIM351PortTuner.designer.cs">
+      <DependentUpon>FastwelNIM351PortTuner.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CAN\DataLinkLayer\CanPort\Design\Controls\ICanPortEditor.cs" />
+    <Compile Include="CAN\DataLinkLayer\CanPort\Design\Controls\IXXATCanPortTuner.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CAN\DataLinkLayer\CanPort\Design\Controls\IXXATCanPortTuner.designer.cs">
+      <DependentUpon>IXXATCanPortTuner.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CAN\DataLinkLayer\CanPort\Design\ICanPortTypeConverter.cs" />
+    <Compile Include="CAN\DataLinkLayer\CanPort\Design\ICanPortUITypeEditor.cs" />
+    <Compile Include="CAN\DataLinkLayer\CanPort\Design\ICanPortUITypeEditorDialogForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CAN\DataLinkLayer\CanPort\Design\ICanPortUITypeEditorDialogForm.Designer.cs">
+      <DependentUpon>ICanPortUITypeEditorDialogForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CAN\DataLinkLayer\CanPort\DeviceDescription.cs" />
+    <Compile Include="CAN\DataLinkLayer\CanPort\BaudRate.cs" />
+    <Compile Include="CAN\DataLinkLayer\CanPort\CanLineStatus.cs" />
+    <Compile Include="CAN\DataLinkLayer\CanPort\CanPortStatus.cs" />
+    <Compile Include="CAN\DataLinkLayer\CanPort\Fastwel\NIM351\API\Api.cs" />
+    <Compile Include="CAN\DataLinkLayer\CanPort\Fastwel\NIM351\API\CAN_ERR_CRTL.cs" />
+    <Compile Include="CAN\DataLinkLayer\CanPort\Fastwel\NIM351\API\CAN_ERR_LOSTARB.cs" />
+    <Compile Include="CAN\DataLinkLayer\CanPort\Fastwel\NIM351\API\CAN_ERR_PROT.cs" />
+    <Compile Include="CAN\DataLinkLayer\CanPort\Fastwel\NIM351\API\CAN_ERR_PROT_LOC.cs" />
+    <Compile Include="CAN\DataLinkLayer\CanPort\Fastwel\NIM351\API\CAN_ERR_TRX.cs" />
+    <Compile Include="CAN\DataLinkLayer\CanPort\Fastwel\NIM351\API\CAN_ERR_TX_TIMEOUT.cs" />
+    <Compile Include="CAN\DataLinkLayer\CanPort\Fastwel\NIM351\API\CAN_MSG_FLAG.cs" />
+    <Compile Include="CAN\DataLinkLayer\CanPort\Fastwel\NIM351\API\CAN_MSG_MASK.cs" />
+    <Compile Include="CAN\DataLinkLayer\CanPort\Fastwel\NIM351\API\CAN_OPMODE.cs" />
+    <Compile Include="CAN\DataLinkLayer\CanPort\Fastwel\NIM351\API\CAN_OPMODE_ERRFRAME.cs" />
+    <Compile Include="CAN\DataLinkLayer\CanPort\Fastwel\NIM351\API\CAN_WAIT.cs" />
+    <Compile Include="CAN\DataLinkLayer\CanPort\Fastwel\NIM351\API\ERRORCLASSLIST.cs" />
+    <Compile Include="CAN\DataLinkLayer\CanPort\Fastwel\NIM351\API\F_CAN_BAUDRATE.cs" />
+    <Compile Include="CAN\DataLinkLayer\CanPort\Fastwel\NIM351\API\F_CAN_CONTROLLER.cs" />
+    <Compile Include="CAN\DataLinkLayer\CanPort\Fastwel\NIM351\API\F_CAN_ERRORS.cs" />
+    <Compile Include="CAN\DataLinkLayer\CanPort\Fastwel\NIM351\API\F_CAN_MSG.cs" />
+    <Compile Include="CAN\DataLinkLayer\CanPort\Fastwel\NIM351\API\F_CAN_PURGE_MASK.cs" />
+    <Compile Include="CAN\DataLinkLayer\CanPort\Fastwel\NIM351\API\F_CAN_RESULT.cs" />
+    <Compile Include="CAN\DataLinkLayer\CanPort\Fastwel\NIM351\API\F_CAN_RX.cs" />
+    <Compile Include="CAN\DataLinkLayer\CanPort\Fastwel\NIM351\API\F_CAN_SETTINGS.cs" />
+    <Compile Include="CAN\DataLinkLayer\CanPort\Fastwel\NIM351\API\F_CAN_STATE.cs" />
+    <Compile Include="CAN\DataLinkLayer\CanPort\Fastwel\NIM351\API\F_CAN_STATS.cs" />
+    <Compile Include="CAN\DataLinkLayer\CanPort\Fastwel\NIM351\API\F_CAN_STATUS.cs" />
+    <Compile Include="CAN\DataLinkLayer\CanPort\Fastwel\NIM351\API\F_CAN_TIMEOUTS.cs" />
+    <Compile Include="CAN\DataLinkLayer\CanPort\Fastwel\NIM351\API\F_CAN_TX.cs" />
+    <Compile Include="CAN\DataLinkLayer\CanPort\Fastwel\NIM351\API\F_CAN_WAIT.cs" />
+    <Compile Include="CAN\DataLinkLayer\CanPort\Fastwel\NIM351\CanPort.cs" />
+    <Compile Include="CAN\DataLinkLayer\CanPort\Fastwel\NIM351\Convert\ConvertNim351.cs" />
+    <Compile Include="CAN\DataLinkLayer\CanPort\Fastwel\NIM351\Forms\FormTestPort.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CAN\DataLinkLayer\CanPort\Fastwel\NIM351\Forms\FormTestPort.Designer.cs">
+      <DependentUpon>FormTestPort.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CAN\DataLinkLayer\CanPort\PortMode.cs" />
+    <Compile Include="CAN\DataLinkLayer\CanPort\EventHandlerErrorRecived.cs" />
+    <Compile Include="CAN\DataLinkLayer\CanPort\EventHandlerPortChangesStatus.cs" />
+    <Compile Include="CAN\DataLinkLayer\CanPort\ICanPort.cs" />
+    <Compile Include="CAN\DataLinkLayer\CanPort\PortSettings.cs" />
+    <Compile Include="CAN\DataLinkLayer\CanPort\ControllerInfo.cs" />
+    <Compile Include="CAN\DataLinkLayer\Message\Error.cs" />
+    <Compile Include="CAN\DataLinkLayer\Message\FrameFormat.cs" />
+    <Compile Include="CAN\DataLinkLayer\Message\FrameType.cs" />
+    <Compile Include="CAN\DataLinkLayer\Message\Message.cs" />
+    <Compile Include="CAN\ApplicationLayer\Transactions\Transaction.cs" />
+    <Compile Include="CAN\ApplicationLayer\Transactions\TransactionStatus.cs" />
+    <Compile Include="CAN\ApplicationLayer\Transactions\TransactionType.cs" />
+    <Compile Include="CAN\DataLinkLayer\CanPort\IXXAT\CanPort.cs" />
+    <Compile Include="CAN\DataLinkLayer\CanPort\IXXAT\FilterIds.cs" />
+    <Compile Include="CAN\DataTypes\DataConvertor.cs" />
+    <Compile Include="CAN\DataTypes\NgkBoolean.cs" />
+    <Compile Include="CAN\DataTypes\NgkByte.cs" />
+    <Compile Include="CAN\DataTypes\NgkDateTime.cs" />
+    <Compile Include="CAN\DataTypes\NgkFloat.cs" />
+    <Compile Include="CAN\DataTypes\NgkInt16.cs" />
+    <Compile Include="CAN\DataTypes\NgkUFloat.cs" />
+    <Compile Include="CAN\DataTypes\NgkUInt32.cs" />
+    <Compile Include="CAN\DataTypes\NgkVersion.cs" />
+    <Compile Include="CAN\DataTypes\DateTimeConvertor\Unix.cs" />
+    <Compile Include="CAN\DataTypes\NgkUInt16.cs" />
+    <Compile Include="CAN\DataTypes\Helper\ScalerTypes.cs" />
+    <Compile Include="CAN\DataTypes\ProductVersion.cs" />
+    <Compile Include="CAN\Design\DevicesCollectionEditor.cs" />
+    <Compile Include="CAN\Design\INetworkControllerTypeConverter.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\ErrorMessages.Designer.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="CAN\DataLinkLayer\CanPort\IXXAT\Documents\IXXATHw.ico" />
+    <None Include="CAN\DataLinkLayer\CanPort\IXXAT\Documents\vcinet2.dll" />
+    <None Include="CAN\DataLinkLayer\CanPort\IXXAT\Documents\vcinet2.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="CAN\DataLinkLayer\CanPort\Fastwel\NIM351\Documents\NIM351.doc" />
+    <None Include="CAN\DataLinkLayer\CanPort\Fastwel\NIM351\Documents\NIM351.pdf" />
+    <None Include="CAN\DataLinkLayer\CanPort\IXXAT\Documents\vcinet2.chm" />
+    <None Include="CAN\DataLinkLayer\CanPort\IXXAT\Documents\vcinet2.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="CAN\DataLinkLayer\CanPort\Design\Controls\FastwelNIM351PortTuner.resx">
+      <DependentUpon>FastwelNIM351PortTuner.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CAN\DataLinkLayer\CanPort\Design\Controls\IXXATCanPortTuner.resx">
+      <DependentUpon>IXXATCanPortTuner.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CAN\DataLinkLayer\CanPort\Design\ICanPortUITypeEditorDialogForm.resx">
+      <DependentUpon>ICanPortUITypeEditorDialogForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CAN\DataLinkLayer\CanPort\Fastwel\NIM351\Forms\FormTestPort.resx">
+      <DependentUpon>FormTestPort.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\ErrorMessages.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <SubType>Designer</SubType>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="CAN\DataLinkLayer\CanPort\Fastwel\NIM351\Documents\fwcan.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\faviconMy.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{78E073B6-AD50-429C-9261-4DE3438D8EAE}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

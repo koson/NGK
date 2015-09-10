@@ -1,0 +1,127 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{2EBFE338-3D51-4616-B6B5-94CEBFB62CDE}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>NGK.CorrosionMonitoringSystem</RootNamespace>
+    <AssemblyName>MonitoringSystem</AssemblyName>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="NLog, Version=2.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL" />
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="DL\MatchingAddresses\RemappingTableKip9811.cs" />
+    <Compile Include="DL\ModbusAdapterContext.cs" />
+    <Compile Include="DL\ModbusAddresses\KIP9811Address.cs" />
+    <Compile Include="DL\ModbusAddresses\KIP00.cs" />
+    <Compile Include="DL\CanNetworkServiceAdapter.cs" />
+    <Compile Include="BL\BLController.cs" />
+    <Compile Include="BL\FieldNamesOfObjectDictionary.cs" />
+    <Compile Include="Core\Settings.cs" />
+    <Compile Include="DL\ModbusAddresses\KCCM.cs" />
+    <Compile Include="DL\ModbusAdapterParameterContext.cs" />
+    <Compile Include="DL\ModbusServiceAdapter.cs" />
+    <Compile Include="DL\ModbusAddresses\ModbusVisitingCard.cs" />
+    <Compile Include="DL\Modbus\mKIP9811.cs" />
+    <Compile Include="PL\FormNetworkControl.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PL\FormNetworkControl.Designer.cs">
+      <DependentUpon>FormNetworkControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\NetworkDevice.cs" />
+    <Compile Include="Models\DataObjectInfo.cs" />
+    <Compile Include="Models\ParametersPivotTable.cs" />
+    <Compile Include="PL\Controls\ButtonsPanel.cs">
+    </Compile>
+    <Compile Include="PL\Controls\SystemStatusBar.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="PL\CorrosionMonitoringSystemForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PL\CorrosionMonitoringSystemForm.Designer.cs">
+      <DependentUpon>CorrosionMonitoringSystemForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PL\SystemButtonClickEventHandler.cs" />
+    <Compile Include="BL\Messages.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="PL\FormNetworkControl.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>FormNetworkControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PL\CorrosionMonitoringSystemForm.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>CorrosionMonitoringSystemForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CanNgk\CanNgk.csproj">
+      <Project>{95234605-221A-41A5-A9BA-ED933C75C30E}</Project>
+      <Name>CanNgk</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{78E073B6-AD50-429C-9261-4DE3438D8EAE}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Modbus\Modbus.csproj">
+      <Project>{B5A4D2E6-8BCF-40E2-BD06-0DB320E688B0}</Project>
+      <Name>Modbus</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="NLog.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\faviconMy.ico" />
+    <None Include="settings.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

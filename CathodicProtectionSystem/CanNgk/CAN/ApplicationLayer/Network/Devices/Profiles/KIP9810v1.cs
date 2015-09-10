@@ -1,0 +1,313 @@
+using System;
+using System.Text;
+using NGK.CAN.DataTypes;
+using NGK.CAN.ApplicationLayer.Network.Devices.Profiles.ObjectDictionary;
+using NGK.CAN.ApplicationLayer.Network.Devices.Profiles.ObjectDictionary.Collections;
+using NGK.CAN.DataTypes.Helper;
+
+namespace NGK.CAN.ApplicationLayer.Network.Devices.Profiles
+{
+    /// <summary>
+    /// Реализует профиль устройства КИП 9810 версии 1
+    /// </summary>
+    public sealed class KIP9810v1: Prototype  
+    {
+        #region Fields And Properties
+        
+        private static KIP9810v1 _Instance;
+
+        public static IProfile Instance
+        {
+            get 
+            {
+                if (_Instance == null)
+                {
+                    _Instance = new KIP9810v1();
+                }
+                return _Instance; 
+            }
+        }
+
+        private Version _SoftwareVersion;
+        private Version _HardwareVersion;
+        private ObjectInfoCollection _ObjectList;
+        
+        #endregion
+
+        #region Constructors
+        /// <summary>
+        /// Конструктор
+        /// </summary>
+        private KIP9810v1()
+        {
+            _SoftwareVersion = new Version(1, 0);
+            _HardwareVersion = new Version(1, 0);
+            CreateObjectDictionary();
+        }
+        #endregion
+
+        #region Methods
+        /// <summary>
+        /// Создаёт описание объектов словаря объектов устройства
+        /// </summary>
+        private void CreateObjectDictionary()
+        {
+            _ObjectList = new ObjectInfoCollection();
+
+            _ObjectList.Add(new ObjectInfo(0x2000, "device_type", "Тип устройства",
+                true, true, true, "Тип устройства", String.Empty, Category.System,
+                new NgkUInt16(ScalerTypes.x1), 9810));
+
+            _ObjectList.Add(new ObjectInfo(0x2001, "fw_version", "Версия ПО", 
+                true, true, true, "Версия ПО", String.Empty, Category.System,
+                new NgkVersion(), 
+                (new NgkVersion()).ConvertToBasis(new ProductVersion(_SoftwareVersion))));
+
+            _ObjectList.Add(new ObjectInfo(0x2002, "hw_version", "Версия аппаратуры", 
+                true, true, true, "Версия аппаратуры", String.Empty, Category.System,
+                new NgkVersion(), 
+                (new NgkVersion()).ConvertToBasis(new ProductVersion(_HardwareVersion))));
+
+            _ObjectList.Add(new ObjectInfo(0x2003, "serial_number1", "Серийный номер устройства",
+                true, true, true, "Серийный номер 1", String.Empty, Category.System,
+                new NgkUInt16(ScalerTypes.x1), (UInt32)0));
+
+            _ObjectList.Add(new ObjectInfo(0x2004, "serial_number2", "Серийный номер устройства",
+                true, true, true, "Серийный номер 2", String.Empty, Category.System, 
+                new NgkUInt16(ScalerTypes.x1), (UInt32)0));
+
+            _ObjectList.Add(new ObjectInfo(0x2005, "serial_number3", "Серийный номер устройства", 
+                true, true, true, "Серийный номер 3", String.Empty, Category.System,
+                new NgkUInt16(ScalerTypes.x1), (UInt32)0));
+
+            _ObjectList.Add(new ObjectInfo(0x2006, "vcard_chksum", "Контрольная сумма CRC16 визитной карты устройства", 
+                true, true, true, "Контрольная сумма", String.Empty, Category.System,
+                new NgkUInt16(ScalerTypes.x1), (UInt32)0));
+
+            _ObjectList.Add(new ObjectInfo(0x2007, "vendor_id", "Код производителя", 
+                true, true, true, "Код производителя", String.Empty, Category.System, 
+                new NgkUInt16(ScalerTypes.x1), (UInt32)0));
+
+            _ObjectList.Add(new ObjectInfo(0x2008, "polarization_pot", 
+                "Поляризационный потенциал, В", 
+                false, true, true, "Поляризационный потенциал", "B", Category.Measured,
+                new NgkFloat(ScalerTypes.x001), (UInt32)0)); 
+
+            _ObjectList.Add(new ObjectInfo(0x2009, "protection_pot", "Защитный потенциал, В",
+                false, true, true, "U защитный","B", Category.Measured,
+                new NgkFloat(ScalerTypes.x001), (UInt32)0)); 
+
+            _ObjectList.Add(new ObjectInfo(0x200A, "induced_ac", "Наведенное переменное напряжение, В", 
+                false, true, true, "U наведенное перемен.", "B", Category.Measured, 
+                new NgkUInt16(ScalerTypes.x1), (UInt32)0));
+
+            _ObjectList.Add(new ObjectInfo(0x200B, "protection_cur", "Ток катодной защиты, А",
+                false, true, true, "I катодной защиты", "A", Category.Measured,
+                new NgkUFloat(ScalerTypes.x005), (UInt32)0)); 
+
+            _ObjectList.Add(new ObjectInfo(0x200C, "polarization_cur", 
+                "Ток поляризации, mA",
+                false, true, true, "I поляризации", "A", Category.Measured,
+                new NgkFloat(ScalerTypes.x01), (UInt32)0)); 
+
+            //uFloatNgk = new NgkUFloat(Precision.x001, 0);
+            _ObjectList.Add(new ObjectInfo(0x200D, "aux_cur1", "Ток канала 1, mA",
+                false, true, true, "I канала 1", "mA", Category.Measured, 
+                new NgkUFloat(ScalerTypes.x001), (UInt32)0));
+
+            //uFloatNgk = new NgkUFloat(Precision.x001, 0);
+            _ObjectList.Add(new ObjectInfo(0x200E, "aux_cur2", "Ток канала 2, mA",
+                false, true, true, "I канала 2", "mA", Category.Measured,
+                new NgkUFloat(ScalerTypes.x001), (UInt32)0)); 
+
+            _ObjectList.Add(new ObjectInfo(0x200F, "corrosion_depth", "Глубина коррозии, мкм",
+                false, true, true, "Глубина коррозии", "мкм", Category.Measured, 
+                new NgkUInt16(ScalerTypes.x1), (UInt32)0));
+
+            _ObjectList.Add(new ObjectInfo(0x2010, "corrosion_speed", "Скорость коррозии, мкм/год", 
+                false, true, true, "Скорость коррозии", "мкм/год", Category.Measured,
+                new NgkUInt16(ScalerTypes.x1), (UInt32)0)); 
+
+            _ObjectList.Add(new ObjectInfo(0x2011, "usipk_state", "Состояние УСИКПСТ",
+                false, true, true, "Состояние УСИКПСТ", String.Empty, Category.Measured,
+                new NgkByte(), (UInt32)0)); 
+
+            _ObjectList.Add(new ObjectInfo(0x2012, "supply_voltage", 
+                "Питающее напряжение, B", 
+                false, true, true, "Питающее напряжение", "B", Category.Measured,
+                new NgkUFloat(ScalerTypes.x005), (UInt32)0));
+
+            _ObjectList.Add(new ObjectInfo(0x2013, "battery_voltage", 
+                "Напряжение батареи, B", 
+                false, true, true, "U бат.", "B", Category.Measured,
+                new NgkUFloat(ScalerTypes.x001), (UInt32)0));
+
+            _ObjectList.Add(new ObjectInfo(0x2014, "int_temp", 
+                "Температура с встроенного датчика, \u00B0C",
+                false, true, true, "Температура с встроенного датчика", "C", Category.Measured,
+                new NgkInt16(), (UInt32)0));
+
+            _ObjectList.Add(new ObjectInfo(0x2015, "tamper", "Вскрытие", 
+                false, false, true, "Вскрытие", String.Empty, Category.System, 
+                new NgkBoolean(),  (new NgkBoolean()).ConvertToBasis(false)));
+
+            _ObjectList.Add(new ObjectInfo(0x2016, "supply_voltage_low","Питания неисправно",
+                false, true, true, "Напряжение питания ниже нормы", String.Empty, Category.Measured,
+                new NgkBoolean(), (new NgkBoolean()).ConvertToBasis(false)));
+
+            _ObjectList.Add(new ObjectInfo(0x2017, "battery_voltage_low", "Напряжение батареи ниже нормы",
+                false, true, true, "Батарея неисправна", String.Empty, Category.Measured,
+                new NgkBoolean(), (new NgkBoolean()).ConvertToBasis(false)));
+
+            _ObjectList.Add(new ObjectInfo(0x2018, "corrosion_sense1", "Состояние датчика коррозии 1",
+                false, true, true, "Датчик коррозии 1 сработал", String.Empty, Category.Measured,
+                new NgkBoolean(), (new NgkBoolean()).ConvertToBasis(false)));
+
+            _ObjectList.Add(new ObjectInfo(0x2019, "corrosion_sense2", "Состояние датчика коррозии 2",
+                false, true, true, "Датчик коррозии 2 сработал", String.Empty, Category.Measured,
+                new NgkBoolean(), (new NgkBoolean()).ConvertToBasis(false)));
+
+            _ObjectList.Add(new ObjectInfo(0x201A, "corrosion_sense3", "Состояние датчика коррозии 3",
+                false, true, true, "Датчик коррозии 3 сработал", String.Empty, Category.Measured,
+                new NgkBoolean(), (new NgkBoolean()).ConvertToBasis(false)));
+
+            _ObjectList.Add(new ObjectInfo(0x201B, "polarization_cur_dc", 
+                "Ток натекания постоянный (ток протекающий между трубой и электродом сравнения)", 
+                false, true, true, "Ток натекания постоянный, mA", "mA", Category.Measured,
+                new NgkFloat(ScalerTypes.x01), (UInt32)0)); 
+
+            _ObjectList.Add(new ObjectInfo(0x201C, "polarization_cur_ac", 
+                "Ток натекания переменный (ток протекающий между трубой и электродом сравнения)",
+                false, true, true, "I натекания перем., mA", "mA", Category.Measured,
+                new NgkFloat(ScalerTypes.x01), (UInt32)0)); 
+
+            _ObjectList.Add(new ObjectInfo(0x201E, "meas_period", 
+                "Период измерений и передачи данных, сек", 
+                false, true, true, "Период измерений и передачи данных", "сек.", Category.Configuration,
+                new NgkUInt32(), (UInt32)0));
+
+            _ObjectList.Add(new ObjectInfo(0x2020, "meas_supply_period", "Период измерения питающего напряжения, сек", 
+                false, true, true, "Период измерения Uп", "сек.", Category.Configuration,
+                new NgkUInt16(ScalerTypes.x1), (UInt32)10));
+
+            _ObjectList.Add(new ObjectInfo(0x2021, "usipk_period", "Период опроса УСИКПСТ, сек",
+                false, true, true, "Период опроса УСИКПСТ", "сек.", Category.Configuration, 
+                new NgkUInt16(ScalerTypes.x10), (UInt32)10));
+
+            _ObjectList.Add(new ObjectInfo(0x2022, "corr_sense_period", "Период опроса датчиков коррозии, сек",
+                false, true, true, "Период опроса датчиков коррозии", "сек.", Category.Configuration,
+                new NgkUInt16(ScalerTypes.x10), (UInt32)0));
+
+            _ObjectList.Add(new ObjectInfo(0x2023, "aux1_period", "Период опроса канала 1, сек",
+                false, true, true, "Период опроса канала 1", "сек.", Category.Configuration, 
+                new NgkUInt16(ScalerTypes.x10), (UInt32)0));
+
+            _ObjectList.Add(new ObjectInfo(0x2024, "aux2_period", "Период опроса канала 2, сек",
+                false, true, true, "Период опроса канала 2", "сек.", Category.Configuration,
+                new NgkUInt16(ScalerTypes.x10), (UInt32)0));
+
+            _ObjectList.Add(new ObjectInfo(0x2026, "shunt_nom", "Номинал шунта, А", 
+                false, true, true, "Номинал шунта", "A", Category.Configuration,
+                new NgkUInt16(ScalerTypes.x1), (UInt32)50));
+
+            _ObjectList.Add(new ObjectInfo(0x2027, "polarisation_pot_en", "Разрешение измерения поляр. потенциала",
+                false, true, true, "Разрешение измерения поляр. потенциала", String.Empty, Category.Configuration,
+                new NgkBoolean(), (new NgkBoolean()).ConvertToBasis(false)));
+
+            _ObjectList.Add(new ObjectInfo(0x2028, "protection_pot_en", "Разрешение измерения защитного потенциала",
+                false, true, true, "Разрешение измерения защитного потенциала", String.Empty, Category.Configuration,
+                new NgkBoolean(), (new NgkBoolean()).ConvertToBasis(false)));
+
+            _ObjectList.Add(new ObjectInfo(0x2029, "protection_cur_en", 
+                "Разрешение измерения защитного тока",
+                false, true, true, "Разрешение измерения защитного тока", String.Empty, Category.Configuration,
+                new NgkBoolean(), (new NgkBoolean()).ConvertToBasis(false)));
+
+            _ObjectList.Add(new ObjectInfo(0x202A, "polarisation_cur_en", 
+                "Разрешение измерения поляризационного тока",
+                false, true, true, "Разрешение измерения поляризационного тока", String.Empty, Category.Configuration,
+                new NgkBoolean(), (new NgkBoolean()).ConvertToBasis(false)));
+
+            _ObjectList.Add(new ObjectInfo(0x202B, "induced_ac_en", 
+                "Разрешение измерения наведенного напряжения",
+                false, true, true, "Разрешение измерения наведенного напряжения", String.Empty, Category.Configuration,
+                new NgkBoolean(), (new NgkBoolean()).ConvertToBasis(false)));
+
+            _ObjectList.Add(new ObjectInfo(0x202C, "prot_pot_ext_range", 
+                "Расширенный диапазон защитного потенциала",
+                false, true, true, "Расширенный диапазон защитного потенциала", String.Empty, Category.Configuration,
+                new NgkBoolean(), (new NgkBoolean()).ConvertToBasis(false)));
+
+            _ObjectList.Add(new ObjectInfo(0x202D, "polarization_cur_dc_en", 
+                "Разрешение измерения постоянного тока натекания", 
+                false, true, true, "Разрешение измерения постоянного тока натекания", String.Empty, Category.Configuration,
+                new NgkBoolean(), (new NgkBoolean()).ConvertToBasis(false)));
+
+            _ObjectList.Add(new ObjectInfo(0x202E, "polarization_cur_ac_en", 
+                "Разрешение измерения переменного тока натекания",
+                false, true, true, "Разрешение измерения переменного тока натекания", String.Empty, Category.Configuration,
+                new NgkBoolean(), (new NgkBoolean()).ConvertToBasis(false)));
+
+            _ObjectList.Add(new ObjectInfo(0x202F, "status_flags_en", 
+                "Разрешение передачи слова состояния", 
+                false, true, true, "Разрешение передачи слова состояния", String.Empty, Category.Configuration,
+                new NgkBoolean(), (new NgkBoolean()).ConvertToBasis(false)));
+
+            _ObjectList.Add(new ObjectInfo(0x2030, "pdo_flags", 
+                "Разрешение или запрещение передачи PDO",
+                false, true, true, "Разрешение или запрещение передачи PDO", String.Empty, Category.Configuration,
+                new NgkUInt16(ScalerTypes.x1), (UInt32)0));
+
+            _ObjectList.Add(new ObjectInfo(0x2031, "datetime", "Текущее время",
+                true, true, true, "Текущее время", String.Empty, Category.System,
+                new NgkDateTime(), (new NgkDateTime()).ConvertToBasis(DateTime.Now)));
+
+            //// Подключаем событие от объектного словаря
+            //base.CreateObjectDictionary();
+
+            return;
+        }
+        #endregion
+
+        #region IDeviceProfile Members
+
+        public override DeviceType DeviceType
+        {
+            get { return DeviceType.KIP_MAIN_POWERED_v1; }
+        }
+
+        public override string Description
+        {
+            get { return @"Устройство КИП с питанием от питающей сети"; }
+        }
+
+        public override Version SoftwareVersion
+        {
+            get { return _SoftwareVersion; }
+        }
+
+        public override Version HardwareVersion
+        {
+            get { return _HardwareVersion; }
+        }
+
+        public override ObjectInfoCollection ObjectInfoList
+        {
+            get 
+            {
+                return _ObjectList;
+            }
+        }
+
+        #endregion
+
+        #region Indexes
+        /// <summary>
+        /// Индексы объектов словаря устройства
+        /// </summary>
+        public class Indexes
+        {
+        }
+        #endregion
+    }
+}

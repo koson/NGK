@@ -1,0 +1,85 @@
+<?xml version="1.0"?>
+<Network Name="MyNetwork">
+  <Devices>
+    <Device Address="1" Description="" Status="Stopped">
+      <HoldingRegisters>
+        <HoldingRegister Address="0">
+          <Value>0</Value>
+          <Description>Holding register, Address 0</Description>
+        </HoldingRegister>
+        <HoldingRegister Address="1">
+          <Value>1</Value>
+          <Description>Holding register, Address 1</Description>
+        </HoldingRegister>
+        <HoldingRegister Address="2">
+          <Value>2</Value>
+          <Description>Holding register, Address 2</Description>
+        </HoldingRegister>
+      </HoldingRegisters>
+      <InputRegisters>
+        <InputRegister Address="0">
+          <Value>0</Value>
+          <Description>Input register, Address 0</Description>
+        </InputRegister>
+        <InputRegister Address="1">
+          <Value>1</Value>
+          <Description>Input register, Address 1</Description>
+        </InputRegister>
+        <InputRegister Address="2">
+          <Value>2</Value>
+          <Description>Input register, Address 2</Description>
+        </InputRegister>
+      </InputRegisters>
+      <Сoils>
+        <Coil Address="0">
+          <Value>false</Value>
+          <Description>Relay, Address 0</Description>
+        </Coil>
+        <Coil Address="1">
+          <Value>true</Value>
+          <Description>Relay, Address 1</Description>
+        </Coil>
+        <Coil Address="2">
+          <Value>false</Value>
+          <Description>Relay, Address 2</Description>
+        </Coil>
+        <Coil Address="3">
+          <Value>true</Value>
+          <Description>Relay, Address 3</Description>
+        </Coil>
+      </Сoils>
+      <DiscretesInputs>
+        <DiscreteInput Address="0">
+          <Value>false</Value>
+          <Description>Discrete Input, Address 0</Description>
+        </DiscreteInput>
+        <DiscreteInput Address="1">
+          <Value>true</Value>
+          <Description>Discrete Input, Address 1</Description>
+        </DiscreteInput>
+      </DiscretesInputs>
+      <Files>
+        <File Number="3" Description="File 03">
+          <Records>
+            <Record Number="9" Description="File 0x03.Record 0x09">
+              <Value>13261</Value>
+            </Record>
+            <Record Number="10" Description="File 0x03.Record 0x0A">
+              <Value>64</Value>
+            </Record>
+          </Records>
+        </File>
+        <File Number="4" Description="File 04">
+          <Records>
+            <Record Number="1" Description="File 0x04.Record 0x01">
+              <Value>3582</Value>
+            </Record>
+            <Record Number="2" Description="File 0x04.Record 0x02">
+              <Value>32</Value>
+            </Record>
+          </Records>
+        </File>
+      </Files>
+    </Device>
+  </Devices>
+</Network>

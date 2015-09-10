@@ -1,0 +1,166 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{B5A4D2E6-8BCF-40E2-BD06-0DB320E688B0}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Modbus</RootNamespace>
+    <AssemblyName>Modbus</AssemblyName>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Design" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization, Version=3.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL" />
+    <Reference Include="System.ServiceModel, Version=3.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Convert.cs" />
+    <Compile Include="EnumStatus.cs" />
+    <Compile Include="OSIModel\ApplicationLayer\NetworksManager.cs" />
+    <Compile Include="OSIModel\ApplicationLayer\Workmode.cs" />
+    <Compile Include="OSIModel\ApplicationLayer\Slave\DataModel\DataTypes\EnumParameterType.cs" />
+    <Compile Include="OSIModel\ApplicationLayer\Slave\DataModel\DataTypes\File.cs" />
+    <Compile Include="OSIModel\ApplicationLayer\Slave\DataModel\DataTypes\Record.cs" />
+    <Compile Include="OSIModel\ApplicationLayer\Slave\DataModel\DataTypes\RecordsCollection.cs" />
+    <Compile Include="OSIModel\ApplicationLayer\Slave\DataModel\DataTypes\Parameter.cs" />
+    <Compile Include="OSIModel\ApplicationLayer\Slave\DataModel\FilesCollection.cs" />
+    <Compile Include="OSIModel\ApplicationLayer\Slave\Dialogs\EditNetworkControllerDialog.cs" />
+    <Compile Include="OSIModel\ApplicationLayer\Slave\Dialogs\FormEditNetworkController.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="OSIModel\ApplicationLayer\Slave\Dialogs\FormEditNetworkController.Designer.cs">
+      <DependentUpon>FormEditNetworkController.cs</DependentUpon>
+    </Compile>
+    <Compile Include="OSIModel\ApplicationLayer\Slave\NetworkAPI\EnumCodeError.cs" />
+    <Compile Include="OSIModel\ApplicationLayer\Master\Device.cs" />
+    <Compile Include="OSIModel\ApplicationLayer\Master\IApi.cs" />
+    <Compile Include="OSIModel\ApplicationLayer\Slave\DataModel\CoilsCollection.cs">
+    </Compile>
+    <Compile Include="OSIModel\ApplicationLayer\Slave\DataModel\DataTypes\Coil.cs" />
+    <Compile Include="OSIModel\ApplicationLayer\Slave\DataModel\DataTypes\DiscreteInput.cs" />
+    <Compile Include="OSIModel\ApplicationLayer\Slave\DataModel\DataTypes\HoldingRegister.cs" />
+    <Compile Include="OSIModel\ApplicationLayer\Slave\DataModel\DataTypes\InputRegister.cs" />
+    <Compile Include="OSIModel\ApplicationLayer\Slave\DevicesCollection.cs" />
+    <Compile Include="OSIModel\ApplicationLayer\Slave\DataModel\DiscretesInputsCollection.cs" />
+    <Compile Include="OSIModel\ApplicationLayer\Slave\DataModel\HoldingRegistersCollection.cs" />
+    <Compile Include="OSIModel\ApplicationLayer\Slave\DataModel\InputRegistersCollection.cs" />
+    <Compile Include="OSIModel\ApplicationLayer\Slave\NetworkAPI\INetworkFunctions.cs" />
+    <Compile Include="OSIModel\ApplicationLayer\Slave\Device.cs" />
+    <Compile Include="OSIModel\ApplicationLayer\Slave\NetworkController.cs" />
+    <Compile Include="OSIModel\ApplicationLayer\Slave\NetworkErrorOccurredEventHandler.cs" />
+    <Compile Include="OSIModel\ApplicationLayer\Slave\NetworksCollection.cs" />
+    <Compile Include="OSIModel\DataLinkLayer\CRC16.cs" />
+    <Compile Include="OSIModel\DataLinkLayer\Diagnostics\EnumTypeOfMessageLog.cs" />
+    <Compile Include="OSIModel\DataLinkLayer\Dialogs\DialogSerialPortSettings.cs" />
+    <Compile Include="OSIModel\DataLinkLayer\Dialogs\FormSerialPortSettings.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="OSIModel\DataLinkLayer\Dialogs\FormSerialPortSettings.Designer.cs">
+      <DependentUpon>FormSerialPortSettings.cs</DependentUpon>
+    </Compile>
+    <Compile Include="OSIModel\DataLinkLayer\EnumInterfaceType.cs" />
+    <Compile Include="OSIModel\DataLinkLayer\EnumMode.cs" />
+    <Compile Include="OSIModel\DataLinkLayer\EnumRequestError.cs" />
+    <Compile Include="OSIModel\Transaction\EnumTransactionStatus.cs" />
+    <Compile Include="OSIModel\Transaction\EnumTransactionType.cs" />
+    <Compile Include="OSIModel\DataLinkLayer\Master\IDataLinkLayer.cs" />
+    <Compile Include="OSIModel\DataLinkLayer\Master\RTU\SerialPort\ComPort.cs" />
+    <Compile Include="OSIModel\DataLinkLayer\Master\RTU\SerialPort\ConverterType\ComPortConverter.cs" />
+    <Compile Include="OSIModel\DataLinkLayer\Master\RTU\SerialPort\UITypeEditor\SerialPortSettings.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="OSIModel\DataLinkLayer\Master\RTU\SerialPort\UITypeEditor\SerialPortSettings.designer.cs">
+      <DependentUpon>SerialPortSettings.cs</DependentUpon>
+    </Compile>
+    <Compile Include="OSIModel\DataLinkLayer\Master\RTU\SerialPort\UITypeEditor\SerialPortUITypeEditor.cs" />
+    <Compile Include="OSIModel\DataLinkLayer\Slave\IDataLinkLayer.cs" />
+    <Compile Include="OSIModel\DataLinkLayer\Slave\RTU\SerialPort\ComPort.cs" />
+    <Compile Include="OSIModel\DataLinkLayer\Slave\RTU\SerialPort\EnumPortError.cs" />
+    <Compile Include="OSIModel\DataLinkLayer\Slave\RTU\SerialPort\ErrorOccurredEventArgs.cs" />
+    <Compile Include="OSIModel\DataLinkLayer\Slave\RTU\SerialPort\MessageEventArgs.cs" />
+    <Compile Include="OSIModel\DataLinkLayer\Slave\RTU\SerialPort\EventHandleResponseWasSent.cs" />
+    <Compile Include="OSIModel\DataLinkLayer\Slave\RTU\SerialPort\EventHandlerErrorOccurred.cs" />
+    <Compile Include="OSIModel\DataLinkLayer\Slave\RTU\SerialPort\EventHandlerRequestWasRecived.cs" />
+    <Compile Include="OSIModel\DataLinkLayer\TypeConverters\BooleanTypeConverter.cs" />
+    <Compile Include="OSIModel\Message\CRC16.cs" />
+    <Compile Include="OSIModel\Message\Message.cs" />
+    <Compile Include="OSIModel\Message\PDU.cs" />
+    <Compile Include="OSIModel\Message\Result.cs" />
+    <Compile Include="OSIModel\Transaction\Transaction.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="OSIModel\ApplicationLayer\Slave\Dialogs\FormEditNetworkController.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>FormEditNetworkController.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="OSIModel\DataLinkLayer\Dialogs\FormSerialPortSettings.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>FormSerialPortSettings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="OSIModel\DataLinkLayer\Master\RTU\SerialPort\UITypeEditor\SerialPortSettings.resx">
+      <DependentUpon>SerialPortSettings.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{629E6838-9D25-4D9E-B848-28A8D6B88266}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram1.cd" />
+    <None Include="OSIModel\ApplicationLayer\Slave\config.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="OSIModel\ApplicationLayer\Slave\config.xsx">
+      <DependentUpon>config.xsd</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="OSIModel\ApplicationLayer\Slave\config.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Include="Resources\faviconMy.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="OSIModel\DataLinkLayer\ConnectionUITypeEditor\" />
+    <Folder Include="OSIModel\DataLinkLayer\Master\ASCII\" />
+    <Folder Include="OSIModel\DataLinkLayer\Slave\ASCII\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

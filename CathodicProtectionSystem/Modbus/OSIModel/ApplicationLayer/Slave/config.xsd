@@ -1,0 +1,120 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="Network">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="Devices">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Device" minOccurs="0" maxOccurs="247">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="HoldingRegisters">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="HoldingRegister" minOccurs="0" maxOccurs="65535">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="Value" type="xs:unsignedShort" />
+                                <xs:element name="Description" type="xs:string" />
+                              </xs:sequence>
+                              <xs:attribute name="Address" type="xs:unsignedShort" use="required" />
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="InputRegisters">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="InputRegister" minOccurs="0" maxOccurs="65535">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="Value" type="xs:unsignedShort" />
+                                <xs:element name="Description" type="xs:string" />
+                              </xs:sequence>
+                              <xs:attribute name="Address" type="xs:unsignedShort" use="required" />
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="Сoils">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="Coil" minOccurs="0" maxOccurs="65535">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="Value" type="xs:boolean" />
+                                <xs:element name="Description" type="xs:string" />
+                              </xs:sequence>
+                              <xs:attribute name="Address" type="xs:unsignedShort" use="required" />
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="DiscretesInputs">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="DiscreteInput" minOccurs="0" maxOccurs="65535">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="Value" type="xs:boolean" />
+                                <xs:element name="Description" type="xs:string" />
+                              </xs:sequence>
+                              <xs:attribute name="Address" type="xs:unsignedShort" use="required" />
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="Files">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="File" minOccurs="0" maxOccurs="65535">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="Records">
+                                  <xs:complexType>
+                                    <xs:sequence>
+                                      <xs:element name="Record" minOccurs="0" maxOccurs="10000">
+                                        <xs:complexType>
+                                          <xs:sequence>
+                                            <xs:element name="Value" type="xs:unsignedShort" />
+                                          </xs:sequence>
+                                          <xs:attribute name="Number" type="xs:unsignedShort" use="required" />
+                                          <xs:attribute name="Description" type="xs:string" use="required" />
+                                        </xs:complexType>
+                                      </xs:element>
+                                    </xs:sequence>
+                                  </xs:complexType>
+                                </xs:element>
+                              </xs:sequence>
+                              <xs:attribute name="Number" type="xs:unsignedShort" use="required" />
+                              <xs:attribute name="Description" type="xs:string" use="required" />
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                  <xs:attribute name="Address" type="xs:unsignedByte" use="required" />
+                  <xs:attribute name="Description" type="xs:string" use="required" />
+                  <xs:attribute name="Status" type="Status" use="required" />
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+      <xs:attribute name="Name" type="xs:string" use="required" />
+    </xs:complexType>
+  </xs:element>
+  <xs:simpleType name="Status">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Running" />
+      <xs:enumeration value="Stopped" />
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>
