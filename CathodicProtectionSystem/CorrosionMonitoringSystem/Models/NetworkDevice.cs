@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.ComponentModel;
 using NGK.CAN.ApplicationLayer.Network.Devices;
 using NGK.CAN.ApplicationLayer.Network.Devices.Profiles.ObjectDictionary;
+using Common.ComponentModel;
 
 namespace NGK.CorrosionMonitoringSystem.Models
 {
@@ -25,6 +27,7 @@ namespace NGK.CorrosionMonitoringSystem.Models
         /// <summary>
         /// 
         /// </summary>
+        [TypeConverter(typeof(EnumTypeConverter))]
         public DeviceStatus Status
         {
             get { return _Status; }
@@ -39,6 +42,16 @@ namespace NGK.CorrosionMonitoringSystem.Models
             get { return _NetworkId; }
             set { _NetworkId = value; }
         }
+        private string _NetworkDescription;
+        /// <summary>
+        /// 
+        /// </summary>
+        public string NetworkDescription
+        {
+            get { return _NetworkDescription; }
+            set { _NetworkDescription = value; }
+        }
+
         private string _Location;
         /// <summary>
         /// 
@@ -82,6 +95,7 @@ namespace NGK.CorrosionMonitoringSystem.Models
         public NetworkDevice(IDevice device)
         {
             _NetworkId = device.Network.NetworkId;
+            _NetworkDescription = device.Network.Description;
             _NodeId = device.NodeId;
             _Location = device.LocationName;
             _PollingInterval = device.PollingInterval;

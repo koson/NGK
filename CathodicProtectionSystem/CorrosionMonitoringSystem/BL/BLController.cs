@@ -640,39 +640,25 @@ namespace NGK.CorrosionMonitoringSystem.BL
             {
                 case "DataGridViewDevicesList":
                     {
-                        Settings.NodeIdColumnWidth = control.Columns["NodeId"].Width;
                         Settings.StatusColumnWidth = control.Columns["Status"].Width;
                         Settings.NetworkNameColumnWidth = control.Columns["NetworkName"].Width;
                         Settings.LocationNameColumnWidth = control.Columns["Location"].Width;
-                        Settings.PollingIntervalColumnWidth = control.Columns["PollingInterval"].Width;
                         break;
                     }
                 case "DataGridViewObjectDictionary":
                     {
-                        Settings.ObjectDictionaryDescriptionColumnWidth = 
-                            control.Columns[FieldNamesOfObjectDictionary.INDEX].Width;
-                        Settings.ObjectDictionaryIndexNameColumnWidth = 
-                            control.Columns[FieldNamesOfObjectDictionary.NAME].Width; //"IndexName"
                         Settings.ObjectDictionaryDisplayedNameColumnWidth = 
                             control.Columns[FieldNamesOfObjectDictionary.DISPLAYED_NAME].Width; //"DisplayedName"
                         Settings.ObjectDictionaryIndexValueColumnWidth = 
                             control.Columns[FieldNamesOfObjectDictionary.VALUE].Width; //"IndexValue"
                         Settings.ObjectDictionaryLastUpdateTimeColumnWidth = 
                             control.Columns[FieldNamesOfObjectDictionary.MODIFIED].Width;
-                        Settings.ObjectDictionaryDescriptionColumnWidth = 
-                            control.Columns[FieldNamesOfObjectDictionary.DESCRIPTION].Width; //"Description"
-                        Settings.ObjectDictionaryCategoryColumnWidth = 
-                            control.Columns[FieldNamesOfObjectDictionary.CATEGORY].Width; //"Category"
-                        Settings.ObjectDictionaryReadOnlyColumnWidth = 
-                            control.Columns[FieldNamesOfObjectDictionary.READ_ONLY].Width; //"ReadOnly"
-                        Settings.ObjectDictionarySdoReadEnableColumnWidth =
-                            control.Columns[FieldNamesOfObjectDictionary.ENABLE_CYCLIC_READ].Width; //"SdoReadEnable"
                         break;
                     }
                 case "DataGridViewParametersPivotTable":
                     {
-                        Settings.PivotTableNodeIdColumnWidth = control.Columns["NodeId"].Width;
-                        Settings.PivotTableLocationColumnWidth = control.Columns["Location"].Width;
+                        Settings.PivotTableLocationColumnWidth = 
+                            control.Columns["Location"].Width;
                         Settings.PivotTablePolarisationPotential_2008ColumnWidth =
                             control.Columns["PolarisationPotential_2008"].Width;
                         Settings.PivotTableProtectionPotential_2009ColumnWidth =
@@ -685,7 +671,6 @@ namespace NGK.CorrosionMonitoringSystem.BL
                             control.Columns["Corrosion_depth_200F"].Width;
                         Settings.PivotTableCorrosion_speed_2010ColumnWidth = 
                             control.Columns["Corrosion_speed_2010"].Width;
-                        Settings.PivotTableTamper_2015ColumnWidth = control.Columns["Tamper_2015"].Width;
                         break;
                     }
             }
@@ -835,8 +820,8 @@ namespace NGK.CorrosionMonitoringSystem.BL
         public void InitTableOfDevices(DataGridView control)
         {
             ToolStripMenuItem menuItem;
-            //ToolStripSeparator separator;
             DataGridViewTextBoxColumn textboxClmn;
+            control.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.None;
 
             // Настраиваем контрол
             control.Name = "DataGridViewDevicesList";
@@ -870,6 +855,19 @@ namespace NGK.CorrosionMonitoringSystem.BL
             //textboxClmn.DefaultCellStyle = this._RowStyleDeviceIsStopped;
             control.Columns.Add(textboxClmn);
 
+            // Создаём столбец "Место установки"
+            textboxClmn = new DataGridViewTextBoxColumn();
+            textboxClmn.Name = "Location";
+            //textboxClmn.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            textboxClmn.HeaderText = "Расположение";
+            textboxClmn.ReadOnly = true;
+            textboxClmn.SortMode = DataGridViewColumnSortMode.NotSortable;
+            textboxClmn.Visible = true;
+            //textboxClmn.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            textboxClmn.DataPropertyName = "Location";
+            //textboxClmn.DefaultCellStyle = this._RowStyleDeviceIsStopped;
+            control.Columns.Add(textboxClmn);
+
             // Создаём столбец "Статус устройства"
             textboxClmn = new DataGridViewTextBoxColumn();
             textboxClmn.Name = "Status";
@@ -891,20 +889,7 @@ namespace NGK.CorrosionMonitoringSystem.BL
             textboxClmn.SortMode = DataGridViewColumnSortMode.Programmatic;
             textboxClmn.Visible = true;
             //textboxClmn.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
-            textboxClmn.DataPropertyName = "Network";
-            //textboxClmn.DefaultCellStyle = this._RowStyleDeviceIsStopped;
-            control.Columns.Add(textboxClmn);
-
-            // Создаём столбец "Место установки"
-            textboxClmn = new DataGridViewTextBoxColumn();
-            textboxClmn.Name = "Location";
-            //textboxClmn.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-            textboxClmn.HeaderText = "Расположение";
-            textboxClmn.ReadOnly = true;
-            textboxClmn.SortMode = DataGridViewColumnSortMode.NotSortable;
-            textboxClmn.Visible = true;
-            //textboxClmn.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
-            textboxClmn.DataPropertyName = "Location";
+            textboxClmn.DataPropertyName = "NetworkDescription";
             //textboxClmn.DefaultCellStyle = this._RowStyleDeviceIsStopped;
             control.Columns.Add(textboxClmn);
 
@@ -924,7 +909,8 @@ namespace NGK.CorrosionMonitoringSystem.BL
             // Подклчюем источник данных - список сетевых устройств
             control.DataSource = null;
             int x = 0;
-            control.DataSource = this._CanNetworksManager.Networks[x].Devices; //NETWORK_CAN_0
+            control.DataSource = 
+                _CanNetworksManager.Networks[x].Devices; //NETWORK_CAN_0
 
             // Сортируем устройства по статусу
             //control.Sort(control.Columns["Status"],
@@ -946,6 +932,11 @@ namespace NGK.CorrosionMonitoringSystem.BL
             style.Font = control.Columns["NodeId"].CellTemplate.Style.Font;
             style.Format = "X";
             control.Columns["NodeId"].CellTemplate.Style = style;
+
+            style = new DataGridViewCellStyle();
+            style.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            style.Font = control.Columns["Status"].CellTemplate.Style.Font;
+            control.Columns["Status"].CellTemplate.Style = style;
 
             style = new DataGridViewCellStyle();
             style.Alignment = DataGridViewContentAlignment.MiddleCenter;
@@ -974,21 +965,29 @@ namespace NGK.CorrosionMonitoringSystem.BL
                 cManager.PositionChanged += this._EventHandler_DevicesListCurrencyManager_PositionChanged;
             }
 
-            // Устанавливаем ширину столбцов из настроек
-            control.Columns["NodeId"].Width = Settings.NodeIdColumnWidth;
-            control.Columns["Status"].Width = Settings.StatusColumnWidth;
-            control.Columns["NetworkName"].Width = Settings.NetworkNameColumnWidth;
-            control.Columns["Location"].Width = Settings.LocationNameColumnWidth;
-            control.Columns["PollingInterval"].Width = Settings.PollingIntervalColumnWidth;
-
             // Скрываем/отображаем стобцы в зависимости от установок приложения
-            control.Columns["NodeId"].Visible = Settings.DevicesListNodeIdVisible;
-            control.Columns["Status"].Visible = Settings.DevicesListStatusVisible;
-            control.Columns["NetworkName"].Visible = Settings.DevicesListNetworkNameVisible;
-            control.Columns["Location"].Visible = Settings.DevicesListLocationNameVisible;
-            control.Columns["PollingInterval"].Visible = Settings.DevicesListPollingIntervalVisible;
+            if (Settings.IsDebug)
+            {
+                foreach (DataGridViewColumn clmn in control.Columns)
+                {
+                    clmn.Visible = true;
+                }
+            }
+            else
+            {
+                control.Columns["NodeId"].Visible = false;
+                control.Columns["Status"].Visible = true;
+                control.Columns["NetworkName"].Visible = true;
+                control.Columns["Location"].Visible = true;
+                control.Columns["PollingInterval"].Visible = false;
 
-            this.AdjustColumnsWidth(control);
+                // Устанавливаем ширину столбцов из настроек
+                control.Columns["Status"].Width = Settings.StatusColumnWidth;
+                control.Columns["NetworkName"].Width = Settings.NetworkNameColumnWidth;
+                control.Columns["Location"].Width = Settings.LocationNameColumnWidth;
+            }
+
+            AdjustColumnsWidth(control);
 
             // Инициализируем контекстные меню
             //this._DeviceListContextMenuStripForNetwork = new ContextMenuStrip();
@@ -1112,25 +1111,28 @@ namespace NGK.CorrosionMonitoringSystem.BL
         /// <param name="control"></param>
         private void AdjustColumnsWidth(DataGridView control)
         {
-#if DEBUG
-            foreach (DataGridViewColumn column in control.Columns)
+            if (Settings.IsDebug)
             {
-                column.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            }
-#else
-            List<int> clmns_visible = new List<int>();
-
-            for (int i = 0; i < control.Columns.Count; i++)
-            {
-                control.Columns[i].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
-                if (control.Columns[i].Visible)
+                foreach (DataGridViewColumn column in control.Columns)
                 {
-                    clmns_visible.Add(i);
+                    column.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
                 }
             }
-            control.Columns[clmns_visible[clmns_visible.Count - 1]].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            return;
-#endif
+            else
+            {
+                List<int> clmns_visible = new List<int>();
+
+                for (int i = 0; i < control.Columns.Count; i++)
+                {
+                    control.Columns[i].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+                    if (control.Columns[i].Visible)
+                    {
+                        clmns_visible.Add(i);
+                    }
+                }
+                control.Columns[clmns_visible[clmns_visible.Count - 1]].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                return;
+            }
         }
         /// <summary>
         /// Возвращает текущее устройство в списке устройств сети. 
@@ -1277,7 +1279,7 @@ namespace NGK.CorrosionMonitoringSystem.BL
             // Создаём столбец "Индекс"
             textboxClmn = new DataGridViewTextBoxColumn();
             textboxClmn.Name = FieldNamesOfObjectDictionary.MODIFIED; //"LastUpdateTime";
-            textboxClmn.HeaderText = "Дата и время обновления занчения";
+            textboxClmn.HeaderText = "Дата обновления";
             textboxClmn.ReadOnly = true;
             textboxClmn.SortMode = DataGridViewColumnSortMode.NotSortable;
             textboxClmn.Visible = true;
@@ -1335,43 +1337,32 @@ namespace NGK.CorrosionMonitoringSystem.BL
             control.Columns.Add(checkboxClmn);
 
             // Скрываем/отображаем стобцы в зависимости от установок приложения
-            control.Columns[FieldNamesOfObjectDictionary.INDEX].Width = 
-                Settings.ObjectDictionaryIndexColumnWidth;
-            control.Columns[FieldNamesOfObjectDictionary.NAME].Width = 
-                Settings.ObjectDictionaryIndexNameColumnWidth;
-            control.Columns[FieldNamesOfObjectDictionary.DISPLAYED_NAME].Width = //"DisplayedName"
-                Settings.ObjectDictionaryDisplayedNameColumnWidth;
-            control.Columns[FieldNamesOfObjectDictionary.VALUE].Width = //"IndexValue"
-                Settings.ObjectDictionaryIndexValueColumnWidth;
-            control.Columns[FieldNamesOfObjectDictionary.MODIFIED].Width = 
-                Settings.ObjectDictionaryLastUpdateTimeColumnWidth;
-            control.Columns[FieldNamesOfObjectDictionary.DESCRIPTION].Width = //"Description"
-                Settings.ObjectDictionaryDescriptionColumnWidth;
-            control.Columns[FieldNamesOfObjectDictionary.CATEGORY].Width = //"Category"
-                Settings.ObjectDictionaryCategoryColumnWidth;
-            control.Columns[FieldNamesOfObjectDictionary.READ_ONLY].Width = //"ReadOnly"
-                Settings.ObjectDictionaryReadOnlyColumnWidth;
-            control.Columns[FieldNamesOfObjectDictionary.ENABLE_CYCLIC_READ].Width = //"SdoReadEnable"
-                Settings.ObjectDictionarySdoReadEnableColumnWidth;
+            if (Settings.IsDebug)
+            {
+                foreach (DataGridViewColumn item in control.Columns)
+                {
+                    item.Visible = true;
+                }
+            }
+            else
+            {
+                control.Columns[FieldNamesOfObjectDictionary.INDEX].Visible = false;
+                control.Columns[FieldNamesOfObjectDictionary.NAME].Visible = false;
+                control.Columns[FieldNamesOfObjectDictionary.DISPLAYED_NAME].Visible = true;
+                control.Columns[FieldNamesOfObjectDictionary.VALUE].Visible = true;
+                control.Columns[FieldNamesOfObjectDictionary.MODIFIED].Visible = true;
+                control.Columns[FieldNamesOfObjectDictionary.DESCRIPTION].Visible = false;
+                control.Columns[FieldNamesOfObjectDictionary.CATEGORY].Visible = false;
+                control.Columns[FieldNamesOfObjectDictionary.READ_ONLY].Visible = false;
+                control.Columns[FieldNamesOfObjectDictionary.ENABLE_CYCLIC_READ].Visible = false;
 
-            control.Columns[FieldNamesOfObjectDictionary.INDEX].Visible = //"Index"
-                Settings.ObjectDictionaryIndexVisible;
-            control.Columns[FieldNamesOfObjectDictionary.NAME].Visible = //"IndexName"
-                Settings.ObjectDictionaryIndexNameVisible;
-            control.Columns[FieldNamesOfObjectDictionary.DISPLAYED_NAME].Visible = //"DisplayedName"
-                Settings.ObjectDictionaryDisplayedNameVisible;
-            control.Columns[FieldNamesOfObjectDictionary.VALUE].Visible = //"IndexValue"
-                Settings.ObjectDictionaryIndexValueVisible;
-            control.Columns[FieldNamesOfObjectDictionary.MODIFIED].Visible = 
-                Settings.ObjectDictionaryLastUpdateTimeVisible;
-            control.Columns[FieldNamesOfObjectDictionary.DESCRIPTION].Visible = //"Description"
-                Settings.ObjectDictionaryDescriptionVisible;
-            control.Columns[FieldNamesOfObjectDictionary.CATEGORY].Visible = //"Category"
-                Settings.ObjectDictionaryCategoryVisible;
-            control.Columns[FieldNamesOfObjectDictionary.READ_ONLY].Visible = //"ReadOnly"
-                Settings.ObjectDictionaryReadOnlyVisible;
-            control.Columns[FieldNamesOfObjectDictionary.ENABLE_CYCLIC_READ].Visible = //"SdoReadEnable"
-                Settings.ObjectDictionarySdoReadEnableVisible;
+                control.Columns[FieldNamesOfObjectDictionary.DISPLAYED_NAME].Width = //"DisplayedName"
+                    Settings.ObjectDictionaryDisplayedNameColumnWidth;
+                control.Columns[FieldNamesOfObjectDictionary.VALUE].Width = //"IndexValue"
+                    Settings.ObjectDictionaryIndexValueColumnWidth;
+                control.Columns[FieldNamesOfObjectDictionary.MODIFIED].Width =
+                    Settings.ObjectDictionaryLastUpdateTimeColumnWidth;
+            }
 
             // Подстраиваем ширину столбцов
             this.AdjustColumnsWidth(control);
@@ -1387,7 +1378,8 @@ namespace NGK.CorrosionMonitoringSystem.BL
             control.ColumnHeadersDefaultCellStyle.ApplyStyle(style);
 
             // Настраиваем формат вывода данных в столбцах
-            System.Globalization.CultureInfo cultureRussian = new System.Globalization.CultureInfo("ru-RU", false);
+            System.Globalization.CultureInfo cultureRussian = 
+                new System.Globalization.CultureInfo("ru-RU", false);
 
             clmn = control.Columns[FieldNamesOfObjectDictionary.INDEX];
             clmn.ReadOnly = true;
@@ -1434,7 +1426,8 @@ namespace NGK.CorrosionMonitoringSystem.BL
             control.AllowUserToAddRows = false;
             //control.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             control.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.None;
-            control.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            control.ColumnHeadersHeightSizeMode = 
+                DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             //control.RowEnter +=
             //    new DataGridViewCellEventHandler(EventHandler_dataGridViewDeviceList_RowEnter);
             //control.GotFocus += new EventHandler(EventHandler_DataGridView_GotFocus);
@@ -1529,21 +1522,21 @@ namespace NGK.CorrosionMonitoringSystem.BL
             textboxClmn.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
             control.Columns.Add(textboxClmn);
 
-            textboxClmn = new DataGridViewTextBoxColumn();
-            textboxClmn.Name = "Tamper_2015";
-            textboxClmn.HeaderText = "Вскрытие корпуса";
-            textboxClmn.ReadOnly = true;
-            textboxClmn.SortMode = DataGridViewColumnSortMode.NotSortable;
-            textboxClmn.Visible = false;
-            //textboxClmn.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
-            textboxClmn.DataPropertyName = "Tamper_2015";
-            textboxClmn.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            control.Columns.Add(textboxClmn);
+            //textboxClmn = new DataGridViewTextBoxColumn();
+            //textboxClmn.Name = "Tamper_2015";
+            //textboxClmn.HeaderText = "Вскрытие корпуса";
+            //textboxClmn.ReadOnly = true;
+            //textboxClmn.SortMode = DataGridViewColumnSortMode.NotSortable;
+            //textboxClmn.Visible = false;
+            ////textboxClmn.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
+            //textboxClmn.DataPropertyName = "Tamper_2015";
+            //textboxClmn.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            //control.Columns.Add(textboxClmn);
 
             // Создаём объект сводной талицы (будет использоваться в качестве источника данных для 
             // диаграмм и сводной таблицы параметров)
             BindingSource bindingSourceNetworkCan = new BindingSource();
-            bindingSourceNetworkCan.DataSource = this._PivotTable.PivotTable;
+            bindingSourceNetworkCan.DataSource = _PivotTable.PivotTable;
             // Подклчюем источник данных - список сетевых устройств
             control.DataSource = null;
             control.DataSource = bindingSourceNetworkCan;
@@ -1568,26 +1561,38 @@ namespace NGK.CorrosionMonitoringSystem.BL
             //    new DataGridViewCellMouseEventHandler(EventHandler_dataGridViewPivotTable_ColumnHeaderMouseClick);
 
             // Настраиваем видимость и ширину столбцов грида
-            control.Columns["NodeId"].Width = Settings.PivotTableNodeIdColumnWidth;
-            control.Columns["Location"].Width = Settings.PivotTableLocationColumnWidth;
-            control.Columns["PolarisationPotential_2008"].Width = Settings.PivotTablePolarisationPotential_2008ColumnWidth;
-            control.Columns["ProtectionPotential_2009"].Width = Settings.PivotTableProtectionPotential_2009ColumnWidth;
-            control.Columns["ProtectionCurrent_200B"].Width = Settings.PivotTableProtectionCurrent_200BColumnWidth;
-            control.Columns["PolarisationCurrent_200С"].Width = Settings.PivotTablePolarisationCurrent_200СColumnWidth;
-            control.Columns["Corrosion_depth_200F"].Width = Settings.PivotTableCorrosion_depth_200FColumnWidth;
-            control.Columns["Corrosion_speed_2010"].Width = Settings.PivotTableCorrosion_speed_2010ColumnWidth;
-            control.Columns["Tamper_2015"].Width = Settings.PivotTableTamper_2015ColumnWidth;
+            if (Settings.IsDebug)
+            {
+                foreach (DataGridViewColumn item in control.Columns)
+                {
+                    item.Visible = true;
+                }
+            }
+            else
+            {
+                control.Columns["Location"].Width = 
+                    Settings.PivotTableLocationColumnWidth;
+                control.Columns["PolarisationPotential_2008"].Width = 
+                    Settings.PivotTablePolarisationPotential_2008ColumnWidth;
+                control.Columns["ProtectionPotential_2009"].Width = 
+                    Settings.PivotTableProtectionPotential_2009ColumnWidth;
+                control.Columns["ProtectionCurrent_200B"].Width = 
+                    Settings.PivotTableProtectionCurrent_200BColumnWidth;
+                control.Columns["PolarisationCurrent_200С"].Width = 
+                    Settings.PivotTablePolarisationCurrent_200СColumnWidth;
+                control.Columns["Corrosion_depth_200F"].Width = 
+                    Settings.PivotTableCorrosion_depth_200FColumnWidth;
+                control.Columns["Corrosion_speed_2010"].Width = 
+                    Settings.PivotTableCorrosion_speed_2010ColumnWidth;
 
-            control.Columns["NodeId"].Visible = Settings.PivotTableNodeIdColumnVisible;
-            control.Columns["Location"].Visible = Settings.PivotTableLocationColumnVisible;
-            control.Columns["PolarisationPotential_2008"].Visible = Settings.PivotTablePolarisationPotential_2008ColumnVisible;
-            control.Columns["ProtectionPotential_2009"].Visible = Settings.PivotTableProtectionPotential_2009ColumnVisible;
-            control.Columns["ProtectionCurrent_200B"].Visible = Settings.PivotTableProtectionCurrent_200BColumnVisible;
-            control.Columns["PolarisationCurrent_200С"].Visible = Settings.PivotTablePolarisationCurrent_200СColumnVisible;
-            control.Columns["Corrosion_depth_200F"].Visible = Settings.PivotTableCorrosion_depth_200FColumnVisible;
-            control.Columns["Corrosion_speed_2010"].Visible = Settings.PivotTableCorrosion_speed_2010ColumnVisible;
-            control.Columns["Tamper_2015"].Visible = Settings.PivotTableTamper_2015ColumnVisible;
-
+                control.Columns["Location"].Width = Settings.PivotTableLocationColumnWidth;
+                control.Columns["PolarisationPotential_2008"].Width = Settings.PivotTablePolarisationPotential_2008ColumnWidth;
+                control.Columns["ProtectionPotential_2009"].Width = Settings.PivotTableProtectionPotential_2009ColumnWidth;
+                control.Columns["ProtectionCurrent_200B"].Width = Settings.PivotTableProtectionCurrent_200BColumnWidth;
+                control.Columns["PolarisationCurrent_200С"].Width = Settings.PivotTablePolarisationCurrent_200СColumnWidth;
+                control.Columns["Corrosion_depth_200F"].Width = Settings.PivotTableCorrosion_depth_200FColumnWidth;
+                control.Columns["Corrosion_speed_2010"].Width = Settings.PivotTableCorrosion_speed_2010ColumnWidth;
+            }
             this.AdjustColumnsWidth(control);
             return;
         }

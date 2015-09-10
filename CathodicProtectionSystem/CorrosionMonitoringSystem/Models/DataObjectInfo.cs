@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.ComponentModel;
 using NGK.CAN.ApplicationLayer.Network.Devices.Profiles.ObjectDictionary;
 using NGK.CAN.ApplicationLayer.Network.Devices.ObjectDictionary;
+using Common.ComponentModel;
 
 namespace NGK.CorrosionMonitoringSystem.Models
 {
@@ -122,7 +124,7 @@ namespace NGK.CorrosionMonitoringSystem.Models
         }
 
         private ObjectStatus _Status;
-
+        [TypeConverter(typeof(EnumTypeConverter))]
         public ObjectStatus Status
         {
             get { return _Status; }

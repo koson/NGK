@@ -52,7 +52,6 @@ namespace NGK.CorrosionMonitoringSystem.Models
         #endregion
 
         #region Methods
-        //--------------------------------------------------------------------------------
         /// <summary>
         /// Обновляет данные в сводной таблице
         /// </summary>
@@ -67,7 +66,6 @@ namespace NGK.CorrosionMonitoringSystem.Models
 
             return;
         }
-        //--------------------------------------------------------------------------------
         /// <summary>
         /// Инициализирует список устройств типа КИП из устройств доступных в сети
         /// </summary>

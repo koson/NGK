@@ -15,171 +15,98 @@ namespace NGK.CorrosionMonitoringSystem.Core
     public static class Settings
     {
         #region Fields And Properties
+
         private static Configuration _LocalConfig;
         private static Configuration _RemoteConfig;
         private static Boolean _RemoteConfigurationEnable;
 
+        #region Настройки основного окна программы
+        /// <summary>
+        /// Разрешает/запрещает отображение курсора
+        /// </summary>
         public static Boolean CursorEnable
         {
             get { return Boolean.Parse(GetParameter("CursorEnable")); }
         }
+        /// <summary>
+        /// Разрешает/запрещает отображение приложения на панели задач
+        /// </summary>
         public static Boolean ShowInTaskbar
         {
             get { return Boolean.Parse(GetParameter("ShowInTaskbar")); }
         }
-        [DefaultSettingValueAttribute("255, 128, 0")]
-        [Description("Цвет строки неисправного устройсва в списке устройств")]
-        public static Color CommunicationErrorRowColor
-        {
-            get { return ConvertTo(GetParameter("CommunicationErrorRowColor")); }
-        }    
-        public static Color ConfigurationErrorRowColor
-        {
-            get { return ConvertTo(GetParameter("ConfigurationErrorRowColor")); }
-        }
-        public static Color PreoperationalModeRowColor
-        {
-            get { return ConvertTo(GetParameter("PreoperationalModeRowColor")); }
-        }
-        public static Color OperationalModeRowColor
-        {
-            get { return ConvertTo(GetParameter("OperationalModeRowColor")); }
-        }
-        public static Color StoppedModeRowColor
-        {
-            get { return ConvertTo(GetParameter("StoppedModeRowColor")); }
-        }
-        public static Boolean ObjectDictionaryIndexVisible
-        {
-            get { return Boolean.Parse(GetParameter("ObjectDictionaryIndexVisible")); }
-        }
-        public static Boolean ObjectDictionaryIndexNameVisible
-        {
-            get { return Boolean.Parse(GetParameter("ObjectDictionaryIndexNameVisible")); }
-        }
-        public static Boolean ObjectDictionaryDisplayedNameVisible
-        {
-            get { return Boolean.Parse(GetParameter("ObjectDictionaryDisplayedNameVisible")); }
-        }
-        public static Boolean ObjectDictionaryIndexValueVisible
-        {
-            get { return Boolean.Parse(GetParameter("ObjectDictionaryIndexValueVisible")); }
-        }
-        public static Boolean ObjectDictionaryDataTypeVisible
-        {
-            get { return Boolean.Parse(GetParameter("ObjectDictionaryDataTypeVisible")); }
-        }
-        public static Boolean ObjectDictionaryLastUpdateTimeVisible
-        {
-            get { return Boolean.Parse(GetParameter("ObjectDictionaryLastUpdateTimeVisible")); }
-        }
-        public static Boolean ObjectDictionaryDescriptionVisible
-        {
-            get { return Boolean.Parse(GetParameter("ObjectDictionaryDescriptionVisible")); }
-        }
-        public static Boolean ObjectDictionaryCategoryVisible
-        {
-            get { return Boolean.Parse(GetParameter("ObjectDictionaryCategoryVisible")); }
-        }
-        public static Boolean ObjectDictionaryReadOnlyVisible
-        {
-            get { return Boolean.Parse(GetParameter("ObjectDictionaryReadOnlyVisible")); }
-        }
-        public static Boolean ObjectDictionarySdoReadEnableVisible
-        {
-            get { return Boolean.Parse(GetParameter("ObjectDictionarySdoReadEnableVisible")); }
-        }
-
-        public static Boolean DevicesListNodeIdVisible
-        {
-            get { return Boolean.Parse(GetParameter("NodeIdVisible")); }
-        }
-        public static Boolean DevicesListStatusVisible
-        {
-            get { return Boolean.Parse(GetParameter("StatusVisible")); }
-        }
-        public static Boolean DevicesListNetworkNameVisible
-        {
-            get { return Boolean.Parse(GetParameter("NetworkNameVisible")); }
-        }
-        public static Boolean DevicesListLocationNameVisible
-        {
-            get { return Boolean.Parse(GetParameter("LocationNameVisible")); }
-        }
-        public static Boolean DevicesListPollingIntervalVisible
-        {
-            get { return Boolean.Parse(GetParameter("PollingIntervalVisible")); }
-        }
-        /// <summary>
-        /// Возвращает массив номеров индексов объектного словаря устройства КИП9810, которые должны
-        /// быть скрыты от пользователя
-        /// </summary>
-        public static UInt16[] HiddenIndexesKip9810
-        {
-            get 
-            {
-                String[] strArr;
-                String str = GetParameter("HideObjectIndexForKip9810");
-                if (String.IsNullOrEmpty(str))
-                {
-                    strArr = new string[0];
-                }
-                else
-                {
-                    strArr = str.Split(',');
-                }
-                UInt16[] array = new ushort[strArr.Length];
-                for (int i = 0; i < strArr.Length; i++)
-                {
-                    array[i] = UInt16.Parse(strArr[i].Trim(), 
-                        NumberStyles.HexNumber, NumberFormatInfo.InvariantInfo);
-                }
-                return array;
-            }
-        }
-        /// <summary>
-        /// Возвращает массив номеров индексов объектного словаря устройства КИП9811, которые должны
-        /// быть скрыты от пользователя
-        /// </summary>
-        public static UInt16[] HiddenIndexesKip9811
-        {
-            get
-            {
-                String[] strArr;
-                String str = GetParameter("HideObjectIndexForKip9811");
-                if (String.IsNullOrEmpty(str))
-                {
-                    strArr = new string[0];
-                }
-                else
-                {
-                    strArr = str.Split(',');
-                }
-                UInt16[] array = new ushort[strArr.Length];
-                for (int i = 0; i < strArr.Length; i++)
-                {
-                    array[i] = UInt16.Parse(strArr[i].Trim(),
-                        NumberStyles.HexNumber, NumberFormatInfo.InvariantInfo);
-                }
-                return array; 
-            }
-        }
         /// <summary>
         /// Возвращает значение разрешающее/запрещающее основному 
-        /// окну программы иметь заголовок и т.п.
+        /// окну программы иметь рамку (строка заголовака и состояния) и т.п.
         /// </summary>
         public static Boolean FormBorderEnable
         {
             get { return Boolean.Parse(GetParameter("FormBorderEnable")); }
         }
+
+        #endregion
+
+        #region Настройки грида отображения устройств системы
         /// <summary>
-        /// 
+        /// Возвращает цвет стрки устройства в состоянии "Ошибка соединения"
         /// </summary>
-        public static int NodeIdColumnWidth
+        [DefaultSettingValueAttribute("255, 128, 0")]
+        [Description("Цвет строки неисправного устройсва в списке устройств")]
+        public static Color CommunicationErrorRowColor
         {
-            get { return Int32.Parse(GetParameter("NodeIdColumnWidth")); }
-            set { SetParameter("NodeIdColumnWidth", value); }
+            get { return ConvertTo(GetParameter("CommunicationErrorRowColor")); }
         }
+        /// <summary>
+        /// Возвращает цвет стрки устройства в состоянии "Ошибка конфигурации"
+        /// </summary>
+        //[DefaultSettingValueAttribute("255, 128, 0")]
+        [Description("Цвет строки неисправного устройсва в списке устройств")]
+        public static Color ConfigurationErrorRowColor
+        {
+            get { return ConvertTo(GetParameter("ConfigurationErrorRowColor")); }
+        }
+        /// <summary>
+        /// Возвращает цвет стрки устройства в состоянии "Preoperational"
+        /// </summary>
+        //[DefaultSettingValueAttribute("255, 128, 0")]
+        [Description("Цвет строки устройсва в состоянии Preoperational")]
+        public static Color PreoperationalModeRowColor
+        {
+            get { return ConvertTo(GetParameter("PreoperationalModeRowColor")); }
+        }
+        /// <summary>
+        /// Возвращает цвет стрки устройства в состоянии "Operational"
+        /// </summary>
+        //[DefaultSettingValueAttribute("255, 128, 0")]       
+        [Description("Цвет строки устройсва в состоянии Operational")]
+        public static Color OperationalModeRowColor
+        {
+            get { return ConvertTo(GetParameter("OperationalModeRowColor")); }
+        }
+        /// <summary>
+        /// Возвращает цвет стрки устройства в состоянии "Stopped"
+        /// </summary>
+        //[DefaultSettingValueAttribute("255, 128, 0")]       
+        [Description("Цвет строки устройсва в состоянии Stopped")]
+        public static Color StoppedModeRowColor
+        {
+            get { return ConvertTo(GetParameter("StoppedModeRowColor")); }
+        }
+        #endregion
+
+        #region Mode
+        /// <summary>
+        /// Возвращает режим работы прорграммы. В режиме "Debug" отображатся
+        /// вся информация. В противном случае, только часть.
+        /// </summary>
+        public static Boolean IsDebug
+        {
+            get { return Boolean.Parse(GetParameter("IsDebug")); }
+        }
+        #endregion 
+
+        #region Настроки гридов
+
         public static int StatusColumnWidth
         {
             get { return Int32.Parse(GetParameter("StatusColumnWidth")); }
@@ -188,27 +115,12 @@ namespace NGK.CorrosionMonitoringSystem.Core
         public static int NetworkNameColumnWidth
         {
             get { return Int32.Parse(GetParameter("NetworkNameColumnWidth")); }
-            set { SetParameter("NetworkNameColumnWidth", value); }            
+            set { SetParameter("NetworkNameColumnWidth", value); }
         }
         public static int LocationNameColumnWidth
         {
             get { return Int32.Parse(GetParameter("LocationNameColumnWidth")); }
             set { SetParameter("LocationNameColumnWidth", value); }
-        }
-        public static int PollingIntervalColumnWidth
-        {
-            get { return Int32.Parse(GetParameter("PollingIntervalColumnWidth")); }
-            set { SetParameter("PollingIntervalColumnWidth", value); }
-        }
-        public static int ObjectDictionaryIndexColumnWidth
-        {
-            get { return Int32.Parse(GetParameter("ObjectDictionaryIndexColumnWidth")); }
-            set { SetParameter("ObjectDictionaryIndexColumnWidth", value); }
-        }
-        public static int ObjectDictionaryIndexNameColumnWidth
-        {
-            get { return Int32.Parse(GetParameter("ObjectDictionaryIndexNameColumnWidth")); }
-            set { SetParameter("ObjectDictionaryIndexNameColumnWidth", value); }
         }
         public static int ObjectDictionaryDisplayedNameColumnWidth
         {
@@ -220,40 +132,10 @@ namespace NGK.CorrosionMonitoringSystem.Core
             get { return Int32.Parse(GetParameter("ObjectDictionaryIndexValueColumnWidth")); }
             set { SetParameter("ObjectDictionaryIndexValueColumnWidth", value); }
         }
-        public static int ObjectDictionaryTypeOfValueColumnWidth
-        {
-            get { return Int32.Parse(GetParameter("ObjectDictionaryTypeOfValueColumnWidth")); }
-            set { SetParameter("ObjectDictionaryTypeOfValueColumnWidth", value); }
-        }
         public static int ObjectDictionaryLastUpdateTimeColumnWidth
         {
             get { return Int32.Parse(GetParameter("ObjectDictionaryLastUpdateTimeColumnWidth")); }
             set { SetParameter("ObjectDictionaryLastUpdateTimeColumnWidth", value); }
-        }
-        public static int ObjectDictionaryDescriptionColumnWidth
-        {
-            get { return Int32.Parse(GetParameter("ObjectDictionaryDescriptionColumnWidth")); }
-            set { SetParameter("ObjectDictionaryDescriptionColumnWidth", value); }
-        }
-        public static int ObjectDictionaryCategoryColumnWidth
-        {
-            get { return Int32.Parse(GetParameter("ObjectDictionaryCategoryColumnWidth")); }
-            set { SetParameter("ObjectDictionaryCategoryColumnWidth", value); }
-        }
-        public static int ObjectDictionaryReadOnlyColumnWidth
-        {
-            get { return Int32.Parse(GetParameter("ObjectDictionaryReadOnlyColumnWidth")); }
-            set { SetParameter("ObjectDictionaryReadOnlyColumnWidth", value); }
-        }
-        public static int ObjectDictionarySdoReadEnableColumnWidth
-        {
-            get { return Int32.Parse(GetParameter("ObjectDictionarySdoReadEnableColumnWidth")); }
-            set { SetParameter("ObjectDictionarySdoReadEnableColumnWidth", value); }
-        }
-        public static int PivotTableNodeIdColumnWidth
-        {
-            get { return Int32.Parse(GetParameter("PivotTableNodeIdColumnWidth")); }
-            set { SetParameter("PivotTableNodeIdColumnWidth", value); }
         }
         public static int PivotTableLocationColumnWidth
         {
@@ -290,58 +172,70 @@ namespace NGK.CorrosionMonitoringSystem.Core
             get { return Int32.Parse(GetParameter("PivotTableCorrosion_speed_2010ColumnWidth")); }
             set { SetParameter("PivotTableCorrosion_speed_2010ColumnWidth", value); }
         }
-        public static int PivotTableTamper_2015ColumnWidth
-        {
-            get { return Int32.Parse(GetParameter("PivotTableTamper_2015ColumnWidth")); }
-            set { SetParameter("PivotTableTamper_2015ColumnWidth", value); }
-        }
-        public static Boolean PivotTableNodeIdColumnVisible
-        {
-            get { return Boolean.Parse(GetParameter("PivotTableNodeIdColumnVisible")); }
-            set { SetParameter("PivotTableNodeIdColumnVisible", value); }
-        }
-        public static Boolean PivotTableLocationColumnVisible
-        {
-            get { return Boolean.Parse(GetParameter("PivotTableLocationColumnVisible")); }
-            set { SetParameter("PivotTableLocationColumnVisible", value); }
-        }
-        public static Boolean PivotTablePolarisationPotential_2008ColumnVisible
-        {
-            get { return Boolean.Parse(GetParameter("PivotTablePolarisationPotential_2008ColumnVisible")); }
-            set { SetParameter("PivotTablePolarisationPotential_2008ColumnVisible", value); }
-        }
-        public static Boolean PivotTableProtectionPotential_2009ColumnVisible
-        {
-            get { return Boolean.Parse(GetParameter("PivotTableProtectionPotential_2009ColumnVisible")); }
-            set { SetParameter("PivotTableProtectionPotential_2009ColumnVisible", value); }
-        }
-        public static Boolean PivotTableProtectionCurrent_200BColumnVisible
-        {
-            get { return Boolean.Parse(GetParameter("PivotTableProtectionCurrent_200BColumnVisible")); }
-            set { SetParameter("PivotTableProtectionCurrent_200BColumnVisible", value); }
-        }
-        public static Boolean PivotTablePolarisationCurrent_200СColumnVisible
-        {
-            get { return Boolean.Parse(GetParameter("PivotTablePolarisationCurrent_200СColumnVisible")); }
-            set { SetParameter("PivotTablePolarisationCurrent_200СColumnVisible", value); }
-        }
-        public static Boolean PivotTableCorrosion_depth_200FColumnVisible
-        {
-            get { return Boolean.Parse(GetParameter("PivotTableCorrosion_depth_200FColumnVisible")); }
-            set { SetParameter("PivotTableCorrosion_depth_200FColumnVisible", value); }
-        }
-        public static Boolean PivotTableCorrosion_speed_2010ColumnVisible
-        {
-            get { return Boolean.Parse(GetParameter("PivotTableCorrosion_speed_2010ColumnVisible")); }
-            set { SetParameter("PivotTableCorrosion_speed_2010ColumnVisible", value); }
-        }
-        public static Boolean PivotTableTamper_2015ColumnVisible
-        {
-            get { return Boolean.Parse(GetParameter("PivotTableTamper_2015ColumnVisible")); }
-            set { SetParameter("PivotTableTamper_2015ColumnVisible", value); }
-        }
+
         #endregion
+
+        /// <summary>
+        /// Возвращает массив номеров индексов объектного словаря устройства КИП9810,
+        /// которые должны быть скрыты от пользователя
+        /// </summary>
+        public static UInt16[] HiddenIndexesKip9810
+        {
+            get 
+            {
+                String[] strArr;
+                String str = GetParameter("HideObjectIndexForKip9810");
+                if (String.IsNullOrEmpty(str))
+                {
+                    strArr = new string[0];
+                }
+                else
+                {
+                    strArr = str.Split(',');
+                }
+                UInt16[] array = new ushort[strArr.Length];
+                for (int i = 0; i < strArr.Length; i++)
+                {
+                    array[i] = UInt16.Parse(strArr[i].Trim(), 
+                        NumberStyles.HexNumber, NumberFormatInfo.InvariantInfo);
+                }
+                return array;
+            }
+        }
+        /// <summary>
+        /// Возвращает массив номеров индексов объектного словаря устройства КИП9811,
+        /// которые должны быть скрыты от пользователя
+        /// </summary>
+        public static UInt16[] HiddenIndexesKip9811
+        {
+            get
+            {
+                String[] strArr;
+                String str = GetParameter("HideObjectIndexForKip9811");
+                if (String.IsNullOrEmpty(str))
+                {
+                    strArr = new string[0];
+                }
+                else
+                {
+                    strArr = str.Split(',');
+                }
+                UInt16[] array = new ushort[strArr.Length];
+                for (int i = 0; i < strArr.Length; i++)
+                {
+                    array[i] = UInt16.Parse(strArr[i].Trim(),
+                        NumberStyles.HexNumber, NumberFormatInfo.InvariantInfo);
+                }
+                return array; 
+            }
+        }
+
+        #endregion
+
         #region Constructors
+        /// <summary>
+        /// Конструктор
+        /// </summary>
         static Settings()
         {
             _LocalConfig = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
@@ -355,8 +249,15 @@ namespace NGK.CorrosionMonitoringSystem.Core
                     ConfigurationUserLevel.None);
             }
         }
+
         #endregion
+
         #region Methods
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="paramName"></param>
+        /// <returns></returns>
         private static String GetParameter(String paramName)
         {
             if (_RemoteConfigurationEnable)
@@ -368,6 +269,11 @@ namespace NGK.CorrosionMonitoringSystem.Core
                 return _LocalConfig.AppSettings.Settings[paramName].Value;
             }
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="paramName"></param>
+        /// <param name="value"></param>
         private static void SetParameter(String paramName, ValueType value)
         {
             if (_RemoteConfigurationEnable)
@@ -384,6 +290,11 @@ namespace NGK.CorrosionMonitoringSystem.Core
             }
             return;
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="paramName"></param>
+        /// <returns></returns>
         private static Color ConvertTo(String paramName)
         {
             String[] arr = paramName.Split(',');
@@ -410,6 +321,7 @@ namespace NGK.CorrosionMonitoringSystem.Core
                 throw new Exception("Некорректный формат значения параметра конфигурации");
             }
         }
+
         #endregion
     }
 }
