@@ -148,7 +148,14 @@ namespace NGK.CorrosionMonitoringSystem.BL
                 DataObject param = dvc.ObjectDictionary[parameter.Index];
                 parameter.Modified = param.Modified;
                 parameter.Status = param.Status;
-                parameter.Value = param.TotalValue.ToString();
+                if (param.TotalValue is Boolean)
+                {
+                    parameter.Value = (Boolean)param.TotalValue ? "Да" : "Нет";
+                }
+                else
+                {
+                    parameter.Value = param.TotalValue.ToString();
+                }
             }
         }
 
