@@ -2,8 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 // 
-using NGK.CAN.OSIModel.DataLinkLayer.CanPort.Fastwel.NIM351;
-using NGK.CAN.OSIModel.DataLinkLayer.CanPort.Fastwel.NIM351.Forms;
+using NGK.CAN.DataLinkLayer.CanPort.Fastwel.NIM351;
+using NGK.CAN.DataLinkLayer.CanPort.Fastwel.NIM351.Forms;
 
 namespace TestCanPortNim351
 {
