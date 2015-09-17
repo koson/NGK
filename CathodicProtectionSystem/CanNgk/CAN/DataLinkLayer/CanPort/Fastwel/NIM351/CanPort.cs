@@ -1142,7 +1142,7 @@ namespace NGK.CAN.DataLinkLayer.CanPort.Fastwel.NIM351
             F_CAN_RESULT result;
             F_CAN_TX buffer;
             F_CAN_STATE status;
-            //uint count = 0;
+            uint count = 0;
 
             // Если прот закрыт, отсылка сообщения не возможна
             if (!this.IsOpen)
@@ -1161,8 +1161,8 @@ namespace NGK.CAN.DataLinkLayer.CanPort.Fastwel.NIM351
             // Разбираем сообщение и подготавливаем его для отправки
             buffer.msg = ConvertNim351.ConvertToF_CAN_MSG(message);
 
-            //result = Api.fw_can_send(this._DeviceHandle, ref buffer, 1, ref count);
-            result = Api.fw_can_post_message(this._DeviceHandle, ref buffer);
+            result = Api.fw_can_send(this._DeviceHandle, ref buffer, 1, ref count);
+            //result = Api.fw_can_post_message(this._DeviceHandle, ref buffer);
 
             if (!Api.f_can_success(result))
             {
