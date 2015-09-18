@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using NGK.CorrosionMonitoringSystem.DL.Modbus;
 using NGK.CAN.ApplicationLayer.Network.Devices;
+using NGK.CAN.DataTypes.DateTimeConvertor;
 using Modbus.OSIModel.ApplicationLayer.Slave.DataModel.DataTypes;
 using NGK.CorrosionMonitoringSystem.DL.ModbusAddresses;
 
@@ -78,7 +79,7 @@ namespace NGK.CorrosionMonitoringSystem.DL.MatchingAddresses
             {
                 throw new InvalidCastException("Требуется устройство CAN типа КИП-9811");
             }
-            if (modbusDevice.Records[KIP9811Address.VisitingCard.DeviceType].Value ==
+            if (modbusDevice.Records[KIP9811Address.VisitingCard.DeviceType].Value !=
                 (UInt16)DeviceType.KIP_BATTERY_POWER_v1)
             {
                 throw new InvalidCastException("Требуется устройство modbus типа КИП-9811");
@@ -161,9 +162,9 @@ namespace NGK.CorrosionMonitoringSystem.DL.MatchingAddresses
             var32 = (UInt32)canDevice.GetObject(_TableAddress[0x0026]);
             modbusDevice.Records[0x0026].Value = (UInt16)var32;
             //0x0036, 0x0037
-            var32 = (UInt16)canDevice.GetObject(_TableAddress[0x0036]);
+            var32 = Unix.ToUnixTime((DateTime)canDevice.GetObject(_TableAddress[0x0036]));
             modbusDevice.Records[0x0036].Value = (UInt16)(var32 >> 16);
-            var32 = (UInt16)canDevice.GetObject(_TableAddress[0x0037]);
+            var32 = Unix.ToUnixTime((DateTime)canDevice.GetObject(_TableAddress[0x0037]));
             modbusDevice.Records[0x0037].Value = (UInt16)var32;
             return;
         }

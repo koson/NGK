@@ -142,7 +142,7 @@ namespace NGK.CorrosionMonitoringSystem.DL
             network.Devices.Add(_DeviceKCCM);
 
             File mDevice;
-            ushort i = 0;
+            ushort i = 1;
 
             foreach (NGK.CAN.ApplicationLayer.Network.Devices.Device device in
                 canDevices)
@@ -154,16 +154,16 @@ namespace NGK.CorrosionMonitoringSystem.DL
                             mDevice = CreateKIP01(); // Создаём пустое устройство нужного типа
                             // Инициализируем его 
                             mDevice.Number = i++;
-                            mDevice.Records[KIP9811Address.VisitingCard.HardwareVersion].Value = 
-                                (UInt16)device.GetObject(KIP9811v1.Indexes.hw_version);
+                            mDevice.Records[KIP9811Address.VisitingCard.HardwareVersion].Value =
+                                ((ProductVersion)device.GetObject(KIP9811v1.Indexes.hw_version)).TotalVersion;
                             mDevice.Records[KIP9811Address.VisitingCard.SoftwareVersion].Value = 
-                                (UInt16)device.GetObject(KIP9811v1.Indexes.fw_version);
+                                ((ProductVersion)device.GetObject(KIP9811v1.Indexes.fw_version)).TotalVersion;
                             mDevice.Records[KIP9811Address.VisitingCard.SerialNumberHigh].Value = 
-                                (UInt16)device.GetObject(KIP9811v1.Indexes.serial_number1);
-                            mDevice.Records[KIP9811Address.VisitingCard.SerialNumberMiddle].Value = 
-                                (UInt16)device.GetObject(KIP9811v1.Indexes.serial_number2);
-                            mDevice.Records[KIP9811Address.VisitingCard.SerialNumberLow].Value = 
-                                (UInt16)device.GetObject(KIP9811v1.Indexes.serial_number3);
+                                System.Convert.ToUInt16(device.GetObject(KIP9811v1.Indexes.serial_number1));
+                            mDevice.Records[KIP9811Address.VisitingCard.SerialNumberMiddle].Value =
+                                System.Convert.ToUInt16(device.GetObject(KIP9811v1.Indexes.serial_number2));
+                            mDevice.Records[KIP9811Address.VisitingCard.SerialNumberLow].Value =
+                                System.Convert.ToUInt16(device.GetObject(KIP9811v1.Indexes.serial_number3));
                             mDevice.Records[KIP9811Address.VisitingCard.CRC16].Value = 0; //TODO (сделать рассчёт CRC16)
                             mDevice.Records[KIP9811Address.ServiceInformation.NetworkNumber].Value = 
                                 System.Convert.ToUInt16(_CanNetworksTable[device.Network.Description]);
@@ -194,7 +194,6 @@ namespace NGK.CorrosionMonitoringSystem.DL
         /// <returns></returns>
         private Device CreateKCCM(Byte address)
         {
-
             Device device = new Device(address);
 
             device.Description = "Блок КССМУ";
@@ -328,7 +327,7 @@ namespace NGK.CorrosionMonitoringSystem.DL
             // Не реализованно - всегда 0
             file.Records.Add(new Record(0x0009, 0, "Номер сети"));
             file.Records.Add(new Record(0x000A, 1, "Сетевой адрес"));
-            file.Records.Add(new Record(0x000A, 1, "Наличие связи с устройством"));
+            file.Records.Add(new Record(0x000B, 1, "Наличие связи с устройством"));
             
             // Добавляем данные специфичные для объектов словаря CAN устройства
 
@@ -423,6 +422,9 @@ namespace NGK.CorrosionMonitoringSystem.DL
             foreach (ModbusAdapterContext context in _Context)
             {
                 // Получаем CAN-устройство
+                //UInt32 x = context.CanDevice.NetworkId;
+                //Byte y = context.CanDevice.NodeId;
+                //device = manager.Networks[x].Devices[y];
                 device = manager.Networks[context.CanDevice.NetworkId]
                     .Devices[context.CanDevice.NodeId];
                 modbusDevice = _DeviceKCCM.Files[context.ModbusDevice.FileNumber];

@@ -21,23 +21,6 @@ namespace NGK.CAN.ApplicationLayer.Network.Master.Collections
         {
             return item.NetworkId;
         }
-        protected override void InsertItem(int index, NetworkController item)
-        {
-            base.InsertItem(index, item);
-        }
-        protected override void RemoveItem(int index)
-        {
-            base.RemoveItem(index);
-        }
-        protected override void ClearItems()
-        {
-            base.ClearItems();
-        }
-        protected override void SetItem(int index, NetworkController item)
-        {
-            base.SetItem(index, item);
-        }
-
         #endregion
     }
 }

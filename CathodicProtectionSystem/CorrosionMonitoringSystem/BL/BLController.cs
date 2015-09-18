@@ -110,8 +110,8 @@ namespace NGK.CorrosionMonitoringSystem.BL
                 new EventHandler(EvetnHandler_PivotTable_TableWasUpdated);
 
 
-            // Настраиваем сеть модбас
-            //_ModbusNetworkAdapter = new ModbusServiceAdapter();
+            // Настраиваем сеть Modbus
+            _ModbusNetworkAdapter = new ModbusServiceAdapter();
 
             // Настраиваем таймер
             _GeneralTimer = new Timer();

@@ -39,6 +39,7 @@ namespace NGK.CorrosionMonitoringSystem.DL
         {
             CanDevice = new CAN();
             CanDevice.NetworkId = canDevice.Network.NetworkId;
+            CanDevice.NodeId = canDevice.NodeId;
             ModbusDevice = new Modbus();
             ModbusDevice.FileNumber = modbusDevice.Number;
         }
