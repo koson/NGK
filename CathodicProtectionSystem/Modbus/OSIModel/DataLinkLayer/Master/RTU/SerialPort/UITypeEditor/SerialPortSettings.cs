@@ -6,20 +6,17 @@ using System.Data;
 using System.Text;
 using System.Windows.Forms;
 
-//=======================================================================================
 namespace Modbus.OSIModel.DataLinkLayer.Master.RTU.SerialPort.UITypeEditor
 {
-    //===================================================================================
     /// <summary>
     /// Делегат для создания события окончания редактирования свойства классах редакторов типов
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="args"></param>
     public delegate void EditingIsCompleteEventHandler(object sender, EventArgs args);
-    //===================================================================================
+
     public partial class SerialPortSettings : UserControl
     {
-        //-------------------------------------------------------------------------------
         #region Fields and Properties
         //-------------------------------------------------------------------------------
         /// <summary>
@@ -47,7 +44,7 @@ namespace Modbus.OSIModel.DataLinkLayer.Master.RTU.SerialPort.UITypeEditor
         }
         //-------------------------------------------------------------------------------
         #endregion
-        //-------------------------------------------------------------------------------
+
         #region Constructors
         //-------------------------------------------------------------------------------
         /// <summary>
@@ -70,7 +67,7 @@ namespace Modbus.OSIModel.DataLinkLayer.Master.RTU.SerialPort.UITypeEditor
         }
         //-------------------------------------------------------------------------------
         #endregion
-        //-------------------------------------------------------------------------------
+
         #region Methods
         //-------------------------------------------------------------------------------
         /// <summary>
@@ -87,22 +84,22 @@ namespace Modbus.OSIModel.DataLinkLayer.Master.RTU.SerialPort.UITypeEditor
             int[] br = new int[] {110, 300, 600, 1200, 2400, 
                     4800, 9600, 14400, 19200, 38400, 56000, 
                     57600, 115200, 128000, 256000 };
-            this.comboBoxBautRate.DataSource = br;
+            comboBoxBautRate.DataSource = br;
 
             // Загружаем список размерности бит данных символа
             int[] dt = new int[] { 7, 8 };
-            this.comboBoxDataBits.DataSource = dt;
+            comboBoxDataBits.DataSource = dt;
 
             // Загружаем список паритетов
-            this.comboBoxParity.DataSource = Enum.GetNames(typeof(System.IO.Ports.Parity));
+            comboBoxParity.DataSource = Enum.GetNames(typeof(System.IO.Ports.Parity));
             // Загружаем список стоп бит
-            this.comboBoxStopBits.DataSource = Enum.GetNames(typeof(System.IO.Ports.StopBits));
+            comboBoxStopBits.DataSource = Enum.GetNames(typeof(System.IO.Ports.StopBits));
 
             // Загружаем список портов в системе;
             String[] portNames = System.IO.Ports.SerialPort.GetPortNames();
 
             // Выводим их пользователю
-            this.comboBoxPortName.DataSource = portNames;
+            comboBoxPortName.DataSource = portNames;
 
             if (_SerialPort != null)
             {
@@ -110,11 +107,11 @@ namespace Modbus.OSIModel.DataLinkLayer.Master.RTU.SerialPort.UITypeEditor
 
 
                 // Находим в списке порт и устанавливаем его в выподающем списке
-                for (int i = 0; i < this.comboBoxPortName.Items.Count; i++)
+                for (int i = 0; i < comboBoxPortName.Items.Count; i++)
                 {
-                    if (_SerialPort.PortName == (String)this.comboBoxPortName.Items[i])
+                    if (_SerialPort.PortName == (String)comboBoxPortName.Items[i])
                     {
-                        this.comboBoxPortName.SelectedIndex = i;
+                        comboBoxPortName.SelectedIndex = i;
                     }
                 }
             }
@@ -127,39 +124,39 @@ namespace Modbus.OSIModel.DataLinkLayer.Master.RTU.SerialPort.UITypeEditor
 
             }
             // Заполняем настройками порта элементы управления формы
-            for (int i = 0; i < this.comboBoxBautRate.Items.Count; i++)
+            for (int i = 0; i < comboBoxBautRate.Items.Count; i++)
             {
-                if (_SerialPort.BaudRate == (int)this.comboBoxBautRate.Items[i])
+                if (_SerialPort.BaudRate == (int)comboBoxBautRate.Items[i])
                 {
-                    this.comboBoxBautRate.SelectedIndex = i;
+                    comboBoxBautRate.SelectedIndex = i;
                 }
             }
 
-            for (int i = 0; i < this.comboBoxDataBits.Items.Count; i++)
+            for (int i = 0; i < comboBoxDataBits.Items.Count; i++)
             {
-                if (_SerialPort.DataBits == (int)this.comboBoxDataBits.Items[i])
+                if (_SerialPort.DataBits == (int)comboBoxDataBits.Items[i])
                 {
-                    this.comboBoxDataBits.SelectedIndex = i;
+                    comboBoxDataBits.SelectedIndex = i;
                 }
             }
 
-            for (int i = 0; i < this.comboBoxParity.Items.Count; i++)
+            for (int i = 0; i < comboBoxParity.Items.Count; i++)
             {
                 if (_SerialPort.Parity == 
                     (System.IO.Ports.Parity)Enum.Parse(typeof(System.IO.Ports.Parity), 
-                    (String)this.comboBoxParity.Items[i]))
+                    (String)comboBoxParity.Items[i]))
                 {
-                    this.comboBoxParity.SelectedIndex = i;
+                    comboBoxParity.SelectedIndex = i;
                 }
             }
 
-            for (int i = 0; i < this.comboBoxStopBits.Items.Count; i++)
+            for (int i = 0; i < comboBoxStopBits.Items.Count; i++)
             {
                 if (_SerialPort.StopBits == 
                     (System.IO.Ports.StopBits)Enum.Parse(typeof(System.IO.Ports.StopBits),
-                    (String)this.comboBoxStopBits.Items[i]))
+                    (String)comboBoxStopBits.Items[i]))
                 {
-                    this.comboBoxStopBits.SelectedIndex = i;
+                    comboBoxStopBits.SelectedIndex = i;
                 }
             }
             return;
@@ -246,13 +243,13 @@ namespace Modbus.OSIModel.DataLinkLayer.Master.RTU.SerialPort.UITypeEditor
                 case Keys.Escape:
                     {
                         // По нажатию кнопки закрываем форму и устанавливаем результат
-                        this.OnEditingIsComplete(new EventArgs());
+                        OnEditingIsComplete(new EventArgs());
                         break;
                     }
                 case Keys.Enter:
                     {
                         // По нажатию кнопки закрываем форму и устанавливаем результат
-                        this.OnEditingIsComplete(new EventArgs());
+                        OnEditingIsComplete(new EventArgs());
                         break;
                     }
             }
@@ -272,7 +269,7 @@ namespace Modbus.OSIModel.DataLinkLayer.Master.RTU.SerialPort.UITypeEditor
             _SerialPort.StopBits = _StopBits;
             _SerialPort.Parity = _Parity;
 
-            this.OnEditingIsComplete(new EventArgs());
+            OnEditingIsComplete(new EventArgs());
             return;
         }
         //-------------------------------------------------------------------------------
@@ -282,15 +279,15 @@ namespace Modbus.OSIModel.DataLinkLayer.Master.RTU.SerialPort.UITypeEditor
         /// <param name="args"></param>
         private void OnEditingIsComplete(EventArgs args)
         {
-            if (this.EditingIsComplete != null)
+            if (EditingIsComplete != null)
             {
-                this.EditingIsComplete(this, args);
+                EditingIsComplete(this, args);
             }
             return;
         }
         //-------------------------------------------------------------------------------
         #endregion
-        //-------------------------------------------------------------------------------
+
         #region Events
         //-------------------------------------------------------------------------------
         /// <summary>
@@ -299,9 +296,5 @@ namespace Modbus.OSIModel.DataLinkLayer.Master.RTU.SerialPort.UITypeEditor
         public event EditingIsCompleteEventHandler EditingIsComplete;
         //-------------------------------------------------------------------------------
         #endregion
-        //-------------------------------------------------------------------------------
     }
-    //===================================================================================
 }
-//=======================================================================================
-// End Of File

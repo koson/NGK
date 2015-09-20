@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Text;
 using System.Xml;
 using System.Xml.Schema;
-//using System.Threading;
 using Modbus.OSIModel.DataLinkLayer.Slave;
 using Modbus.OSIModel.DataLinkLayer.Slave.RTU.ComPort;
 using Modbus.OSIModel.ApplicationLayer.Slave.DataModel.DataTypes;
@@ -34,7 +33,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
         /// </summary>
         public String NetworkName
         {
-            get { return this._NetworkName; }
+            get { return _NetworkName; }
             set 
             {
                 if (NetworksManager.Instance.Networks.Contains(value))
@@ -44,7 +43,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
                 }
                 else
                 {
-                    this._NetworkName = value;
+                    _NetworkName = value;
                 }
             }
         }
@@ -57,12 +56,12 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
         /// </summary>
         public IDataLinkLayer Connection
         {
-            get { return this._Connection; }
+            get { return _Connection; }
             set 
             {
                 lock (SyncRoot)
                 {
-                    if (this.Status == Status.Stopped)
+                    if (Status == Status.Stopped)
                     {
                         if (value != null)
                         {
@@ -73,17 +72,17 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
                             }
                             else
                             {
-                                this._Connection = value;
+                                _Connection = value;
 
-                                this._Connection.RequestWasRecived +=
-                                    new EventHandlerRequestWasRecived(this.EventHandler_Connection_RequestWasRecived);
-                                this._Connection.ErrorOccurred +=
-                                    new EventHandlerErrorOccurred(this.EventHandler_Connection_ErrorAccured);
+                                _Connection.RequestWasRecived +=
+                                    new EventHandlerRequestWasRecived(EventHandler_Connection_RequestWasRecived);
+                                _Connection.ErrorOccurred +=
+                                    new EventHandlerErrorOccurred(EventHandler_Connection_ErrorAccured);
                             }
                         }
                         else
                         {
-                            this._Connection = value;                            
+                            _Connection = value;                            
                         }
                     }
                     else
@@ -112,9 +111,9 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
         {
             get 
             {
-                if (this._Connection != null)
+                if (_Connection != null)
                 {
-                    if (this._Connection.IsOpen)
+                    if (_Connection.IsOpen)
                     {
                         return Status.Running;
                     }
@@ -133,11 +132,11 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
                 switch (value)
                 {
                     case Status.Paused:
-                        { this.Suspend(); break; }
+                        { Suspend(); break; }
                     case Status.Running:
-                        { this.Start(); break; }
+                        { Start(); break; }
                     case Status.Stopped:
-                        { this.Stop(); break; }
+                        { Stop(); break; }
                 }
             }
         }
@@ -148,7 +147,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
         /// <summary>
         /// Объект для синхронизации.
         /// </summary>
-        public static Object SyncRoot;
+        public static Object SyncRoot = new Object();
         #endregion
 
         #region Constructors
@@ -160,9 +159,9 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
             NetworksManager manager = NetworksManager.Instance;
             _NetworkName = GetNewName(); 
 
-            //this.Stop();
-            this._Devices = new DevicesCollection(this);
-            this._Devices.ItemsListWasChanged +=
+            //Stop();
+            _Devices = new DevicesCollection(this);
+            _Devices.ItemsListWasChanged +=
                 new EventHandler(EventHandler_DevicesCollection_ItemsListWasChanged);
         }
         /// <summary>
@@ -182,24 +181,24 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
             }
             else
             {
-                this._NetworkName = networkName;
+                _NetworkName = networkName;
             }
 
-            this._Devices = new DevicesCollection(this);
-            this._Devices.ItemsListWasChanged +=
+            _Devices = new DevicesCollection(this);
+            _Devices.ItemsListWasChanged +=
                 new EventHandler(EventHandler_DevicesCollection_ItemsListWasChanged);
 
-            this._Connection = connection;
+            _Connection = connection;
 
             if (_Connection != null)
             {
-                this._Connection.RequestWasRecived +=
+                _Connection.RequestWasRecived +=
                     new EventHandlerRequestWasRecived(EventHandler_Connection_RequestWasRecived);
-                this._Connection.ErrorOccurred +=
+                _Connection.ErrorOccurred +=
                     new EventHandlerErrorOccurred(EventHandler_Connection_ErrorAccured);
 
                 // Переводим контроллер в состояние "стоп"
-                this.Stop();
+                Stop();
             }
         }
         #endregion
@@ -219,7 +218,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
                 "Ошибка при работе соединения: {0}; Описание: {1}",
                 args.Error, args.Description);
 
-            this.OnNetworkErrorOccurred(new NetworkErrorEventArgs(
+            OnNetworkErrorOccurred(new NetworkErrorEventArgs(
                 ErrorCategory.DataLinkLayerError, msg, null));
             return;
         }
@@ -247,7 +246,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
                     // Направляем ему данный запрос
                     lock (SyncRoot)
                     {
-                        this.Devices[args.Message.Address].GetIncommingMessage(args.Message);
+                        Devices[args.Message.Address].GetIncommingMessage(args.Message);
                     }
                 }
             }
@@ -309,15 +308,15 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
         /// </summary>
         public void Start()
         {
-            if (this._Connection != null)
+            if (_Connection != null)
             {
-                if (this._Connection.IsOpen)
+                if (_Connection.IsOpen)
                 {
                     // Ничего не делаем, соединение уже открыто
                 }
                 else
                 {
-                    this.Connection.Open();
+                    Connection.Open();
                 }
             }
             else
@@ -332,11 +331,11 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
         /// </summary>
         public void Stop()
         {
-            if (this._Connection != null)
+            if (_Connection != null)
             {
-                if (this._Connection.IsOpen)
+                if (_Connection.IsOpen)
                 {
-                    this.Connection.Close();
+                    Connection.Close();
                 }
                 else
                 {
@@ -372,11 +371,11 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
                 writer.WriteStartDocument();
                 
                 writer.WriteStartElement("Network");
-                writer.WriteAttributeString("Name", this.NetworkName);
+                writer.WriteAttributeString("Name", NetworkName);
 
                 // Сохраняем список устройств
                 writer.WriteStartElement("Devices");
-                foreach (Device device in this._Devices)
+                foreach (Device device in _Devices)
                 {
                     writer.WriteStartElement("Device");
                     // Сохраняем свойства элемента "Device"
@@ -915,7 +914,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
         private void OnDevicesListWasChanged()
         {
             EventArgs args = new EventArgs();
-            EventHandler handler = this.DevicesListWasChanged;
+            EventHandler handler = DevicesListWasChanged;
 
             if (handler != null)
             {
@@ -949,7 +948,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
         private void OnStatusWasChanged()
         {
             EventArgs args = new EventArgs();
-            EventHandler handler = this.NetworkChangedStatus;
+            EventHandler handler = NetworkChangedStatus;
 
             if (handler != null)
             {
@@ -982,7 +981,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
         /// </summary>
         private void OnNetworkErrorOccurred(NetworkErrorEventArgs args)
         {
-            NetworkErrorOccurredEventHandler handler = this.NetworkErrorOccurred;
+            NetworkErrorOccurredEventHandler handler = NetworkErrorOccurred;
 
             if (args == null)
             {
@@ -1030,22 +1029,18 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
         #endregion
 
         #region Events
-        //---------------------------------------------------------------------------
         /// <summary>
         /// Событие происходит после изменения состояния контроллера сети
         /// </summary>
         public event EventHandler NetworkChangedStatus;
-        //---------------------------------------------------------------------------
         /// <summary>
         /// Событие происходит при изменении списка устройств сети
         /// </summary>
         public event EventHandler DevicesListWasChanged;
-        //---------------------------------------------------------------------------
         /// <summary>
         /// Событие происходит при возникновении ошибок работы сети
         /// </summary>
         public event NetworkErrorOccurredEventHandler NetworkErrorOccurred;
-        //---------------------------------------------------------------------------
         #endregion
 
         #region IManageable Members
@@ -1056,14 +1051,14 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
             {
                 lock (SyncRoot)
                 {
-                    this.NetworkChangedStatus += value;
+                    NetworkChangedStatus += value;
                 }
             }
             remove 
             {
                 lock (SyncRoot)
                 {
-                    this.NetworkChangedStatus -= value;
+                    NetworkChangedStatus -= value;
                 }
             }
         }

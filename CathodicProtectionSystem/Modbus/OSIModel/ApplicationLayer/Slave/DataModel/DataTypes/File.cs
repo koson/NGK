@@ -24,12 +24,12 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.DataModel.DataTypes
         /// </summary>
         public UInt16 Number
         {
-            get { return this._Number; }
+            get { return _Number; }
             set 
             {
                 if (value != 0)
                 {
-                    this._Number = value;
+                    _Number = value;
                 }
                 else
                 {
@@ -48,7 +48,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.DataModel.DataTypes
         /// </summary>
         public RecordsCollection Records
         {
-            get { return this._RecordsCollection; }
+            get { return _RecordsCollection; }
         }
         //---------------------------------------------------------------------------
         /// <summary>
@@ -66,11 +66,11 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.DataModel.DataTypes
             {
                 if (value == null)
                 {
-                    this._Description = String.Empty;
+                    _Description = String.Empty;
                 }
                 else
                 {
-                    this._Description = value;
+                    _Description = value;
                 }
             }
         }
@@ -85,7 +85,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.DataModel.DataTypes
         /// </summary>
         public Device Device
         {
-            get { return this._Device; }
+            get { return _Device; }
         }
         //---------------------------------------------------------------------------
         #endregion
@@ -97,10 +97,10 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.DataModel.DataTypes
         /// </summary>
         public File()
         {
-            this._Number = 0;
-            this._Description = String.Empty;
-            this._Device = null;
-            this._RecordsCollection = new RecordsCollection();
+            _Number = 0;
+            _Description = String.Empty;
+            _Device = null;
+            _RecordsCollection = new RecordsCollection();
         }
         //---------------------------------------------------------------------------
         /// <summary>
@@ -110,19 +110,19 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.DataModel.DataTypes
         /// <param name="description">Описание файла</param>
         public File(UInt16 number, String description)
         {
-            this.Number = number;
+            Number = number;
 
             if (description == null)
             {
-                this._Description = String.Empty;
+                _Description = String.Empty;
             }
             else
             {
-                this._Description = description;
+                _Description = description;
             }
 
-            this._Device = null;
-            this._RecordsCollection = new RecordsCollection();
+            _Device = null;
+            _RecordsCollection = new RecordsCollection();
         }
         //---------------------------------------------------------------------------
         #endregion
@@ -139,24 +139,24 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.DataModel.DataTypes
         /// <param name="owner">Владелец данного файла</param>
         internal void SetOwner(Device owner)
         {
-            if (this._Device == null)
+            if (_Device == null)
             {
-                this._Device = owner;
-                this._RecordsCollection.SetOwner(owner);
+                _Device = owner;
+                _RecordsCollection.SetOwner(owner);
             }
             else
             {
                 if (owner == null)
                 {
                     // Освобождаем параметр от владельца
-                    this._Device = owner;
+                    _Device = owner;
                 }
                 else
                 {
                     // Если устройство, которому принадлежит данный файл
                     // эквивалентен устанавливаемому, тогда ничего не делаем. 
                     // Здесь нет ошибки. В противном случае, генерируем исключение
-                    if (this._Device.Equals(owner) == false)
+                    if (_Device.Equals(owner) == false)
                     {
                         throw new InvalidOperationException(
                             "Данный файл уже принадлежит другому устройству");

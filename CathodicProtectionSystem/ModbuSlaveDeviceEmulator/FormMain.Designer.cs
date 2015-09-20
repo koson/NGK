@@ -124,7 +124,7 @@
             this._ToolStripMenuItemFileExit.Name = "_ToolStripMenuItemFileExit";
             this._ToolStripMenuItemFileExit.Size = new System.Drawing.Size(178, 24);
             this._ToolStripMenuItemFileExit.Text = "Выход";
-            this._ToolStripMenuItemFileExit.Click += new System.EventHandler(this._ToolStripMenuItemFileExit_Click);
+            this._ToolStripMenuItemFileExit.Click += new System.EventHandler(this.EventHandler_ToolStripMenuItemFileExit_Click);
             // 
             // _ToolStripMenuItemNetwork
             // 
@@ -171,7 +171,7 @@
             this._ToolStripButtonStart.Size = new System.Drawing.Size(51, 24);
             this._ToolStripButtonStart.Text = "Старт";
             this._ToolStripButtonStart.ToolTipText = "Запускает эмулятор";
-            this._ToolStripButtonStart.Click += new System.EventHandler(this._ToolStripButtonStart_Click);
+            this._ToolStripButtonStart.Click += new System.EventHandler(this.EventHandler_ToolStripButtonStart_Click);
             // 
             // _ToolStripButtonStop
             // 
@@ -182,7 +182,7 @@
             this._ToolStripButtonStop.Name = "_ToolStripButtonStop";
             this._ToolStripButtonStop.Size = new System.Drawing.Size(46, 24);
             this._ToolStripButtonStop.Text = "Стоп";
-            this._ToolStripButtonStop.Click += new System.EventHandler(this._ToolStripButtonStop_Click);
+            this._ToolStripButtonStop.Click += new System.EventHandler(this.EventHandler_ToolStripButtonStop_Click);
             // 
             // _SplitContainerMainWindow
             // 

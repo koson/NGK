@@ -28,7 +28,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
         /// <returns>Массив элементов коллекции</returns>
         public NetworkController[] ToArray()
         {
-            NetworkController[] array = new NetworkController[this.Count];
+            NetworkController[] array = new NetworkController[Count];
             for (int i = 0; i < array.Length; i++)
             {
                 array[i] = this[i];

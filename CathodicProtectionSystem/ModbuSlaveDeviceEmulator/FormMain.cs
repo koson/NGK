@@ -6,31 +6,25 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using System.Configuration;
-//
 using Modbus.OSIModel.DataLinkLayer.Slave;
 using Modbus.OSIModel.DataLinkLayer.Slave.RTU.ComPort;
 using Modbus.OSIModel.ApplicationLayer.Slave;
 using Modbus.OSIModel.ApplicationLayer.Slave.DataModel.DataTypes;
+using Common.Controlling;
 
-//===================================================================================
 namespace ModbuSlaveDevicesNetwork
 {
-    //===============================================================================
     public partial class FormMain : Form
     {
-        //---------------------------------------------------------------------------
         #region Fields And Properties
-        //---------------------------------------------------------------------------
         /// <summary>
         /// Объект для физического подключения к сети
         /// </summary>
         private ComPort _SerialPort;
-        //---------------------------------------------------------------------------
         /// <summary>
         /// Контроллер сети modbus
         /// </summary>
         private NetworkController _Network;
-        //---------------------------------------------------------------------------
         /// <summary>
         /// Для теста
         /// </summary>
@@ -39,20 +33,15 @@ namespace ModbuSlaveDevicesNetwork
             get { return _Network; }
             set { _Network = value; }
         }
-        //---------------------------------------------------------------------------
         /// <summary>
         /// Путь к текущему файлу конфигурации сети.
         /// </summary>
         private String _PathToFileNetworkConfig;
-        //---------------------------------------------------------------------------
         private BindingSource _BindingSourceDevices;
-        //---------------------------------------------------------------------------
         private BindingSource _BindingSourceFile;
-        //---------------------------------------------------------------------------
         #endregion
-        //---------------------------------------------------------------------------
+
         #region Constructors
-        //---------------------------------------------------------------------------
         /// <summary>
         /// Конструктор
         /// </summary>
@@ -63,11 +52,9 @@ namespace ModbuSlaveDevicesNetwork
             this.FormClosed += new FormClosedEventHandler(
                 EventHandler_FormMain_FormClosed);
         }
-        //---------------------------------------------------------------------------
         #endregion
-        //---------------------------------------------------------------------------
+
         #region Event Handlers For FormMain
-        //---------------------------------------------------------------------------
         /// <summary>
         /// Обработчик события загрузки формы
         /// </summary>
@@ -78,26 +65,26 @@ namespace ModbuSlaveDevicesNetwork
             FormMain form = (FormMain)sender;
 
             // Инициализируем статусную строку
-            this.InitStatusBar(ref this._StatusStripMainWindow);
+            InitStatusBar(ref this._StatusStripMainWindow);
 
-            this._TreeViewNetwork.AfterCheck += 
+            _TreeViewNetwork.AfterCheck += 
                 new TreeViewEventHandler(EventHandler_TreeViewNetwork_AfterCheck);
 
-            this._BindingSourceDevices = new BindingSource();
-            this._BindingSourceDevices.CurrentChanged += new EventHandler(EventHandler_BindingSourceDevices_CurrentChanged);
-            this._BindingSourceFile = new BindingSource();
+            _BindingSourceDevices = new BindingSource();
+            _BindingSourceDevices.CurrentChanged += 
+                new EventHandler(EventHandler_BindingSourceDevices_CurrentChanged);
+            _BindingSourceFile = new BindingSource();
 
-            this.InitGrids();
+            InitGrids();
             
             // Загрузаем настройки приложения
-            this.LoadAppConfiguration();
-
-            
+            LoadAppConfiguration();
 
             return;
         }
-        //---------------------------------------------------------------------------
-        private void EventHandler_BindingSourceDevices_CurrentChanged(object sender, EventArgs e)
+
+        private void EventHandler_BindingSourceDevices_CurrentChanged(
+            object sender, EventArgs e)
         {
             BindingSource bs = (BindingSource)sender;
             Device device = (Device)bs.Current;
@@ -111,15 +98,14 @@ namespace ModbuSlaveDevicesNetwork
             }
             return;
         }
-        //---------------------------------------------------------------------------
+
         private void EventHadler_Device_MasterChangedData(object sender, EventArgs e)
         {
             // При записи данных мастером в текущее отображаемое устройство
             // обновляем контекст
-            this._BindingSourceDevices.ResetCurrentItem();
+            _BindingSourceDevices.ResetCurrentItem();
             return;
         }
-        //---------------------------------------------------------------------------
         /// <summary>
         /// 
         /// </summary>
@@ -128,21 +114,19 @@ namespace ModbuSlaveDevicesNetwork
         private void EventHandler_FormMain_FormClosed(object sender, 
             FormClosedEventArgs e)
         {
-            if (this._Network != null)
+            if (_Network != null)
             {
-                this._Network.Stop();
+                _Network.Stop();
             }
-            if (this._SerialPort != null)
+            if (_SerialPort != null)
             {
-                this._SerialPort.Dispose();
+                _SerialPort.Dispose();
             }
             return;
         }
-        //---------------------------------------------------------------------------
         #endregion
-        //---------------------------------------------------------------------------
+
         #region ToolStripMenuItem
-        //---------------------------------------------------------------------------
         /// <summary>
         /// Обработчик выбора меню настройки COM-порта
         /// </summary>
@@ -153,7 +137,6 @@ namespace ModbuSlaveDevicesNetwork
         {
             return;
         }
-        //---------------------------------------------------------------------------
         /// <summary>
         /// Обработчик события выбора меню "Создать"
         /// </summary>
@@ -166,10 +149,9 @@ namespace ModbuSlaveDevicesNetwork
             // Если текущая сеть != null, то спрашиваем пользователя хочет ли он
             // сохранить текущую конфигурацию.
             NetworkController network = new NetworkController();
-            this.SetCurrentNetwork(network);
+            SetCurrentNetwork(network);
             return;
         }
-        //---------------------------------------------------------------------------
         /// <summary>
         /// 
         /// </summary>
@@ -183,10 +165,9 @@ namespace ModbuSlaveDevicesNetwork
             Configuration configuration = ConfigurationManager.OpenExeConfiguration(
                 ConfigurationUserLevel.None);
             pathToFile = configuration.AppSettings.Settings["PathToNetworkConfigFile"].Value;
-            this._Network.SaveToXmlFile(pathToFile);
+            _Network.SaveToXmlFile(pathToFile);
             return;
         }
-        //---------------------------------------------------------------------------
         /// <summary>
         /// Обработчик события выбора меню "Сохранить как"
         /// </summary>
@@ -211,12 +192,11 @@ namespace ModbuSlaveDevicesNetwork
             
             if (result == DialogResult.OK)
             {
-                this._Network.SaveToXmlFile(dialog.FileName);
+                _Network.SaveToXmlFile(dialog.FileName);
             }
 
             return;
         }
-        //---------------------------------------------------------------------------
         /// <summary>
         /// 
         /// </summary>
@@ -225,14 +205,12 @@ namespace ModbuSlaveDevicesNetwork
         private void EventHandler_ToolStripMenuItemNetworkEdit_Click(
             object sender, EventArgs e)
         {
-            this.EditNetwork(this._Network);
+            EditNetwork(_Network);
             return;
         }
-        //---------------------------------------------------------------------------
         #endregion
-        //---------------------------------------------------------------------------
+
         #region EventHandlers For TreeViewNetwork
-        //---------------------------------------------------------------------------
         /// <summary>
         /// Обработчикс события 
         /// </summary>
@@ -250,36 +228,38 @@ namespace ModbuSlaveDevicesNetwork
             {
                 if (e.Node.Equals(control.TopNode))
                 {
-                    this._TabControlDeviceProperties.Visible = false;
+                    _TabControlDeviceProperties.Visible = false;
                 }
                 else if (e.Node.Tag is Device)
                 {
                     device = e.Node.Tag as Device;
-                    this._TabControlDeviceProperties.Visible = true;
+                    _TabControlDeviceProperties.Visible = true;
 
-                    this._TabControlDeviceProperties.Enabled = true;
-                    this._BindingSourceDevices.Position = this._BindingSourceDevices.IndexOf(device);
-                    Object obj = this._DataGridViewHoldingRegisters.DataSource;
+                    _TabControlDeviceProperties.Enabled = true;
+                    _BindingSourceDevices.Position = 
+                        _BindingSourceDevices.IndexOf(device);
+                    Object obj = _DataGridViewHoldingRegisters.DataSource;
                 }
                 else
                 {
-                    this._TabControlDeviceProperties.Enabled = false;
+                    _TabControlDeviceProperties.Enabled = false;
                 }
             }
             return;
         }
-        //---------------------------------------------------------------------------
         /// <summary>
         /// 
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void EventHandler_TreeViewNetwork_AfterCheck(object sender, TreeViewEventArgs e)
+        private void EventHandler_TreeViewNetwork_AfterCheck(
+            object sender, TreeViewEventArgs e)
         {
             Device device;
             TreeView control = (TreeView)sender;
 
-            if ((e.Action == TreeViewAction.ByKeyboard) || (e.Action == TreeViewAction.ByMouse))
+            if ((e.Action == TreeViewAction.ByKeyboard) || 
+                (e.Action == TreeViewAction.ByMouse))
             {
                 if (control.TopNode.Equals(e.Node))
                 {
@@ -321,11 +301,9 @@ namespace ModbuSlaveDevicesNetwork
             { }
             return;
         }
-        //---------------------------------------------------------------------------
         #endregion
-        //---------------------------------------------------------------------------
+
         #region Methods
-        //---------------------------------------------------------------------------
         /// <summary>
         /// Инициализирует гриды
         /// </summary>
@@ -343,16 +321,16 @@ namespace ModbuSlaveDevicesNetwork
 
             headercellstyle = new DataGridViewCellStyle();
             headercellstyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            font = this._DataGridViewCoils.ColumnHeadersDefaultCellStyle.Font;
+            font = _DataGridViewCoils.ColumnHeadersDefaultCellStyle.Font;
             headercellstyle.Font = new Font(font, FontStyle.Bold);
 
             #region DataGridViewCoils
             // Загружаем данные устройства
-            this._DataGridViewCoils.AutoGenerateColumns = false;
-            this._DataGridViewCoils.DataSource = null;
-            this._DataGridViewCoils.DataMember = "Coils";
-            this._DataGridViewCoils.AllowUserToAddRows = false;
-            this._DataGridViewCoils.AllowUserToDeleteRows = false;
+            _DataGridViewCoils.AutoGenerateColumns = false;
+            _DataGridViewCoils.DataSource = null;
+            _DataGridViewCoils.DataMember = "Coils";
+            _DataGridViewCoils.AllowUserToAddRows = false;
+            _DataGridViewCoils.AllowUserToDeleteRows = false;
 
             txtColumn = new DataGridViewTextBoxColumn();
             txtColumn.Name = "Column_Coil_Address";
@@ -361,7 +339,7 @@ namespace ModbuSlaveDevicesNetwork
             txtColumn.HeaderText = "Адрес";
             txtColumn.HeaderCell.Style = headercellstyle;
             txtColumn.DataPropertyName = "Address";
-            this._DataGridViewCoils.Columns.Add(txtColumn);
+            _DataGridViewCoils.Columns.Add(txtColumn);
 
             chkColumn = new DataGridViewCheckBoxColumn();
             chkColumn.Name = "Column_Coil_Value";
@@ -370,7 +348,7 @@ namespace ModbuSlaveDevicesNetwork
             chkColumn.HeaderText = "Значение";
             chkColumn.HeaderCell.Style = headercellstyle;
             chkColumn.DataPropertyName = "Value";
-            this._DataGridViewCoils.Columns.Add(chkColumn);
+            _DataGridViewCoils.Columns.Add(chkColumn);
 
             txtColumn = new DataGridViewTextBoxColumn();
             txtColumn.Name = "Column_Coil_Description";
@@ -380,15 +358,15 @@ namespace ModbuSlaveDevicesNetwork
             //column.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
             txtColumn.HeaderText = "Примечания";
             txtColumn.HeaderCell.Style = headercellstyle;
-            this._DataGridViewCoils.Columns.Add(txtColumn);
+            _DataGridViewCoils.Columns.Add(txtColumn);
             #endregion
 
             #region DataGridViewDiscretesInputs
-            this._DataGridViewDiscretesInputs.AutoGenerateColumns = false;
-            this._DataGridViewDiscretesInputs.DataSource = null;
-            this._DataGridViewDiscretesInputs.DataMember = "DiscretesInputs";
-            this._DataGridViewDiscretesInputs.AllowUserToAddRows = false;
-            this._DataGridViewDiscretesInputs.AllowUserToDeleteRows = false;
+            _DataGridViewDiscretesInputs.AutoGenerateColumns = false;
+            _DataGridViewDiscretesInputs.DataSource = null;
+            _DataGridViewDiscretesInputs.DataMember = "DiscretesInputs";
+            _DataGridViewDiscretesInputs.AllowUserToAddRows = false;
+            _DataGridViewDiscretesInputs.AllowUserToDeleteRows = false;
 
 
             txtColumn = new DataGridViewTextBoxColumn();
@@ -398,7 +376,7 @@ namespace ModbuSlaveDevicesNetwork
             txtColumn.DefaultCellStyle = cellstyle;
             txtColumn.HeaderText = "Адрес";
             txtColumn.HeaderCell.Style = headercellstyle;
-            this._DataGridViewDiscretesInputs.Columns.Add(txtColumn);
+            _DataGridViewDiscretesInputs.Columns.Add(txtColumn);
 
 
             chkColumn = new DataGridViewCheckBoxColumn();
@@ -408,7 +386,7 @@ namespace ModbuSlaveDevicesNetwork
             chkColumn.HeaderText = "Значение";
             chkColumn.HeaderCell.Style = headercellstyle;
             chkColumn.DataPropertyName = "Value";
-            this._DataGridViewDiscretesInputs.Columns.Add(chkColumn);
+            _DataGridViewDiscretesInputs.Columns.Add(chkColumn);
 
             txtColumn = new DataGridViewTextBoxColumn();
             txtColumn.Name = "Column_DiscretesInputs_Description";
@@ -418,16 +396,16 @@ namespace ModbuSlaveDevicesNetwork
             //column.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
             txtColumn.HeaderText = "Примечания";
             txtColumn.HeaderCell.Style = headercellstyle;
-            this._DataGridViewDiscretesInputs.Columns.Add(txtColumn);
+            _DataGridViewDiscretesInputs.Columns.Add(txtColumn);
             #endregion
 
             #region DataGridViewHoldingRegisters
-            this._DataGridViewHoldingRegisters.AutoGenerateColumns = false;
-            this._DataGridViewHoldingRegisters.DataSource = null;
+            _DataGridViewHoldingRegisters.AutoGenerateColumns = false;
+            _DataGridViewHoldingRegisters.DataSource = null;
             //this._DataGridViewHoldingRegisters.DataSource = device;
-            this._DataGridViewHoldingRegisters.DataMember = "HoldingRegisters";
-            this._DataGridViewHoldingRegisters.AllowUserToAddRows = false;
-            this._DataGridViewHoldingRegisters.AllowUserToDeleteRows = false;
+            _DataGridViewHoldingRegisters.DataMember = "HoldingRegisters";
+            _DataGridViewHoldingRegisters.AllowUserToAddRows = false;
+            _DataGridViewHoldingRegisters.AllowUserToDeleteRows = false;
 
             txtColumn = new DataGridViewTextBoxColumn();
             txtColumn.Name = "Column_HoldingRegisters_Address";
@@ -436,7 +414,7 @@ namespace ModbuSlaveDevicesNetwork
             txtColumn.DefaultCellStyle = cellstyle;
             txtColumn.HeaderText = "Адрес";
             txtColumn.HeaderCell.Style = headercellstyle;
-            this._DataGridViewHoldingRegisters.Columns.Add(txtColumn);
+            _DataGridViewHoldingRegisters.Columns.Add(txtColumn);
 
             txtColumn = new DataGridViewTextBoxColumn();
             txtColumn.Name = "Column_HoldingRegisters_Description";
@@ -445,7 +423,7 @@ namespace ModbuSlaveDevicesNetwork
             txtColumn.DefaultCellStyle = cellstyle;
             txtColumn.HeaderText = "Значение";
             txtColumn.HeaderCell.Style = headercellstyle;
-            this._DataGridViewHoldingRegisters.Columns.Add(txtColumn);
+            _DataGridViewHoldingRegisters.Columns.Add(txtColumn);
 
             txtColumn = new DataGridViewTextBoxColumn();
             txtColumn.Name = "Column_HoldingRegisters_Description";
@@ -455,16 +433,16 @@ namespace ModbuSlaveDevicesNetwork
             //column.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
             txtColumn.HeaderText = "Примечания";
             txtColumn.HeaderCell.Style = headercellstyle;
-            this._DataGridViewHoldingRegisters.Columns.Add(txtColumn);
+            _DataGridViewHoldingRegisters.Columns.Add(txtColumn);
             #endregion
 
             #region DataGridViewInputRegisters
-            this._DataGridViewInputRegisters.AutoGenerateColumns = false;
-            this._DataGridViewInputRegisters.DataSource = null;
+            _DataGridViewInputRegisters.AutoGenerateColumns = false;
+            _DataGridViewInputRegisters.DataSource = null;
             //this._DataGridViewInputRegisters.DataSource = device;
-            this._DataGridViewInputRegisters.DataMember = "InputRegisters";
-            this._DataGridViewInputRegisters.AllowUserToAddRows = false;
-            this._DataGridViewInputRegisters.AllowUserToDeleteRows = false;
+            _DataGridViewInputRegisters.DataMember = "InputRegisters";
+            _DataGridViewInputRegisters.AllowUserToAddRows = false;
+            _DataGridViewInputRegisters.AllowUserToDeleteRows = false;
 
 
             txtColumn = new DataGridViewTextBoxColumn();
@@ -474,7 +452,7 @@ namespace ModbuSlaveDevicesNetwork
             txtColumn.DefaultCellStyle = cellstyle;
             txtColumn.HeaderText = "Адрес";
             txtColumn.HeaderCell.Style = headercellstyle;
-            this._DataGridViewInputRegisters.Columns.Add(txtColumn);
+            _DataGridViewInputRegisters.Columns.Add(txtColumn);
 
             txtColumn = new DataGridViewTextBoxColumn();
             txtColumn.Name = "Column_InputRegisters_Value";
@@ -483,7 +461,7 @@ namespace ModbuSlaveDevicesNetwork
             txtColumn.DefaultCellStyle = cellstyle;
             txtColumn.HeaderText = "Значение";
             txtColumn.HeaderCell.Style = headercellstyle;
-            this._DataGridViewInputRegisters.Columns.Add(txtColumn);
+            _DataGridViewInputRegisters.Columns.Add(txtColumn);
 
             txtColumn = new DataGridViewTextBoxColumn();
             txtColumn.Name = "Column_InputRegisters_Description";
@@ -493,17 +471,18 @@ namespace ModbuSlaveDevicesNetwork
             //column.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
             txtColumn.HeaderText = "Примечания";
             txtColumn.HeaderCell.Style = headercellstyle;
-            this._DataGridViewInputRegisters.Columns.Add(txtColumn);
+            _DataGridViewInputRegisters.Columns.Add(txtColumn);
 
             #endregion
 
             #region DataGridViewFiles
-            this._DataGridViewFiles.AutoGenerateColumns = false;
-            this._DataGridViewFiles.DataSource = null;
-            this._DataGridViewFiles.DataMember = "Files";
-            this._DataGridViewFiles.AllowUserToAddRows = false;
-            this._DataGridViewFiles.AllowUserToDeleteRows = false;
-            this._DataGridViewFiles.SelectionChanged += new EventHandler(EventHandler_DataGridViewFiles_SelectionChanged);
+            _DataGridViewFiles.AutoGenerateColumns = false;
+            _DataGridViewFiles.DataSource = null;
+            _DataGridViewFiles.DataMember = "Files";
+            _DataGridViewFiles.AllowUserToAddRows = false;
+            _DataGridViewFiles.AllowUserToDeleteRows = false;
+            _DataGridViewFiles.SelectionChanged += 
+                new EventHandler(EventHandler_DataGridViewFiles_SelectionChanged);
 
             txtColumn = new DataGridViewTextBoxColumn();
             txtColumn.Name = "Column_Files_Description";
@@ -512,7 +491,7 @@ namespace ModbuSlaveDevicesNetwork
             txtColumn.DefaultCellStyle = cellstyle;
             txtColumn.HeaderText = "Номер файла";
             txtColumn.HeaderCell.Style = headercellstyle;
-            this._DataGridViewFiles.Columns.Add(txtColumn);
+            _DataGridViewFiles.Columns.Add(txtColumn);
 
             txtColumn = new DataGridViewTextBoxColumn();
             txtColumn.Name = "Column_Files_Description";
@@ -522,16 +501,16 @@ namespace ModbuSlaveDevicesNetwork
             //column.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
             txtColumn.HeaderText = "Примечания";
             txtColumn.HeaderCell.Style = headercellstyle;
-            this._DataGridViewFiles.Columns.Add(txtColumn);
+            _DataGridViewFiles.Columns.Add(txtColumn);
 
             #endregion
 
             #region DataGridViewRecords
-            this._DataGridViewRecords.AutoGenerateColumns = false;
-            this._DataGridViewRecords.DataSource = null;
-            this._DataGridViewRecords.DataMember = "Records";
-            this._DataGridViewRecords.AllowUserToAddRows = false;
-            this._DataGridViewRecords.AllowUserToDeleteRows = false;
+            _DataGridViewRecords.AutoGenerateColumns = false;
+            _DataGridViewRecords.DataSource = null;
+            _DataGridViewRecords.DataMember = "Records";
+            _DataGridViewRecords.AllowUserToAddRows = false;
+            _DataGridViewRecords.AllowUserToDeleteRows = false;
 
             txtColumn = new DataGridViewTextBoxColumn();
             txtColumn.Name = "Column_Records_Address";
@@ -540,7 +519,7 @@ namespace ModbuSlaveDevicesNetwork
             txtColumn.DefaultCellStyle = cellstyle;
             txtColumn.HeaderText = "Номер записи";
             txtColumn.HeaderCell.Style = headercellstyle;
-            this._DataGridViewRecords.Columns.Add(txtColumn);
+            _DataGridViewRecords.Columns.Add(txtColumn);
 
             txtColumn = new DataGridViewTextBoxColumn();
             txtColumn.Name = "Column_Records_Value";
@@ -549,7 +528,7 @@ namespace ModbuSlaveDevicesNetwork
             txtColumn.DefaultCellStyle = cellstyle;
             txtColumn.HeaderText = "Значение";
             txtColumn.HeaderCell.Style = headercellstyle;
-            this._DataGridViewRecords.Columns.Add(txtColumn);
+            _DataGridViewRecords.Columns.Add(txtColumn);
 
             txtColumn = new DataGridViewTextBoxColumn();
             txtColumn.Name = "Column_Records_Description";
@@ -559,42 +538,42 @@ namespace ModbuSlaveDevicesNetwork
             //column.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
             txtColumn.HeaderText = "Примечания";
             txtColumn.HeaderCell.Style = headercellstyle;
-            this._DataGridViewRecords.Columns.Add(txtColumn);
+            _DataGridViewRecords.Columns.Add(txtColumn);
 
             #endregion
 
             return;
         }
-        //---------------------------------------------------------------------------
         /// <summary>
         /// 
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void EventHandler_DataGridViewFiles_SelectionChanged(object sender, EventArgs e)
+        private void EventHandler_DataGridViewFiles_SelectionChanged(
+            object sender, EventArgs e)
         {
             DataGridView control = (DataGridView)sender;
             CurrencyManager manager = 
-                control.BindingContext[control.DataSource, control.DataMember] as CurrencyManager;
+                control.BindingContext[control.DataSource, control.DataMember] 
+                as CurrencyManager;
 
             if (manager != null)
             {
                 if (manager.Count != 0)
                 {
                     File file = (File)manager.Current;
-                    this._BindingSourceFile = new BindingSource(file, String.Empty);
+                    _BindingSourceFile = new BindingSource(file, String.Empty);
 
-                    this._DataGridViewRecords.DataSource = this._BindingSourceFile;
-                    this._DataGridViewRecords.DataMember = "Records";
+                    _DataGridViewRecords.DataSource = _BindingSourceFile;
+                    _DataGridViewRecords.DataMember = "Records";
                 }
                 else
                 {
-                    this._DataGridViewRecords.DataSource = null;
+                    _DataGridViewRecords.DataSource = null;
                 }
             }
             return;
         }
-        //---------------------------------------------------------------------------
         /// <summary>
         /// Обработчик события изменения конфигурации сети
         /// </summary>
@@ -604,10 +583,9 @@ namespace ModbuSlaveDevicesNetwork
         {
             //NetworkController network = (NetworkController)sender;
             // Обновляем элементы окна
-            this.ShowNetwork(ref this._TreeViewNetwork, ref this._Network);
+            ShowNetwork(ref _TreeViewNetwork, ref _Network);
             return;
         }
-        //---------------------------------------------------------------------------
         /// <summary>
         /// Метод отображает устройства сети в элементе control;
         /// </summary>
@@ -675,7 +653,6 @@ namespace ModbuSlaveDevicesNetwork
             }
             return;
         }
-        //---------------------------------------------------------------------------
         /// <summary>
         /// Метод запускает форму для редактирования сети Modbus
         /// </summary>
@@ -684,11 +661,11 @@ namespace ModbuSlaveDevicesNetwork
         {
             DialogResult result;
 
-            if (this._Network != null)
+            if (_Network != null)
             {
-                if (this._Network.Connection != null)
+                if (_Network.Connection != null)
                 {
-                    if (this._Network.Connection.IsOpen)
+                    if (_Network.Connection.IsOpen)
                     {
                         result = MessageBox.Show(this, 
                             "Соединение активно, остановить и продолжить редактирование сети ?",
@@ -707,15 +684,14 @@ namespace ModbuSlaveDevicesNetwork
                 // Вызываем форму для редактирования сети
                 Modbus.OSIModel.ApplicationLayer.Slave.Dialogs.EditNetworkControllerDialog dialog =
                     new Modbus.OSIModel.ApplicationLayer.Slave.Dialogs.EditNetworkControllerDialog();
-                dialog.Network = this._Network;
+                dialog.Network = _Network;
                 result = dialog.ShowDialog();
 
-                this.ShowNetwork(ref this._TreeViewNetwork, ref this._Network);
+                this.ShowNetwork(ref _TreeViewNetwork, ref _Network);
 
             }
             return;
         }
-        //---------------------------------------------------------------------------
         /// <summary>
         /// Метод вызывается при старте ПО, ищет xml-файл конфигурации, проверяет
         /// его по xsd-схеме и если всё нормально создаёт сеть. Если не удалось
@@ -751,7 +727,6 @@ namespace ModbuSlaveDevicesNetwork
             }
             return network;
         }
-        //---------------------------------------------------------------------------
         /// <summary>
         /// 
         /// </summary>
@@ -766,13 +741,13 @@ namespace ModbuSlaveDevicesNetwork
 
                 try
                 {
-                    this._PathToFileNetworkConfig = config.AppSettings.Settings["PathToNetworkConfigFile"].Value;
+                    _PathToFileNetworkConfig = 
+                        config.AppSettings.Settings["PathToNetworkConfigFile"].Value;
                     
-                    if (this._PathToFileNetworkConfig == String.Empty)
+                    if (_PathToFileNetworkConfig == String.Empty)
                     {
                         // Используется каталог приложения (по умолчанию)
-                        this._PathToFileNetworkConfig = Application.StartupPath + @"\config.xml";
-                        
+                        _PathToFileNetworkConfig = Application.StartupPath + @"\config.xml";
                     }
                 }
                 catch
@@ -781,7 +756,7 @@ namespace ModbuSlaveDevicesNetwork
                         "Будет использован поиск файла конфигурации по умолчанию",
                         "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     // Используется каталог приложения (по умолчанию)
-                    this._PathToFileNetworkConfig = Application.StartupPath + @"\config.xml";
+                    _PathToFileNetworkConfig = Application.StartupPath + @"\config.xml";
                 }
 
                 // Создаём объект для подключения
@@ -790,7 +765,7 @@ namespace ModbuSlaveDevicesNetwork
                     String portName = config.AppSettings.Settings["PortName"].Value;
                     if (portName == String.Empty)
                     {
-                        this._SerialPort = null;
+                        _SerialPort = null;
                     }
                     else
                     {
@@ -802,10 +777,10 @@ namespace ModbuSlaveDevicesNetwork
                         System.IO.Ports.StopBits stopBits = (System.IO.Ports.StopBits)Enum.Parse(
                             typeof(System.IO.Ports.StopBits),
                             config.AppSettings.Settings["StopBits"].Value, true);
-                        this._SerialPort = new ComPort(portName, baudRate, parity, dataBits, stopBits);
+                        _SerialPort = new ComPort(portName, baudRate, parity, dataBits, stopBits);
 
-                        this._ToolStripButtonStart.Enabled = true;
-                        this._ToolStripButtonStop.Enabled = false;
+                        _ToolStripButtonStart.Enabled = true;
+                        _ToolStripButtonStop.Enabled = false;
                     }
                 }
                 catch
@@ -813,7 +788,7 @@ namespace ModbuSlaveDevicesNetwork
                     MessageBox.Show(this, "Порт подключения к сети не создан, неверные настройки в файле конфигурации приложения" +
                         "Приложение будет закрыто",
                         "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    this._SerialPort = null;
+                    _SerialPort = null;
                     Application.Exit();
                 }
 
@@ -822,16 +797,16 @@ namespace ModbuSlaveDevicesNetwork
             {
                 MessageBox.Show(this, "Не удалось получить настройки из Файла конфигурации приложения",
                     "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                this._SerialPort = null;
+                _SerialPort = null;
                 // Используется каталог приложения (по умолчанию)
-                this._PathToFileNetworkConfig = Application.StartupPath + @"\config.xml";
+                _PathToFileNetworkConfig = Application.StartupPath + @"\config.xml";
             }
             // Cоздаём сеть
-            NetworkController network = this.LoadNetworkConfiguration(this._PathToFileNetworkConfig);
-            this.SetCurrentNetwork(network);
+            NetworkController network = 
+                LoadNetworkConfiguration(_PathToFileNetworkConfig);
+            SetCurrentNetwork(network);
             return;
         }
-        //---------------------------------------------------------------------------
         /// <summary>
         /// Сохраняет текущие настройки приложения 
         /// </summary>
@@ -859,16 +834,15 @@ namespace ModbuSlaveDevicesNetwork
             config.Save(System.Configuration.ConfigurationSaveMode.Modified);
             return;
         }
-        //---------------------------------------------------------------------------
         /// <summary>
         /// Устанавливает сетк как текущую для работы программы
         /// </summary>
         /// <param name="network"></param>
         private void SetCurrentNetwork(NetworkController network)
         {
-            if (this._Network != null)
+            if (_Network != null)
             {
-                if (this._Network.Status == Common.Controlling.Status.Running)
+                if (_Network.Status == Status.Running)
                 {
                     throw new InvalidOperationException(
                         "Невозможно сменить рабочую сеть, текущая сеть имеет активное состояние");
@@ -877,47 +851,47 @@ namespace ModbuSlaveDevicesNetwork
 
             if (network == null)
             {
-                this._Network = network;
-                this._ToolStripMenuItemNetwork.Enabled = false;
-                this._ToolStripMenuItemFileSave.Enabled = false;
-                this._ToolStripMenuItemFileSaveAs.Enabled = false;
-                this._BindingSourceDevices.DataSource = null;
+                _Network = network;
+                _ToolStripMenuItemNetwork.Enabled = false;
+                _ToolStripMenuItemFileSave.Enabled = false;
+                _ToolStripMenuItemFileSaveAs.Enabled = false;
+                _BindingSourceDevices.DataSource = null;
             }
             else
             {
                 // Устанавливаем новую сеть в качестве текущей
-                this._Network = network;
-                this._Network.Connection = this._SerialPort;
-                this._Network.DevicesListWasChanged +=
+                _Network = network;
+                _Network.Connection = _SerialPort;
+                _Network.DevicesListWasChanged +=
                     new EventHandler(EventHandler_Network_DevicesListWasChanged);
-                this._Network.NetworkErrorOccurred += new NetworkErrorOccurredEventHandler(EventHandler_Network_NetworkErrorOccurred);
+                _Network.NetworkErrorOccurred += 
+                    new NetworkErrorOccurredEventHandler(EventHandler_Network_NetworkErrorOccurred);
 
-                this._ToolStripMenuItemFileSave.Enabled = true;
-                this._ToolStripMenuItemFileSaveAs.Enabled = true;
+                _ToolStripMenuItemFileSave.Enabled = true;
+                _ToolStripMenuItemFileSaveAs.Enabled = true;
 
-                this._ToolStripMenuItemNetwork.Enabled = true;
+                _ToolStripMenuItemNetwork.Enabled = true;
                 // Разрешаем редакитрование сети
-                this._ToolStripMenuItemNetworkEdit.Enabled = true;
-                this._ToolStripButtonStart.Enabled = true;
-                this._ToolStripButtonStop.Enabled = false;
+                _ToolStripMenuItemNetworkEdit.Enabled = true;
+                _ToolStripButtonStart.Enabled = true;
+                _ToolStripButtonStop.Enabled = false;
 
-                this._BindingSourceDevices.DataSource = null;
-                this._BindingSourceDevices.DataSource = Network.Devices;
-                this._DataGridViewCoils.DataSource = this._BindingSourceDevices;
-                this._DataGridViewDiscretesInputs.DataSource = this._BindingSourceDevices;
-                this._DataGridViewFiles.DataSource = this._BindingSourceDevices;
-                this._DataGridViewHoldingRegisters.DataSource = this._BindingSourceDevices;
-                this._DataGridViewInputRegisters.DataSource = this._BindingSourceDevices;
+                _BindingSourceDevices.DataSource = null;
+                _BindingSourceDevices.DataSource = Network.Devices;
+                _DataGridViewCoils.DataSource = _BindingSourceDevices;
+                _DataGridViewDiscretesInputs.DataSource = _BindingSourceDevices;
+                _DataGridViewFiles.DataSource = _BindingSourceDevices;
+                _DataGridViewHoldingRegisters.DataSource = _BindingSourceDevices;
+                _DataGridViewInputRegisters.DataSource = _BindingSourceDevices;
             }
 
             // Отображаем текущую сеть сеть
-            this.ShowNetwork(ref this._TreeViewNetwork, ref this._Network);
+            ShowNetwork(ref _TreeViewNetwork, ref _Network);
             // Отображем статусную строку
-            this.SetPathToFileNetworkConfigToStatusStrip(this._PathToFileNetworkConfig);
-            this.SetSerialPortSettingToStatusStrip(this._SerialPort);
+            SetPathToFileNetworkConfigToStatusStrip(_PathToFileNetworkConfig);
+            SetSerialPortSettingToStatusStrip(_SerialPort);
             return;
         }
-        //---------------------------------------------------------------------------
         /// <summary>
         /// Обработчик события возникновения ошибок в работе сети
         /// </summary>
@@ -932,7 +906,6 @@ namespace ModbuSlaveDevicesNetwork
                 MessageBoxButtons.OK, MessageBoxIcon.Error);
             return;
         }
-        //---------------------------------------------------------------------------
         /// <summary>
         /// Инициализирует строку состояния приложения
         /// </summary>
@@ -972,7 +945,6 @@ namespace ModbuSlaveDevicesNetwork
             control.Items.Add(lblItem);
             return;
         }
-        //---------------------------------------------------------------------------
         /// <summary>
         /// Отображает значение в строке состояния приложения
         /// </summary>
@@ -980,11 +952,11 @@ namespace ModbuSlaveDevicesNetwork
         private void SetPathToFileNetworkConfigToStatusStrip(String path)
         {
             ToolStripStatusLabel lable;
-            lable = (ToolStripStatusLabel)this._StatusStripMainWindow.Items["_ToolStripLabelPathToFile"];
+            lable = (ToolStripStatusLabel)_StatusStripMainWindow
+                .Items["_ToolStripLabelPathToFile"];
             lable.Text = path;
             return;
         }
-        //---------------------------------------------------------------------------
         /// <summary>
         /// Отображает значение в строке состояния приложения
         /// </summary>
@@ -995,61 +967,54 @@ namespace ModbuSlaveDevicesNetwork
             
             if (serialPort != null)
             {
-                this._StatusStripMainWindow.Items["_ToolStripLabelSettingsPort"].Text =
+                _StatusStripMainWindow.Items["_ToolStripLabelSettingsPort"].Text =
                     String.Format("{0}, {1}, {2}, {3}, {4}", serialPort.SerialPort.PortName,
                     serialPort.SerialPort.BaudRate.ToString(), serialPort.SerialPort.DataBits.ToString(),
                     serialPort.SerialPort.StopBits.ToString(), serialPort.SerialPort.Parity.ToString());
             }
             else
             {
-                this._StatusStripMainWindow.Items["_ToolStripLabelSettingsPort"].Text = String.Empty;
+                _StatusStripMainWindow.Items["_ToolStripLabelSettingsPort"].Text = 
+                    String.Empty;
             }
         }
-        //---------------------------------------------------------------------------
         /// <summary>
         /// 
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void _ToolStripButtonStart_Click(object sender, EventArgs e)
+        private void EventHandler_ToolStripButtonStart_Click(object sender, EventArgs e)
         {
             ToolStripButton btn = (ToolStripButton)sender;
-            this._Network.Start();
+            _Network.Start();
             btn.Enabled = false;
-            this._ToolStripButtonStop.Enabled = true;
-            this._ToolStripMenuItemNetworkEdit.Enabled = false;
+            _ToolStripButtonStop.Enabled = true;
+            _ToolStripMenuItemNetworkEdit.Enabled = false;
             return;
         }
-        //---------------------------------------------------------------------------
         /// <summary>
         /// 
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void _ToolStripButtonStop_Click(object sender, EventArgs e)
+        private void EventHandler_ToolStripButtonStop_Click(object sender, EventArgs e)
         {
             ToolStripButton btn = (ToolStripButton)sender;
-            this._Network.Stop();
+            _Network.Stop();
             btn.Enabled = false;
-            this._ToolStripButtonStart.Enabled = true;
-            this._ToolStripMenuItemNetworkEdit.Enabled = true;
+            _ToolStripButtonStart.Enabled = true;
+            _ToolStripMenuItemNetworkEdit.Enabled = true;
             return;
         }
-        //---------------------------------------------------------------------------
         /// <summary>
         /// 
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void _ToolStripMenuItemFileExit_Click(object sender, EventArgs e)
+        private void EventHandler_ToolStripMenuItemFileExit_Click(object sender, EventArgs e)
         {
             Application.Exit();
         }
-        //---------------------------------------------------------------------------
         #endregion
-        //---------------------------------------------------------------------------
     }
-    //===============================================================================
 }
-//===================================================================================
-// End of file

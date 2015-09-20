@@ -3,25 +3,20 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using System.Diagnostics;
-//
 using Modbus.OSIModel.ApplicationLayer.Slave.DataModel;
 using Modbus.OSIModel.ApplicationLayer.Slave.DataModel.DataTypes;
 using Modbus.OSIModel.ApplicationLayer.Slave.NetworkAPI;
 using Modbus.OSIModel.Message;
-//
 using Common.Controlling;
 
-//===================================================================================
 namespace Modbus.OSIModel.ApplicationLayer.Slave
 {
-    //===============================================================================
     /// <summary>
     /// Класс для реализации Slave - устройства сети modbus
     /// </summary>
     [Serializable]
     public class Device: INetworkFunctions, IManageable
     {
-        //---------------------------------------------------------------------------
         /// <summary>
         /// Структура подзапроса или группы читаемых регистров из файла в запросе
         /// с кодом 0x14
@@ -33,14 +28,11 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
             public UInt16 RecordNumber;
             public UInt16 RecordLength;
         }
-        //---------------------------------------------------------------------------
         #region Fields and Properties
-        //---------------------------------------------------------------------------
         /// <summary>
         /// Сетевой адрес устройства
         /// </summary>
         private Byte _Address;
-        //---------------------------------------------------------------------------
         /// <summary>
         /// Сетевой адрес устройства
         /// </summary>
@@ -57,16 +49,14 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
                 }
                 else
                 {
-                    this._Address = value;
+                    _Address = value;
                 }
             }
         }
-        //---------------------------------------------------------------------------
         /// <summary>
         /// Контроллер сети, которой содержит данное устройство
         /// </summary>
         private NetworkController _NetworkController;
-        //---------------------------------------------------------------------------
         /// <summary>
         /// Возвращает контроллер сети, которой содержит данное устройство
         /// </summary>
@@ -75,25 +65,21 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
             get { return _NetworkController; }
             set { _NetworkController = value; }
         }
-        //---------------------------------------------------------------------------
         /// <summary>
         /// Таблица дискретных входов\выходов
         /// </summary>
         private CoilsCollection _Coils;
-        //---------------------------------------------------------------------------
         /// <summary>
         /// Таблица дискретных входов\выходов
         /// </summary>
         public CoilsCollection Coils
         {
-            get { return this._Coils; }
+            get { return _Coils; }
         }
-        //---------------------------------------------------------------------------
         /// <summary>
         /// Таблица дискретных входов
         /// </summary>
         private DiscretesInputsCollection _DiscretesInputs;
-        //---------------------------------------------------------------------------
         /// <summary>
         /// Таблица дискретных входов
         /// </summary>
@@ -101,12 +87,10 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
         {
             get { return _DiscretesInputs; }
         }
-        //---------------------------------------------------------------------------
         /// <summary>
         /// Таблица регистров хранения
         /// </summary>
         private HoldingRegistersCollection _HoldingRegisters;
-        //---------------------------------------------------------------------------
         /// <summary>
         /// Таблица регистров хранения
         /// </summary>
@@ -114,12 +98,10 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
         {
             get { return _HoldingRegisters; }
         }
-        //---------------------------------------------------------------------------
         /// <summary>
         /// Таблица входных регистров
         /// </summary>
         private InputRegistersCollection _InputRegisters;
-        //---------------------------------------------------------------------------
         /// <summary>
         /// Таблица входных регистров
         /// </summary>
@@ -127,63 +109,57 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
         {
             get { return _InputRegisters; }
         }
-        //---------------------------------------------------------------------------
         /// <summary>
         /// Список файлов данного устройства
         /// </summary>
         private FilesCollection _Files;
-        //---------------------------------------------------------------------------
         /// <summary>
         /// Список файлов устройства
         /// </summary>
         public FilesCollection Files
         {
-            get { return this._Files; }
+            get { return _Files; }
         }
-        //---------------------------------------------------------------------------
         /// <summary>
         /// Описание устройства
         /// </summary>
         private String _Description;
-        //---------------------------------------------------------------------------
         /// <summary>
         /// Описание устройства
         /// </summary>
         public String Description
         {
-            get { return this._Description; }
+            get { return _Description; }
             set 
             {
                 if (value == null)
                 {
-                    this._Description = String.Empty;
+                    _Description = String.Empty;
                 }
                 else
                 {
-                    this._Description = value;
+                    _Description = value;
                 }
             }
         }
-        //---------------------------------------------------------------------------
         /// <summary>
         /// Статус устройства. 
         /// </summary>
         private Status _Status;
-        //---------------------------------------------------------------------------
         /// <summary>
         /// Состояние устройства Modbus
         /// </summary>
         public Status Status
         {
-            get { return this._Status; }
+            get { return _Status; }
             set 
             {
                 switch (value)
                 {
                     case Status.Running:
-                        { this.Start(); break; }
+                        { Start(); break; }
                     case Status.Stopped:
-                        { this.Stop(); break; }
+                        { Stop(); break; }
                     case Status.Paused:
                         {
                             throw new NotSupportedException(
@@ -197,102 +173,93 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
                 }
             }
         }
-        //---------------------------------------------------------------------------
         #endregion
-        //---------------------------------------------------------------------------
         #region Constructors
-        //---------------------------------------------------------------------------
         /// <summary>
         /// Конструктор
         /// </summary>
         public Device()
         {
-            this._Status = Status.Stopped;
-            this.Address = 1;
-            this._Description = String.Empty;
+            _Status = Status.Stopped;
+            Address = 1;
+            _Description = String.Empty;
 
-            this._Coils = new CoilsCollection();
-            this._Coils.SetOwner(this);
-            this._Coils.ListWasChanged += 
+            _Coils = new CoilsCollection();
+            _Coils.SetOwner(this);
+            _Coils.ListWasChanged += 
                 new EventHandler(EventHandler_Coils_ListWasChanged);
-            this._DiscretesInputs = new DiscretesInputsCollection();
-            this._DiscretesInputs.SetOwner(this);
-            this._DiscretesInputs.ListWasChanged += 
+            _DiscretesInputs = new DiscretesInputsCollection();
+            _DiscretesInputs.SetOwner(this);
+            _DiscretesInputs.ListWasChanged += 
                 new EventHandler(EventHandler_DiscretesInputs_ListWasChanged);
-            this._InputRegisters = new InputRegistersCollection();
-            this._InputRegisters.SetOwner(this);
-            this._InputRegisters.ListWasChanged += 
+            _InputRegisters = new InputRegistersCollection();
+            _InputRegisters.SetOwner(this);
+            _InputRegisters.ListWasChanged += 
                 new EventHandler(EventHandler_InputRegisters_ListWasChanged);
-            this._HoldingRegisters = new HoldingRegistersCollection();
-            this._HoldingRegisters.SetOwner(this);
-            this._HoldingRegisters.ListWasChanged += 
+            _HoldingRegisters = new HoldingRegistersCollection();
+            _HoldingRegisters.SetOwner(this);
+            _HoldingRegisters.ListWasChanged += 
                 new EventHandler(EventHandler_HoldingRegisters_ListWasChanged);
-            this._Files = new FilesCollection();
-            this._Files.SetOwner(this);
-            this._Files.ListWasChanged += 
+            _Files = new FilesCollection();
+            _Files.SetOwner(this);
+            _Files.ListWasChanged += 
                 new EventHandler(EventHandler_Files_ListWasChanged);
         }
-        //---------------------------------------------------------------------------
         /// <summary>
         /// Конструктор
         /// </summary>
         /// <param name="address">Сетевой адрес устройсва</param>
         public Device(Byte address)
         {
-            this._Status = Status.Stopped;
-            this.Address = address;
-            this._Description = String.Empty;
+            _Status = Status.Stopped;
+            Address = address;
+            _Description = String.Empty;
 
-            this._Coils = new CoilsCollection();
-            this._Coils.SetOwner(this);
-            this._Coils.ListWasChanged +=
+            _Coils = new CoilsCollection();
+            _Coils.SetOwner(this);
+            _Coils.ListWasChanged +=
                 new EventHandler(EventHandler_Coils_ListWasChanged);
-            this._DiscretesInputs = new DiscretesInputsCollection();
-            this._DiscretesInputs.SetOwner(this);
-            this._DiscretesInputs.ListWasChanged +=
+            _DiscretesInputs = new DiscretesInputsCollection();
+            _DiscretesInputs.SetOwner(this);
+            _DiscretesInputs.ListWasChanged +=
                 new EventHandler(EventHandler_DiscretesInputs_ListWasChanged);
-            this._InputRegisters = new InputRegistersCollection();
-            this._InputRegisters.SetOwner(this);
-            this._InputRegisters.ListWasChanged +=
+            _InputRegisters = new InputRegistersCollection();
+            _InputRegisters.SetOwner(this);
+            _InputRegisters.ListWasChanged +=
                 new EventHandler(EventHandler_InputRegisters_ListWasChanged);
-            this._HoldingRegisters = new HoldingRegistersCollection();
-            this._HoldingRegisters.SetOwner(this);
-            this._HoldingRegisters.ListWasChanged +=
+            _HoldingRegisters = new HoldingRegistersCollection();
+            _HoldingRegisters.SetOwner(this);
+            _HoldingRegisters.ListWasChanged +=
                 new EventHandler(EventHandler_HoldingRegisters_ListWasChanged);
-            this._Files = new FilesCollection();
-            this._Files.SetOwner(this);
-            this._Files.ListWasChanged +=
+            _Files = new FilesCollection();
+            _Files.SetOwner(this);
+            _Files.ListWasChanged +=
                 new EventHandler(EventHandler_Files_ListWasChanged);
         }
-        //---------------------------------------------------------------------------
         #endregion
-        //---------------------------------------------------------------------------
         #region Methods
-        //---------------------------------------------------------------------------
         /// <summary>
         /// Запускает устройство. Устанавливает активный статус устройству. 
         /// Устройство отвечает на запросы из сети (от мастера сети)
         /// </summary>
         public void Start()
         {
-            this._Status = Status.Running;
+            _Status = Status.Running;
             // Генерируем событие
-            this.OnStatusWasChanged();
+            OnStatusWasChanged();
             return;
         }
-        //---------------------------------------------------------------------------
         /// <summary>
         /// Останавливает устройство. Устройство не реагирует 
         /// на запросы из сети (от мастера сети)
         /// </summary>
         public void Stop()
         {
-            this._Status = Status.Stopped;
+            _Status = Status.Stopped;
             // Генерируем событие
-            this.OnStatusWasChanged();
+            OnStatusWasChanged();
             return;
         }
-        //---------------------------------------------------------------------------
         /// <summary>
         /// Обработчик события изменения списка дискретных входов/выходов
         /// </summary>
@@ -301,10 +268,9 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
         private void EventHandler_Coils_ListWasChanged(object sender, EventArgs e)
         {
             // Генерируем событие
-            this.OnDeviceChangedConfiguration();
+            OnDeviceChangedConfiguration();
             return;
         }
-        //---------------------------------------------------------------------------
         /// <summary>
         /// Обработчик события изменения списка дискретных входов
         /// </summary>
@@ -313,9 +279,8 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
         private void EventHandler_DiscretesInputs_ListWasChanged(object sender, EventArgs e)
         {
             // Генерируем событие
-            this.OnDeviceChangedConfiguration();
+            OnDeviceChangedConfiguration();
         }
-        //---------------------------------------------------------------------------
         /// <summary>
         /// Обработчик события изменения списка файлов устройства
         /// </summary>
@@ -324,9 +289,8 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
         private void EventHandler_Files_ListWasChanged(object sender, EventArgs e)
         {
             // Генерируем событие
-            this.OnDeviceChangedConfiguration();
+            OnDeviceChangedConfiguration();
         }
-        //---------------------------------------------------------------------------
         /// <summary>
         /// Обработчик события изменения списка регистров ввода/вывода
         /// </summary>
@@ -336,9 +300,8 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
             object sender, EventArgs e)
         {
             // Генерируем событие
-            this.OnDeviceChangedConfiguration();
+            OnDeviceChangedConfiguration();
         }
-        //---------------------------------------------------------------------------
         /// <summary>
         /// Обработчик события изменения списка входных регистров
         /// </summary>
@@ -348,9 +311,8 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
             object sender, EventArgs e)
         {
             // Генерируем событие
-            this.OnDeviceChangedConfiguration();
+            OnDeviceChangedConfiguration();
         }
-        //---------------------------------------------------------------------------
         /// <summary>
         /// Метод получает входящие из сети сообщение (от мастера) обрабатываем его
         /// и формирует ответ, если это необходимо (при адресованном запросе)
@@ -361,14 +323,14 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
         {
             // Проверяем статус устройства, если устройство пассивно
             // не обрабатываем запрос и не отвечаем.
-            if (this.Status == Status.Running)
+            if (Status == Status.Running)
             {
                 // Проверяем. Это сообщение адресовано данному устройству или нет
-                if ((message.Address == this.Address) || (message.Address == 0))
+                if ((message.Address == Address) || (message.Address == 0))
                 {
                     // Сообщение предназначено для данного устройства
                     // !!! данную функцию выполнить в отдельном потоке
-                    this.RequestParse(message);
+                    RequestParse(message);
                 }
                 else
                 {
@@ -377,16 +339,15 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
             }
             return;
         }
-        //---------------------------------------------------------------------------
         /// <summary>
         /// Метод отправляет ответ slave-устройства мастеру сети на его запрос.
         /// </summary>
         /// <param name="answer">Ответное сообщение</param>
         private void SendResponse(Message.Message answer)
         {
-            if (this.NetworkController != null)
+            if (NetworkController != null)
             {
-                this.NetworkController.GetOutcommingMessage(answer);
+                NetworkController.GetOutcommingMessage(answer);
             }
             else
             {
@@ -395,7 +356,6 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
             }
             return;
         }
-        //---------------------------------------------------------------------------
         /// <summary>
         /// Забирает запрос и вызывает необходимые 
         /// для его выполнения функции
@@ -461,7 +421,6 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
             }
 
         }
-        //---------------------------------------------------------------------------
         /// <summary>
         /// Метод устанавливает владелца данного объекта. Метод вызывается владельцем
         /// при добавлении данного устройства в свой список. А так же, вызывается при 
@@ -470,23 +429,23 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
         /// <param name="owner">Будующий владелец данного устройства</param>
         internal void SetOwner(NetworkController owner)
         {
-            if (this._NetworkController == null)
+            if (_NetworkController == null)
             {
-                this._NetworkController = owner;
+                _NetworkController = owner;
             }
             else
             {
                 if (owner == null)
                 {
                     // Осовбождаем владельца, теперь устройство свободно
-                    this._NetworkController = null;
+                    _NetworkController = null;
                 }
                 else
                 {
                     // Если контроллер сети, которой принадлежит данное устройство 
                     // устанавливаемой, тогда ничего не делаем. 
                     // Здесь нет ошибки. В противном случае, генерируем исключение
-                    if (this.Equals(owner) == false)
+                    if (Equals(owner) == false)
                     {
                         throw new InvalidOperationException(
                             "Данное modbus-устройство уже принадлежит другому контроллеру сети");
@@ -494,13 +453,12 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
                 }
             }
         }
-        //---------------------------------------------------------------------------
         /// <summary>
         /// Генерирует событие MasterChangedCoils
         /// </summary>
         private void OnMasterChangedCoils()
         {
-            EventHandler handler = this.MasterChangedCoils;
+            EventHandler handler = MasterChangedCoils;
             EventArgs args = new EventArgs();
 
             if (handler != null)
@@ -529,13 +487,12 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
             }
             return;
         }
-        //---------------------------------------------------------------------------
         /// <summary>
         /// Генерирует событие MasterChangedHoldingRegisters
         /// </summary>
         private void OnMasterChangedHoldingRegisters()
         {
-            EventHandler handler = this.MasterChangedHoldingRegisters;
+            EventHandler handler = MasterChangedHoldingRegisters;
             EventArgs args = new EventArgs();
 
             if (handler != null)
@@ -564,13 +521,12 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
             }
             return;
         }
-        //---------------------------------------------------------------------------
         /// <summary>
         /// Генерирует событие изменения конфигурации модели данных устройства
         /// </summary>
         private void OnDeviceChangedConfiguration()
         {
-            EventHandler handler = this.DeviceChangedConfiguration;
+            EventHandler handler = DeviceChangedConfiguration;
             EventArgs args = new EventArgs();
 
             if (handler != null)
@@ -598,13 +554,12 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
             }
             return;
         }
-        //---------------------------------------------------------------------------
         /// <summary>
         /// Генерирует событие изменения статуса устройства
         /// </summary>
         private void OnStatusWasChanged()
         {
-            EventHandler handler = this.StatusWasChanged;
+            EventHandler handler = StatusWasChanged;
             EventArgs args = new EventArgs();
 
             if (handler != null)
@@ -632,7 +587,6 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
             }
             return;
         }
-        //---------------------------------------------------------------------------
         /// <summary>
         /// Возвращает объект в виде строки
         /// </summary>
@@ -642,13 +596,13 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
             StringBuilder sb = new StringBuilder();
 
             sb.Append("Device; Address: 0x");
-            sb.Append(this.Address.ToString("X2"));
+            sb.Append(Address.ToString("X2"));
             sb.Append("; ");
 
-            if (this._NetworkController != null)
+            if (_NetworkController != null)
             {
                 sb.Append("Network: ");
-                sb.Append(this._NetworkController.NetworkName);
+                sb.Append(_NetworkController.NetworkName);
                 sb.Append("; ");
             }
             else
@@ -657,14 +611,13 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
             }
 
             sb.Append("Description: ");
-            sb.Append(this.Description);
+            sb.Append(Description);
             
             return sb.ToString();
             //return base.ToString();
         }
-        //---------------------------------------------------------------------------
         #endregion
-        //---------------------------------------------------------------------------
+
         #region Events
         //---------------------------------------------------------------------------
         /// <summary>
@@ -696,7 +649,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
         public event EventHandler StatusWasChanged;
         //---------------------------------------------------------------------------
         #endregion
-        //---------------------------------------------------------------------------
+
         // !!! Необоходимо сделать статическим методами, для того что бы уменьшить
         // размер устройтва в ОЗУ.
         #region INetworkFunctions Members
@@ -743,9 +696,9 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
                         message = String.Format(
                             "Количество реле для чтения в запросе {0}, а должно быть 1...2000", quantity);
                         pdu = new Message.PDU(0x81, new Byte[] { 0x03 });
-                        answer = new Modbus.OSIModel.Message.Message(this._Address, pdu);
+                        answer = new Modbus.OSIModel.Message.Message(_Address, pdu);
                         // Отправляем сообщение
-                        this.SendResponse(answer);
+                        SendResponse(answer);
 
                         result = new Message.Result(Error.IllegalDataValue,
                             message, request, answer);
@@ -761,14 +714,14 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
                             // Если реле не существует в системе формируем ответ
                             // c исключение
 
-                            if (this.Coils.Contains(System.Convert.ToUInt16(address + i)) == false)
+                            if (Coils.Contains(System.Convert.ToUInt16(address + i)) == false)
                             {
                                 // Формируем ответ с исключение 2
-                                answer = new Modbus.OSIModel.Message.Message(this.Address,
+                                answer = new Modbus.OSIModel.Message.Message(Address,
                                     new PDU(0x81, new Byte[] { 0x2 }));
 
                                 // Отправляем ответ мастеру
-                                this.SendResponse(answer);
+                                SendResponse(answer);
 
                                 result = new Message.Result(Error.IllegalDataAddress,
                                     String.Format("Реле с адресом {0} не существует", 
@@ -799,7 +752,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
                         {
                             data[index] = (Byte)(data[index] | 
                                 (Byte)(Modbus.Convert.BooleanToBit(
-                                this.Coils[System.Convert.ToUInt16(address + i)].Value) << number));
+                                Coils[System.Convert.ToUInt16(address + i)].Value) << number));
 
                             if (++number > 7)
                             {
@@ -812,9 +765,9 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
                         pdu.AddDataByte((byte)totalBytes);  // Добавляем количество байт с состояниями реле
                         pdu.AddDataBytesRange(data);        // Добавляем байты с состояниями реле
 
-                        answer = new Modbus.OSIModel.Message.Message(this.Address, pdu);
+                        answer = new Modbus.OSIModel.Message.Message(Address, pdu);
                         // Отправляем ответ мастеру
-                        this.SendResponse(answer);
+                        SendResponse(answer);
                         result = new Message.Result(Error.NoError, String.Empty, request, answer);
                     }
                 }
@@ -867,10 +820,10 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
                             String.Format("Количество дискретных входов для чтения в запросе {0}, а должно быть 1...2000",
                             quantity);
                         pdu = new Message.PDU(0x82, new Byte[] { 0x03 });
-                        answer = new Modbus.OSIModel.Message.Message(this._Address, pdu);
+                        answer = new Modbus.OSIModel.Message.Message(_Address, pdu);
 
                         // Отправляем сообщение
-                        this.SendResponse(answer);
+                        SendResponse(answer);
 
                         result = new Message.Result(Error.IllegalDataValue,
                             message, request, answer);
@@ -884,12 +837,12 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
                         for (int i = 0; i < quantity; i++)
                         {
                             //inputs[i] = _discretesInputs.Find((UInt16)(address + i));
-                            if (this.DiscretesInputs.Contains(System.Convert.ToUInt16(address + i)) == false)
+                            if (DiscretesInputs.Contains(System.Convert.ToUInt16(address + i)) == false)
                             {
                             // Если дискретный вход не существует в системе формируем ответ
                             // c исключением 2
                                 pdu = new Message.PDU(0x82, new Byte[] { 0x02 });
-                                answer = new Message.Message(this._Address, pdu);
+                                answer = new Message.Message(_Address, pdu);
 
                                 message =
                                     String.Format("Дискретный вход с адресом {0} не существует",
@@ -898,7 +851,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
                                     message, request, answer);
 
                                 // Отправляем ответ мастеру
-                                this.SendResponse(answer);
+                                SendResponse(answer);
 
                                 return result;
                             }
@@ -928,7 +881,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
                         for (int i = 0; i < quantity; i++)
                         {
                             data[index] = (Byte)(data[index] |
-                                (Byte)(Modbus.Convert.BooleanToBit(this.DiscretesInputs[address + i].Value) << number));
+                                (Byte)(Modbus.Convert.BooleanToBit(DiscretesInputs[address + i].Value) << number));
 
                             if (++number > 7)
                             {
@@ -940,11 +893,11 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
                         pdu.Function = request.PDUFrame.Function;
                         pdu.AddDataByte((Byte)totalBytes);
                         pdu.AddDataBytesRange(data);
-                        answer = new Message.Message(this._Address, pdu);
+                        answer = new Message.Message(_Address, pdu);
 
                         result = new Message.Result(Error.NoError, String.Empty, request, answer);
                         // Отправляем ответ мастеру
-                        this.SendResponse(answer);
+                        SendResponse(answer);
                     }
                 }
             }
@@ -994,9 +947,9 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
                             String.Format("Количество регистров для чтения в запросе {0}, а должно быть 1...125",
                             quantity);
                         pdu = new Message.PDU(0x83, new Byte[] { 0x03 });
-                        answer = new Message.Message(this._Address, pdu);
+                        answer = new Message.Message(_Address, pdu);
                         // Отправляем сообщение
-                        this.SendResponse(answer);
+                        SendResponse(answer);
 
                         result = new Message.Result(Error.IllegalDataValue,
                             message, request, answer);
@@ -1009,11 +962,11 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
                         {
                             // Если регистр не существует в системе формируем ответ
                             // c исключение
-                            if (this.HoldingRegisters.Contains(System.Convert.ToUInt16(address + i)) == false)
+                            if (HoldingRegisters.Contains(System.Convert.ToUInt16(address + i)) == false)
                             {
                                 // Формируем ответ с исключение 2
                                 pdu = new Message.PDU(0x83, new Byte[] { 0x02 });
-                                answer = new Message.Message(this._Address, pdu);
+                                answer = new Message.Message(_Address, pdu);
 
                                 message =
                                     String.Format("Регистр с адресом {0} не существует",
@@ -1022,7 +975,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
                                     message, request, answer);
 
                                 // Отправляем ответ мастеру
-                                this.SendResponse(answer);
+                                SendResponse(answer);
 
                                 return result;
                             }
@@ -1036,17 +989,17 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
 
                         for (int i = 0; i < quantity; i++)
                         {
-                            temp = Modbus.Convert.ConvertToBytes(this.HoldingRegisters[i].Value);
+                            temp = Modbus.Convert.ConvertToBytes(HoldingRegisters[i].Value);
                             data.AddRange(temp);
                         }
                         pdu = new Message.PDU();
                         pdu.Function = 0x3;
                         pdu.AddDataBytesRange(data.ToArray());
-                        answer = new Message.Message(this._Address, pdu);
+                        answer = new Message.Message(_Address, pdu);
 
                         result = new Message.Result(Error.NoError, String.Empty, request, answer);
                         // Отправляем ответ мастеру
-                        this.SendResponse(answer);
+                        SendResponse(answer);
                     }
                 }
             }
@@ -1096,10 +1049,10 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
                             String.Format("Количество регистров для чтения в запросе {0}, а должно быть 1...125",
                             quantity);
                         pdu = new Message.PDU(0x84, new Byte[] { 0x03 });
-                        answer = new Message.Message(this._Address, pdu);
+                        answer = new Message.Message(_Address, pdu);
 
                         // Отправляем сообщение
-                        this.SendResponse(answer);
+                        SendResponse(answer);
 
                         result = new Message.Result(Error.IllegalDataValue,
                             message, request, answer);
@@ -1112,10 +1065,10 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
                         {
                             // Если регистр не существует в системе формируем ответ
                             // c исключением 2
-                            if (this.InputRegisters.Contains(System.Convert.ToUInt16(address + i)) == false)
+                            if (InputRegisters.Contains(System.Convert.ToUInt16(address + i)) == false)
                             {
                                 pdu = new Message.PDU(0x84, new Byte[] { 0x02 });
-                                answer = new Message.Message(this.Address, pdu);
+                                answer = new Message.Message(Address, pdu);
 
                                 message =
                                     String.Format("Регистр с адресом {0} не существует",
@@ -1124,7 +1077,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
                                     message, request, answer);
 
                                 // Отправляем ответ мастеру
-                                this.SendResponse(answer);
+                                SendResponse(answer);
                                 return result;
                             }
                         }
@@ -1136,18 +1089,18 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
                         for (int i = 0; i < quantity; i++)
                         {
                             temp = Modbus.Convert.ConvertToBytes(
-                                this.InputRegisters[System.Convert.ToUInt16(address + i)].Value);
+                                InputRegisters[System.Convert.ToUInt16(address + i)].Value);
                             data.AddRange(temp);
                         }
                         pdu = new Message.PDU();
                         pdu.Function = 0x04;
                         pdu.AddDataByte((Byte)(data.Count));
                         pdu.AddDataBytesRange(data.ToArray());
-                        answer = new Message.Message(this._Address, pdu);
+                        answer = new Message.Message(_Address, pdu);
 
                         result = new Result(Error.NoError, String.Empty, request, answer);
                         // Отправляем ответ мастеру
-                        this.SendResponse(answer);
+                        SendResponse(answer);
                     }
                 }
             }
@@ -1203,9 +1156,9 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
                                 "Неверный формат данных для кодировки состояния реле {0}, а должно быть 0x0000 или 0xFF00",
                                 status.ToString("X4"));
                             pdu = new Message.PDU((Byte)(0x05 | 0x80), new Byte[] { 0x03 });
-                            answer = new Modbus.OSIModel.Message.Message(this._Address, pdu);
+                            answer = new Modbus.OSIModel.Message.Message(_Address, pdu);
                             // Отправляем сообщение
-                            this.SendResponse(answer);
+                            SendResponse(answer);
 
                             result = new Message.Result(Error.IllegalDataValue,
                                 message, request, answer);
@@ -1218,11 +1171,11 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
 
                 // Если регистр не существует в системе формируем ответ
                 // c исключение
-                if (this.Coils.Contains(address) == false)
+                if (Coils.Contains(address) == false)
                 {
                     // Формируем ответ с исключение 2
                     pdu = new Message.PDU((Byte)(0x80 | 0x05), new Byte[] { 0x02 });
-                    answer = new Modbus.OSIModel.Message.Message(this._Address, pdu);
+                    answer = new Modbus.OSIModel.Message.Message(_Address, pdu);
                     message =
                         String.Format("Реле с адресом {0} не существует",
                             address);
@@ -1230,14 +1183,14 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
                         message, request, answer);
 
                     // Отправляем ответ мастеру
-                    this.SendResponse(answer);
+                    SendResponse(answer);
                     return result;
                 }
                 else
                 {
                     // Реле найдено, устанавливаем новое значение и
                     // формируем ответное сообщение
-                    this.Coils[address].Value = Modbus.Convert.ToBoolean(coilValue);
+                    Coils[address].Value = Modbus.Convert.ToBoolean(coilValue);
 
                     // Формируем ответ.
                     List<Byte> data_ = new List<byte>();
@@ -1247,13 +1200,13 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
                     pdu = new Message.PDU();
                     pdu.Function = 0x05;
                     pdu.AddDataBytesRange(data_.ToArray());
-                    answer = new Message.Message(this._Address, pdu);
+                    answer = new Message.Message(_Address, pdu);
 
                     result = new Message.Result(Error.NoError, String.Empty, request, answer);
                     // Отправляем ответ мастеру
-                    this.SendResponse(answer);
+                    SendResponse(answer);
                     // Формируем событие
-                    this.OnMasterChangedCoils();
+                    OnMasterChangedCoils();
                 }
             }
             return result;
@@ -1289,13 +1242,13 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
 
                 // Выполняем запрос. Проверяем доступность в 
                 // регистра 
-                if (this._HoldingRegisters.Contains(address) == false)
+                if (_HoldingRegisters.Contains(address) == false)
                 {
                     // Если регистр не существует в системе формируем ответ
                     // c исключение
                     // Формируем ответ с исключение 2
                     pdu = new Message.PDU((Byte)(0x06 | 0x80), new Byte[] { 0x02 });
-                    answer = new Message.Message(this._Address, pdu);
+                    answer = new Message.Message(_Address, pdu);
 
                     message =
                         String.Format("Регистр с адресом {0} не существует", address);
@@ -1304,7 +1257,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
                         message, request, answer);
 
                     // Отправляем ответ мастеру
-                    this.SendResponse(answer);
+                    SendResponse(answer);
 
                     return result;
                 }
@@ -1312,20 +1265,20 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
                 {
                     // Все регистры найдены, устанавливаем новые значения и
                     // формируем ответное сообщение
-                    this._HoldingRegisters[address].Value = value;
+                    _HoldingRegisters[address].Value = value;
 
                     // Формируем ответ.
                     pdu = new Message.PDU();
                     pdu.Function = 0x06;
                     pdu.AddDataBytesRange(Modbus.Convert.ConvertToBytes(address));
                     pdu.AddDataBytesRange(Modbus.Convert.ConvertToBytes(value));
-                    answer = new Modbus.OSIModel.Message.Message(this._Address, pdu);
+                    answer = new Modbus.OSIModel.Message.Message(_Address, pdu);
 
                     result = new Message.Result(Error.NoError, String.Empty, request, answer);
                     // Отправляем ответ мастеру
-                    this.SendResponse(answer);
+                    SendResponse(answer);
                     // Формируем событие
-                    this.OnMasterChangedHoldingRegisters();
+                    OnMasterChangedHoldingRegisters();
                 }
             }
             return result;
@@ -1379,10 +1332,10 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
                         String.Format("Количество реле для записи в запросе равно {0}, а должно быть 1...0x7B0",
                         quantity);
                     pdu = new Message.PDU((Byte)(0xF | 0x80), new Byte[] { 0x03 });
-                    answer = new Message.Message(this._Address, pdu);
+                    answer = new Message.Message(_Address, pdu);
 
                     // Отправляем сообщение
-                    this.SendResponse(answer);
+                    SendResponse(answer);
 
                     result = new Message.Result(Error.IllegalDataValue,
                         message, request, answer);
@@ -1395,11 +1348,11 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
                     {
                         // Если регистр не существует в системе формируем ответ
                         // c исключение
-                        if (this.Coils.Contains(System.Convert.ToUInt16(address + i)) == false)
+                        if (Coils.Contains(System.Convert.ToUInt16(address + i)) == false)
                         {
                             // Формируем ответ с исключение 2
                             pdu = new Message.PDU((Byte)(0x80 | 0x0F), new Byte[] { 0x02 });
-                            answer = new Message.Message(this.Address, pdu);
+                            answer = new Message.Message(Address, pdu);
 
                             message =
                                 String.Format("Реле с адресом {0} не существует",
@@ -1408,7 +1361,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
                                 message, request, answer);
 
                             // Отправляем ответ мастеру
-                            this.SendResponse(answer);
+                            SendResponse(answer);
                             return result;
                         }
                     }
@@ -1430,13 +1383,13 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
                             {
                                 if (((status >> y) & 0x01) == 0)
                                 {
-                                    this.Coils[System.Convert.ToUInt16(address + totalBytes)].Value = 
+                                    Coils[System.Convert.ToUInt16(address + totalBytes)].Value = 
                                         Modbus.Convert.ToBoolean(State.Off); 
                                     //rows[totalBytes]["Value"] = Modbus.Convert.ToBoolean(State.Off);
                                 }
                                 else
                                 {
-                                    this.Coils[System.Convert.ToUInt16(address + totalBytes)].Value =
+                                    Coils[System.Convert.ToUInt16(address + totalBytes)].Value =
                                         Modbus.Convert.ToBoolean(State.On);
                                     //rows[totalBytes]["Value"] = Modbus.Convert.ToBoolean(State.On);
                                 }
@@ -1451,13 +1404,13 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
                     pdu = new Message.PDU();
                     pdu.Function = 0x0F;
                     pdu.AddDataBytesRange(data_.ToArray());
-                    answer = new Message.Message(this._Address, pdu);
+                    answer = new Message.Message(_Address, pdu);
 
                     result = new Message.Result(Error.NoError, String.Empty, request, answer);
                     // Отправляем ответ мастеру
-                    this.SendResponse(answer);
+                    SendResponse(answer);
                     // Формируем событие
-                    this.OnMasterChangedCoils();
+                    OnMasterChangedCoils();
                 }
             }
             return result;
@@ -1499,10 +1452,10 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
                         String.Format("Количество регистров для записи в запросе равно {0}, а должно быть 1...123",
                         quantity);
                     pdu = new Message.PDU((Byte)(0x10 | 0x80), new Byte[] { 0x03 });
-                    answer = new Modbus.OSIModel.Message.Message(this._Address, pdu);
+                    answer = new Modbus.OSIModel.Message.Message(_Address, pdu);
 
                     // Отправляем сообщение
-                    this.SendResponse(answer);
+                    SendResponse(answer);
 
                     result = new Message.Result(Error.IllegalDataValue,
                         message, request, answer);
@@ -1515,11 +1468,11 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
                     {
                         // Если регистр не существует в системе формируем ответ
                         // c исключение
-                        if (this.HoldingRegisters.Contains(System.Convert.ToUInt16(address + i)) == false)
+                        if (HoldingRegisters.Contains(System.Convert.ToUInt16(address + i)) == false)
                         {
                             // Формируем ответ с исключение 2
                             pdu = new Message.PDU((Byte)(0x10 | 0x80), new Byte[] { 0x02 });
-                            answer = new Message.Message(this._Address, pdu);
+                            answer = new Message.Message(_Address, pdu);
                             message =
                                 String.Format("Регистр с адресом {0} не существует",
                                 (address + i));
@@ -1527,7 +1480,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
                                 message, request, answer);
 
                             // Отправляем ответ мастеру
-                            this.SendResponse(answer);
+                            SendResponse(answer);
                             return result;
                         }
                     }
@@ -1541,7 +1494,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
                     for (int i = 0; i < quantity; i++)
                     {
                         Array.Copy(request.PDUFrame.Data, (5 + (i * 2)), temp, 0, 2);
-                        this._HoldingRegisters[System.Convert.ToUInt16(address + i)].Value = 
+                        _HoldingRegisters[System.Convert.ToUInt16(address + i)].Value = 
                             Modbus.Convert.ConvertToUInt16(temp);
                     }
 
@@ -1554,12 +1507,12 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
                     pdu = new Message.PDU();
                     pdu.Function = 0x10;
                     pdu.AddDataBytesRange(data.ToArray());
-                    answer = new Message.Message(this._Address, pdu);
+                    answer = new Message.Message(_Address, pdu);
                     result = new Message.Result(Error.NoError, String.Empty, request, answer);
                     // Отправляем ответ мастеру
-                    this.SendResponse(answer);
+                    SendResponse(answer);
                     // Формируем событие
-                    this.OnMasterChangedHoldingRegisters();
+                    OnMasterChangedHoldingRegisters();
                 }
             }
             return result;
@@ -1592,13 +1545,13 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
                 {
                     // Ошибка. Минимальная длина pdu запроса 0х14 это 7 байт
                     message = "Ошибка. Длина pdu запроса 0x14 менее 7 байт";
-                    answer = new Message.Message(this._Address,
+                    answer = new Message.Message(_Address,
                         new PDU((Byte)(0x14 | 0x80), new byte[] { 0x03 }));
 
                     result = new Message.Result(Error.RequestError,
                         message, request, answer);
                     // Отправляем ответ
-                    this.SendResponse(answer);
+                    SendResponse(answer);
                     return result;
                 }
                 else
@@ -1611,13 +1564,13 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
                             "Ошибка. Код функции 0x14. Параметр Byte Count = {0} вне допустимого диапазона 0x07...0xF5",
                             request.PDUFrame.Data[ByteCountIndex], (request.PDUFrame.Length - 2));
 
-                        answer = new Message.Message(this._Address,
+                        answer = new Message.Message(_Address,
                         new PDU((Byte)(0x14 | 0x80), new byte[] { 0x03 }));
 
                         result = new Message.Result(Error.RequestError,
                             message, request, answer);
                         // Отправляем ответ
-                        this.SendResponse(answer);
+                        SendResponse(answer);
                         return result;
                     }
                     else
@@ -1631,13 +1584,13 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
                                 "Ошибка. Параметр Byte Count = {0} не совпадает с фактической длиной {1}",
                                 request.PDUFrame.Data[ByteCountIndex], (request.PDUFrame.Length - 2));
 
-                            answer = new Message.Message(this._Address,
+                            answer = new Message.Message(_Address,
                             new PDU((Byte)(0x14 | 0x80), new byte[] { 0x03 }));
 
                             result = new Message.Result(Error.RequestError,
                                 message, request, answer);
                             // Отправляем ответ
-                            this.SendResponse(answer);
+                            SendResponse(answer);
                             return result;
                         }
                         else
@@ -1651,13 +1604,13 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
                                 // Ошибка. Указанная длина не совпадает с фактической
                                 message = String.Format("Ошибка. Неверная длина данных в запросе");
 
-                                answer = new Message.Message(this._Address,
+                                answer = new Message.Message(_Address,
                                 new PDU((Byte)(0x14 | 0x80), new byte[] { 0x03 }));
 
                                 result = new Message.Result(Error.RequestError,
                                     message, request, answer);
                                 // Отправляем ответ
-                                this.SendResponse(answer);
+                                SendResponse(answer);
                                 return result;
 
                             }
@@ -1688,12 +1641,12 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
                                     if (subRequestList[i].ReferenceType != 0x6)
                                     {
                                         // Ошибка
-                                        answer = new Message.Message(this._Address,
+                                        answer = new Message.Message(_Address,
                                             new PDU((Byte)(0x80 | 0x14), new byte[] { 0x2 }));
                                         message = "Ошибка: Подзапрос имеет недопустимое значение праметра The reference type";
                                         result = new Result(Error.RequestError, message, request, answer);
                                         
-                                        this.SendResponse(answer);
+                                        SendResponse(answer);
                                         
                                         return result;
                                     }
@@ -1704,12 +1657,12 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
                                         if (subRequestList[i].RecordNumber > 0x270F)
                                         {
                                             // Ошибка
-                                            answer = new Message.Message(this._Address,
+                                            answer = new Message.Message(_Address,
                                                 new PDU((Byte)(0x80 | 0x14), new byte[] { 0x2 }));
                                             message = "Ошибка: Подзапрос имеет недопустимое значение номера записи файла";
                                             result = new Result(Error.RequestError, message, request, answer);
 
-                                            this.SendResponse(answer);
+                                            SendResponse(answer);
 
                                             return result;
                                         }
@@ -1719,12 +1672,12 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
                                             if (subRequestList[i].RecordNumber + subRequestList[i].RecordLength > 0x270F)
                                             {
                                                 // Ошибка
-                                                answer = new Message.Message(this._Address,
+                                                answer = new Message.Message(_Address,
                                                     new PDU((Byte)(0x80 | 0x14), new byte[] { 0x2 }));
                                                 message = "Ошибка: Подзапрос имеет недопустимое значение длины блока читаемых записей из файла";
                                                 result = new Result(Error.RequestError, message, request, answer);
 
-                                                this.SendResponse(answer);
+                                                SendResponse(answer);
 
                                                 return result;
                                             }
@@ -1749,12 +1702,12 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
                                 {
                                     // Ошибка. Длина запрощенных данных превышает максимальную
                                     // длину PDU ответного пакета
-                                    answer = new Message.Message(this._Address,
+                                    answer = new Message.Message(_Address,
                                         new PDU((Byte)(0x80 | 0x14), new byte[] { 0x2 }));
                                     message = "Ошибка: Длина запрошенных данных превышает максимальную длину PDU";
                                     result = new Result(Error.RequestError, message, request, answer);
 
-                                    this.SendResponse(answer);
+                                    SendResponse(answer);
 
                                     return result;
                                 }
@@ -1769,13 +1722,13 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
                                     {
                                         subRequest = subRequestList[i];
 
-                                        if (this._Files.Contains(subRequest.FileNumber) == true)
+                                        if (_Files.Contains(subRequest.FileNumber) == true)
                                         {
                                             // Файл найден. Получаем его записи
                                             list.Add(System.Convert.ToByte(subRequest.RecordLength * 2 + 1)); // File resp. length
                                             list.Add(0x06); // Ref. type
 
-                                            File file = this._Files[subRequest.FileNumber];
+                                            File file = _Files[subRequest.FileNumber];
                                             
                                             for (int y = 0; y < subRequest.RecordLength; y++)
                                             {
@@ -1794,14 +1747,14 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
                                                     // Указанной записи не существует в данном файле
                                                     // Ошибка. Длина запрощенных данных превышает максимальную
                                                     // длину PDU ответного пакета
-                                                    answer = new Message.Message(this._Address,
+                                                    answer = new Message.Message(_Address,
                                                         new PDU((Byte)(0x80 | 0x14), new byte[] { 0x4 }));
                                                     message = String.Format(
                                                         "Ошибка: Не найдена запрашиваемая запись с номером {0} в запрашиваемом файле c номером {0}",
                                                         var, file.Number);
                                                     result = new Result(Error.RequestError, message, request, answer);
 
-                                                    this.SendResponse(answer);
+                                                    SendResponse(answer);
 
                                                     return result;
                                                 }
@@ -1810,14 +1763,14 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
                                         else
                                         {
                                             // Файла с таким номером не существует. Возвращает исключение
-                                            answer = new Message.Message(this._Address,
+                                            answer = new Message.Message(_Address,
                                                 new PDU((Byte)(0x80 | 0x14), new byte[] { 0x4 }));
                                             message = String.Format(
                                                 "Ошибка: Не найден запрашиваемый файл c номером {0}",
                                                 subRequest.FileNumber);
                                             result = new Result(Error.RequestError, message, request, answer);
 
-                                            this.SendResponse(answer);
+                                            SendResponse(answer);
 
                                             return result;
                                         }
@@ -1825,12 +1778,12 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
 
                                     // Если оказались в данной точке, значит предыдущий цикл выполнился устпешно
                                     // Можно отправлять данные
-                                    answer = new Message.Message(this._Address,
+                                    answer = new Message.Message(_Address,
                                         new PDU(0x14, list.ToArray()));
                                     message = String.Empty;
                                     result = new Result(Error.NoError, message, request, answer);
 
-                                    this.SendResponse(answer);
+                                    SendResponse(answer);
 
                                     return result;
                                 }
@@ -1848,10 +1801,10 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
             Message.PDU pdu = new Message.PDU();
             pdu.Function = (Byte)(request.PDUFrame.Function | 0x80);
             pdu.AddDataByte(0x01);   //Error.IllegalFunction
-            answer = new Modbus.OSIModel.Message.Message(this.Address, pdu);
+            answer = new Modbus.OSIModel.Message.Message(Address, pdu);
 
             // Отправляем ответ
-            this.SendResponse(answer);
+            SendResponse(answer);
 
             Message.Result result =
                 new Message.Result(Error.IllegalFunction,
@@ -1861,17 +1814,16 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
         }
         //---------------------------------------------------------------------------
         #endregion
-        //---------------------------------------------------------------------------
         #region IManageable Members
         //---------------------------------------------------------------------------
         void IManageable.Start()
         {
-            this.Start();
+            Start();
         }
         //---------------------------------------------------------------------------
         void IManageable.Stop()
         {
-            this.Stop();
+            Stop();
         }
         //---------------------------------------------------------------------------
         void IManageable.Suspend()
@@ -1883,11 +1835,11 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
         {
             get
             {
-                return this.Status;
+                return Status;
             }
             set
             {
-                this.Status = value;
+                Status = value;
             }
         }
         //---------------------------------------------------------------------------
@@ -1895,18 +1847,14 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
         {
             add 
             {
-                this.StatusWasChanged += value;
+                StatusWasChanged += value;
             }
             remove 
             {
-                this.StatusWasChanged -= value;
+                StatusWasChanged -= value;
             }
         }
         //---------------------------------------------------------------------------
         #endregion
-        //---------------------------------------------------------------------------
     }
-    //===============================================================================
 }
-//===================================================================================
-// End of file

@@ -23,7 +23,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.DataModel.DataTypes
         /// </summary>
         public DiscreteInput()
         {
-            this.Value = false;
+            Value = false;
         }
         /// <summary>
         /// Конструктор

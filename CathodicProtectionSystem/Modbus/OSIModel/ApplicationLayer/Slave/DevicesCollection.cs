@@ -53,7 +53,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
         protected override void ClearItems()
         {
             // Обнуляем владельца удаляемого элемента.
-            foreach (Device device in this.Items)
+            foreach (Device device in Items)
             {
                 device.SetOwner(null);
             }
@@ -61,7 +61,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
             base.ClearItems();
             
             // Вызываем событие
-            this.OnItemsListWasChanged();
+            OnItemsListWasChanged();
             
             return;
         }
@@ -74,10 +74,10 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
         protected override void InsertItem(int index, Device item)
         {
             // Устанавливаем владельца добавляемого элемента.
-            item.SetOwner(this._NetworkController); 
+            item.SetOwner(_NetworkController); 
             base.InsertItem(index, item);
             // Вызываем событие
-            this.OnItemsListWasChanged();
+            OnItemsListWasChanged();
             return;
         }
 
@@ -90,17 +90,17 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
             }
             base.RemoveItem(index);
             // Вызываем событие
-            this.OnItemsListWasChanged();
+            OnItemsListWasChanged();
             return;
         }
 
         protected override void SetItem(int index, Device item)
         {
             // Устанавливаем владельца добавляемого элемента.
-            item.SetOwner(this._NetworkController);
+            item.SetOwner(_NetworkController);
             base.SetItem(index, item);
             // Вызываем событие
-            this.OnItemsListWasChanged();
+            OnItemsListWasChanged();
             return;
         }
         /// <summary>
@@ -109,7 +109,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
         public void OnItemsListWasChanged()
         {
             EventArgs args = new EventArgs();
-            EventHandler handler = this.ItemsListWasChanged;
+            EventHandler handler = ItemsListWasChanged;
 
             if (handler != null)
             {

@@ -24,7 +24,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.DataModel.DataTypes
         /// </summary>
         public InputRegister()
         {
-            this.Value = 0;
+            Value = 0;
         }
         /// <summary>
         /// Конструктор

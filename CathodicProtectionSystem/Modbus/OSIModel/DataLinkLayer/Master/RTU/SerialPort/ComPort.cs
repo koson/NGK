@@ -10,17 +10,14 @@ using Modbus.OSIModel.DataLinkLayer.Diagnostics;
 using Modbus.OSIModel.DataLinkLayer.TypeConverters;
 using Modbus.OSIModel.Transaction;
 
-//===================================================================================
 namespace Modbus.OSIModel.DataLinkLayer.Master.RTU.SerialPort
 {
-    //===============================================================================
     /// <summary>
     /// Класс реализует Data Link Layer протокола Modbus для физического
     /// уровня RS-485/RS-232 на основе COM-порта компьютера
     /// </summary>
     public class ComPort : Modbus.OSIModel.DataLinkLayer.Master.IDataLinkLayer
     {
-        //----------------------------------------------------------------------------
         #region Fields and Properties
         //----------------------------------------------------------------------------
         /// <summary>
@@ -50,11 +47,11 @@ namespace Modbus.OSIModel.DataLinkLayer.Master.RTU.SerialPort
                 _EventLogEnable = value;
                 if (_EventLogEnable)
                 {
-                    this.CreateLog();
+                    CreateLog();
                 }
                 else
                 {
-                    this.DeleteLog();
+                    DeleteLog();
                 }
             }
         }
@@ -192,7 +189,7 @@ namespace Modbus.OSIModel.DataLinkLayer.Master.RTU.SerialPort
         }
         //----------------------------------------------------------------------------
         #endregion
-        //----------------------------------------------------------------------------
+
         #region Constructors
         //----------------------------------------------------------------------------
         /// <summary>
@@ -240,7 +237,7 @@ namespace Modbus.OSIModel.DataLinkLayer.Master.RTU.SerialPort
                     _PathToLogFile = Environment.CurrentDirectory + @"\datalink.log";
                 }
 
-                this.CreateLog();
+                CreateLog();
             }
             else
             {
@@ -306,14 +303,14 @@ namespace Modbus.OSIModel.DataLinkLayer.Master.RTU.SerialPort
             Trace.TraceInformation("{0}: {1} Окончание сессии",
                 DateTime.Now.ToShortDateString(), DateTime.Now.ToLongTimeString());
 
-            this.DeleteLog();
-            this.CloseConnect();
-            this.SerialPort = null;
+            DeleteLog();
+            CloseConnect();
+            SerialPort = null;
 
         }
         //----------------------------------------------------------------------------
         #endregion
-        //----------------------------------------------------------------------------
+
         #region Methods
         //----------------------------------------------------------------------------
         /// <summary>
@@ -327,10 +324,10 @@ namespace Modbus.OSIModel.DataLinkLayer.Master.RTU.SerialPort
                 _Logger.Filter = null;
             }
 
-            this._Logger = new TextWriterTraceListener(_PathToLogFile);
+            _Logger = new TextWriterTraceListener(_PathToLogFile);
             
             Trace.Listeners.Clear();
-            Trace.Listeners.Add(this._Logger);
+            Trace.Listeners.Add(_Logger);
             Trace.AutoFlush = true;
             Trace.TraceInformation(String.Empty); // Для форматирования текста, отделяет сессию от сесии
             Trace.TraceInformation("{0}: {1} Старт сессии",
@@ -515,7 +512,7 @@ namespace Modbus.OSIModel.DataLinkLayer.Master.RTU.SerialPort
                     }
             }
 
-            this.StopTransaction();
+            StopTransaction();
 
             _timeOut.Set();
             
@@ -606,7 +603,7 @@ namespace Modbus.OSIModel.DataLinkLayer.Master.RTU.SerialPort
         /// </summary>
         //public string Name
         //{
-        //    get { return this._serialPort.PortName; }
+        //    get { return _serialPort.PortName; }
         //}
         //----------------------------------------------------------------------------
         /// <summary>
@@ -615,11 +612,11 @@ namespace Modbus.OSIModel.DataLinkLayer.Master.RTU.SerialPort
         /// <param name="value">Таймаут, мсек</param>
         public void SetTimeOut(int value)
         {
-            this._ValueTimeOut = value;
+            _ValueTimeOut = value;
         }
         //----------------------------------------------------------------------------
         #endregion
-        //----------------------------------------------------------------------------
+
         #region Члены IDataLinkLayer
         //---------------------------------------------------------------------------
         /// <summary>
@@ -668,7 +665,7 @@ namespace Modbus.OSIModel.DataLinkLayer.Master.RTU.SerialPort
             Byte[] reply;
             Byte[] tempArray;
 
-            error = this.SendMessage(requst.Address, requst.PDUFrame.Function, 
+            error = SendMessage(requst.Address, requst.PDUFrame.Function, 
                 requst.PDUFrame.Data, out reply);
 
             if (error == RequestError.NoError)
@@ -742,11 +739,11 @@ namespace Modbus.OSIModel.DataLinkLayer.Master.RTU.SerialPort
             // Если адрес нулевой, значит широковещательный запрос
             if (address == 0)
             {
-                this.StartTransaction(TransactionType.BroadcastMode);
+                StartTransaction(TransactionType.BroadcastMode);
             }
             else
             {
-                this.StartTransaction(TransactionType.UnicastMode);
+                StartTransaction(TransactionType.UnicastMode);
             }
 
             // При отключении USB работающего через виртуальный COM-порт,
@@ -769,7 +766,7 @@ namespace Modbus.OSIModel.DataLinkLayer.Master.RTU.SerialPort
                         DateTime.Now.ToLongTimeString(), Thread.CurrentThread.ManagedThreadId, ex.Message);
                 }
                 
-                this.StopTransaction();
+                StopTransaction();
                 answer = null;
                 _serialPort = null;
                 return RequestError.PortError;
@@ -807,7 +804,7 @@ namespace Modbus.OSIModel.DataLinkLayer.Master.RTU.SerialPort
             }
             if (true == _timeOut.WaitOne(interval)) //
             {
-                //this.StopTransaction();
+                //StopTransaction();
 
                 if (_error == RequestError.NoError)
                 {
@@ -838,7 +835,7 @@ namespace Modbus.OSIModel.DataLinkLayer.Master.RTU.SerialPort
                                 // Получаем: Код функции + данные ответного сообщения, 
                                 // возвращаем их
                                 answer = message.ToArray();
-                                this.StopTransaction();
+                                StopTransaction();
                                 return RequestError.NoError;
                             }
                             else
@@ -850,7 +847,7 @@ namespace Modbus.OSIModel.DataLinkLayer.Master.RTU.SerialPort
                                         DateTime.Now.ToLongTimeString(), Thread.CurrentThread.ManagedThreadId);
                                 }
                                 answer = null;
-                                this.StopTransaction();
+                                StopTransaction();
                                 return RequestError.WrongFunction;
                             }
                         }
@@ -863,7 +860,7 @@ namespace Modbus.OSIModel.DataLinkLayer.Master.RTU.SerialPort
                                     DateTime.Now.ToLongTimeString(), Thread.CurrentThread.ManagedThreadId);
                             }
                             answer = null;
-                            this.StopTransaction();
+                            StopTransaction();
                             return RequestError.WrongAddress;
                         }
                     }
@@ -876,7 +873,7 @@ namespace Modbus.OSIModel.DataLinkLayer.Master.RTU.SerialPort
                                 DateTime.Now.ToLongTimeString(), Thread.CurrentThread.ManagedThreadId);
                         }
                         answer = null;
-                        this.StopTransaction();
+                        StopTransaction();
                         return RequestError.CheckSumError;
                     }
                 }
@@ -890,7 +887,7 @@ namespace Modbus.OSIModel.DataLinkLayer.Master.RTU.SerialPort
                             Thread.CurrentThread.ManagedThreadId, _error);
                     }
                     answer = null;
-                    this.StopTransaction();
+                    StopTransaction();
                     return _error;
                 }
             }
@@ -911,7 +908,7 @@ namespace Modbus.OSIModel.DataLinkLayer.Master.RTU.SerialPort
                                     DateTime.Now.ToLongTimeString(), Thread.CurrentThread.ManagedThreadId,
                                     _serialPort.BytesToRead.ToString());
                             }
-                            this.StopTransaction();
+                            StopTransaction();
                             answer = null;
                             return RequestError.TimeOut;
                         }
@@ -922,7 +919,7 @@ namespace Modbus.OSIModel.DataLinkLayer.Master.RTU.SerialPort
                                 Trace.TraceError("{0}: Поток ID: {1} : Истек таймер широковещательной команды",
                                     DateTime.Now.ToLongTimeString(), Thread.CurrentThread.ManagedThreadId);
                             }
-                            this.StopTransaction();
+                            StopTransaction();
                             answer = null;
                             return RequestError.TurnAroundDelay;
                         }
@@ -933,7 +930,7 @@ namespace Modbus.OSIModel.DataLinkLayer.Master.RTU.SerialPort
                                 Trace.TraceError("{0}: Поток ID: {1} : Ошибка не определена",
                                     DateTime.Now.ToLongTimeString(), Thread.CurrentThread.ManagedThreadId);
                             }
-                            this.StopTransaction();
+                            StopTransaction();
                             answer = null;
                             return RequestError.UnknownError;
                         }
@@ -974,7 +971,7 @@ namespace Modbus.OSIModel.DataLinkLayer.Master.RTU.SerialPort
         /// <returns></returns>
         public Boolean IsOpen()
         {
-            return this._serialPort.IsOpen;
+            return _serialPort.IsOpen;
         }
         //---------------------------------------------------------------------------
         /// <summary>
@@ -993,22 +990,18 @@ namespace Modbus.OSIModel.DataLinkLayer.Master.RTU.SerialPort
         public object GetConnection()
         {
         //    SerialPortSettings settings;
-        //    settings.PortName = this._serialPort.PortName;
-        //    settings.BaudRate = this._serialPort.BaudRate;
-        //    settings.DataBits = this._serialPort.DataBits;
-        //    settings.StopBits = this._serialPort.StopBits;
-        //    settings.Parity = this._serialPort.Parity;
-        //    settings.TimeOut = this._ValueTimeOut;
-        //    settings.AroundDelay = this._ValueTurnAroundDelay;
+        //    settings.PortName = _serialPort.PortName;
+        //    settings.BaudRate = _serialPort.BaudRate;
+        //    settings.DataBits = _serialPort.DataBits;
+        //    settings.StopBits = _serialPort.StopBits;
+        //    settings.Parity = _serialPort.Parity;
+        //    settings.TimeOut = _ValueTimeOut;
+        //    settings.AroundDelay = _ValueTurnAroundDelay;
         //    settings.Mode = TransmissionMode.RTU;
         //    return (Object)settings;
             return (object)this;
         }
         //---------------------------------------------------------------------------
         #endregion
-        //---------------------------------------------------------------------------
     }
-    //===============================================================================
 }
-//===================================================================================
-// End of file

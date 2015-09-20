@@ -22,7 +22,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.DataModel.DataTypes
         /// </summary>
         public UInt16 Address
         {
-            get { return this._Address; }
+            get { return _Address; }
             set { _Address = value; }
         }      
         /// <summary>
@@ -39,7 +39,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.DataModel.DataTypes
             {
                 _Value = value;
                 // Генерируем событие
-                this.OnValueWasChanged();
+                OnValueWasChanged();
             }
         }
         /// <summary>
@@ -80,9 +80,9 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.DataModel.DataTypes
         /// </summary>
         public Parameter()
         {
-            this._Device = null;
-            this._Address = 0;
-            this._Description = String.Empty;
+            _Device = null;
+            _Address = 0;
+            _Description = String.Empty;
         }
         /// <summary>
         /// Конструктор
@@ -137,23 +137,23 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.DataModel.DataTypes
         /// <param name="owner">Устройство владелец</param>
         internal void SetOwner(Device owner)
         {
-            if (this._Device == null)
+            if (_Device == null)
             {
-                this._Device = owner;
+                _Device = owner;
             }
             else
             {
                 if (owner == null)
                 {
                     // Освобождаем параметр от владельца
-                    this._Device = owner;
+                    _Device = owner;
                 }
                 else
                 {
                     // Если устройство, которой принадлежит данный параметр, 
                     // эквивалентно устанавливаемому, то ничего не делаем. 
                     // Здесь нет ошибки. В противном случае, генерируем исключение
-                    if (this.Equals(owner) == false)
+                    if (Equals(owner) == false)
                     {
                         throw new InvalidOperationException(
                             "Данный параметр модели данных modbus принадлежит другому modbus-устройству");
@@ -167,7 +167,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.DataModel.DataTypes
         /// </summary>
         protected virtual void OnMasterSetValue()
         {
-            EventHandler handler = this.MasterSetValue;
+            EventHandler handler = MasterSetValue;
             EventArgs args = new EventArgs();
 
             if (handler != null)
@@ -197,7 +197,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.DataModel.DataTypes
         /// </summary>
         protected virtual void OnValueWasChanged()
         {
-            EventHandler handler = this.ValueWasChanged;
+            EventHandler handler = ValueWasChanged;
             EventArgs args = new EventArgs();
 
             if (handler != null)

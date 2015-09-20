@@ -22,7 +22,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.DataModel.DataTypes
         /// </summary>
         private Coil(): base()
         {
-            this._Value = false;            
+            _Value = false;            
         }
         /// <summary>
         /// Конструктор

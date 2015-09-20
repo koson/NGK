@@ -3,24 +3,19 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 
-//===================================================================================
 namespace Modbus.OSIModel.ApplicationLayer.Master
 {
-    //===============================================================================
     /// <summary>
     /// Класс для реализации функционала протокола modbus
     /// при работе сервера в режиме Master
     /// </summary>
     public class Device : IApi
     {
-        //---------------------------------------------------------------------------
         #region Constructors and Destructor
-        //---------------------------------------------------------------------------
         /// <summary>
         /// Запрещённый конструктор по умолчанию
         /// </summary>
         private Device() { }
-        //---------------------------------------------------------------------------
         /// <summary>
         /// Конструктор
         /// </summary>
@@ -36,13 +31,12 @@ namespace Modbus.OSIModel.ApplicationLayer.Master
             _dataLinkObject = dataLinkObject;
             
             // Сервер находится в режиме простоя
-            this.StopTransaction();
+            StopTransaction();
 
             return;
         }
-        //---------------------------------------------------------------------------
         #endregion
-        //---------------------------------------------------------------------------
+
         #region Fields and Properties
         //---------------------------------------------------------------------------
         /// <summary>
@@ -71,7 +65,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Master
         private bool _flgBusy;
         //---------------------------------------------------------------------------
         #endregion
-        //---------------------------------------------------------------------------
+
         #region Methods
         //---------------------------------------------------------------------------
         /// <summary>
@@ -223,7 +217,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Master
             }
 
             // Устанавливаем начало транзакции
-            this.StartTransaction();
+            StartTransaction();
     
             // Отправляем запрос
             Modbus.OSIModel.DataLinkLayer.RequestError error =
@@ -234,7 +228,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Master
                 case Modbus.OSIModel.DataLinkLayer.RequestError.NoError:
                     {
                         // Разбираем сообщение на предмет ошибок
-                        if (this.IsError(request, answer, out result))
+                        if (IsError(request, answer, out result))
                         {
                             // Ошибка была
                             break;
@@ -306,7 +300,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Master
                         break;
                     }
             }
-            this.StopTransaction();
+            StopTransaction();
             return result;
         }
         //---------------------------------------------------------------------------
@@ -337,11 +331,10 @@ namespace Modbus.OSIModel.ApplicationLayer.Master
                 new Modbus.OSIModel.Message.Message(addressSlave, 0x1, array.ToArray());
             
             // Выполняем запрос
-            Message.Result result = this.ReadCoils(request, out coils);
+            Message.Result result = ReadCoils(request, out coils);
             
             return result;
         }
-        //---------------------------------------------------------------------------
         /// <summary>
         /// Функция 0x2. Читает дискретные входы
         /// в удалённом устройстве
@@ -382,7 +375,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Master
             }
 
             // Устанавливаем начало транзакции
-            this.StartTransaction();
+            StartTransaction();
 
             // Отправляем запрос
             Modbus.OSIModel.DataLinkLayer.RequestError error =
@@ -393,7 +386,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Master
                 case Modbus.OSIModel.DataLinkLayer.RequestError.NoError:
                     {
                         // Разбираем сообщение на предмет ошибок
-                        if (this.IsError(request, answer, out result))
+                        if (IsError(request, answer, out result))
                         {
                             // Ошибка была
                             break;
@@ -470,10 +463,9 @@ namespace Modbus.OSIModel.ApplicationLayer.Master
                         break;
                     }
             }
-            this.StopTransaction();
+            StopTransaction();
             return result;
         }
-        //---------------------------------------------------------------------------
         /// <summary>
         /// Функция 0х3. Читает holding-регистры
         /// в удалённом устройстве
@@ -498,12 +490,12 @@ namespace Modbus.OSIModel.ApplicationLayer.Master
             {
                 throw new Exception(String.Format(
                     "Попытка выполнить запрос (код функции 0x3) к серверу {0}, во время выполнения предыдущего",
-                    this.Name));
+                    Name));
             }
             else
             {
                 // Устанавливаем начало транзакции
-                this.StartTransaction();
+                StartTransaction();
 
                 // Отправляем запрос
                 Modbus.OSIModel.DataLinkLayer.RequestError error =
@@ -514,7 +506,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Master
                     case Modbus.OSIModel.DataLinkLayer.RequestError.NoError:
                         {
                             // Разбираем сообщение на предмет ошибок
-                            if (this.IsError(request, answer, out result))
+                            if (IsError(request, answer, out result))
                             {
                                 // Ошибка была
                                 values = null;
@@ -571,11 +563,10 @@ namespace Modbus.OSIModel.ApplicationLayer.Master
                             break;
                         }
                 }
-                this.StopTransaction();
+                StopTransaction();
                 return result;
             }
         }
-        //---------------------------------------------------------------------------
         /// <summary>
         /// Функция 0х3. Читает holding-регистры
         /// в удалённом устройстве
@@ -597,9 +588,8 @@ namespace Modbus.OSIModel.ApplicationLayer.Master
             frame.AddDataBytesRange(Convert.ConvertToBytes(Quantity));
 
             Message.Message request = new Message.Message(AddressSlave, frame);
-            return this.ReadHoldingRegisters(request, out values);
+            return ReadHoldingRegisters(request, out values);
         }
-        //---------------------------------------------------------------------------
         /// <summary>
         /// Функция 0х3. Формирует сообщение для организации запроса чтения
         /// holding-регистров в физическом устройстве
@@ -691,12 +681,12 @@ namespace Modbus.OSIModel.ApplicationLayer.Master
             {
                 throw new Exception(String.Format(
                     "Попытка выполнить запрос (код функции 0x4) к серверу {0}, во время выполнения предыдущего",
-                    this.Name));
+                    Name));
             }
             else
             {
                 // Устанавливаем начало транзакции
-                this.StartTransaction();
+                StartTransaction();
 
                 // Отправляем запрос
                 Modbus.OSIModel.DataLinkLayer.RequestError error =
@@ -707,7 +697,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Master
                     case Modbus.OSIModel.DataLinkLayer.RequestError.NoError:
                         {
                             // Разбираем сообщение на предмет ошибок
-                            if (this.IsError(request, answer, out result))
+                            if (IsError(request, answer, out result))
                             {
                                 // Ошибка была
                                 values = null;
@@ -764,11 +754,10 @@ namespace Modbus.OSIModel.ApplicationLayer.Master
                             break;
                         }
                 }
-                this.StopTransaction();
+                StopTransaction();
                 return result;
             }
         }
-        //---------------------------------------------------------------------------
         /// <summary>
         /// Функция 0х5. Устанавливает реле в состояние вкл./выкл. 
         /// в удалённом устройстве
@@ -789,10 +778,10 @@ namespace Modbus.OSIModel.ApplicationLayer.Master
             {
                 return result = new Message.Result(Error.IllegalReguest,
                     String.Format("Попытка выполнить запрос (код функции 0x5) к серверу {0}, во время выполнения предыдущего",
-                    this.Name), null, null);
+                    Name), null, null);
                 //throw new Exception(String.Format(
                 //    "Попытка выполнить запрос (код функции 0x5) к серверу {0}, во время выполнения предыдущего",
-                //    this.Name));
+                //    Name));
             }
             else
             {
@@ -806,7 +795,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Master
                 {
 
                     // Устанавливаем начало транзакции
-                    this.StartTransaction();
+                    StartTransaction();
 
                     // Подготавливаем данные
                     List<byte> array = new List<byte>();
@@ -837,7 +826,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Master
                         case Modbus.OSIModel.DataLinkLayer.RequestError.NoError:
                             {
                                 // Разбираем сообщение на предмет ошибок
-                                if (this.IsError(request, answer, out result))
+                                if (IsError(request, answer, out result))
                                 {
                                     // Ошибка была
                                     break;
@@ -902,7 +891,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Master
                                 break;
                             }
                     }
-                    this.StopTransaction();
+                    StopTransaction();
                     return result;
                 }
             }
@@ -927,15 +916,15 @@ namespace Modbus.OSIModel.ApplicationLayer.Master
                 value = 0;
                 return result = new Message.Result(Error.IllegalReguest,
                     String.Format("Попытка выполнить запрос (код функции 0x6) к серверу {0}, во время выполнения предыдущего",
-                    this.Name), null, null);
+                    Name), null, null);
                 //throw new Exception(String.Format(
                 //    "Попытка выполнить запрос (код функции 0x6) к серверу {0}, во время выполнения предыдущего",
-                //    this.Name));
+                //    Name));
             }
             else
             {
                 // Устанавливаем начало транзакции
-                this.StartTransaction();
+                StartTransaction();
 
                 // Отправляем запрос
                 Modbus.OSIModel.DataLinkLayer.RequestError error =
@@ -946,7 +935,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Master
                     case Modbus.OSIModel.DataLinkLayer.RequestError.NoError:
                         {
                             // Разбираем сообщение на предмет ошибок
-                            if (this.IsError(request, answer, out result))
+                            if (IsError(request, answer, out result))
                             {
                                 // Ошибка была
                                 value = 0;
@@ -1009,11 +998,10 @@ namespace Modbus.OSIModel.ApplicationLayer.Master
                             break;
                         }
                 }
-                this.StopTransaction();
+                StopTransaction();
                 return result;
             }
         }
-        //---------------------------------------------------------------------------
         /// <summary>
         /// Функция 0x6. Формирует запрос на запись регистра хранения
         /// в физическом устройстве
@@ -1029,9 +1017,8 @@ namespace Modbus.OSIModel.ApplicationLayer.Master
             ref ushort value)
         {
             Message.Message msg = Device.WriteSingleRegister(addressSlave, addressRegister, value);
-            return this.WriteSingleRegister(msg, ref value); 
+            return WriteSingleRegister(msg, ref value); 
         }
-        //---------------------------------------------------------------------------
         /// <summary>
         /// Функция 0x6. Формирует запрос на запись регистра хранения
         /// в физическом устройстве
@@ -1180,12 +1167,12 @@ namespace Modbus.OSIModel.ApplicationLayer.Master
             {
                 return result = new Message.Result(Error.IllegalReguest,
                     String.Format("Попытка выполнить запрос (код функции 0x0F) к серверу {0}, во время выполнения предыдущего",
-                    this.Name), null, null);
+                    Name), null, null);
             }
             else
             {
                 // Устанавливаем начало транзакции
-                this.StartTransaction();
+                StartTransaction();
 
                 // Отправляем запрос
                 Modbus.OSIModel.DataLinkLayer.RequestError error =
@@ -1196,7 +1183,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Master
                     case Modbus.OSIModel.DataLinkLayer.RequestError.NoError:
                         {
                             // Разбираем сообщение на предмет ошибок
-                            if (this.IsError(request, answer, out result))
+                            if (IsError(request, answer, out result))
                             {
                                 // Ошибка была
                                 break;
@@ -1265,7 +1252,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Master
                             break;
                         }
                 }
-                this.StopTransaction();
+                StopTransaction();
                 return result;
             }   
         }
@@ -1323,12 +1310,12 @@ namespace Modbus.OSIModel.ApplicationLayer.Master
             {
                 return result = new Message.Result(Error.IllegalReguest,
                     String.Format("Попытка выполнить запрос (код функции 0x10) к серверу {0}, во время выполнения предыдущего",
-                    this.Name), null, null);
+                    Name), null, null);
             }
             else
             {
                 // Устанавливаем начало транзакции
-                this.StartTransaction();
+                StartTransaction();
 
                 // Отправляем запрос
                 Modbus.OSIModel.DataLinkLayer.RequestError error =
@@ -1339,7 +1326,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Master
                     case Modbus.OSIModel.DataLinkLayer.RequestError.NoError:
                         {
                             // Разбираем сообщение на предмет ошибок
-                            if (this.IsError(request, answer, out result))
+                            if (IsError(request, answer, out result))
                             {
                                 // Ошибка была
                                 break;
@@ -1408,11 +1395,10 @@ namespace Modbus.OSIModel.ApplicationLayer.Master
                             break;
                         }
                 }
-                this.StopTransaction();
+                StopTransaction();
                 return result;
             }           
         }
-        //---------------------------------------------------------------------------
         /// <summary>
         /// Функция 16 (0х10). Записывает значения массива регистров
         /// </summary>
@@ -1424,7 +1410,6 @@ namespace Modbus.OSIModel.ApplicationLayer.Master
         {
             throw new NotImplementedException();
         }
-        //---------------------------------------------------------------------------
         /// <summary>
         /// Функция 17 (0х11). Только для последовательной линии.
         /// Не разбирался.
@@ -1434,7 +1419,6 @@ namespace Modbus.OSIModel.ApplicationLayer.Master
         {
             throw new NotImplementedException();
         }
-        //---------------------------------------------------------------------------
         /// <summary>
         /// Функция 20 (0х14). С функцией не разбирался
         /// </summary>
@@ -1442,7 +1426,6 @@ namespace Modbus.OSIModel.ApplicationLayer.Master
         {
             throw new NotImplementedException();
         }
-        //---------------------------------------------------------------------------
         /// <summary>
         /// Функция 21 (0х15). С функцией не разбирался
         /// </summary>
@@ -1450,7 +1433,6 @@ namespace Modbus.OSIModel.ApplicationLayer.Master
         {
             throw new NotImplementedException();
         }
-        //---------------------------------------------------------------------------
         /// <summary>
         /// Функция 22 (0х16). С функцией не разбирался
         /// </summary>
@@ -1464,7 +1446,6 @@ namespace Modbus.OSIModel.ApplicationLayer.Master
         {
             throw new NotImplementedException();
         }
-        //---------------------------------------------------------------------------
         /// <summary>
         /// Функция 23 (0х17). С функцией не разбирался
         /// </summary>
@@ -1482,7 +1463,6 @@ namespace Modbus.OSIModel.ApplicationLayer.Master
         {
             throw new NotImplementedException();
         }
-        //---------------------------------------------------------------------------
         /// <summary>
         /// Функция 24 (0х18). С Функцией не разбирался
         /// </summary>
@@ -1493,7 +1473,6 @@ namespace Modbus.OSIModel.ApplicationLayer.Master
         {
             throw new NotImplementedException();
         }
-        //---------------------------------------------------------------------------
         /// <summary>
         /// Метод отсылает запрос с определённым пользователем
         /// кодом и данными.
@@ -1514,11 +1493,11 @@ namespace Modbus.OSIModel.ApplicationLayer.Master
             {
                 throw new Exception(String.Format(
                     "Попытка выполнить запрос User defined к серверу {0}, во время выполнения предыдущего",
-                    this.Name));
+                    Name));
             }
             else
             {
-                this.StartTransaction();
+                StartTransaction();
 
                 request = new Modbus.OSIModel.Message.Message(address, code, data);
  
@@ -1531,7 +1510,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Master
                     case Modbus.OSIModel.DataLinkLayer.RequestError.NoError:
                         {
                             // Разбираем сообщение на предмет ошибок
-                            if (this.IsError(request, answer, out result))
+                            if (IsError(request, answer, out result))
                             {
                                 // Ошибка была
                                 break;
@@ -1559,11 +1538,10 @@ namespace Modbus.OSIModel.ApplicationLayer.Master
                             break;
                         }
                 }
-                this.StopTransaction();
+                StopTransaction();
                 return result;
             }
         }
-        //---------------------------------------------------------------------------
         /// <summary>
         /// Возвращает интерфейс объекта уровня Datalink layer
         /// </summary>
@@ -1571,25 +1549,18 @@ namespace Modbus.OSIModel.ApplicationLayer.Master
         {
             get { return _dataLinkObject; }
         }
-        //---------------------------------------------------------------------------
         /// <summary>
         /// Возвращает интерфейс объекта уровня Datalink layer
         /// </summary>
         /// <returns></returns>
         public Modbus.OSIModel.DataLinkLayer.Master.IDataLinkLayer GetDataLinkObject()
         {
-            return this._dataLinkObject;
+            return _dataLinkObject;
         }
-        //---------------------------------------------------------------------------
         public Boolean IsBusy()
         {
-            return this._flgBusy;
+            return _flgBusy;
         }
-        //---------------------------------------------------------------------------
         #endregion
-        //---------------------------------------------------------------------------
     }
-    //===============================================================================
 }
-//===================================================================================
-// End of file

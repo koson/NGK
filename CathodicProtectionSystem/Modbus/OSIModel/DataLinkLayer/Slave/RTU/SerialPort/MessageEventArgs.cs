@@ -1,18 +1,14 @@
 ﻿using System;
 using Modbus.OSIModel.Message;
 
-//===================================================================================
 namespace Modbus.OSIModel.DataLinkLayer.Slave.RTU.ComPort
 {
-    //===============================================================================
     /// <summary>
     /// Класс для создания аргументов при событии отправки или приёма сообщения
     /// </summary>
     public class MessageEventArgs
     {
-        //---------------------------------------------------------------------------
         Message.Message _Message;
-        //---------------------------------------------------------------------------
         /// <summary>
         /// Отправленное сообщение
         /// </summary>
@@ -21,15 +17,13 @@ namespace Modbus.OSIModel.DataLinkLayer.Slave.RTU.ComPort
             get { return _Message; }
             set { _Message = value; }
         }
-        //---------------------------------------------------------------------------
         /// <summary>
         /// Конструктор
         /// </summary>
         public MessageEventArgs()
         {
-            this.Message = new Message.Message(0, new PDU());
+            Message = new Message.Message(0, new PDU());
         }
-        //---------------------------------------------------------------------------
         /// <summary>
         /// Конструктор
         /// </summary>
@@ -37,11 +31,7 @@ namespace Modbus.OSIModel.DataLinkLayer.Slave.RTU.ComPort
         /// мастеру или принятое от него</param>
         public MessageEventArgs(Message.Message message)
         {
-            this.Message = message;
+            Message = message;
         }
-        //---------------------------------------------------------------------------
     }
-    //===============================================================================
 }
-//===================================================================================
-// End of file

@@ -43,7 +43,7 @@ namespace Modbus.OSIModel.DataLinkLayer.Slave.RTU.ComPort
         /// </summary>
         public Transaction.Transaction СurrentTransaction
         {
-            get { return this._СurrentTransaction.DeepCopy(); }
+            get { return _СurrentTransaction.DeepCopy(); }
         }
         /// <summary>
         /// Таймер определения конца запроса
@@ -69,32 +69,32 @@ namespace Modbus.OSIModel.DataLinkLayer.Slave.RTU.ComPort
         /// </summary>
         public ComPort()
         {
-            this._SyncRoot = new Object();
-            this._СurrentTransaction = 
+            _SyncRoot = new Object();
+            _СurrentTransaction = 
                 new Modbus.OSIModel.Transaction.Transaction(TransactionType.Undefined, null);
 
-            this._TimerInterFrameDelay = new Timer(20);
-            this._TimerInterFrameDelay.AutoReset = false;
-            this._TimerInterFrameDelay.Elapsed +=
+            _TimerInterFrameDelay = new Timer(20);
+            _TimerInterFrameDelay.AutoReset = false;
+            _TimerInterFrameDelay.Elapsed +=
                 new ElapsedEventHandler(EventHandler_TmrInterFrameDelay_Elapsed);
-            this._TimerInterFrameDelay.Stop();
+            _TimerInterFrameDelay.Stop();
 
-            this._TimerTimeoutCurrentTransaction = new Timer();
-            this._TimerTimeoutCurrentTransaction.AutoReset = false;
-            this._TimerTimeoutCurrentTransaction.Interval = 200;
-            this._TimerTimeoutCurrentTransaction.Elapsed +=
+            _TimerTimeoutCurrentTransaction = new Timer();
+            _TimerTimeoutCurrentTransaction.AutoReset = false;
+            _TimerTimeoutCurrentTransaction.Interval = 200;
+            _TimerTimeoutCurrentTransaction.Elapsed +=
                 new ElapsedEventHandler(EventHandler_TimerTimeoutCurrentTransaction_Elapsed);
-            this._TimerTimeoutCurrentTransaction.Stop();
+            _TimerTimeoutCurrentTransaction.Stop();
 
             // Настраиваем последовательный порт
-            this._SerialPort =
+            _SerialPort =
                 new System.IO.Ports.SerialPort("COM1", 19200, Parity.Even, 8, StopBits.One);
             
-            this._SerialPort.ErrorReceived += new
+            _SerialPort.ErrorReceived += new
                 SerialErrorReceivedEventHandler(EventHandler_SerialPort_ErrorReceived);
-            this._SerialPort.DataReceived +=
+            _SerialPort.DataReceived +=
                 new SerialDataReceivedEventHandler(EventHandler_SerialPort_DataReceived);
-            this._SerialPort.ReceivedBytesThreshold = 1;
+            _SerialPort.ReceivedBytesThreshold = 1;
         }
         //---------------------------------------------------------------------------
         /// <summary>
@@ -109,32 +109,32 @@ namespace Modbus.OSIModel.DataLinkLayer.Slave.RTU.ComPort
             int baudRate, Parity parity,
             int dataBits, StopBits stopBits)
         {
-            this._SyncRoot = new Object();
-            this._СurrentTransaction =
+            _SyncRoot = new Object();
+            _СurrentTransaction =
                 new Modbus.OSIModel.Transaction.Transaction(TransactionType.Undefined, null);
 
-            this._TimerInterFrameDelay = new Timer(20);
-            this._TimerInterFrameDelay.AutoReset = false;
-            this._TimerInterFrameDelay.Elapsed +=
+            _TimerInterFrameDelay = new Timer(20);
+            _TimerInterFrameDelay.AutoReset = false;
+            _TimerInterFrameDelay.Elapsed +=
                 new ElapsedEventHandler(EventHandler_TmrInterFrameDelay_Elapsed);
-            this._TimerInterFrameDelay.Stop();
+            _TimerInterFrameDelay.Stop();
 
-            this._TimerTimeoutCurrentTransaction = new Timer();
-            this._TimerTimeoutCurrentTransaction.AutoReset = false;
-            this._TimerTimeoutCurrentTransaction.Interval = 200;
-            this._TimerTimeoutCurrentTransaction.Elapsed += 
+            _TimerTimeoutCurrentTransaction = new Timer();
+            _TimerTimeoutCurrentTransaction.AutoReset = false;
+            _TimerTimeoutCurrentTransaction.Interval = 200;
+            _TimerTimeoutCurrentTransaction.Elapsed += 
                 new ElapsedEventHandler(EventHandler_TimerTimeoutCurrentTransaction_Elapsed);
-            this._TimerTimeoutCurrentTransaction.Stop();
+            _TimerTimeoutCurrentTransaction.Stop();
 
             // Настраиваем последовательный порт
-            this._SerialPort =
+            _SerialPort =
                 new System.IO.Ports.SerialPort(portName, baudRate,
                     parity, dataBits, stopBits);
-            this._SerialPort.ErrorReceived += new
+            _SerialPort.ErrorReceived += new
                 SerialErrorReceivedEventHandler(EventHandler_SerialPort_ErrorReceived);
-            this._SerialPort.DataReceived +=
+            _SerialPort.DataReceived +=
                 new SerialDataReceivedEventHandler(EventHandler_SerialPort_DataReceived);
-            this._SerialPort.ReceivedBytesThreshold = 1;
+            _SerialPort.ReceivedBytesThreshold = 1;
         }
         //---------------------------------------------------------------------------
         #endregion
@@ -150,15 +150,15 @@ namespace Modbus.OSIModel.DataLinkLayer.Slave.RTU.ComPort
         {
             String msg;
             Timer timer = (Timer)sender;
-            Debug.WriteLine("Timer Elapsed: " + this._TimerTimeoutCurrentTransaction.Enabled.ToString());
+            Debug.WriteLine("Timer Elapsed: " + _TimerTimeoutCurrentTransaction.Enabled.ToString());
             timer.Stop();
             
             // Прерываем текущую транзакцию.
-            if (this._СurrentTransaction.TransactionType == TransactionType.UnicastMode)
+            if (_СurrentTransaction.TransactionType == TransactionType.UnicastMode)
             {
-                if (this._СurrentTransaction.IsRunning)
+                if (_СurrentTransaction.IsRunning)
                 {
-                    this._СurrentTransaction.Abort("Подчинённое устройство не ответило за заданное время");
+                    _СurrentTransaction.Abort("Подчинённое устройство не ответило за заданное время");
                 }
                 else
                 {
@@ -192,8 +192,8 @@ namespace Modbus.OSIModel.DataLinkLayer.Slave.RTU.ComPort
 
             // Таймер сработал, значит сообщение (запрос) 
             // принят полностью считаем CRC16            
-            message = new byte[this._SerialPort.BytesToRead];
-            this._SerialPort.Read(message, 0, this._SerialPort.BytesToRead);
+            message = new byte[_SerialPort.BytesToRead];
+            _SerialPort.Read(message, 0, _SerialPort.BytesToRead);
 
             if (true == Modbus.OSIModel.DataLinkLayer.CRC16.VerefyCRC16(message))
             {
@@ -206,29 +206,29 @@ namespace Modbus.OSIModel.DataLinkLayer.Slave.RTU.ComPort
                 if (request.Address == 0)
                 {
                     // Формируем событие приёма широковещаетельного запроса
-                    this._СurrentTransaction = new Transaction.Transaction(
+                    _СurrentTransaction = new Transaction.Transaction(
                         TransactionType.BroadcastMode, request);
-                    this._СurrentTransaction.TransactionWasEnded += 
+                    _СurrentTransaction.TransactionWasEnded += 
                         new EventHandler(EventHandler_СurrentTransaction_TransactionWasEnded);
-                    this._СurrentTransaction.Start(); // Стартуем транзакцию
-                    this.OnRequestWasRecived(new MessageEventArgs(request));
+                    _СurrentTransaction.Start(); // Стартуем транзакцию
+                    OnRequestWasRecived(new MessageEventArgs(request));
                     // ??? Можно было бы запустить таймер задержки при широковещаетльном запросе
                     // Сейчас не реализовано. По этому, завершам транзакцию сразу.
-                    this._СurrentTransaction.Stop(null); // Завершает транзакцию 
+                    _СurrentTransaction.Stop(null); // Завершает транзакцию 
                 }
                 else
                 {
-                    this._СurrentTransaction = new Transaction.Transaction(
+                    _СurrentTransaction = new Transaction.Transaction(
                         TransactionType.UnicastMode, request);
-                    this._СurrentTransaction.TransactionWasEnded +=
+                    _СurrentTransaction.TransactionWasEnded +=
                         new EventHandler(EventHandler_СurrentTransaction_TransactionWasEnded);
-                    this._СurrentTransaction.Start();
+                    _СurrentTransaction.Start();
                     // Запускаем таймер таймаута ответа подчинённого устройства
-                    this._TimerTimeoutCurrentTransaction.Start();
+                    _TimerTimeoutCurrentTransaction.Start();
                     // Формируем событие приёма адресованного запроса. 
                     // Транзакция здесь продолжается до тех пор, покак не будет
                     // отправлен ответ.
-                    this.OnRequestWasRecived(new MessageEventArgs(request));
+                    OnRequestWasRecived(new MessageEventArgs(request));
                 }
             }
             else
@@ -290,8 +290,8 @@ namespace Modbus.OSIModel.DataLinkLayer.Slave.RTU.ComPort
                     }
             }
 
-            //this._SerialPort.DiscardOutBuffer();
-            //this._SerialPort.DiscardInBuffer();
+            //_SerialPort.DiscardOutBuffer();
+            //_SerialPort.DiscardInBuffer();
 
             return;
         }
@@ -307,11 +307,11 @@ namespace Modbus.OSIModel.DataLinkLayer.Slave.RTU.ComPort
             StringBuilder sb;
             
             // Сбрасываем межкадровый таймер
-            this._TimerInterFrameDelay.Stop();
+            _TimerInterFrameDelay.Stop();
 
-            if (!this._СurrentTransaction.IsRunning)
+            if (!_СurrentTransaction.IsRunning)
             {
-                if (this._SerialPort.BytesToRead == 0)
+                if (_SerialPort.BytesToRead == 0)
                 {
                     Debug.WriteLine("Принята нулевая посылка");
                     return;
@@ -320,17 +320,17 @@ namespace Modbus.OSIModel.DataLinkLayer.Slave.RTU.ComPort
                 {
                     // После принятия очердной порции байт запроса
                     // Запускаем межкадровый таймер
-                    this._TimerInterFrameDelay.Start();
+                    _TimerInterFrameDelay.Start();
                 }
             }
             else
             {
                 // Принято сообщение при активной транзакции обработке ранее принятого
                 // сообщения. Прочитали (опустошили буфер) и забыли
-                if (this._SerialPort.BytesToRead != 0)
+                if (_SerialPort.BytesToRead != 0)
                 {
-                    data = new byte[this._SerialPort.BytesToRead];
-                    this._SerialPort.Read(data, 0, data.Length);
+                    data = new byte[_SerialPort.BytesToRead];
+                    _SerialPort.Read(data, 0, data.Length);
                 }
                 else
                 {
@@ -340,14 +340,14 @@ namespace Modbus.OSIModel.DataLinkLayer.Slave.RTU.ComPort
                 // Генерируем события ошибки
                 sb = new StringBuilder(50);
                 sb.AppendFormat("Modbus ComPort {0} Приняты данные при активной транзакции запрос-ответ: ", 
-                    this._SerialPort.PortName);
+                    _SerialPort.PortName);
 
                 foreach (Byte var in data)
                 {
                     sb.AppendFormat("0x{0:X2} ", var);                    
                 }
 
-                this.OnErrorOccurred(new ErrorOccurredEventArgs(
+                OnErrorOccurred(new ErrorOccurredEventArgs(
                     PortError.TransatcionError, sb.ToString().Trim()));
             }
 
@@ -366,21 +366,21 @@ namespace Modbus.OSIModel.DataLinkLayer.Slave.RTU.ComPort
             _error = (PortError)e.EventType;
 
             msg = String.Format(
-                "Modbus ComPort {0}. Ошибка при приёме данных", this._SerialPort.PortName);
+                "Modbus ComPort {0}. Ошибка при приёме данных", _SerialPort.PortName);
 
             // Останавливаем таймер
-            this._TimerInterFrameDelay.Stop();
+            _TimerInterFrameDelay.Stop();
 
-            if (this._СurrentTransaction != null)
+            if (_СurrentTransaction != null)
             {
-                if (this._СurrentTransaction.IsRunning)
+                if (_СurrentTransaction.IsRunning)
                 {
-                    this._СurrentTransaction.Abort(msg);
+                    _СurrentTransaction.Abort(msg);
                 }
             }
           
             // Генерируем соыбытие
-            this.OnErrorOccurred(new ErrorOccurredEventArgs(_error, msg));
+            OnErrorOccurred(new ErrorOccurredEventArgs(_error, msg));
             return;
         }
         /// <summary>
@@ -389,7 +389,7 @@ namespace Modbus.OSIModel.DataLinkLayer.Slave.RTU.ComPort
         /// <param name="args"></param>
         private void OnRequestWasRecived(MessageEventArgs args)
         {
-            EventHandlerRequestWasRecived handler = this.RequestWasRecived;
+            EventHandlerRequestWasRecived handler = RequestWasRecived;
 
             if (handler != null)
             {
@@ -423,7 +423,7 @@ namespace Modbus.OSIModel.DataLinkLayer.Slave.RTU.ComPort
         /// <param name="args">Аргументы события</param>
         private void OnResponseWasSent(MessageEventArgs args)
         {
-            EventHandleResponseWasSent handler = this.ResponseWasSent;
+            EventHandleResponseWasSent handler = ResponseWasSent;
 
             if (handler != null)
             {
@@ -457,7 +457,7 @@ namespace Modbus.OSIModel.DataLinkLayer.Slave.RTU.ComPort
         /// <param name="args">Аргументы события</param>
         private void OnErrorOccurred(ErrorOccurredEventArgs args)
         {
-            EventHandlerErrorOccurred handle = this.ErrorOccurred;
+            EventHandlerErrorOccurred handle = ErrorOccurred;
 
             if (handle != null)
             {
@@ -490,21 +490,21 @@ namespace Modbus.OSIModel.DataLinkLayer.Slave.RTU.ComPort
         /// </summary>
         public void Dispose()
         {
-            if (this._TimerInterFrameDelay != null)
+            if (_TimerInterFrameDelay != null)
             {
-                this._TimerInterFrameDelay.Stop();
-                this._TimerInterFrameDelay.Dispose();
+                _TimerInterFrameDelay.Stop();
+                _TimerInterFrameDelay.Dispose();
             }
             
-            if (this._TimerTimeoutCurrentTransaction != null)
+            if (_TimerTimeoutCurrentTransaction != null)
             {
-                this._TimerTimeoutCurrentTransaction.Stop();
-                this._TimerTimeoutCurrentTransaction.Dispose();
+                _TimerTimeoutCurrentTransaction.Stop();
+                _TimerTimeoutCurrentTransaction.Dispose();
             }
 
-            if (this._SerialPort != null)
+            if (_SerialPort != null)
             {
-                this.SerialPort.Dispose();
+                SerialPort.Dispose();
             }
             return;
         }
@@ -529,26 +529,26 @@ namespace Modbus.OSIModel.DataLinkLayer.Slave.RTU.ComPort
 
         public void Open()
         {
-            this._SerialPort.Open();
+            _SerialPort.Open();
         }
 
         public void Close()
         {
-            this._SerialPort.Close();
+            _SerialPort.Close();
         }
 
         public void SendResponse(Message.Message answer)
         {
             // Останавливаем таймер таймаута
-            this._TimerTimeoutCurrentTransaction.Stop();
+            _TimerTimeoutCurrentTransaction.Stop();
            
             Byte[] array = answer.ToArray();
             // Отсылаем ответ
             _SerialPort.Write(array, 0, array.Length);
             // Останавливаем транзакцию
-            this._СurrentTransaction.Stop(answer);
+            _СurrentTransaction.Stop(answer);
             // Формирует событие
-            this.OnResponseWasSent(new MessageEventArgs(answer));
+            OnResponseWasSent(new MessageEventArgs(answer));
 
             return;
         }
@@ -565,7 +565,7 @@ namespace Modbus.OSIModel.DataLinkLayer.Slave.RTU.ComPort
         {
             get
             {
-                return this._SerialPort.IsOpen;
+                return _SerialPort.IsOpen;
             }
         }
 
@@ -591,14 +591,14 @@ namespace Modbus.OSIModel.DataLinkLayer.Slave.RTU.ComPort
             {
                 lock (_SyncRoot)
                 {
-                    this.RequestWasRecived += value;
+                    RequestWasRecived += value;
                 }
             }
             remove 
             {
                 lock (_SyncRoot)
                 {
-                    this.RequestWasRecived -= value;
+                    RequestWasRecived -= value;
                 }
             }
         }
@@ -607,16 +607,16 @@ namespace Modbus.OSIModel.DataLinkLayer.Slave.RTU.ComPort
         {
             add 
             {
-                lock (this._SyncRoot)
+                lock (_SyncRoot)
                 {
-                    this.ResponseWasSent += value;
+                    ResponseWasSent += value;
                 }
             }
             remove 
             {
-                lock (this._SyncRoot)
+                lock (_SyncRoot)
                 {
-                    this.ResponseWasSent -= value;
+                    ResponseWasSent -= value;
                 }
             }
         }
@@ -627,14 +627,14 @@ namespace Modbus.OSIModel.DataLinkLayer.Slave.RTU.ComPort
             {
                 lock (_SyncRoot)
                 {
-                    this.ErrorOccurred += value;
+                    ErrorOccurred += value;
                 }
             }
             remove 
             {
                 lock (_SyncRoot)
                 {
-                    this.ErrorOccurred -= value;
+                    ErrorOccurred -= value;
                 }
             }
         }

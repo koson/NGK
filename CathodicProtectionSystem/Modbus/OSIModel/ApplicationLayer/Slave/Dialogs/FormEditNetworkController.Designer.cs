@@ -28,472 +28,472 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.Dialogs
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            this._MenuStripMain = new System.Windows.Forms.MenuStrip();
-            this._StatusStripMain = new System.Windows.Forms.StatusStrip();
-            this._SplitContainerMain = new System.Windows.Forms.SplitContainer();
-            this._DataGridViewDevicesList = new System.Windows.Forms.DataGridView();
-            this._ContextMenuStripDevicesList = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this._ToolStripMenuItemAddDevice = new System.Windows.Forms.ToolStripMenuItem();
-            this._ToolStripMenuItemRemoveDevice = new System.Windows.Forms.ToolStripMenuItem();
-            this._TabControlDevice = new System.Windows.Forms.TabControl();
-            this._TabPageHoldingRegisters = new System.Windows.Forms.TabPage();
-            this._DataGridViewHoldingRegisters = new System.Windows.Forms.DataGridView();
-            this._ContextMenuStripHoldingRegisters = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this._ToolStripMenuItemAddHoldingRegister = new System.Windows.Forms.ToolStripMenuItem();
-            this._ToolStripMenuItemRemoveHoldingRegister = new System.Windows.Forms.ToolStripMenuItem();
-            this._TabPageInputRegisters = new System.Windows.Forms.TabPage();
-            this._DataGridViewInputRegisters = new System.Windows.Forms.DataGridView();
-            this._ContextMenuStripInputRegisters = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this._ToolStripMenuItemAddInputRegister = new System.Windows.Forms.ToolStripMenuItem();
-            this._ToolStripMenuItemRemoveInputRegister = new System.Windows.Forms.ToolStripMenuItem();
-            this._TabPageCoils = new System.Windows.Forms.TabPage();
-            this._DataGridViewCoils = new System.Windows.Forms.DataGridView();
-            this._ContextMenuStripCoils = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this._ToolStripMenuItemAddCoil = new System.Windows.Forms.ToolStripMenuItem();
-            this._ToolStripMenuItemRemoveCoil = new System.Windows.Forms.ToolStripMenuItem();
-            this._TabPageDiscretesInputs = new System.Windows.Forms.TabPage();
-            this._DataGridViewDiscretesInputs = new System.Windows.Forms.DataGridView();
-            this._ContextMenuStripDiscretesInputs = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this._ToolStripMenuItemAddDiscreteInput = new System.Windows.Forms.ToolStripMenuItem();
-            this._ToolStripMenuItemRemoveDiscreteInput = new System.Windows.Forms.ToolStripMenuItem();
-            this._TabPageFiles = new System.Windows.Forms.TabPage();
-            this._SplitContainerFiles = new System.Windows.Forms.SplitContainer();
-            this._DataGridViewFiles = new System.Windows.Forms.DataGridView();
-            this._ContextMenuStripFiles = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this._ToolStripMenuItemAddFile = new System.Windows.Forms.ToolStripMenuItem();
-            this._ToolStripMenuItemRemoveFile = new System.Windows.Forms.ToolStripMenuItem();
-            this._DataGridViewRecords = new System.Windows.Forms.DataGridView();
-            this._ContextMenuStripRecords = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this._ToolStripMenuItemAddRecord = new System.Windows.Forms.ToolStripMenuItem();
-            this._ToolStripMenuItemRemoveRecord = new System.Windows.Forms.ToolStripMenuItem();
-            this._SplitContainerMain.Panel1.SuspendLayout();
-            this._SplitContainerMain.Panel2.SuspendLayout();
-            this._SplitContainerMain.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this._DataGridViewDevicesList)).BeginInit();
-            this._ContextMenuStripDevicesList.SuspendLayout();
-            this._TabControlDevice.SuspendLayout();
-            this._TabPageHoldingRegisters.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this._DataGridViewHoldingRegisters)).BeginInit();
-            this._ContextMenuStripHoldingRegisters.SuspendLayout();
-            this._TabPageInputRegisters.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this._DataGridViewInputRegisters)).BeginInit();
-            this._ContextMenuStripInputRegisters.SuspendLayout();
-            this._TabPageCoils.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this._DataGridViewCoils)).BeginInit();
-            this._ContextMenuStripCoils.SuspendLayout();
-            this._TabPageDiscretesInputs.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this._DataGridViewDiscretesInputs)).BeginInit();
-            this._ContextMenuStripDiscretesInputs.SuspendLayout();
-            this._TabPageFiles.SuspendLayout();
-            this._SplitContainerFiles.Panel1.SuspendLayout();
-            this._SplitContainerFiles.Panel2.SuspendLayout();
-            this._SplitContainerFiles.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this._DataGridViewFiles)).BeginInit();
-            this._ContextMenuStripFiles.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this._DataGridViewRecords)).BeginInit();
-            this._ContextMenuStripRecords.SuspendLayout();
-            this.SuspendLayout();
+            components = new System.ComponentModel.Container();
+            _MenuStripMain = new System.Windows.Forms.MenuStrip();
+            _StatusStripMain = new System.Windows.Forms.StatusStrip();
+            _SplitContainerMain = new System.Windows.Forms.SplitContainer();
+            _DataGridViewDevicesList = new System.Windows.Forms.DataGridView();
+            _ContextMenuStripDevicesList = new System.Windows.Forms.ContextMenuStrip(components);
+            _ToolStripMenuItemAddDevice = new System.Windows.Forms.ToolStripMenuItem();
+            _ToolStripMenuItemRemoveDevice = new System.Windows.Forms.ToolStripMenuItem();
+            _TabControlDevice = new System.Windows.Forms.TabControl();
+            _TabPageHoldingRegisters = new System.Windows.Forms.TabPage();
+            _DataGridViewHoldingRegisters = new System.Windows.Forms.DataGridView();
+            _ContextMenuStripHoldingRegisters = new System.Windows.Forms.ContextMenuStrip(components);
+            _ToolStripMenuItemAddHoldingRegister = new System.Windows.Forms.ToolStripMenuItem();
+            _ToolStripMenuItemRemoveHoldingRegister = new System.Windows.Forms.ToolStripMenuItem();
+            _TabPageInputRegisters = new System.Windows.Forms.TabPage();
+            _DataGridViewInputRegisters = new System.Windows.Forms.DataGridView();
+            _ContextMenuStripInputRegisters = new System.Windows.Forms.ContextMenuStrip(components);
+            _ToolStripMenuItemAddInputRegister = new System.Windows.Forms.ToolStripMenuItem();
+            _ToolStripMenuItemRemoveInputRegister = new System.Windows.Forms.ToolStripMenuItem();
+            _TabPageCoils = new System.Windows.Forms.TabPage();
+            _DataGridViewCoils = new System.Windows.Forms.DataGridView();
+            _ContextMenuStripCoils = new System.Windows.Forms.ContextMenuStrip(components);
+            _ToolStripMenuItemAddCoil = new System.Windows.Forms.ToolStripMenuItem();
+            _ToolStripMenuItemRemoveCoil = new System.Windows.Forms.ToolStripMenuItem();
+            _TabPageDiscretesInputs = new System.Windows.Forms.TabPage();
+            _DataGridViewDiscretesInputs = new System.Windows.Forms.DataGridView();
+            _ContextMenuStripDiscretesInputs = new System.Windows.Forms.ContextMenuStrip(components);
+            _ToolStripMenuItemAddDiscreteInput = new System.Windows.Forms.ToolStripMenuItem();
+            _ToolStripMenuItemRemoveDiscreteInput = new System.Windows.Forms.ToolStripMenuItem();
+            _TabPageFiles = new System.Windows.Forms.TabPage();
+            _SplitContainerFiles = new System.Windows.Forms.SplitContainer();
+            _DataGridViewFiles = new System.Windows.Forms.DataGridView();
+            _ContextMenuStripFiles = new System.Windows.Forms.ContextMenuStrip(components);
+            _ToolStripMenuItemAddFile = new System.Windows.Forms.ToolStripMenuItem();
+            _ToolStripMenuItemRemoveFile = new System.Windows.Forms.ToolStripMenuItem();
+            _DataGridViewRecords = new System.Windows.Forms.DataGridView();
+            _ContextMenuStripRecords = new System.Windows.Forms.ContextMenuStrip(components);
+            _ToolStripMenuItemAddRecord = new System.Windows.Forms.ToolStripMenuItem();
+            _ToolStripMenuItemRemoveRecord = new System.Windows.Forms.ToolStripMenuItem();
+            _SplitContainerMain.Panel1.SuspendLayout();
+            _SplitContainerMain.Panel2.SuspendLayout();
+            _SplitContainerMain.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(_DataGridViewDevicesList)).BeginInit();
+            _ContextMenuStripDevicesList.SuspendLayout();
+            _TabControlDevice.SuspendLayout();
+            _TabPageHoldingRegisters.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(_DataGridViewHoldingRegisters)).BeginInit();
+            _ContextMenuStripHoldingRegisters.SuspendLayout();
+            _TabPageInputRegisters.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(_DataGridViewInputRegisters)).BeginInit();
+            _ContextMenuStripInputRegisters.SuspendLayout();
+            _TabPageCoils.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(_DataGridViewCoils)).BeginInit();
+            _ContextMenuStripCoils.SuspendLayout();
+            _TabPageDiscretesInputs.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(_DataGridViewDiscretesInputs)).BeginInit();
+            _ContextMenuStripDiscretesInputs.SuspendLayout();
+            _TabPageFiles.SuspendLayout();
+            _SplitContainerFiles.Panel1.SuspendLayout();
+            _SplitContainerFiles.Panel2.SuspendLayout();
+            _SplitContainerFiles.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(_DataGridViewFiles)).BeginInit();
+            _ContextMenuStripFiles.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(_DataGridViewRecords)).BeginInit();
+            _ContextMenuStripRecords.SuspendLayout();
+            SuspendLayout();
             // 
             // _MenuStripMain
             // 
-            this._MenuStripMain.Location = new System.Drawing.Point(0, 0);
-            this._MenuStripMain.Name = "_MenuStripMain";
-            this._MenuStripMain.Size = new System.Drawing.Size(880, 24);
-            this._MenuStripMain.TabIndex = 0;
-            this._MenuStripMain.Text = "menuStrip1";
+            _MenuStripMain.Location = new System.Drawing.Point(0, 0);
+            _MenuStripMain.Name = "_MenuStripMain";
+            _MenuStripMain.Size = new System.Drawing.Size(880, 24);
+            _MenuStripMain.TabIndex = 0;
+            _MenuStripMain.Text = "menuStrip1";
             // 
             // _StatusStripMain
             // 
-            this._StatusStripMain.Location = new System.Drawing.Point(0, 434);
-            this._StatusStripMain.Name = "_StatusStripMain";
-            this._StatusStripMain.Size = new System.Drawing.Size(880, 22);
-            this._StatusStripMain.TabIndex = 1;
-            this._StatusStripMain.Text = "statusStrip1";
+            _StatusStripMain.Location = new System.Drawing.Point(0, 434);
+            _StatusStripMain.Name = "_StatusStripMain";
+            _StatusStripMain.Size = new System.Drawing.Size(880, 22);
+            _StatusStripMain.TabIndex = 1;
+            _StatusStripMain.Text = "statusStrip1";
             // 
             // _SplitContainerMain
             // 
-            this._SplitContainerMain.Dock = System.Windows.Forms.DockStyle.Fill;
-            this._SplitContainerMain.Location = new System.Drawing.Point(0, 24);
-            this._SplitContainerMain.Name = "_SplitContainerMain";
+            _SplitContainerMain.Dock = System.Windows.Forms.DockStyle.Fill;
+            _SplitContainerMain.Location = new System.Drawing.Point(0, 24);
+            _SplitContainerMain.Name = "_SplitContainerMain";
             // 
             // _SplitContainerMain.Panel1
             // 
-            this._SplitContainerMain.Panel1.Controls.Add(this._DataGridViewDevicesList);
+            _SplitContainerMain.Panel1.Controls.Add(_DataGridViewDevicesList);
             // 
             // _SplitContainerMain.Panel2
             // 
-            this._SplitContainerMain.Panel2.Controls.Add(this._TabControlDevice);
-            this._SplitContainerMain.Size = new System.Drawing.Size(880, 410);
-            this._SplitContainerMain.SplitterDistance = 292;
-            this._SplitContainerMain.TabIndex = 3;
+            _SplitContainerMain.Panel2.Controls.Add(_TabControlDevice);
+            _SplitContainerMain.Size = new System.Drawing.Size(880, 410);
+            _SplitContainerMain.SplitterDistance = 292;
+            _SplitContainerMain.TabIndex = 3;
             // 
             // _DataGridViewDevicesList
             // 
-            this._DataGridViewDevicesList.AllowUserToAddRows = false;
-            this._DataGridViewDevicesList.AllowUserToDeleteRows = false;
-            this._DataGridViewDevicesList.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this._DataGridViewDevicesList.ContextMenuStrip = this._ContextMenuStripDevicesList;
-            this._DataGridViewDevicesList.Dock = System.Windows.Forms.DockStyle.Fill;
-            this._DataGridViewDevicesList.Location = new System.Drawing.Point(0, 0);
-            this._DataGridViewDevicesList.Name = "_DataGridViewDevicesList";
-            this._DataGridViewDevicesList.RowTemplate.Height = 24;
-            this._DataGridViewDevicesList.Size = new System.Drawing.Size(292, 410);
-            this._DataGridViewDevicesList.TabIndex = 0;
+            _DataGridViewDevicesList.AllowUserToAddRows = false;
+            _DataGridViewDevicesList.AllowUserToDeleteRows = false;
+            _DataGridViewDevicesList.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            _DataGridViewDevicesList.ContextMenuStrip = _ContextMenuStripDevicesList;
+            _DataGridViewDevicesList.Dock = System.Windows.Forms.DockStyle.Fill;
+            _DataGridViewDevicesList.Location = new System.Drawing.Point(0, 0);
+            _DataGridViewDevicesList.Name = "_DataGridViewDevicesList";
+            _DataGridViewDevicesList.RowTemplate.Height = 24;
+            _DataGridViewDevicesList.Size = new System.Drawing.Size(292, 410);
+            _DataGridViewDevicesList.TabIndex = 0;
             // 
             // _ContextMenuStripDevicesList
             // 
-            this._ContextMenuStripDevicesList.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this._ToolStripMenuItemAddDevice,
-            this._ToolStripMenuItemRemoveDevice});
-            this._ContextMenuStripDevicesList.Name = "_ContextMenuStripTreeViewNetwork";
-            this._ContextMenuStripDevicesList.Size = new System.Drawing.Size(146, 52);
+            _ContextMenuStripDevicesList.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            _ToolStripMenuItemAddDevice,
+            _ToolStripMenuItemRemoveDevice});
+            _ContextMenuStripDevicesList.Name = "_ContextMenuStripTreeViewNetwork";
+            _ContextMenuStripDevicesList.Size = new System.Drawing.Size(146, 52);
             // 
             // _ToolStripMenuItemAddDevice
             // 
-            this._ToolStripMenuItemAddDevice.Name = "_ToolStripMenuItemAddDevice";
-            this._ToolStripMenuItemAddDevice.Size = new System.Drawing.Size(145, 24);
-            this._ToolStripMenuItemAddDevice.Text = "Добавить";
-            this._ToolStripMenuItemAddDevice.Click += new System.EventHandler(this.EventHandler_ToolStripMenuItemAddDevice_Click);
+            _ToolStripMenuItemAddDevice.Name = "_ToolStripMenuItemAddDevice";
+            _ToolStripMenuItemAddDevice.Size = new System.Drawing.Size(145, 24);
+            _ToolStripMenuItemAddDevice.Text = "Добавить";
+            _ToolStripMenuItemAddDevice.Click += new System.EventHandler(EventHandler_ToolStripMenuItemAddDevice_Click);
             // 
             // _ToolStripMenuItemRemoveDevice
             // 
-            this._ToolStripMenuItemRemoveDevice.Name = "_ToolStripMenuItemRemoveDevice";
-            this._ToolStripMenuItemRemoveDevice.Size = new System.Drawing.Size(145, 24);
-            this._ToolStripMenuItemRemoveDevice.Text = "Удалить";
-            this._ToolStripMenuItemRemoveDevice.Click += new System.EventHandler(this.EventHandler_ToolStripMenuItemRemoveDevice_Click);
+            _ToolStripMenuItemRemoveDevice.Name = "_ToolStripMenuItemRemoveDevice";
+            _ToolStripMenuItemRemoveDevice.Size = new System.Drawing.Size(145, 24);
+            _ToolStripMenuItemRemoveDevice.Text = "Удалить";
+            _ToolStripMenuItemRemoveDevice.Click += new System.EventHandler(EventHandler_ToolStripMenuItemRemoveDevice_Click);
             // 
             // _TabControlDevice
             // 
-            this._TabControlDevice.Controls.Add(this._TabPageHoldingRegisters);
-            this._TabControlDevice.Controls.Add(this._TabPageInputRegisters);
-            this._TabControlDevice.Controls.Add(this._TabPageCoils);
-            this._TabControlDevice.Controls.Add(this._TabPageDiscretesInputs);
-            this._TabControlDevice.Controls.Add(this._TabPageFiles);
-            this._TabControlDevice.Dock = System.Windows.Forms.DockStyle.Fill;
-            this._TabControlDevice.Location = new System.Drawing.Point(0, 0);
-            this._TabControlDevice.Name = "_TabControlDevice";
-            this._TabControlDevice.SelectedIndex = 0;
-            this._TabControlDevice.Size = new System.Drawing.Size(584, 410);
-            this._TabControlDevice.TabIndex = 0;
+            _TabControlDevice.Controls.Add(_TabPageHoldingRegisters);
+            _TabControlDevice.Controls.Add(_TabPageInputRegisters);
+            _TabControlDevice.Controls.Add(_TabPageCoils);
+            _TabControlDevice.Controls.Add(_TabPageDiscretesInputs);
+            _TabControlDevice.Controls.Add(_TabPageFiles);
+            _TabControlDevice.Dock = System.Windows.Forms.DockStyle.Fill;
+            _TabControlDevice.Location = new System.Drawing.Point(0, 0);
+            _TabControlDevice.Name = "_TabControlDevice";
+            _TabControlDevice.SelectedIndex = 0;
+            _TabControlDevice.Size = new System.Drawing.Size(584, 410);
+            _TabControlDevice.TabIndex = 0;
             // 
             // _TabPageHoldingRegisters
             // 
-            this._TabPageHoldingRegisters.Controls.Add(this._DataGridViewHoldingRegisters);
-            this._TabPageHoldingRegisters.Location = new System.Drawing.Point(4, 25);
-            this._TabPageHoldingRegisters.Name = "_TabPageHoldingRegisters";
-            this._TabPageHoldingRegisters.Padding = new System.Windows.Forms.Padding(3);
-            this._TabPageHoldingRegisters.Size = new System.Drawing.Size(576, 381);
-            this._TabPageHoldingRegisters.TabIndex = 0;
-            this._TabPageHoldingRegisters.Text = "Holding Registers";
-            this._TabPageHoldingRegisters.UseVisualStyleBackColor = true;
+            _TabPageHoldingRegisters.Controls.Add(_DataGridViewHoldingRegisters);
+            _TabPageHoldingRegisters.Location = new System.Drawing.Point(4, 25);
+            _TabPageHoldingRegisters.Name = "_TabPageHoldingRegisters";
+            _TabPageHoldingRegisters.Padding = new System.Windows.Forms.Padding(3);
+            _TabPageHoldingRegisters.Size = new System.Drawing.Size(576, 381);
+            _TabPageHoldingRegisters.TabIndex = 0;
+            _TabPageHoldingRegisters.Text = "Holding Registers";
+            _TabPageHoldingRegisters.UseVisualStyleBackColor = true;
             // 
             // _DataGridViewHoldingRegisters
             // 
-            this._DataGridViewHoldingRegisters.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this._DataGridViewHoldingRegisters.ContextMenuStrip = this._ContextMenuStripHoldingRegisters;
-            this._DataGridViewHoldingRegisters.Dock = System.Windows.Forms.DockStyle.Fill;
-            this._DataGridViewHoldingRegisters.Location = new System.Drawing.Point(3, 3);
-            this._DataGridViewHoldingRegisters.MultiSelect = false;
-            this._DataGridViewHoldingRegisters.Name = "_DataGridViewHoldingRegisters";
-            this._DataGridViewHoldingRegisters.RowTemplate.Height = 24;
-            this._DataGridViewHoldingRegisters.Size = new System.Drawing.Size(570, 375);
-            this._DataGridViewHoldingRegisters.TabIndex = 0;
+            _DataGridViewHoldingRegisters.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            _DataGridViewHoldingRegisters.ContextMenuStrip = _ContextMenuStripHoldingRegisters;
+            _DataGridViewHoldingRegisters.Dock = System.Windows.Forms.DockStyle.Fill;
+            _DataGridViewHoldingRegisters.Location = new System.Drawing.Point(3, 3);
+            _DataGridViewHoldingRegisters.MultiSelect = false;
+            _DataGridViewHoldingRegisters.Name = "_DataGridViewHoldingRegisters";
+            _DataGridViewHoldingRegisters.RowTemplate.Height = 24;
+            _DataGridViewHoldingRegisters.Size = new System.Drawing.Size(570, 375);
+            _DataGridViewHoldingRegisters.TabIndex = 0;
             // 
             // _ContextMenuStripHoldingRegisters
             // 
-            this._ContextMenuStripHoldingRegisters.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this._ToolStripMenuItemAddHoldingRegister,
-            this._ToolStripMenuItemRemoveHoldingRegister});
-            this._ContextMenuStripHoldingRegisters.Name = "_ContextMenuStripHoldingRegisters";
-            this._ContextMenuStripHoldingRegisters.Size = new System.Drawing.Size(204, 52);
+            _ContextMenuStripHoldingRegisters.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            _ToolStripMenuItemAddHoldingRegister,
+            _ToolStripMenuItemRemoveHoldingRegister});
+            _ContextMenuStripHoldingRegisters.Name = "_ContextMenuStripHoldingRegisters";
+            _ContextMenuStripHoldingRegisters.Size = new System.Drawing.Size(204, 52);
             // 
             // _ToolStripMenuItemAddHoldingRegister
             // 
-            this._ToolStripMenuItemAddHoldingRegister.Name = "_ToolStripMenuItemAddHoldingRegister";
-            this._ToolStripMenuItemAddHoldingRegister.Size = new System.Drawing.Size(203, 24);
-            this._ToolStripMenuItemAddHoldingRegister.Text = "Добавить регистр";
-            this._ToolStripMenuItemAddHoldingRegister.Click += new System.EventHandler(this.EventHandler_ToolStripMenuItemAddHoldingRegister_Click);
+            _ToolStripMenuItemAddHoldingRegister.Name = "_ToolStripMenuItemAddHoldingRegister";
+            _ToolStripMenuItemAddHoldingRegister.Size = new System.Drawing.Size(203, 24);
+            _ToolStripMenuItemAddHoldingRegister.Text = "Добавить регистр";
+            _ToolStripMenuItemAddHoldingRegister.Click += new System.EventHandler(EventHandler_ToolStripMenuItemAddHoldingRegister_Click);
             // 
             // _ToolStripMenuItemRemoveHoldingRegister
             // 
-            this._ToolStripMenuItemRemoveHoldingRegister.Name = "_ToolStripMenuItemRemoveHoldingRegister";
-            this._ToolStripMenuItemRemoveHoldingRegister.Size = new System.Drawing.Size(203, 24);
-            this._ToolStripMenuItemRemoveHoldingRegister.Text = "Удалить регистр";
-            this._ToolStripMenuItemRemoveHoldingRegister.Click += new System.EventHandler(this.EventHandler_ToolStripMenuItemRemoveHoldingRegister_Click);
+            _ToolStripMenuItemRemoveHoldingRegister.Name = "_ToolStripMenuItemRemoveHoldingRegister";
+            _ToolStripMenuItemRemoveHoldingRegister.Size = new System.Drawing.Size(203, 24);
+            _ToolStripMenuItemRemoveHoldingRegister.Text = "Удалить регистр";
+            _ToolStripMenuItemRemoveHoldingRegister.Click += new System.EventHandler(EventHandler_ToolStripMenuItemRemoveHoldingRegister_Click);
             // 
             // _TabPageInputRegisters
             // 
-            this._TabPageInputRegisters.Controls.Add(this._DataGridViewInputRegisters);
-            this._TabPageInputRegisters.Location = new System.Drawing.Point(4, 25);
-            this._TabPageInputRegisters.Name = "_TabPageInputRegisters";
-            this._TabPageInputRegisters.Padding = new System.Windows.Forms.Padding(3);
-            this._TabPageInputRegisters.Size = new System.Drawing.Size(576, 381);
-            this._TabPageInputRegisters.TabIndex = 1;
-            this._TabPageInputRegisters.Text = "Input Registers";
-            this._TabPageInputRegisters.UseVisualStyleBackColor = true;
+            _TabPageInputRegisters.Controls.Add(_DataGridViewInputRegisters);
+            _TabPageInputRegisters.Location = new System.Drawing.Point(4, 25);
+            _TabPageInputRegisters.Name = "_TabPageInputRegisters";
+            _TabPageInputRegisters.Padding = new System.Windows.Forms.Padding(3);
+            _TabPageInputRegisters.Size = new System.Drawing.Size(576, 381);
+            _TabPageInputRegisters.TabIndex = 1;
+            _TabPageInputRegisters.Text = "Input Registers";
+            _TabPageInputRegisters.UseVisualStyleBackColor = true;
             // 
             // _DataGridViewInputRegisters
             // 
-            this._DataGridViewInputRegisters.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this._DataGridViewInputRegisters.ContextMenuStrip = this._ContextMenuStripInputRegisters;
-            this._DataGridViewInputRegisters.Dock = System.Windows.Forms.DockStyle.Fill;
-            this._DataGridViewInputRegisters.Location = new System.Drawing.Point(3, 3);
-            this._DataGridViewInputRegisters.Name = "_DataGridViewInputRegisters";
-            this._DataGridViewInputRegisters.RowTemplate.Height = 24;
-            this._DataGridViewInputRegisters.Size = new System.Drawing.Size(570, 375);
-            this._DataGridViewInputRegisters.TabIndex = 0;
+            _DataGridViewInputRegisters.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            _DataGridViewInputRegisters.ContextMenuStrip = _ContextMenuStripInputRegisters;
+            _DataGridViewInputRegisters.Dock = System.Windows.Forms.DockStyle.Fill;
+            _DataGridViewInputRegisters.Location = new System.Drawing.Point(3, 3);
+            _DataGridViewInputRegisters.Name = "_DataGridViewInputRegisters";
+            _DataGridViewInputRegisters.RowTemplate.Height = 24;
+            _DataGridViewInputRegisters.Size = new System.Drawing.Size(570, 375);
+            _DataGridViewInputRegisters.TabIndex = 0;
             // 
             // _ContextMenuStripInputRegisters
             // 
-            this._ContextMenuStripInputRegisters.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this._ToolStripMenuItemAddInputRegister,
-            this._ToolStripMenuItemRemoveInputRegister});
-            this._ContextMenuStripInputRegisters.Name = "_ContextMenuStripInputRegisters";
-            this._ContextMenuStripInputRegisters.Size = new System.Drawing.Size(204, 52);
+            _ContextMenuStripInputRegisters.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            _ToolStripMenuItemAddInputRegister,
+            _ToolStripMenuItemRemoveInputRegister});
+            _ContextMenuStripInputRegisters.Name = "_ContextMenuStripInputRegisters";
+            _ContextMenuStripInputRegisters.Size = new System.Drawing.Size(204, 52);
             // 
             // _ToolStripMenuItemAddInputRegister
             // 
-            this._ToolStripMenuItemAddInputRegister.Name = "_ToolStripMenuItemAddInputRegister";
-            this._ToolStripMenuItemAddInputRegister.Size = new System.Drawing.Size(203, 24);
-            this._ToolStripMenuItemAddInputRegister.Text = "Добавить регистр";
-            this._ToolStripMenuItemAddInputRegister.Click += new System.EventHandler(this.EventHandler_ToolStripMenuItemAddInputRegister_Click);
+            _ToolStripMenuItemAddInputRegister.Name = "_ToolStripMenuItemAddInputRegister";
+            _ToolStripMenuItemAddInputRegister.Size = new System.Drawing.Size(203, 24);
+            _ToolStripMenuItemAddInputRegister.Text = "Добавить регистр";
+            _ToolStripMenuItemAddInputRegister.Click += new System.EventHandler(EventHandler_ToolStripMenuItemAddInputRegister_Click);
             // 
             // _ToolStripMenuItemRemoveInputRegister
             // 
-            this._ToolStripMenuItemRemoveInputRegister.Name = "_ToolStripMenuItemRemoveInputRegister";
-            this._ToolStripMenuItemRemoveInputRegister.Size = new System.Drawing.Size(203, 24);
-            this._ToolStripMenuItemRemoveInputRegister.Text = "Удалить регистр";
-            this._ToolStripMenuItemRemoveInputRegister.Click += new System.EventHandler(this.EventHandler_ToolStripMenuItemRemoveInputRegister_Click);
+            _ToolStripMenuItemRemoveInputRegister.Name = "_ToolStripMenuItemRemoveInputRegister";
+            _ToolStripMenuItemRemoveInputRegister.Size = new System.Drawing.Size(203, 24);
+            _ToolStripMenuItemRemoveInputRegister.Text = "Удалить регистр";
+            _ToolStripMenuItemRemoveInputRegister.Click += new System.EventHandler(EventHandler_ToolStripMenuItemRemoveInputRegister_Click);
             // 
             // _TabPageCoils
             // 
-            this._TabPageCoils.Controls.Add(this._DataGridViewCoils);
-            this._TabPageCoils.Location = new System.Drawing.Point(4, 25);
-            this._TabPageCoils.Name = "_TabPageCoils";
-            this._TabPageCoils.Size = new System.Drawing.Size(576, 381);
-            this._TabPageCoils.TabIndex = 2;
-            this._TabPageCoils.Text = "Coils";
-            this._TabPageCoils.UseVisualStyleBackColor = true;
+            _TabPageCoils.Controls.Add(_DataGridViewCoils);
+            _TabPageCoils.Location = new System.Drawing.Point(4, 25);
+            _TabPageCoils.Name = "_TabPageCoils";
+            _TabPageCoils.Size = new System.Drawing.Size(576, 381);
+            _TabPageCoils.TabIndex = 2;
+            _TabPageCoils.Text = "Coils";
+            _TabPageCoils.UseVisualStyleBackColor = true;
             // 
             // _DataGridViewCoils
             // 
-            this._DataGridViewCoils.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this._DataGridViewCoils.ContextMenuStrip = this._ContextMenuStripCoils;
-            this._DataGridViewCoils.Dock = System.Windows.Forms.DockStyle.Fill;
-            this._DataGridViewCoils.Location = new System.Drawing.Point(0, 0);
-            this._DataGridViewCoils.Name = "_DataGridViewCoils";
-            this._DataGridViewCoils.RowTemplate.Height = 24;
-            this._DataGridViewCoils.Size = new System.Drawing.Size(576, 381);
-            this._DataGridViewCoils.TabIndex = 0;
+            _DataGridViewCoils.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            _DataGridViewCoils.ContextMenuStrip = _ContextMenuStripCoils;
+            _DataGridViewCoils.Dock = System.Windows.Forms.DockStyle.Fill;
+            _DataGridViewCoils.Location = new System.Drawing.Point(0, 0);
+            _DataGridViewCoils.Name = "_DataGridViewCoils";
+            _DataGridViewCoils.RowTemplate.Height = 24;
+            _DataGridViewCoils.Size = new System.Drawing.Size(576, 381);
+            _DataGridViewCoils.TabIndex = 0;
             // 
             // _ContextMenuStripCoils
             // 
-            this._ContextMenuStripCoils.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this._ToolStripMenuItemAddCoil,
-            this._ToolStripMenuItemRemoveCoil});
-            this._ContextMenuStripCoils.Name = "_ContextMenuStripCoils";
-            this._ContextMenuStripCoils.Size = new System.Drawing.Size(278, 52);
+            _ContextMenuStripCoils.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            _ToolStripMenuItemAddCoil,
+            _ToolStripMenuItemRemoveCoil});
+            _ContextMenuStripCoils.Name = "_ContextMenuStripCoils";
+            _ContextMenuStripCoils.Size = new System.Drawing.Size(278, 52);
             // 
             // _ToolStripMenuItemAddCoil
             // 
-            this._ToolStripMenuItemAddCoil.Name = "_ToolStripMenuItemAddCoil";
-            this._ToolStripMenuItemAddCoil.Size = new System.Drawing.Size(277, 24);
-            this._ToolStripMenuItemAddCoil.Text = "Добавить дискр. вход/выход";
-            this._ToolStripMenuItemAddCoil.Click += new System.EventHandler(this.EventHandler_ToolStripMenuItemAddCoil_Click);
+            _ToolStripMenuItemAddCoil.Name = "_ToolStripMenuItemAddCoil";
+            _ToolStripMenuItemAddCoil.Size = new System.Drawing.Size(277, 24);
+            _ToolStripMenuItemAddCoil.Text = "Добавить дискр. вход/выход";
+            _ToolStripMenuItemAddCoil.Click += new System.EventHandler(EventHandler_ToolStripMenuItemAddCoil_Click);
             // 
             // _ToolStripMenuItemRemoveCoil
             // 
-            this._ToolStripMenuItemRemoveCoil.Name = "_ToolStripMenuItemRemoveCoil";
-            this._ToolStripMenuItemRemoveCoil.Size = new System.Drawing.Size(277, 24);
-            this._ToolStripMenuItemRemoveCoil.Text = "Удалить дискр. вход/выход";
-            this._ToolStripMenuItemRemoveCoil.Click += new System.EventHandler(this.EventHandler_ToolStripMenuItemRemoveCoil_Click);
+            _ToolStripMenuItemRemoveCoil.Name = "_ToolStripMenuItemRemoveCoil";
+            _ToolStripMenuItemRemoveCoil.Size = new System.Drawing.Size(277, 24);
+            _ToolStripMenuItemRemoveCoil.Text = "Удалить дискр. вход/выход";
+            _ToolStripMenuItemRemoveCoil.Click += new System.EventHandler(EventHandler_ToolStripMenuItemRemoveCoil_Click);
             // 
             // _TabPageDiscretesInputs
             // 
-            this._TabPageDiscretesInputs.Controls.Add(this._DataGridViewDiscretesInputs);
-            this._TabPageDiscretesInputs.Location = new System.Drawing.Point(4, 25);
-            this._TabPageDiscretesInputs.Name = "_TabPageDiscretesInputs";
-            this._TabPageDiscretesInputs.Size = new System.Drawing.Size(576, 381);
-            this._TabPageDiscretesInputs.TabIndex = 3;
-            this._TabPageDiscretesInputs.Text = "Discretes Inputs";
-            this._TabPageDiscretesInputs.UseVisualStyleBackColor = true;
+            _TabPageDiscretesInputs.Controls.Add(_DataGridViewDiscretesInputs);
+            _TabPageDiscretesInputs.Location = new System.Drawing.Point(4, 25);
+            _TabPageDiscretesInputs.Name = "_TabPageDiscretesInputs";
+            _TabPageDiscretesInputs.Size = new System.Drawing.Size(576, 381);
+            _TabPageDiscretesInputs.TabIndex = 3;
+            _TabPageDiscretesInputs.Text = "Discretes Inputs";
+            _TabPageDiscretesInputs.UseVisualStyleBackColor = true;
             // 
             // _DataGridViewDiscretesInputs
             // 
-            this._DataGridViewDiscretesInputs.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this._DataGridViewDiscretesInputs.ContextMenuStrip = this._ContextMenuStripDiscretesInputs;
-            this._DataGridViewDiscretesInputs.Dock = System.Windows.Forms.DockStyle.Fill;
-            this._DataGridViewDiscretesInputs.Location = new System.Drawing.Point(0, 0);
-            this._DataGridViewDiscretesInputs.Name = "_DataGridViewDiscretesInputs";
-            this._DataGridViewDiscretesInputs.RowTemplate.Height = 24;
-            this._DataGridViewDiscretesInputs.Size = new System.Drawing.Size(576, 381);
-            this._DataGridViewDiscretesInputs.TabIndex = 0;
+            _DataGridViewDiscretesInputs.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            _DataGridViewDiscretesInputs.ContextMenuStrip = _ContextMenuStripDiscretesInputs;
+            _DataGridViewDiscretesInputs.Dock = System.Windows.Forms.DockStyle.Fill;
+            _DataGridViewDiscretesInputs.Location = new System.Drawing.Point(0, 0);
+            _DataGridViewDiscretesInputs.Name = "_DataGridViewDiscretesInputs";
+            _DataGridViewDiscretesInputs.RowTemplate.Height = 24;
+            _DataGridViewDiscretesInputs.Size = new System.Drawing.Size(576, 381);
+            _DataGridViewDiscretesInputs.TabIndex = 0;
             // 
             // _ContextMenuStripDiscretesInputs
             // 
-            this._ContextMenuStripDiscretesInputs.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this._ToolStripMenuItemAddDiscreteInput,
-            this._ToolStripMenuItemRemoveDiscreteInput});
-            this._ContextMenuStripDiscretesInputs.Name = "_ContextMenuStripDiscretesInputs";
-            this._ContextMenuStripDiscretesInputs.Size = new System.Drawing.Size(269, 52);
+            _ContextMenuStripDiscretesInputs.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            _ToolStripMenuItemAddDiscreteInput,
+            _ToolStripMenuItemRemoveDiscreteInput});
+            _ContextMenuStripDiscretesInputs.Name = "_ContextMenuStripDiscretesInputs";
+            _ContextMenuStripDiscretesInputs.Size = new System.Drawing.Size(269, 52);
             // 
             // _ToolStripMenuItemAddDiscreteInput
             // 
-            this._ToolStripMenuItemAddDiscreteInput.Name = "_ToolStripMenuItemAddDiscreteInput";
-            this._ToolStripMenuItemAddDiscreteInput.Size = new System.Drawing.Size(268, 24);
-            this._ToolStripMenuItemAddDiscreteInput.Text = "Добавить дискретный вход";
-            this._ToolStripMenuItemAddDiscreteInput.Click += new System.EventHandler(this.EventHandler_ToolStripMenuItemAddDiscreteInput_Click);
+            _ToolStripMenuItemAddDiscreteInput.Name = "_ToolStripMenuItemAddDiscreteInput";
+            _ToolStripMenuItemAddDiscreteInput.Size = new System.Drawing.Size(268, 24);
+            _ToolStripMenuItemAddDiscreteInput.Text = "Добавить дискретный вход";
+            _ToolStripMenuItemAddDiscreteInput.Click += new System.EventHandler(EventHandler_ToolStripMenuItemAddDiscreteInput_Click);
             // 
             // _ToolStripMenuItemRemoveDiscreteInput
             // 
-            this._ToolStripMenuItemRemoveDiscreteInput.Name = "_ToolStripMenuItemRemoveDiscreteInput";
-            this._ToolStripMenuItemRemoveDiscreteInput.Size = new System.Drawing.Size(268, 24);
-            this._ToolStripMenuItemRemoveDiscreteInput.Text = "Удалить дискретный вход";
-            this._ToolStripMenuItemRemoveDiscreteInput.Click += new System.EventHandler(this.EventHandler_ToolStripMenuItemRemoveDiscreteInput_Click);
+            _ToolStripMenuItemRemoveDiscreteInput.Name = "_ToolStripMenuItemRemoveDiscreteInput";
+            _ToolStripMenuItemRemoveDiscreteInput.Size = new System.Drawing.Size(268, 24);
+            _ToolStripMenuItemRemoveDiscreteInput.Text = "Удалить дискретный вход";
+            _ToolStripMenuItemRemoveDiscreteInput.Click += new System.EventHandler(EventHandler_ToolStripMenuItemRemoveDiscreteInput_Click);
             // 
             // _TabPageFiles
             // 
-            this._TabPageFiles.Controls.Add(this._SplitContainerFiles);
-            this._TabPageFiles.Location = new System.Drawing.Point(4, 25);
-            this._TabPageFiles.Name = "_TabPageFiles";
-            this._TabPageFiles.Size = new System.Drawing.Size(576, 381);
-            this._TabPageFiles.TabIndex = 4;
-            this._TabPageFiles.Text = "Files";
-            this._TabPageFiles.UseVisualStyleBackColor = true;
+            _TabPageFiles.Controls.Add(_SplitContainerFiles);
+            _TabPageFiles.Location = new System.Drawing.Point(4, 25);
+            _TabPageFiles.Name = "_TabPageFiles";
+            _TabPageFiles.Size = new System.Drawing.Size(576, 381);
+            _TabPageFiles.TabIndex = 4;
+            _TabPageFiles.Text = "Files";
+            _TabPageFiles.UseVisualStyleBackColor = true;
             // 
             // _SplitContainerFiles
             // 
-            this._SplitContainerFiles.Dock = System.Windows.Forms.DockStyle.Fill;
-            this._SplitContainerFiles.Location = new System.Drawing.Point(0, 0);
-            this._SplitContainerFiles.Name = "_SplitContainerFiles";
-            this._SplitContainerFiles.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            _SplitContainerFiles.Dock = System.Windows.Forms.DockStyle.Fill;
+            _SplitContainerFiles.Location = new System.Drawing.Point(0, 0);
+            _SplitContainerFiles.Name = "_SplitContainerFiles";
+            _SplitContainerFiles.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
             // _SplitContainerFiles.Panel1
             // 
-            this._SplitContainerFiles.Panel1.Controls.Add(this._DataGridViewFiles);
+            _SplitContainerFiles.Panel1.Controls.Add(_DataGridViewFiles);
             // 
             // _SplitContainerFiles.Panel2
             // 
-            this._SplitContainerFiles.Panel2.Controls.Add(this._DataGridViewRecords);
-            this._SplitContainerFiles.Size = new System.Drawing.Size(576, 381);
-            this._SplitContainerFiles.SplitterDistance = 194;
-            this._SplitContainerFiles.TabIndex = 0;
+            _SplitContainerFiles.Panel2.Controls.Add(_DataGridViewRecords);
+            _SplitContainerFiles.Size = new System.Drawing.Size(576, 381);
+            _SplitContainerFiles.SplitterDistance = 194;
+            _SplitContainerFiles.TabIndex = 0;
             // 
             // _DataGridViewFiles
             // 
-            this._DataGridViewFiles.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this._DataGridViewFiles.ContextMenuStrip = this._ContextMenuStripFiles;
-            this._DataGridViewFiles.Dock = System.Windows.Forms.DockStyle.Fill;
-            this._DataGridViewFiles.Location = new System.Drawing.Point(0, 0);
-            this._DataGridViewFiles.Name = "_DataGridViewFiles";
-            this._DataGridViewFiles.RowTemplate.Height = 24;
-            this._DataGridViewFiles.Size = new System.Drawing.Size(576, 194);
-            this._DataGridViewFiles.TabIndex = 0;
+            _DataGridViewFiles.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            _DataGridViewFiles.ContextMenuStrip = _ContextMenuStripFiles;
+            _DataGridViewFiles.Dock = System.Windows.Forms.DockStyle.Fill;
+            _DataGridViewFiles.Location = new System.Drawing.Point(0, 0);
+            _DataGridViewFiles.Name = "_DataGridViewFiles";
+            _DataGridViewFiles.RowTemplate.Height = 24;
+            _DataGridViewFiles.Size = new System.Drawing.Size(576, 194);
+            _DataGridViewFiles.TabIndex = 0;
             // 
             // _ContextMenuStripFiles
             // 
-            this._ContextMenuStripFiles.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this._ToolStripMenuItemAddFile,
-            this._ToolStripMenuItemRemoveFile});
-            this._ContextMenuStripFiles.Name = "_ContextMenuStripFiles";
-            this._ContextMenuStripFiles.Size = new System.Drawing.Size(185, 52);
+            _ContextMenuStripFiles.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            _ToolStripMenuItemAddFile,
+            _ToolStripMenuItemRemoveFile});
+            _ContextMenuStripFiles.Name = "_ContextMenuStripFiles";
+            _ContextMenuStripFiles.Size = new System.Drawing.Size(185, 52);
             // 
             // _ToolStripMenuItemAddFile
             // 
-            this._ToolStripMenuItemAddFile.Name = "_ToolStripMenuItemAddFile";
-            this._ToolStripMenuItemAddFile.Size = new System.Drawing.Size(184, 24);
-            this._ToolStripMenuItemAddFile.Text = "Добавить файл";
-            this._ToolStripMenuItemAddFile.Click += new System.EventHandler(this.EventHandler_ToolStripMenuItemAddFile_Click);
+            _ToolStripMenuItemAddFile.Name = "_ToolStripMenuItemAddFile";
+            _ToolStripMenuItemAddFile.Size = new System.Drawing.Size(184, 24);
+            _ToolStripMenuItemAddFile.Text = "Добавить файл";
+            _ToolStripMenuItemAddFile.Click += new System.EventHandler(EventHandler_ToolStripMenuItemAddFile_Click);
             // 
             // _ToolStripMenuItemRemoveFile
             // 
-            this._ToolStripMenuItemRemoveFile.Name = "_ToolStripMenuItemRemoveFile";
-            this._ToolStripMenuItemRemoveFile.Size = new System.Drawing.Size(184, 24);
-            this._ToolStripMenuItemRemoveFile.Text = "Удалить файл";
-            this._ToolStripMenuItemRemoveFile.Click += new System.EventHandler(this.EventHandler_ToolStripMenuItemRemoveFile_Click);
+            _ToolStripMenuItemRemoveFile.Name = "_ToolStripMenuItemRemoveFile";
+            _ToolStripMenuItemRemoveFile.Size = new System.Drawing.Size(184, 24);
+            _ToolStripMenuItemRemoveFile.Text = "Удалить файл";
+            _ToolStripMenuItemRemoveFile.Click += new System.EventHandler(EventHandler_ToolStripMenuItemRemoveFile_Click);
             // 
             // _DataGridViewRecords
             // 
-            this._DataGridViewRecords.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this._DataGridViewRecords.ContextMenuStrip = this._ContextMenuStripRecords;
-            this._DataGridViewRecords.Dock = System.Windows.Forms.DockStyle.Fill;
-            this._DataGridViewRecords.Location = new System.Drawing.Point(0, 0);
-            this._DataGridViewRecords.Name = "_DataGridViewRecords";
-            this._DataGridViewRecords.RowTemplate.Height = 24;
-            this._DataGridViewRecords.Size = new System.Drawing.Size(576, 183);
-            this._DataGridViewRecords.TabIndex = 0;
+            _DataGridViewRecords.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            _DataGridViewRecords.ContextMenuStrip = _ContextMenuStripRecords;
+            _DataGridViewRecords.Dock = System.Windows.Forms.DockStyle.Fill;
+            _DataGridViewRecords.Location = new System.Drawing.Point(0, 0);
+            _DataGridViewRecords.Name = "_DataGridViewRecords";
+            _DataGridViewRecords.RowTemplate.Height = 24;
+            _DataGridViewRecords.Size = new System.Drawing.Size(576, 183);
+            _DataGridViewRecords.TabIndex = 0;
             // 
             // _ContextMenuStripRecords
             // 
-            this._ContextMenuStripRecords.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this._ToolStripMenuItemAddRecord,
-            this._ToolStripMenuItemRemoveRecord});
-            this._ContextMenuStripRecords.Name = "_ContextMenuStripRecords";
-            this._ContextMenuStripRecords.Size = new System.Drawing.Size(198, 52);
+            _ContextMenuStripRecords.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            _ToolStripMenuItemAddRecord,
+            _ToolStripMenuItemRemoveRecord});
+            _ContextMenuStripRecords.Name = "_ContextMenuStripRecords";
+            _ContextMenuStripRecords.Size = new System.Drawing.Size(198, 52);
             // 
             // _ToolStripMenuItemAddRecord
             // 
-            this._ToolStripMenuItemAddRecord.Name = "_ToolStripMenuItemAddRecord";
-            this._ToolStripMenuItemAddRecord.Size = new System.Drawing.Size(197, 24);
-            this._ToolStripMenuItemAddRecord.Text = "Добавить запись";
-            this._ToolStripMenuItemAddRecord.Click += new System.EventHandler(this.EventHandler_ToolStripMenuItemAddRecord_Click);
+            _ToolStripMenuItemAddRecord.Name = "_ToolStripMenuItemAddRecord";
+            _ToolStripMenuItemAddRecord.Size = new System.Drawing.Size(197, 24);
+            _ToolStripMenuItemAddRecord.Text = "Добавить запись";
+            _ToolStripMenuItemAddRecord.Click += new System.EventHandler(EventHandler_ToolStripMenuItemAddRecord_Click);
             // 
             // _ToolStripMenuItemRemoveRecord
             // 
-            this._ToolStripMenuItemRemoveRecord.Name = "_ToolStripMenuItemRemoveRecord";
-            this._ToolStripMenuItemRemoveRecord.Size = new System.Drawing.Size(197, 24);
-            this._ToolStripMenuItemRemoveRecord.Text = "Удалить запись";
-            this._ToolStripMenuItemRemoveRecord.Click += new System.EventHandler(this.EventHandler_ToolStripMenuItemRemoveRecord_Click);
+            _ToolStripMenuItemRemoveRecord.Name = "_ToolStripMenuItemRemoveRecord";
+            _ToolStripMenuItemRemoveRecord.Size = new System.Drawing.Size(197, 24);
+            _ToolStripMenuItemRemoveRecord.Text = "Удалить запись";
+            _ToolStripMenuItemRemoveRecord.Click += new System.EventHandler(EventHandler_ToolStripMenuItemRemoveRecord_Click);
             // 
             // FormEditNetworkController
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.AutoSize = true;
-            this.ClientSize = new System.Drawing.Size(880, 456);
-            this.Controls.Add(this._SplitContainerMain);
-            this.Controls.Add(this._StatusStripMain);
-            this.Controls.Add(this._MenuStripMain);
-            this.MainMenuStrip = this._MenuStripMain;
-            this.MaximizeBox = false;
-            this.MinimizeBox = false;
-            this.Name = "FormEditNetworkController";
-            this.ShowIcon = false;
-            this.ShowInTaskbar = false;
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Редактор сети Modbus";
-            this.Load += new System.EventHandler(this.EventHandler_FormEditNetworkController_Load);
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.EventHandler_FormEditNetworkController_FormClosed);
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.EventHandler_FormEditNetworkController_FormClosing);
-            this._SplitContainerMain.Panel1.ResumeLayout(false);
-            this._SplitContainerMain.Panel2.ResumeLayout(false);
-            this._SplitContainerMain.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this._DataGridViewDevicesList)).EndInit();
-            this._ContextMenuStripDevicesList.ResumeLayout(false);
-            this._TabControlDevice.ResumeLayout(false);
-            this._TabPageHoldingRegisters.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this._DataGridViewHoldingRegisters)).EndInit();
-            this._ContextMenuStripHoldingRegisters.ResumeLayout(false);
-            this._TabPageInputRegisters.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this._DataGridViewInputRegisters)).EndInit();
-            this._ContextMenuStripInputRegisters.ResumeLayout(false);
-            this._TabPageCoils.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this._DataGridViewCoils)).EndInit();
-            this._ContextMenuStripCoils.ResumeLayout(false);
-            this._TabPageDiscretesInputs.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this._DataGridViewDiscretesInputs)).EndInit();
-            this._ContextMenuStripDiscretesInputs.ResumeLayout(false);
-            this._TabPageFiles.ResumeLayout(false);
-            this._SplitContainerFiles.Panel1.ResumeLayout(false);
-            this._SplitContainerFiles.Panel2.ResumeLayout(false);
-            this._SplitContainerFiles.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this._DataGridViewFiles)).EndInit();
-            this._ContextMenuStripFiles.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this._DataGridViewRecords)).EndInit();
-            this._ContextMenuStripRecords.ResumeLayout(false);
-            this.ResumeLayout(false);
-            this.PerformLayout();
+            AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            AutoSize = true;
+            ClientSize = new System.Drawing.Size(880, 456);
+            Controls.Add(_SplitContainerMain);
+            Controls.Add(_StatusStripMain);
+            Controls.Add(_MenuStripMain);
+            MainMenuStrip = _MenuStripMain;
+            MaximizeBox = false;
+            MinimizeBox = false;
+            Name = "FormEditNetworkController";
+            ShowIcon = false;
+            ShowInTaskbar = false;
+            StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            Text = "Редактор сети Modbus";
+            Load += new System.EventHandler(EventHandler_FormEditNetworkController_Load);
+            FormClosed += new System.Windows.Forms.FormClosedEventHandler(EventHandler_FormEditNetworkController_FormClosed);
+            FormClosing += new System.Windows.Forms.FormClosingEventHandler(EventHandler_FormEditNetworkController_FormClosing);
+            _SplitContainerMain.Panel1.ResumeLayout(false);
+            _SplitContainerMain.Panel2.ResumeLayout(false);
+            _SplitContainerMain.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(_DataGridViewDevicesList)).EndInit();
+            _ContextMenuStripDevicesList.ResumeLayout(false);
+            _TabControlDevice.ResumeLayout(false);
+            _TabPageHoldingRegisters.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(_DataGridViewHoldingRegisters)).EndInit();
+            _ContextMenuStripHoldingRegisters.ResumeLayout(false);
+            _TabPageInputRegisters.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(_DataGridViewInputRegisters)).EndInit();
+            _ContextMenuStripInputRegisters.ResumeLayout(false);
+            _TabPageCoils.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(_DataGridViewCoils)).EndInit();
+            _ContextMenuStripCoils.ResumeLayout(false);
+            _TabPageDiscretesInputs.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(_DataGridViewDiscretesInputs)).EndInit();
+            _ContextMenuStripDiscretesInputs.ResumeLayout(false);
+            _TabPageFiles.ResumeLayout(false);
+            _SplitContainerFiles.Panel1.ResumeLayout(false);
+            _SplitContainerFiles.Panel2.ResumeLayout(false);
+            _SplitContainerFiles.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(_DataGridViewFiles)).EndInit();
+            _ContextMenuStripFiles.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(_DataGridViewRecords)).EndInit();
+            _ContextMenuStripRecords.ResumeLayout(false);
+            ResumeLayout(false);
+            PerformLayout();
 
         }
 

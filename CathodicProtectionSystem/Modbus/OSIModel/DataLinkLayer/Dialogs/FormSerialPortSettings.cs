@@ -6,13 +6,10 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 
-//===================================================================================
 namespace Modbus.OSIModel.DataLinkLayer.Dialogs
 {
-    //===============================================================================
     public partial class FormSerialPortSettings : Form
     {
-        //---------------------------------------------------------------------------
         #region Fields And Properties
         //---------------------------------------------------------------------------
         private System.IO.Ports.SerialPort _SerialPort;
@@ -26,7 +23,7 @@ namespace Modbus.OSIModel.DataLinkLayer.Dialogs
         private BindingSource _BindingSourceSerialPort;
         //---------------------------------------------------------------------------
         #endregion
-        //---------------------------------------------------------------------------
+
         #region Constructors
         //---------------------------------------------------------------------------
         /// <summary>
@@ -35,11 +32,11 @@ namespace Modbus.OSIModel.DataLinkLayer.Dialogs
         public FormSerialPortSettings()
         {
             InitializeComponent();
-            this.Load += new EventHandler(EventHandler_FormSerialPortSettings_Load);
+            Load += new EventHandler(EventHandler_FormSerialPortSettings_Load);
         }
         //---------------------------------------------------------------------------
         #endregion
-        //---------------------------------------------------------------------------
+
         #region Methods
         //---------------------------------------------------------------------------
         /// <summary>
@@ -50,27 +47,27 @@ namespace Modbus.OSIModel.DataLinkLayer.Dialogs
         private void EventHandler_FormSerialPortSettings_Load(
             object sender, EventArgs e)
         {
-            this._ComboBoxSerialPort.DataSource = System.IO.Ports.SerialPort.GetPortNames();
-            this._ComboBoxSerialPort.DropDownStyle = ComboBoxStyle.DropDownList;
+            _ComboBoxSerialPort.DataSource = System.IO.Ports.SerialPort.GetPortNames();
+            _ComboBoxSerialPort.DropDownStyle = ComboBoxStyle.DropDownList;
 
-            this._ComboBoxBaudRate.DataSource = new Int32[] { 9600, 19200, 115200 };
-            this._ComboBoxBaudRate.DropDownStyle = ComboBoxStyle.DropDownList;
+            _ComboBoxBaudRate.DataSource = new Int32[] { 9600, 19200, 115200 };
+            _ComboBoxBaudRate.DropDownStyle = ComboBoxStyle.DropDownList;
 
-            this._ComboBoxDataBits.DataSource = new Int32[] { 7, 8 };
-            this._ComboBoxDataBits.DropDownStyle = ComboBoxStyle.DropDownList;
+            _ComboBoxDataBits.DataSource = new Int32[] { 7, 8 };
+            _ComboBoxDataBits.DropDownStyle = ComboBoxStyle.DropDownList;
 
-            this._ComboBoxParity.DataSource = Enum.GetValues(typeof(System.IO.Ports.Parity));
-            this._ComboBoxParity.DropDownStyle = ComboBoxStyle.DropDownList;
+            _ComboBoxParity.DataSource = Enum.GetValues(typeof(System.IO.Ports.Parity));
+            _ComboBoxParity.DropDownStyle = ComboBoxStyle.DropDownList;
 
-            this._ComboBoxStopBits.DataSource = Enum.GetValues(typeof(System.IO.Ports.StopBits));
-            this._ComboBoxStopBits.DropDownStyle = ComboBoxStyle.DropDownList;
+            _ComboBoxStopBits.DataSource = Enum.GetValues(typeof(System.IO.Ports.StopBits));
+            _ComboBoxStopBits.DropDownStyle = ComboBoxStyle.DropDownList;
 
-            this._BindingSourceSerialPort = new BindingSource(); 
+            _BindingSourceSerialPort = new BindingSource(); 
 
 
-            if (this._SerialPort != null)
+            if (_SerialPort != null)
             {
-                if (this._SerialPort.IsOpen)
+                if (_SerialPort.IsOpen)
                 {
                 }
                 else
@@ -85,9 +82,5 @@ namespace Modbus.OSIModel.DataLinkLayer.Dialogs
         }
         //---------------------------------------------------------------------------
         #endregion
-        //---------------------------------------------------------------------------
     }
-    //===============================================================================
 }
-//===================================================================================
-// End of file

@@ -3,16 +3,13 @@ using System.Collections.Generic;
 using System.Text;
 using System.Windows.Forms;
 
-//===================================================================================
 namespace Modbus.OSIModel.ApplicationLayer.Slave.Dialogs
 {
-    //===============================================================================
     /// <summary>
     /// Класс для создания диалогового окна редактирования сети Modbus
     /// </summary>
     public class EditNetworkControllerDialog
     {
-        //---------------------------------------------------------------------------
         #region Fields And Properties
         //---------------------------------------------------------------------------
         private NetworkController _Network;
@@ -22,32 +19,26 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.Dialogs
         /// </summary>
         public NetworkController Network
         {
-            get { return this._Network; }
+            get { return _Network; }
             set 
             { 
-                this._Network = value;
+                _Network = value;
             }
         }
         //---------------------------------------------------------------------------
         #endregion
-        //---------------------------------------------------------------------------
         #region Constructors
         //---------------------------------------------------------------------------
         #endregion
-        //---------------------------------------------------------------------------
         #region Methods
         //---------------------------------------------------------------------------
         public DialogResult ShowDialog()
         {
             FormEditNetworkController form = new FormEditNetworkController();
-            form.Network = this._Network;
+            form.Network = _Network;
             return form.ShowDialog();
         }
         //---------------------------------------------------------------------------
         #endregion
-        //---------------------------------------------------------------------------
     }
-    //===============================================================================
 }
-//===================================================================================
-// End of file

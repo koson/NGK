@@ -39,9 +39,9 @@ namespace Modbus.OSIModel.Message
                 UInt16 value;
                 unchecked
                 {
-                    value = this._High;
+                    value = _High;
                     value = (UInt16)(value << 8);
-                    value |= this.Low;
+                    value |= Low;
                 }
                 return value;
             }
@@ -49,8 +49,8 @@ namespace Modbus.OSIModel.Message
             {
                 unchecked
                 {
-                    this.Low = (Byte)value;
-                    this.High = (Byte)(value >> 8);
+                    Low = (Byte)value;
+                    High = (Byte)(value >> 8);
                 }
             }
         }
@@ -63,9 +63,9 @@ namespace Modbus.OSIModel.Message
         /// <param name="value"></param>
         public CRC16(UInt16 value)
         {
-            this._High = 0;
-            this._Low = 0;
-            this.Value = value;
+            _High = 0;
+            _Low = 0;
+            Value = value;
         }
         /// <summary>
         /// Конструктор
@@ -74,8 +74,8 @@ namespace Modbus.OSIModel.Message
         /// <param name="low">Младший байт CRC16</param>
         public CRC16(Byte high, Byte low)
         {
-            this._High = high;
-            this._Low = low;
+            _High = high;
+            _Low = low;
         }
         /// <summary>
         /// Конструктор
@@ -88,8 +88,8 @@ namespace Modbus.OSIModel.Message
             {
                 if (crc16.Length == 2)
                 {
-                    this._Low = crc16[0];
-                    this._High = crc16[1];
+                    _Low = crc16[0];
+                    _High = crc16[1];
                 }
                 else
                 {
@@ -114,7 +114,7 @@ namespace Modbus.OSIModel.Message
         /// <returns>CRC16</returns>
         public Byte[] ToArray()
         {
-            return new Byte[] { this._Low, this._High };
+            return new Byte[] { _Low, _High };
         }
         /// <summary>
         /// Рассчитывает CRC16 для переданного массива

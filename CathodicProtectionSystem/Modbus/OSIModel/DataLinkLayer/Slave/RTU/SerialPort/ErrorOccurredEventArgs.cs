@@ -1,18 +1,14 @@
 ﻿using System;
 using Modbus.OSIModel.DataLinkLayer;
 
-//===================================================================================
 namespace Modbus.OSIModel.DataLinkLayer.Slave.RTU.ComPort
 {
-    //===============================================================================
     /// <summary>
     /// Класс для созданя аргументов события ошибок при приёме и отправке сообщений
     /// </summary>
     public class ErrorOccurredEventArgs: EventArgs
     {
-        //---------------------------------------------------------------------------
         private PortError _error;
-        //---------------------------------------------------------------------------
         /// <summary>
         /// Ошибка
         /// </summary>
@@ -21,9 +17,7 @@ namespace Modbus.OSIModel.DataLinkLayer.Slave.RTU.ComPort
             get { return _error; }
             set { _error = value; }
         }
-        //---------------------------------------------------------------------------
         private String _description;
-        //---------------------------------------------------------------------------
         /// <summary>
         /// Описание ошибки
         /// </summary>
@@ -32,21 +26,15 @@ namespace Modbus.OSIModel.DataLinkLayer.Slave.RTU.ComPort
             get { return _description; }
             set { _description = value; }
         }
-        //---------------------------------------------------------------------------
         public ErrorOccurredEventArgs()
         {
-            this.Error = PortError.NoError;
-            this.Description = String.Empty;
+            Error = PortError.NoError;
+            Description = String.Empty;
         }
-        //---------------------------------------------------------------------------
         public ErrorOccurredEventArgs(PortError error, String description)
         {
-            this.Description = description;
-            this.Error = error;
+            Description = description;
+            Error = error;
         }
-        //---------------------------------------------------------------------------
     }
-    //===============================================================================
 }
-//===================================================================================
-// End of file

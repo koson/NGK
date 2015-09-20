@@ -2,44 +2,36 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-//===================================================================================
 namespace Modbus.OSIModel.ApplicationLayer.Slave
 {
-    //===============================================================================
     /// <summary>
     /// Категории ошибок работы сети
     /// </summary>
     public enum ErrorCategory
     {
-        //---------------------------------------------------------------------------
         /// <summary>
         /// Категория ошибки не определена
         /// </summary>
         Unknown,
-        //---------------------------------------------------------------------------
         /// <summary>
         /// Ошибка возникла в работе объекта соединения
         /// </summary>
         DataLinkLayerError,
-        //---------------------------------------------------------------------------
         /// <summary>
         /// Ошибка возникла в рабоет контроллера сети
         /// </summary>
         ControllerError,
-        //---------------------------------------------------------------------------
         /// <summary>
         /// Ошибка возникла в работе устройства
         /// </summary>
         DeviceError
-        //---------------------------------------------------------------------------
     }
-    //===============================================================================
+
     /// <summary>
     /// Класс для создания агрументов события NetworkErrorOccurredEventHandler
     /// </summary>
     public class NetworkErrorEventArgs: EventArgs
     {
-        //---------------------------------------------------------------------------
         #region Fields And Properties
         //---------------------------------------------------------------------------
         /// <summary>
@@ -52,8 +44,8 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
         /// </summary>
         public ErrorCategory Category
         {
-            get { return this._Category; }
-            set { this._Category = value; }
+            get { return _Category; }
+            set { _Category = value; }
         }
         //---------------------------------------------------------------------------
         /// <summary>
@@ -66,8 +58,8 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
         /// </summary>
         public String ErrorDescription
         {
-            get { return this._ErrorDescription; }
-            set { this._ErrorDescription = value; }
+            get { return _ErrorDescription; }
+            set { _ErrorDescription = value; }
         }
         //---------------------------------------------------------------------------
         /// <summary>
@@ -80,12 +72,11 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
         /// </summary>
         public Exception InnerException
         {
-            get { return this._InnerException; }
-            set { this._InnerException = value; }
+            get { return _InnerException; }
+            set { _InnerException = value; }
         }
         //---------------------------------------------------------------------------
         #endregion
-        //---------------------------------------------------------------------------
         #region Constructors
         //---------------------------------------------------------------------------
         /// <summary>
@@ -93,8 +84,8 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
         /// </summary>
         public NetworkErrorEventArgs()
         {
-            this._Category = ErrorCategory.Unknown;
-            this._ErrorDescription = String.Empty;
+            _Category = ErrorCategory.Unknown;
+            _ErrorDescription = String.Empty;
         }
         //---------------------------------------------------------------------------
         /// <summary>
@@ -106,21 +97,19 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
         public NetworkErrorEventArgs(ErrorCategory category, String description, 
             Exception innerException)
         {
-            this._Category = Category;
+            _Category = Category;
             
             if (description == null)
             {
-                this._ErrorDescription = String.Empty;
+                _ErrorDescription = String.Empty;
             }
 
-            this._ErrorDescription = description;
-            this._InnerException = innerException;
+            _ErrorDescription = description;
+            _InnerException = innerException;
         }
         //---------------------------------------------------------------------------
         #endregion
-        //---------------------------------------------------------------------------
     }
-    //===============================================================================
     /// <summary>
     /// Делегат для создания события возникновения ошибки в работе сети
     /// </summary>
@@ -128,7 +117,4 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
     /// <param name="args">Аргументы события</param>
     public delegate void NetworkErrorOccurredEventHandler(Object sender, 
         NetworkErrorEventArgs args);
-    //===============================================================================
 }
-//===================================================================================
-// End of file

@@ -6,17 +6,13 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using System.Diagnostics;
-//
 using Modbus.OSIModel.ApplicationLayer.Slave.DataModel.DataTypes;
 using Modbus.OSIModel.ApplicationLayer.Slave.DataModel;
 
-//===================================================================================
 namespace Modbus.OSIModel.ApplicationLayer.Slave.Dialogs
 {
-    //===============================================================================
     public partial class FormEditNetworkController : Form
     {
-        //---------------------------------------------------------------------------
         #region Fields And Properties
         //---------------------------------------------------------------------------
         /// <summary>
@@ -37,10 +33,10 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.Dialogs
                 {
                     if (value.Status == Common.Controlling.Status.Stopped)
                     {
-                        this._Network = value;
-                        this._Network.DevicesListWasChanged +=
+                        _Network = value;
+                        _Network.DevicesListWasChanged +=
                             new EventHandler(EventHandler_Network_DevicesListWasChanged);
-                        this._Network.NetworkChangedStatus +=
+                        _Network.NetworkChangedStatus +=
                             new EventHandler(EventHandler_Network_NetworkChangedStatus);
                     }
                     else
@@ -56,7 +52,6 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.Dialogs
         private BindingSource _BindingSourceFile;
         //---------------------------------------------------------------------------
         #endregion
-        //---------------------------------------------------------------------------
         #region Constructors
         //---------------------------------------------------------------------------
         /// <summary>
@@ -68,7 +63,6 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.Dialogs
         }
         //---------------------------------------------------------------------------
         #endregion
-        //---------------------------------------------------------------------------
         #region Methods
         //---------------------------------------------------------------------------
         private void EventHandler_Network_NetworkChangedStatus(
@@ -107,35 +101,35 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.Dialogs
             FormEditNetworkController form = (FormEditNetworkController)sender;
 
             // Контекстное меню
-            this._ContextMenuStripCoils.Enabled = true;
-            this._ContextMenuStripDevicesList.Enabled = true;
-            this._ContextMenuStripHoldingRegisters.Enabled = true;
-            this._ContextMenuStripDiscretesInputs.Enabled = true;
-            this._ContextMenuStripFiles.Enabled = true;
-            this._ContextMenuStripInputRegisters.Enabled = true;
-            this._ContextMenuStripRecords.Enabled = true;
+            _ContextMenuStripCoils.Enabled = true;
+            _ContextMenuStripDevicesList.Enabled = true;
+            _ContextMenuStripHoldingRegisters.Enabled = true;
+            _ContextMenuStripDiscretesInputs.Enabled = true;
+            _ContextMenuStripFiles.Enabled = true;
+            _ContextMenuStripInputRegisters.Enabled = true;
+            _ContextMenuStripRecords.Enabled = true;
 
             // Настраиваем источники данных
-            this._BindingSourceFile = new BindingSource();
-            //this._BindingSourceRecords.DataMember = "Records";
+            _BindingSourceFile = new BindingSource();
+            //_BindingSourceRecords.DataMember = "Records";
 
             // Для списка устройств
-            this._BindingSourceDevicesList = new BindingSource();
-            this._BindingSourceDevicesList.PositionChanged +=
+            _BindingSourceDevicesList = new BindingSource();
+            _BindingSourceDevicesList.PositionChanged +=
                 new EventHandler(EventHandler_BindingSourceDevicesList_PositionChanged);
-            this._BindingSourceDevicesList.ListChanged +=
+            _BindingSourceDevicesList.ListChanged +=
                 new ListChangedEventHandler(EventHandler_BindingSourceDevicesList_ListChanged);
-            this._BindingSourceDevicesList.DataMember = "Devices";
-            this._BindingSourceDevicesList.DataSource = this._Network;
+            _BindingSourceDevicesList.DataMember = "Devices";
+            _BindingSourceDevicesList.DataSource = _Network;
 
             // Настраиваем гриды для отображения данных устройства
-            this.InitDataGridViewDevices();
-            this.InitDataGridViewHoldingRegisters();
-            this.InitDataGridViewCoils();
-            this.InitDataGridViewInputRegisters();
-            this.InitDataGridViewDiscretesInputs();
-            this.InitDataGridViewFiles();
-            this.InitDataGridViewRecords();
+            InitDataGridViewDevices();
+            InitDataGridViewHoldingRegisters();
+            InitDataGridViewCoils();
+            InitDataGridViewInputRegisters();
+            InitDataGridViewDiscretesInputs();
+            InitDataGridViewFiles();
+            InitDataGridViewRecords();
 
             return;
         }
@@ -147,18 +141,18 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.Dialogs
         {
             DataGridViewColumn column;
 
-            this._DataGridViewDevicesList.AllowUserToAddRows = false;
-            this._DataGridViewDevicesList.AllowUserToDeleteRows = false;
-            this._DataGridViewDevicesList.AutoGenerateColumns = false;
-            this._DataGridViewDevicesList.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            this._DataGridViewDevicesList.MultiSelect = false;
-            this._DataGridViewDevicesList.Dock = DockStyle.Fill;
-            this._DataGridViewDevicesList.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            this._DataGridViewDevicesList.CellParsing +=
+            _DataGridViewDevicesList.AllowUserToAddRows = false;
+            _DataGridViewDevicesList.AllowUserToDeleteRows = false;
+            _DataGridViewDevicesList.AutoGenerateColumns = false;
+            _DataGridViewDevicesList.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            _DataGridViewDevicesList.MultiSelect = false;
+            _DataGridViewDevicesList.Dock = DockStyle.Fill;
+            _DataGridViewDevicesList.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            _DataGridViewDevicesList.CellParsing +=
                 new DataGridViewCellParsingEventHandler(EventHandler_DataGridViewDevicesList_CellParsing);
-            this._DataGridViewDevicesList.CellEndEdit +=
+            _DataGridViewDevicesList.CellEndEdit +=
                 new DataGridViewCellEventHandler(EventHandler_DataGridViewDevicesList_CellEndEdit);
-            this._DataGridViewDevicesList.DataError +=
+            _DataGridViewDevicesList.DataError +=
                 new DataGridViewDataErrorEventHandler(EventHandler_DataGridViewDevicesList_DataError);
 
             // Настраиваем столбцы
@@ -170,7 +164,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.Dialogs
             column.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
             column.ValueType = typeof(Byte);
             column.ReadOnly = false;
-            this._DataGridViewDevicesList.Columns.Add(column);
+            _DataGridViewDevicesList.Columns.Add(column);
 
             column = new DataGridViewTextBoxColumn();
             column.Name = "NetworkController";
@@ -180,7 +174,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.Dialogs
             column.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
             column.ValueType = typeof(NetworkController);
             column.ReadOnly = true;
-            this._DataGridViewDevicesList.Columns.Add(column);
+            _DataGridViewDevicesList.Columns.Add(column);
 
             column = new DataGridViewTextBoxColumn();
             column.Name = "Description";
@@ -190,7 +184,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.Dialogs
             column.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
             column.ValueType = typeof(String);
             column.ReadOnly = false;
-            this._DataGridViewDevicesList.Columns.Add(column);
+            _DataGridViewDevicesList.Columns.Add(column);
 
             DataGridViewComboBoxColumn cbxcolumn = new DataGridViewComboBoxColumn();
             cbxcolumn.Name = "Status";
@@ -201,10 +195,10 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.Dialogs
             cbxcolumn.FlatStyle = FlatStyle.Flat;
             cbxcolumn.ValueType = typeof(Common.Controlling.Status);
             cbxcolumn.ReadOnly = false;
-            this._DataGridViewDevicesList.Columns.Add(cbxcolumn);
+            _DataGridViewDevicesList.Columns.Add(cbxcolumn);
 
-            this._DataGridViewDevicesList.DataSource = null;
-            this._DataGridViewDevicesList.DataSource = this._BindingSourceDevicesList;
+            _DataGridViewDevicesList.DataSource = null;
+            _DataGridViewDevicesList.DataSource = _BindingSourceDevicesList;
 
             return;
         }
@@ -217,23 +211,23 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.Dialogs
             DataGridViewColumn column;
             
             // Настраиваем источник данных
-            this._DataGridViewHoldingRegisters.AllowUserToAddRows = false;
-            this._DataGridViewHoldingRegisters.AllowUserToDeleteRows = false;
-            this._DataGridViewHoldingRegisters.AutoGenerateColumns = false;
-            this._DataGridViewHoldingRegisters.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            this._DataGridViewHoldingRegisters.MultiSelect = false;
-            this._DataGridViewHoldingRegisters.Dock = DockStyle.Fill;
-            this._DataGridViewHoldingRegisters.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            this._DataGridViewHoldingRegisters.CellParsing +=
+            _DataGridViewHoldingRegisters.AllowUserToAddRows = false;
+            _DataGridViewHoldingRegisters.AllowUserToDeleteRows = false;
+            _DataGridViewHoldingRegisters.AutoGenerateColumns = false;
+            _DataGridViewHoldingRegisters.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            _DataGridViewHoldingRegisters.MultiSelect = false;
+            _DataGridViewHoldingRegisters.Dock = DockStyle.Fill;
+            _DataGridViewHoldingRegisters.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            _DataGridViewHoldingRegisters.CellParsing +=
                 new DataGridViewCellParsingEventHandler(EventHandler_DataGridViewHoldingRegisters_CellParsing);
-            this._DataGridViewHoldingRegisters.CellEndEdit +=
+            _DataGridViewHoldingRegisters.CellEndEdit +=
                 new DataGridViewCellEventHandler(_DataGridViewHoldingRegisters_CellEndEdit);
-            this._DataGridViewHoldingRegisters.DataError +=
+            _DataGridViewHoldingRegisters.DataError +=
                 new DataGridViewDataErrorEventHandler(EventHandler_DataGridViewHoldingRegisters_DataError);
-            this._DataGridViewHoldingRegisters.DataSource = null;
-            //this._DataGridViewHoldingRegisters.DataSource = this._BindingSourceHoldingRegisters;
-            this._DataGridViewHoldingRegisters.DataMember = "HoldingRegisters";
-            this._DataGridViewHoldingRegisters.DataSource = this._BindingSourceDevicesList;
+            _DataGridViewHoldingRegisters.DataSource = null;
+            //_DataGridViewHoldingRegisters.DataSource = _BindingSourceHoldingRegisters;
+            _DataGridViewHoldingRegisters.DataMember = "HoldingRegisters";
+            _DataGridViewHoldingRegisters.DataSource = _BindingSourceDevicesList;
 
             column = new DataGridViewTextBoxColumn();
             column.Name = "Address";
@@ -244,7 +238,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.Dialogs
             column.ValueType = typeof(UInt16);
             column.Visible = true;
             column.ReadOnly = false;
-            this._DataGridViewHoldingRegisters.Columns.Add(column);
+            _DataGridViewHoldingRegisters.Columns.Add(column);
 
             column = new DataGridViewTextBoxColumn();
             column.Name = "Value";
@@ -255,7 +249,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.Dialogs
             column.ValueType = typeof(UInt16);
             column.Visible = true;
             column.ReadOnly = false;
-            this._DataGridViewHoldingRegisters.Columns.Add(column);
+            _DataGridViewHoldingRegisters.Columns.Add(column);
 
             column = new DataGridViewTextBoxColumn();
             column.Name = "Description";
@@ -266,7 +260,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.Dialogs
             column.ValueType = typeof(String);
             column.Visible = true;
             column.ReadOnly = false;
-            this._DataGridViewHoldingRegisters.Columns.Add(column);
+            _DataGridViewHoldingRegisters.Columns.Add(column);
 
             column = new DataGridViewTextBoxColumn();
             column.Name = "ParameterType";
@@ -277,7 +271,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.Dialogs
             column.ValueType = typeof(ModbusParameterType);
             column.Visible = true;
             column.ReadOnly = true;
-            this._DataGridViewHoldingRegisters.Columns.Add(column);
+            _DataGridViewHoldingRegisters.Columns.Add(column);
 
             column = new DataGridViewTextBoxColumn();
             column.Name = "Device";
@@ -288,7 +282,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.Dialogs
             column.ValueType = typeof(Device);
             column.Visible = true;
             column.ReadOnly = true;
-            this._DataGridViewHoldingRegisters.Columns.Add(column);
+            _DataGridViewHoldingRegisters.Columns.Add(column);
 
             return;
         }
@@ -300,23 +294,23 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.Dialogs
         {
             DataGridViewColumn column;
 
-            this._DataGridViewInputRegisters.AllowUserToAddRows = false;
-            this._DataGridViewInputRegisters.AllowUserToDeleteRows = false;
-            this._DataGridViewInputRegisters.AutoGenerateColumns = false;
-            this._DataGridViewInputRegisters.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            this._DataGridViewInputRegisters.MultiSelect = false;
-            this._DataGridViewInputRegisters.Dock = DockStyle.Fill;
-            this._DataGridViewInputRegisters.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            this._DataGridViewInputRegisters.CellParsing +=
+            _DataGridViewInputRegisters.AllowUserToAddRows = false;
+            _DataGridViewInputRegisters.AllowUserToDeleteRows = false;
+            _DataGridViewInputRegisters.AutoGenerateColumns = false;
+            _DataGridViewInputRegisters.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            _DataGridViewInputRegisters.MultiSelect = false;
+            _DataGridViewInputRegisters.Dock = DockStyle.Fill;
+            _DataGridViewInputRegisters.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            _DataGridViewInputRegisters.CellParsing +=
                 new DataGridViewCellParsingEventHandler(EventHandler_DataGridViewInputRegisters_CellParsing);
-            this._DataGridViewInputRegisters.CellEndEdit +=
+            _DataGridViewInputRegisters.CellEndEdit +=
                 new DataGridViewCellEventHandler(_DataGridViewInputRegisters_CellEndEdit);
-            this._DataGridViewInputRegisters.DataError +=
+            _DataGridViewInputRegisters.DataError +=
                 new DataGridViewDataErrorEventHandler(EventHandler_DataGridViewInputRegisters_DataError);
-            this._DataGridViewInputRegisters.DataSource = null;
-            //this._DataGridViewInputRegisters.DataSource = this._BindingSourceInputRegisters;
-            this._DataGridViewInputRegisters.DataMember = "InputRegisters";
-            this._DataGridViewInputRegisters.DataSource = this._BindingSourceDevicesList;
+            _DataGridViewInputRegisters.DataSource = null;
+            //_DataGridViewInputRegisters.DataSource = _BindingSourceInputRegisters;
+            _DataGridViewInputRegisters.DataMember = "InputRegisters";
+            _DataGridViewInputRegisters.DataSource = _BindingSourceDevicesList;
 
             column = new DataGridViewTextBoxColumn();
             column.Name = "Address";
@@ -327,7 +321,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.Dialogs
             column.ValueType = typeof(UInt16);
             column.Visible = true;
             column.ReadOnly = false;
-            this._DataGridViewInputRegisters.Columns.Add(column);
+            _DataGridViewInputRegisters.Columns.Add(column);
 
             column = new DataGridViewTextBoxColumn();
             column.Name = "Value";
@@ -338,7 +332,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.Dialogs
             column.ValueType = typeof(UInt16);
             column.Visible = true;
             column.ReadOnly = false;
-            this._DataGridViewInputRegisters.Columns.Add(column);
+            _DataGridViewInputRegisters.Columns.Add(column);
 
             column = new DataGridViewTextBoxColumn();
             column.Name = "Description";
@@ -349,7 +343,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.Dialogs
             column.ValueType = typeof(String);
             column.Visible = true;
             column.ReadOnly = false;
-            this._DataGridViewInputRegisters.Columns.Add(column);
+            _DataGridViewInputRegisters.Columns.Add(column);
 
             column = new DataGridViewTextBoxColumn();
             column.Name = "ParameterType";
@@ -360,7 +354,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.Dialogs
             column.ValueType = typeof(ModbusParameterType);
             column.Visible = true;
             column.ReadOnly = true;
-            this._DataGridViewInputRegisters.Columns.Add(column);
+            _DataGridViewInputRegisters.Columns.Add(column);
 
             column = new DataGridViewTextBoxColumn();
             column.Name = "Device";
@@ -371,7 +365,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.Dialogs
             column.ValueType = typeof(Device);
             column.Visible = true;
             column.ReadOnly = true;
-            this._DataGridViewInputRegisters.Columns.Add(column);
+            _DataGridViewInputRegisters.Columns.Add(column);
             
             return;
         }
@@ -383,24 +377,24 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.Dialogs
         {
             DataGridViewColumn column;
 
-            this._DataGridViewCoils.AllowUserToAddRows = false;
-            this._DataGridViewCoils.AllowUserToDeleteRows = false;
-            this._DataGridViewCoils.AutoGenerateColumns = false;
-            this._DataGridViewCoils.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            this._DataGridViewCoils.MultiSelect = false;
-            this._DataGridViewCoils.Dock = DockStyle.Fill;
-            this._DataGridViewCoils.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            this._DataGridViewCoils.CellParsing +=
-                new DataGridViewCellParsingEventHandler(this.EventHandler_DataGridViewCoils_CellParsing);
-            this._DataGridViewCoils.CellEndEdit +=
+            _DataGridViewCoils.AllowUserToAddRows = false;
+            _DataGridViewCoils.AllowUserToDeleteRows = false;
+            _DataGridViewCoils.AutoGenerateColumns = false;
+            _DataGridViewCoils.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            _DataGridViewCoils.MultiSelect = false;
+            _DataGridViewCoils.Dock = DockStyle.Fill;
+            _DataGridViewCoils.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            _DataGridViewCoils.CellParsing +=
+                new DataGridViewCellParsingEventHandler(EventHandler_DataGridViewCoils_CellParsing);
+            _DataGridViewCoils.CellEndEdit +=
                 new DataGridViewCellEventHandler(EventHadler_DataGridViewCoils_CellEndEdit);
-            this._DataGridViewCoils.DataError +=
+            _DataGridViewCoils.DataError +=
                 new DataGridViewDataErrorEventHandler(EventHandler_DataGridViewCoils_DataError);
-            this._DataGridViewCoils.DataSource = null;
-            //this._DataGridViewCoils.DataSource = this._BindingSourceCoils;
-            //this._DataGridViewCoils.DataSource = this._BingingSourceCurrentDevice;
-            this._DataGridViewCoils.DataMember = "Coils";
-            this._DataGridViewCoils.DataSource = this._BindingSourceDevicesList;
+            _DataGridViewCoils.DataSource = null;
+            //_DataGridViewCoils.DataSource = _BindingSourceCoils;
+            //_DataGridViewCoils.DataSource = _BingingSourceCurrentDevice;
+            _DataGridViewCoils.DataMember = "Coils";
+            _DataGridViewCoils.DataSource = _BindingSourceDevicesList;
 
             column = new DataGridViewTextBoxColumn();
             column.Name = "Address";
@@ -410,7 +404,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.Dialogs
             column.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
             column.Visible = true;
             column.ReadOnly = false;
-            this._DataGridViewCoils.Columns.Add(column);
+            _DataGridViewCoils.Columns.Add(column);
 
             column = new DataGridViewCheckBoxColumn();
             column.Name = "Value";
@@ -421,7 +415,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.Dialogs
             column.ValueType = typeof(Boolean);
             column.Visible = true;
             column.ReadOnly = false;
-            this._DataGridViewCoils.Columns.Add(column);
+            _DataGridViewCoils.Columns.Add(column);
 
             column = new DataGridViewTextBoxColumn();
             column.Name = "Description";
@@ -432,7 +426,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.Dialogs
             column.ValueType = typeof(String);
             column.Visible = true;
             column.ReadOnly = false;
-            this._DataGridViewCoils.Columns.Add(column);
+            _DataGridViewCoils.Columns.Add(column);
 
             column = new DataGridViewTextBoxColumn();
             column.Name = "ParameterType";
@@ -443,7 +437,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.Dialogs
             column.ValueType = typeof(ModbusParameterType);
             column.Visible = true;
             column.ReadOnly = true;
-            this._DataGridViewCoils.Columns.Add(column);
+            _DataGridViewCoils.Columns.Add(column);
 
             column = new DataGridViewTextBoxColumn();
             column.Name = "Device";
@@ -454,7 +448,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.Dialogs
             column.ValueType = typeof(Device);
             column.Visible = true;
             column.ReadOnly = true;
-            this._DataGridViewCoils.Columns.Add(column);
+            _DataGridViewCoils.Columns.Add(column);
             
             return;
         }
@@ -466,23 +460,23 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.Dialogs
         {
             DataGridViewColumn column;
 
-            this._DataGridViewDiscretesInputs.AllowUserToAddRows = false;
-            this._DataGridViewDiscretesInputs.AllowUserToDeleteRows = false;
-            this._DataGridViewDiscretesInputs.AutoGenerateColumns = false;
-            this._DataGridViewDiscretesInputs.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            this._DataGridViewDiscretesInputs.MultiSelect = false;
-            this._DataGridViewDiscretesInputs.Dock = DockStyle.Fill;
-            this._DataGridViewDiscretesInputs.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            this._DataGridViewDiscretesInputs.CellParsing +=
+            _DataGridViewDiscretesInputs.AllowUserToAddRows = false;
+            _DataGridViewDiscretesInputs.AllowUserToDeleteRows = false;
+            _DataGridViewDiscretesInputs.AutoGenerateColumns = false;
+            _DataGridViewDiscretesInputs.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            _DataGridViewDiscretesInputs.MultiSelect = false;
+            _DataGridViewDiscretesInputs.Dock = DockStyle.Fill;
+            _DataGridViewDiscretesInputs.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            _DataGridViewDiscretesInputs.CellParsing +=
                 new DataGridViewCellParsingEventHandler(EventHandler_DataGridViewDiscretesInputs_CellParsing);
-            this._DataGridViewDiscretesInputs.CellEndEdit +=
+            _DataGridViewDiscretesInputs.CellEndEdit +=
                 new DataGridViewCellEventHandler(_DataGridViewDiscretesInputs_CellEndEdit);
-            this._DataGridViewDiscretesInputs.DataError +=
+            _DataGridViewDiscretesInputs.DataError +=
                 new DataGridViewDataErrorEventHandler(EventHandler_DataGridViewDiscretesInputs_DataError);
-            this._DataGridViewDiscretesInputs.DataSource = null;
-            //this._DataGridViewDiscretesInputs.DataSource = this._BindingSourceDiscrestesInputs;
-            this._DataGridViewDiscretesInputs.DataMember = "DiscretesInputs";
-            this._DataGridViewDiscretesInputs.DataSource = this._BindingSourceDevicesList;
+            _DataGridViewDiscretesInputs.DataSource = null;
+            //_DataGridViewDiscretesInputs.DataSource = _BindingSourceDiscrestesInputs;
+            _DataGridViewDiscretesInputs.DataMember = "DiscretesInputs";
+            _DataGridViewDiscretesInputs.DataSource = _BindingSourceDevicesList;
 
             column = new DataGridViewTextBoxColumn();
             column.Name = "Address";
@@ -493,7 +487,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.Dialogs
             column.ValueType = typeof(UInt16);
             column.Visible = true;
             column.ReadOnly = false;
-            this._DataGridViewDiscretesInputs.Columns.Add(column);
+            _DataGridViewDiscretesInputs.Columns.Add(column);
 
             column = new DataGridViewCheckBoxColumn();
             column.Name = "Value";
@@ -504,7 +498,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.Dialogs
             column.ValueType = typeof(Boolean);
             column.Visible = true;
             column.ReadOnly = false;
-            this._DataGridViewDiscretesInputs.Columns.Add(column);
+            _DataGridViewDiscretesInputs.Columns.Add(column);
 
             column = new DataGridViewTextBoxColumn();
             column.Name = "Description";
@@ -515,7 +509,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.Dialogs
             column.ValueType = typeof(String);
             column.Visible = true;
             column.ReadOnly = false;
-            this._DataGridViewDiscretesInputs.Columns.Add(column);
+            _DataGridViewDiscretesInputs.Columns.Add(column);
 
             column = new DataGridViewTextBoxColumn();
             column.Name = "ParameterType";
@@ -526,7 +520,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.Dialogs
             column.ValueType = typeof(ModbusParameterType);
             column.Visible = true;
             column.ReadOnly = true;
-            this._DataGridViewDiscretesInputs.Columns.Add(column);
+            _DataGridViewDiscretesInputs.Columns.Add(column);
 
             column = new DataGridViewTextBoxColumn();
             column.Name = "Device";
@@ -537,7 +531,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.Dialogs
             column.ValueType = typeof(Device);
             column.Visible = true;
             column.ReadOnly = true;
-            this._DataGridViewDiscretesInputs.Columns.Add(column);
+            _DataGridViewDiscretesInputs.Columns.Add(column);
 
             return;
         }
@@ -550,27 +544,27 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.Dialogs
             DataGridViewColumn column;
             //CurrencyManager cManager;
 
-            this._DataGridViewFiles.AllowUserToAddRows = false;
-            this._DataGridViewFiles.AllowUserToDeleteRows = false;
-            this._DataGridViewFiles.AutoGenerateColumns = false;
-            this._DataGridViewFiles.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            this._DataGridViewFiles.MultiSelect = false;
-            this._DataGridViewFiles.Dock = DockStyle.Fill;
-            this._DataGridViewFiles.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            this._DataGridViewFiles.CellParsing +=
+            _DataGridViewFiles.AllowUserToAddRows = false;
+            _DataGridViewFiles.AllowUserToDeleteRows = false;
+            _DataGridViewFiles.AutoGenerateColumns = false;
+            _DataGridViewFiles.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            _DataGridViewFiles.MultiSelect = false;
+            _DataGridViewFiles.Dock = DockStyle.Fill;
+            _DataGridViewFiles.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            _DataGridViewFiles.CellParsing +=
                 new DataGridViewCellParsingEventHandler(EventHandler_DataGridViewFiles_CellParsing);
-            this._DataGridViewFiles.CellEndEdit +=
+            _DataGridViewFiles.CellEndEdit +=
                 new DataGridViewCellEventHandler(EventHandler_DataGridViewFiles_CellEndEdit);
-            this._DataGridViewFiles.DataError +=
+            _DataGridViewFiles.DataError +=
                 new DataGridViewDataErrorEventHandler(EventHandler_DataGridViewFiles_DataError);
-            this._DataGridViewFiles.SelectionChanged += 
+            _DataGridViewFiles.SelectionChanged += 
                 new EventHandler(EventHandler_DataGridViewFiles_SelectionChanged);
-            this._DataGridViewFiles.DataSource = null;
-            this._DataGridViewFiles.DataMember = "Files";
-            this._DataGridViewFiles.DataSource = this._BindingSourceDevicesList;
+            _DataGridViewFiles.DataSource = null;
+            _DataGridViewFiles.DataMember = "Files";
+            _DataGridViewFiles.DataSource = _BindingSourceDevicesList;
 
-            //cManager = this._DataGridViewFiles.BindingContext[
-            //    this._DataGridViewFiles.DataSource, this._DataGridViewFiles.DataMember] as CurrencyManager;
+            //cManager = _DataGridViewFiles.BindingContext[
+            //    _DataGridViewFiles.DataSource, _DataGridViewFiles.DataMember] as CurrencyManager;
             //cManager.PositionChanged +=new EventHandler(EventHandler_cManager_PositionChanged);
 
             column = new DataGridViewTextBoxColumn();
@@ -582,7 +576,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.Dialogs
             column.ValueType = typeof(UInt16);
             column.Visible = true;
             column.ReadOnly = false;
-            this._DataGridViewFiles.Columns.Add(column);
+            _DataGridViewFiles.Columns.Add(column);
 
             column = new DataGridViewTextBoxColumn();
             column.Name = "Description";
@@ -593,7 +587,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.Dialogs
             column.ValueType = typeof(String);
             column.Visible = true;
             column.ReadOnly = false;
-            this._DataGridViewFiles.Columns.Add(column);
+            _DataGridViewFiles.Columns.Add(column);
 
             column = new DataGridViewTextBoxColumn();
             column.Name = "Device";
@@ -604,7 +598,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.Dialogs
             column.ValueType = typeof(Device);
             column.Visible = true;
             column.ReadOnly = true;
-            this._DataGridViewFiles.Columns.Add(column);
+            _DataGridViewFiles.Columns.Add(column);
             
             return;
         }
@@ -617,21 +611,21 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.Dialogs
         {
             DataGridViewColumn column;
 
-            this._DataGridViewRecords.AllowUserToAddRows = false;
-            this._DataGridViewRecords.AllowUserToDeleteRows = false;
-            this._DataGridViewRecords.AutoGenerateColumns = false;
-            this._DataGridViewRecords.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            this._DataGridViewRecords.MultiSelect = false;
-            this._DataGridViewRecords.Dock = DockStyle.Fill;
-            this._DataGridViewRecords.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            this._DataGridViewRecords.CellParsing +=
+            _DataGridViewRecords.AllowUserToAddRows = false;
+            _DataGridViewRecords.AllowUserToDeleteRows = false;
+            _DataGridViewRecords.AutoGenerateColumns = false;
+            _DataGridViewRecords.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            _DataGridViewRecords.MultiSelect = false;
+            _DataGridViewRecords.Dock = DockStyle.Fill;
+            _DataGridViewRecords.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            _DataGridViewRecords.CellParsing +=
                 new DataGridViewCellParsingEventHandler(EventHandler_DataGridViewRecords_CellParsing);
-            this._DataGridViewRecords.CellEndEdit +=
+            _DataGridViewRecords.CellEndEdit +=
                 new DataGridViewCellEventHandler(EventHandler_DataGridViewRecords_CellEndEdit);
-            this._DataGridViewRecords.DataError +=
+            _DataGridViewRecords.DataError +=
                 new DataGridViewDataErrorEventHandler(EventHandler_DataGridViewRecords_DataError);
-            //this._DataGridViewRecords.DataMember = String.Empty;
-            //this._DataGridViewRecords.DataSource = this._BindingSourceRecords;
+            //_DataGridViewRecords.DataMember = String.Empty;
+            //_DataGridViewRecords.DataSource = _BindingSourceRecords;
 
             column = new DataGridViewTextBoxColumn();
             column.Name = "Address";
@@ -642,7 +636,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.Dialogs
             column.ValueType = typeof(UInt16);
             column.Visible = true;
             column.ReadOnly = false;
-            this._DataGridViewRecords.Columns.Add(column);
+            _DataGridViewRecords.Columns.Add(column);
 
             column = new DataGridViewTextBoxColumn();
             column.Name = "Value";
@@ -653,7 +647,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.Dialogs
             column.ValueType = typeof(UInt16); 
             column.Visible = true;
             column.ReadOnly = false;
-            this._DataGridViewRecords.Columns.Add(column);
+            _DataGridViewRecords.Columns.Add(column);
 
             column = new DataGridViewTextBoxColumn();
             column.Name = "Description";
@@ -664,7 +658,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.Dialogs
             column.ValueType = typeof(String);
             column.Visible = true;
             column.ReadOnly = false;
-            this._DataGridViewRecords.Columns.Add(column);
+            _DataGridViewRecords.Columns.Add(column);
 
             column = new DataGridViewTextBoxColumn();
             column.Name = "ParameterType";
@@ -675,7 +669,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.Dialogs
             column.ValueType = typeof(ModbusParameterType);
             column.Visible = true;
             column.ReadOnly = true;
-            this._DataGridViewRecords.Columns.Add(column);
+            _DataGridViewRecords.Columns.Add(column);
 
             column = new DataGridViewTextBoxColumn();
             column.Name = "Device";
@@ -686,7 +680,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.Dialogs
             column.ValueType = typeof(Device);
             column.Visible = true;
             column.ReadOnly = true;
-            this._DataGridViewRecords.Columns.Add(column);
+            _DataGridViewRecords.Columns.Add(column);
 
             return;
         }
@@ -711,25 +705,25 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.Dialogs
             {
                 file = (File)manager.Current;
 
-                this._BindingSourceFile = new BindingSource(file, String.Empty);
+                _BindingSourceFile = new BindingSource(file, String.Empty);
 
-                this._DataGridViewRecords.DataSource = null;
-                this._DataGridViewRecords.DataSource = this._BindingSourceFile;
-                this._DataGridViewRecords.DataMember = "Records";
+                _DataGridViewRecords.DataSource = null;
+                _DataGridViewRecords.DataSource = _BindingSourceFile;
+                _DataGridViewRecords.DataMember = "Records";
 
-                this._DataGridViewRecords.Enabled = true;
-                //this._ContextMenuStripRecords.Enabled = true;
+                _DataGridViewRecords.Enabled = true;
+                //_ContextMenuStripRecords.Enabled = true;
             }
             else
             {
-                this._BindingSourceFile = new BindingSource(null, String.Empty);
+                _BindingSourceFile = new BindingSource(null, String.Empty);
 
-                this._DataGridViewRecords.DataSource = null;
-                this._DataGridViewRecords.DataSource = this._BindingSourceFile;
-                this._DataGridViewRecords.DataMember = String.Empty;
+                _DataGridViewRecords.DataSource = null;
+                _DataGridViewRecords.DataSource = _BindingSourceFile;
+                _DataGridViewRecords.DataMember = String.Empty;
 
-                this._DataGridViewRecords.Enabled = false;
-                //this._ContextMenuStripRecords.Enabled = false;
+                _DataGridViewRecords.Enabled = false;
+                //_ContextMenuStripRecords.Enabled = false;
             }
             return;
         }
@@ -753,7 +747,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.Dialogs
                         // соответствующие элементы окна
                         if (bs.Count == 0)
                         {
-                            this._TabControlDevice.Enabled = false;
+                            _TabControlDevice.Enabled = false;
                         }
                         break; 
                     }
@@ -761,18 +755,18 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.Dialogs
                     {
                         // Список устройств всегда больше 0, разрешаем
                         // работу элементов окна.
-                        this._TabControlDevice.Enabled = true;
+                        _TabControlDevice.Enabled = true;
                         break;
                     }
                 case ListChangedType.Reset:
                     {
                         if (bs.Count > 0)
                         {
-                            this._TabControlDevice.Enabled = true;
+                            _TabControlDevice.Enabled = true;
                         }
                         else
                         {
-                            this._TabControlDevice.Enabled = false;
+                            _TabControlDevice.Enabled = false;
                         }
                         break;
                     }
@@ -1378,26 +1372,26 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.Dialogs
             // Находим свобоный адрес и добавляем устройство с этим адресом 
             for (address = 1; address < 248; address++)
 			{
-                if (!this._Network.Devices.Contains(address))
+                if (!_Network.Devices.Contains(address))
                 {
                     device = new Device(address);
-                    this._BindingSourceDevicesList.Add(device);
+                    _BindingSourceDevicesList.Add(device);
 
-                    if (this._BindingSourceDevicesList.Count > 0)
+                    if (_BindingSourceDevicesList.Count > 0)
                     {
-                        this._ContextMenuStripCoils.Enabled = true;
-                        this._ContextMenuStripDiscretesInputs.Enabled = true;
-                        this._ContextMenuStripFiles.Enabled = true;
-                        this._ContextMenuStripHoldingRegisters.Enabled = true;
-                        this._ContextMenuStripInputRegisters.Enabled = true;
-                        this._ContextMenuStripRecords.Enabled = false;
+                        _ContextMenuStripCoils.Enabled = true;
+                        _ContextMenuStripDiscretesInputs.Enabled = true;
+                        _ContextMenuStripFiles.Enabled = true;
+                        _ContextMenuStripHoldingRegisters.Enabled = true;
+                        _ContextMenuStripInputRegisters.Enabled = true;
+                        _ContextMenuStripRecords.Enabled = false;
 
-                        this._DataGridViewCoils.Enabled = true;
-                        this._DataGridViewDiscretesInputs.Enabled = true;
-                        this._DataGridViewFiles.Enabled = true;
-                        this._DataGridViewHoldingRegisters.Enabled = true;
-                        this._DataGridViewInputRegisters.Enabled = true;
-                        this._DataGridViewRecords.Enabled = false;
+                        _DataGridViewCoils.Enabled = true;
+                        _DataGridViewDiscretesInputs.Enabled = true;
+                        _DataGridViewFiles.Enabled = true;
+                        _DataGridViewHoldingRegisters.Enabled = true;
+                        _DataGridViewInputRegisters.Enabled = true;
+                        _DataGridViewRecords.Enabled = false;
                     }
                     return;
                 }
@@ -1411,7 +1405,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.Dialogs
         /// </summary>
         private void RemoveDevice()
         {
-            this._BindingSourceDevicesList.RemoveCurrent();
+            _BindingSourceDevicesList.RemoveCurrent();
             return;
         }
         //---------------------------------------------------------------------------
@@ -1424,7 +1418,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.Dialogs
             Device device;
             HoldingRegister register;
 
-            device = (Device)this._BindingSourceDevicesList.Current;
+            device = (Device)_BindingSourceDevicesList.Current;
 
             for (address = 0; address <= UInt16.MaxValue; address++)
             {
@@ -1433,15 +1427,15 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.Dialogs
                     register = new HoldingRegister(address, 0, String.Empty);
 
                     device.HoldingRegisters.Add(register);
-                    this._BindingSourceDevicesList.ResetCurrentItem();
+                    _BindingSourceDevicesList.ResetCurrentItem();
 
                     if (device.HoldingRegisters.Count > 0)
                     {
-                        this._ToolStripMenuItemRemoveHoldingRegister.Enabled = true;
+                        _ToolStripMenuItemRemoveHoldingRegister.Enabled = true;
                     }
                     if (device.HoldingRegisters.Count == UInt16.MaxValue)
                     {
-                        this._ToolStripMenuItemAddHoldingRegister.Enabled = false;
+                        _ToolStripMenuItemAddHoldingRegister.Enabled = false;
                     }
 
                     return;
@@ -1457,19 +1451,19 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.Dialogs
             HoldingRegister register;
             Device device;
 
-            manager = this._DataGridViewHoldingRegisters.BindingContext[
-                this._DataGridViewHoldingRegisters.DataSource, 
-                this._DataGridViewHoldingRegisters.DataMember] as CurrencyManager;
+            manager = _DataGridViewHoldingRegisters.BindingContext[
+                _DataGridViewHoldingRegisters.DataSource, 
+                _DataGridViewHoldingRegisters.DataMember] as CurrencyManager;
             register = (HoldingRegister)manager.Current;
-            device = (Device)this._BindingSourceDevicesList.Current;
+            device = (Device)_BindingSourceDevicesList.Current;
             device.HoldingRegisters.Remove(register);
-            this._BindingSourceDevicesList.ResetCurrentItem();
+            _BindingSourceDevicesList.ResetCurrentItem();
 
             if (device.HoldingRegisters.Count == 0)
             {
-                this._ToolStripMenuItemRemoveHoldingRegister.Enabled = false;
+                _ToolStripMenuItemRemoveHoldingRegister.Enabled = false;
             }
-            this._ToolStripMenuItemAddHoldingRegister.Enabled = true;
+            _ToolStripMenuItemAddHoldingRegister.Enabled = true;
             return;
         }
         //---------------------------------------------------------------------------
@@ -1479,7 +1473,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.Dialogs
             Device device;
             InputRegister register;
 
-            device = (Device)this._BindingSourceDevicesList.Current;
+            device = (Device)_BindingSourceDevicesList.Current;
 
             for (address = 0; address <= UInt16.MaxValue; address++)
             {
@@ -1487,15 +1481,15 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.Dialogs
                 {
                     register = new InputRegister(address, 0, String.Empty);
                     device.InputRegisters.Add(register);
-                    this._BindingSourceDevicesList.ResetCurrentItem();
+                    _BindingSourceDevicesList.ResetCurrentItem();
 
                     if (device.InputRegisters.Count > 0)
                     {
-                        this._ToolStripMenuItemRemoveInputRegister.Enabled = true;
+                        _ToolStripMenuItemRemoveInputRegister.Enabled = true;
                     }
                     if (device.InputRegisters.Count == UInt16.MaxValue)
                     {
-                        this._ToolStripMenuItemAddInputRegister.Enabled = false;
+                        _ToolStripMenuItemAddInputRegister.Enabled = false;
                     }
                     return;
                 }
@@ -1510,19 +1504,19 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.Dialogs
             InputRegister register;
             Device device;
 
-            manager = this._DataGridViewInputRegisters.BindingContext[
-                this._DataGridViewInputRegisters.DataSource,
-                this._DataGridViewInputRegisters.DataMember] as CurrencyManager;
+            manager = _DataGridViewInputRegisters.BindingContext[
+                _DataGridViewInputRegisters.DataSource,
+                _DataGridViewInputRegisters.DataMember] as CurrencyManager;
             register = (InputRegister)manager.Current;
-            device = (Device)this._BindingSourceDevicesList.Current;
+            device = (Device)_BindingSourceDevicesList.Current;
             device.InputRegisters.Remove(register);
-            this._BindingSourceDevicesList.ResetCurrentItem();
+            _BindingSourceDevicesList.ResetCurrentItem();
 
             if (device.InputRegisters.Count == 0)
             {
-                this._ToolStripMenuItemRemoveInputRegister.Enabled = false;
+                _ToolStripMenuItemRemoveInputRegister.Enabled = false;
             }
-            this._ToolStripMenuItemAddInputRegister.Enabled = true;
+            _ToolStripMenuItemAddInputRegister.Enabled = true;
 
             return;
         }
@@ -1533,7 +1527,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.Dialogs
             Device device;
             Coil coil;
 
-            device = (Device)this._BindingSourceDevicesList.Current;
+            device = (Device)_BindingSourceDevicesList.Current;
 
             for (address = 0; address <= UInt16.MaxValue; address++)
             {
@@ -1541,15 +1535,15 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.Dialogs
                 {
                     coil = new Coil(address, false, String.Empty);
                     device.Coils.Add(coil);
-                    this._BindingSourceDevicesList.ResetCurrentItem();
+                    _BindingSourceDevicesList.ResetCurrentItem();
 
                     if (device.Coils.Count > 0)
                     {
-                        this._ToolStripMenuItemRemoveCoil.Enabled = true;
+                        _ToolStripMenuItemRemoveCoil.Enabled = true;
                     }
                     if (device.Coils.Count == UInt16.MaxValue)
                     {
-                        this._ToolStripMenuItemAddCoil.Enabled = false;
+                        _ToolStripMenuItemAddCoil.Enabled = false;
                     }
                     return;
                 }
@@ -1564,20 +1558,20 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.Dialogs
             Coil coil;
             Device device;
 
-            manager = this._DataGridViewCoils.BindingContext[
-                this._DataGridViewCoils.DataSource,
-                this._DataGridViewCoils.DataMember] as CurrencyManager;
+            manager = _DataGridViewCoils.BindingContext[
+                _DataGridViewCoils.DataSource,
+                _DataGridViewCoils.DataMember] as CurrencyManager;
             coil = (Coil)manager.Current;
-            device = (Device)this._BindingSourceDevicesList.Current;
+            device = (Device)_BindingSourceDevicesList.Current;
             device.Coils.Remove(coil);
-            this._BindingSourceDevicesList.ResetCurrentItem();
+            _BindingSourceDevicesList.ResetCurrentItem();
 
             if (device.Coils.Count == 0)
             {
-                this._ToolStripMenuItemRemoveCoil.Enabled = false;
+                _ToolStripMenuItemRemoveCoil.Enabled = false;
             }
 
-            this._ToolStripMenuItemAddCoil.Enabled = true;
+            _ToolStripMenuItemAddCoil.Enabled = true;
 
             return;
         }
@@ -1588,7 +1582,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.Dialogs
             Device device;
             DiscreteInput input;
 
-            device = (Device)this._BindingSourceDevicesList.Current;
+            device = (Device)_BindingSourceDevicesList.Current;
 
             for (address = 0; address <= UInt16.MaxValue; address++)
             {
@@ -1596,15 +1590,15 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.Dialogs
                 {
                     input = new DiscreteInput(address, false, String.Empty);
                     device.DiscretesInputs.Add(input);
-                    this._BindingSourceDevicesList.ResetCurrentItem();
+                    _BindingSourceDevicesList.ResetCurrentItem();
 
                     if (device.DiscretesInputs.Count > 0)
                     {
-                        this._ToolStripMenuItemRemoveDiscreteInput.Enabled = true;
+                        _ToolStripMenuItemRemoveDiscreteInput.Enabled = true;
                     }
                     if (device.DiscretesInputs.Count == UInt16.MaxValue)
                     {
-                        this._ToolStripMenuItemAddDiscreteInput.Enabled = false;
+                        _ToolStripMenuItemAddDiscreteInput.Enabled = false;
                     }
                     return;
                 }
@@ -1619,19 +1613,19 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.Dialogs
             DiscreteInput input;
             Device device;
 
-            manager = this._DataGridViewDiscretesInputs.BindingContext[
-                this._DataGridViewDiscretesInputs.DataSource,
-                this._DataGridViewDiscretesInputs.DataMember] as CurrencyManager;
+            manager = _DataGridViewDiscretesInputs.BindingContext[
+                _DataGridViewDiscretesInputs.DataSource,
+                _DataGridViewDiscretesInputs.DataMember] as CurrencyManager;
             input = (DiscreteInput)manager.Current;
-            device = (Device)this._BindingSourceDevicesList.Current;
+            device = (Device)_BindingSourceDevicesList.Current;
             device.DiscretesInputs.Remove(input);
-            this._BindingSourceDevicesList.ResetCurrentItem();
+            _BindingSourceDevicesList.ResetCurrentItem();
 
             if (device.DiscretesInputs.Count == 0)
             {
-                this._ToolStripMenuItemRemoveDiscreteInput.Enabled = false;
+                _ToolStripMenuItemRemoveDiscreteInput.Enabled = false;
             }
-            this._ToolStripMenuItemAddDiscreteInput.Enabled = true;
+            _ToolStripMenuItemAddDiscreteInput.Enabled = true;
             return;
         }
         //---------------------------------------------------------------------------
@@ -1641,7 +1635,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.Dialogs
             Device device;
             File file;
 
-            device = (Device)this._BindingSourceDevicesList.Current;
+            device = (Device)_BindingSourceDevicesList.Current;
 
             for (number = 1; number < 10000; number++)
             {
@@ -1649,19 +1643,19 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.Dialogs
                 {
                     file = new File(number, String.Empty);
                     
-                    //this._BindingSourceFiles.Add(file);
-                    //this._BindingSourceFiles.EndEdit();
+                    //_BindingSourceFiles.Add(file);
+                    //_BindingSourceFiles.EndEdit();
                     device.Files.Add(file);
-                    this._BindingSourceDevicesList.ResetCurrentItem();
+                    _BindingSourceDevicesList.ResetCurrentItem();
 
                     if (device.Files.Count > 0)
                     {
-                        this._ToolStripMenuItemRemoveFile.Enabled = true;
-                        this._ContextMenuStripRecords.Enabled = true;
+                        _ToolStripMenuItemRemoveFile.Enabled = true;
+                        _ContextMenuStripRecords.Enabled = true;
                     }
                     if (device.Files.Count > 9999)
                     {
-                        this._ToolStripMenuItemAddFile.Enabled = false;
+                        _ToolStripMenuItemAddFile.Enabled = false;
                     }
                     return;
                 }
@@ -1679,24 +1673,24 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.Dialogs
             File file;
             Device device;
             
-            file = (File)this._BindingSourceFile.Current;
-            device = (Device)this._BindingSourceDevicesList.Current;
+            file = (File)_BindingSourceFile.Current;
+            device = (Device)_BindingSourceDevicesList.Current;
             device.Files.Remove(file);
-            this._BindingSourceDevicesList.ResetCurrentItem();
+            _BindingSourceDevicesList.ResetCurrentItem();
             
-            //this._BindingSourceFile.EndEdit();
-            //this._BindingSourceFile.ResetBindings(false);
+            //_BindingSourceFile.EndEdit();
+            //_BindingSourceFile.ResetBindings(false);
 
             if (device.Files.Count == 0)
             {
-                this._ToolStripMenuItemRemoveFile.Enabled = false;
-                this._ContextMenuStripRecords.Enabled = false;
-                this._ToolStripMenuItemAddFile.Enabled = true;
+                _ToolStripMenuItemRemoveFile.Enabled = false;
+                _ContextMenuStripRecords.Enabled = false;
+                _ToolStripMenuItemAddFile.Enabled = true;
             }
             else
             {
-                this._ToolStripMenuItemRemoveFile.Enabled = true;
-                this._ContextMenuStripRecords.Enabled = true;
+                _ToolStripMenuItemRemoveFile.Enabled = true;
+                _ContextMenuStripRecords.Enabled = true;
             }
             return;
         }
@@ -1711,7 +1705,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.Dialogs
             File file;
             Record record;
 
-            file = (File)this._BindingSourceFile.Current;
+            file = (File)_BindingSourceFile.Current;
 
             for (number = 0; number <= UInt16.MaxValue; number++)
             {
@@ -1719,16 +1713,16 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.Dialogs
                 {
                     record = new Record(number, 0, String.Empty);
                     file.Records.Add(record);
-                    this._BindingSourceFile.ResetCurrentItem();
+                    _BindingSourceFile.ResetCurrentItem();
                     
 
                     if (file.Records.Count > 0)
                     {
-                        this._ToolStripMenuItemRemoveRecord.Enabled = true;
+                        _ToolStripMenuItemRemoveRecord.Enabled = true;
                     }
                     if (file.Records.Count == UInt16.MaxValue)
                     {
-                        this._ToolStripMenuItemAddRecord.Enabled = false;
+                        _ToolStripMenuItemAddRecord.Enabled = false;
                     }
 
                     return;
@@ -1745,22 +1739,22 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.Dialogs
             File file;
             CurrencyManager manager;
 
-            file = (File)this._BindingSourceFile.Current;
+            file = (File)_BindingSourceFile.Current;
 
-            manager = this._DataGridViewRecords.BindingContext[
-                this._DataGridViewRecords.DataSource, this._DataGridViewRecords.DataMember] 
+            manager = _DataGridViewRecords.BindingContext[
+                _DataGridViewRecords.DataSource, _DataGridViewRecords.DataMember] 
                 as CurrencyManager;
             
             record = (Record)manager.Current;
             file.Records.Remove(record);
             
-            this._BindingSourceFile.ResetCurrentItem();
+            _BindingSourceFile.ResetCurrentItem();
 
             if (file.Records.Count == 0)
             {
-                this._ToolStripMenuItemRemoveRecord.Enabled = false;
+                _ToolStripMenuItemRemoveRecord.Enabled = false;
             }
-            this._ToolStripMenuItemAddRecord.Enabled = true;
+            _ToolStripMenuItemAddRecord.Enabled = true;
 
             return;
         }
@@ -1769,92 +1763,92 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.Dialogs
             object sender, EventArgs e)
         {
             //ToolStripMenuItem menu = (ToolStripMenuItem)sender;
-            this.AddDevice();
+            AddDevice();
             return;
         }
         //---------------------------------------------------------------------------
         private void EventHandler_ToolStripMenuItemRemoveDevice_Click(
             object sender, EventArgs e)
         {
-            this.RemoveDevice();
+            RemoveDevice();
             return;
         }
         //---------------------------------------------------------------------------
         private void EventHandler_ToolStripMenuItemAddHoldingRegister_Click(
             object sender, EventArgs e)
         {
-            this.AddHoldingRegister();
+            AddHoldingRegister();
             return;
         }
         //---------------------------------------------------------------------------
         private void EventHandler_ToolStripMenuItemRemoveHoldingRegister_Click(
             object sender, EventArgs e)
         {
-            this.RemoveHoldingRegister();
+            RemoveHoldingRegister();
             return;
         }
         //---------------------------------------------------------------------------
         private void EventHandler_ToolStripMenuItemAddInputRegister_Click(
             object sender, EventArgs e)
         {
-            this.AddInputRegister();
+            AddInputRegister();
             return;
         }
         //---------------------------------------------------------------------------
         private void EventHandler_ToolStripMenuItemRemoveInputRegister_Click(
             object sender, EventArgs e)
         {
-            this.RemoveInputRegister();
+            RemoveInputRegister();
             return;
         }
         //---------------------------------------------------------------------------
         private void EventHandler_ToolStripMenuItemAddDiscreteInput_Click(
             object sender, EventArgs e)
         {
-            this.AddDiscreteInput();
+            AddDiscreteInput();
             return;
         }
         //---------------------------------------------------------------------------
         private void EventHandler_ToolStripMenuItemRemoveDiscreteInput_Click(
             object sender, EventArgs e)
         {
-            this.RemoveDiscreteInput();
+            RemoveDiscreteInput();
             return;
         }
         //---------------------------------------------------------------------------
         private void EventHandler_ToolStripMenuItemAddFile_Click(object sender, EventArgs e)
         {
-            this.AddFile();
+            AddFile();
             return;
         }
         //---------------------------------------------------------------------------
         private void EventHandler_ToolStripMenuItemRemoveFile_Click(object sender, EventArgs e)
         {
-            this.RemoveFile();
+            RemoveFile();
             return;
         }
         //---------------------------------------------------------------------------
         private void EventHandler_ToolStripMenuItemAddRecord_Click(object sender, EventArgs e)
         {
-            this.AddRecord();
+            AddRecord();
             return;
         }
         //---------------------------------------------------------------------------
         private void EventHandler_ToolStripMenuItemRemoveRecord_Click(object sender, EventArgs e)
         {
-            this.RemoveRecord();
+            RemoveRecord();
             return;
         }
         //---------------------------------------------------------------------------
         private void EventHandler_ToolStripMenuItemAddCoil_Click(object sender, EventArgs e)
         {
-            this.AddCoil();
+            AddCoil();
             return;
         }
         //---------------------------------------------------------------------------
         private void EventHandler_ToolStripMenuItemRemoveCoil_Click(object sender, EventArgs e)
         {
-            this.RemoveCoil();
+            RemoveCoil();
             return;
         }
         //---------------------------------------------------------------------------
@@ -1867,14 +1861,10 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.Dialogs
         private void EventHandler_FormEditNetworkController_FormClosed(
             object sender, FormClosedEventArgs e)
         {
-            this.DialogResult = DialogResult.OK;
+            DialogResult = DialogResult.OK;
             return;
         }
         //---------------------------------------------------------------------------
         #endregion
-        //---------------------------------------------------------------------------
     }
-    //===============================================================================
 }
-//===================================================================================
-// End of file

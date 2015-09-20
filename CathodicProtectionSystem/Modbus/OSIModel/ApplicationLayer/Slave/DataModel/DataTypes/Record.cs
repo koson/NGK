@@ -22,7 +22,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.DataModel.DataTypes
         /// </summary>
         private Record(): base()
         {
-            this._Value = 0;            
+            _Value = 0;            
         }
         /// <summary>
         /// Конструктор

@@ -27,7 +27,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.DataModel
         /// </summary>
         public Device Device
         {
-            get { return this._Device; }
+            get { return _Device; }
         }
         //---------------------------------------------------------------------------
         #endregion
@@ -54,10 +54,10 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.DataModel
             }
 
             // Устанавливаем владельца добавляемого элемента.
-            item.SetOwner(this._Device);
+            item.SetOwner(_Device);
             base.InsertItem(index, item);
             // Генерируем событие
-            this.OnListWasChanged();
+            OnListWasChanged();
             return;
         }
         //---------------------------------------------------------------------------
@@ -70,10 +70,10 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.DataModel
                     "Адрес (Номер) записи не может быть более 0x270F (9999)");
             }
             // Устанавливаем владельца добавляемого элемента.
-            item.SetOwner(this._Device);
+            item.SetOwner(_Device);
             base.SetItem(index, item);
             // Генерируем событие
-            this.OnListWasChanged();
+            OnListWasChanged();
             return;
         }
         //---------------------------------------------------------------------------
@@ -86,20 +86,20 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.DataModel
             }
             base.RemoveItem(index);
             // Генерируем событие
-            this.OnListWasChanged();
+            OnListWasChanged();
             return;
         }
         //---------------------------------------------------------------------------
         protected override void ClearItems()
         {
             // Обнуляем владельца удаляемого элемента.
-            for (int i = 0; i < this.Count; i++)
+            for (int i = 0; i < Count; i++)
             {
                 this[i].SetOwner(null);
             }
             base.ClearItems();
             // Генерируем событие
-            this.OnListWasChanged();
+            OnListWasChanged();
             return;
         }
         //---------------------------------------------------------------------------
@@ -113,13 +113,13 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.DataModel
         /// <param name="owner">Владелец данной коллекции</param>
         internal void SetOwner(Device owner)
         {
-            if (this._Device == null)
+            if (_Device == null)
             {
-                this._Device = owner;
+                _Device = owner;
                 // Устанавливаем владелца для всех записей коллекции.
-                for (int i = 0; i < this.Count; i++)
+                for (int i = 0; i < Count; i++)
                 {
-                    this[i].SetOwner(this._Device);
+                    this[i].SetOwner(_Device);
                 }
             }
             else
@@ -127,7 +127,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.DataModel
                 // Если устройство, которому принадлежит данная коллекция записей 
                 // эквивалента устанавливаемой, тогда ничего не делаем. 
                 // Здесь нет ошибки. В противном случае, генерируем исключение
-                if (this._Device.Equals(owner) == false)
+                if (_Device.Equals(owner) == false)
                 {
                     throw new InvalidOperationException(
                         "Данная файл уже принадлежит другому устройству");
@@ -141,7 +141,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.DataModel
         /// </summary>
         private void OnListWasChanged()
         {
-            EventHandler handler = this.ListWasChanged;
+            EventHandler handler = ListWasChanged;
             EventArgs args = new EventArgs();
             if (handler != null)
             {

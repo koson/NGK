@@ -24,7 +24,7 @@ namespace Modbus.OSIModel.Transaction
         /// </summary>
         public TransactionType TransactionType
         {
-            get { return this._Type; }
+            get { return _Type; }
         }
         //---------------------------------------------------------------------------
         /// <summary>
@@ -48,7 +48,7 @@ namespace Modbus.OSIModel.Transaction
             get
             {
                 Boolean result;
-                switch (this._Status)
+                switch (_Status)
                 {
                     case TransactionStatus.Aborted:
                         {
@@ -115,13 +115,13 @@ namespace Modbus.OSIModel.Transaction
             {
                 Int32 result;
 
-                if (this.IsRunning)
+                if (IsRunning)
                 {
-                    result = Environment.TickCount - this._TimeOfStart;
+                    result = Environment.TickCount - _TimeOfStart;
                 }
                 else
                 {
-                    result = this._TimeOfEnd - this._TimeOfStart;
+                    result = _TimeOfEnd - _TimeOfStart;
                 }
                 return result;
             }
@@ -137,7 +137,7 @@ namespace Modbus.OSIModel.Transaction
         /// </summary>
         public Message.Message Request
         {
-            get { return this._Request; }
+            get { return _Request; }
         }
         //---------------------------------------------------------------------------
         /// <summary>
@@ -194,14 +194,14 @@ namespace Modbus.OSIModel.Transaction
         /// </summary>
         public Transaction() 
         {
-            this._Identifier = Transaction.GetRandomNumber();
+            _Identifier = Transaction.GetRandomNumber();
 
-            this._Answer = null;
-            this._Request = null;
-            this._Status = TransactionStatus.NotInitialized;
-            this._TimeOfEnd = 0;
-            this._TimeOfStart = 0;
-            this._Type = TransactionType.Undefined;
+            _Answer = null;
+            _Request = null;
+            _Status = TransactionStatus.NotInitialized;
+            _TimeOfEnd = 0;
+            _TimeOfStart = 0;
+            _Type = TransactionType.Undefined;
         }
         //---------------------------------------------------------------------------
         /// <summary>
@@ -212,14 +212,14 @@ namespace Modbus.OSIModel.Transaction
         public Transaction(TransactionType type, 
             Message.Message request)
         {
-            this._Identifier = Transaction.GetRandomNumber();
+            _Identifier = Transaction.GetRandomNumber();
             
-            this._Type = type;
-            this._Answer = null;
-            this._Request = request;
-            this._Status = TransactionStatus.NotInitialized;
-            this._TimeOfEnd = 0;
-            this._TimeOfStart = 0;
+            _Type = type;
+            _Answer = null;
+            _Request = request;
+            _Status = TransactionStatus.NotInitialized;
+            _TimeOfEnd = 0;
+            _TimeOfStart = 0;
         }
         //---------------------------------------------------------------------------
         #endregion
@@ -240,46 +240,45 @@ namespace Modbus.OSIModel.Transaction
         /// </summary>
         public void Start()
         {
-            if (this.IsRunning)
+            if (IsRunning)
             {
                 throw new InvalidOperationException(String.Format(
                     "Transaction ID: {0} - Попытка запустить уже запущенную транзакцию",
-                    this.Identifier));
+                    Identifier));
             }
             else
             {
-                this._Status = TransactionStatus.Running;
-                this._TimeOfStart = Environment.TickCount;
+                _Status = TransactionStatus.Running;
+                _TimeOfStart = Environment.TickCount;
 
                 //Debug.WriteLine(String.Format(
                 //    "Transaction ID: {0} - Начало транзакции: {1} мсек",
-                //    this.Identifier.ToString(), this._TimeOfStart));
+                //    Identifier.ToString(), _TimeOfStart));
             }
             return;
         }
-        //---------------------------------------------------------------------------
         /// <summary>
         /// Заканчивает текущую транзакцию
         /// </summary>
         /// <param name="answer">Ответ slave-устройства</param>
         public void Stop(Message.Message answer)
         {
-            if (!this.IsRunning)
+            if (!IsRunning)
             {
                 throw new InvalidOperationException(
-                    String.Format("Transaction ID: {0}; Попытка завершить не начатую транзакцию", 
-                    this.Identifier));
+                    String.Format("Transaction ID: {0}; Попытка завершить не начатую транзакцию",
+                    Identifier));
             }
             else
             {
 
-                switch (this.TransactionType)
+                switch (TransactionType)
                 {
                     case TransactionType.UnicastMode:
                         {
                             if (answer != null)
                             {
-                                this._Answer = answer;
+                                _Answer = answer;
                             }
                             else
                             {
@@ -301,50 +300,49 @@ namespace Modbus.OSIModel.Transaction
                         }
                     case TransactionType.Undefined:
                         {
-                            this._Answer = answer;
+                            _Answer = answer;
                             break;
                         }
                 }
 
-                this._TimeOfEnd = Environment.TickCount;
-                this._Status = TransactionStatus.Completed;
+                _TimeOfEnd = Environment.TickCount;
+                _Status = TransactionStatus.Completed;
                 
                 // Генерируем событие окончания транзакции.
                 OnTransactionWasEnded();
 
                 //Debug.WriteLine(String.Format(
                 //    "Transaction ID: {0} - Конец транзакции: {1}; Время транзакции: {2}",
-                //    this.Identifier, this._TimeOfEnd, this.TimeOfTransaction));
+                //    Identifier, _TimeOfEnd, TimeOfTransaction));
             }
             return;
         }
-        //---------------------------------------------------------------------------
         /// <summary>
         /// Прерывает текущую транзакцию
         /// </summary>
         /// <param name="description">Описывает ситуацию отмены текущей транзакции</param>
         public void Abort(String description)
         {
-            if (!this.IsRunning)
+            if (!IsRunning)
             {
                 throw new InvalidOperationException(
                     String.Format("Transaction ID: {0}; Попытка отменить не начатую транзакцию",
-                    this.Identifier));
+                    Identifier));
             }
             else
             {
-                this._TimeOfEnd = Environment.TickCount;
+                _TimeOfEnd = Environment.TickCount;
                 if (description != null)
                 {
-                    this._DescriptionError = description;
+                    _DescriptionError = description;
                 }
                 else
                 {
-                    this._DescriptionError = String.Empty;
+                    _DescriptionError = String.Empty;
                 }
-                this._Status = TransactionStatus.Aborted;
+                _Status = TransactionStatus.Aborted;
                 // Генерируем событие
-                this.OnTransactionWasEnded();
+                OnTransactionWasEnded();
             }
             return;
         }
@@ -354,7 +352,7 @@ namespace Modbus.OSIModel.Transaction
         /// </summary>
         private void OnTransactionWasEnded()
         {
-            EventHandler handler = this.TransactionWasEnded;
+            EventHandler handler = TransactionWasEnded;
             EventArgs args = new EventArgs();
 
             if (handler != null)
@@ -389,17 +387,17 @@ namespace Modbus.OSIModel.Transaction
         /// <returns>Копия объекта</returns>
         public Transaction DeepCopy()
         {
-            Transaction copy = (Transaction)this.MemberwiseClone();
+            Transaction copy = (Transaction)MemberwiseClone();
 
-            if (this._Request != null)
+            if (_Request != null)
             {
-                copy._Request = new Modbus.OSIModel.Message.Message(this._Request.Address,
-                    this._Request.PDUFrame.Function, this._Request.PDUFrame.Data);
+                copy._Request = new Modbus.OSIModel.Message.Message(_Request.Address,
+                    _Request.PDUFrame.Function, _Request.PDUFrame.Data);
             }
-            if (this._Answer != null)
+            if (_Answer != null)
             {
-                copy._Answer = new Modbus.OSIModel.Message.Message(this._Answer.Address,
-                    this._Answer.PDUFrame.Function, this._Answer.PDUFrame.Data);
+                copy._Answer = new Modbus.OSIModel.Message.Message(_Answer.Address,
+                    _Answer.PDUFrame.Function, _Answer.PDUFrame.Data);
             }
 
             return copy;
@@ -420,7 +418,7 @@ namespace Modbus.OSIModel.Transaction
         //---------------------------------------------------------------------------
         object ICloneable.Clone()
         {
-            return this.DeepCopy();
+            return DeepCopy();
         }
         //---------------------------------------------------------------------------
         #endregion

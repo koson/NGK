@@ -3,29 +3,23 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
 
-//===================================================================================
 namespace Modbus.OSIModel.DataLinkLayer.Master.RTU.SerialPort.ConverterType
 {
-    //===============================================================================
     /// <summary>
     /// Предстваляет конвертер типа для serialport
     /// </summary>
     public class ComPortConverter: TypeConverter
     {
-        //---------------------------------------------------------------------------
         //private Boolean _Enable;
-        //---------------------------------------------------------------------------
         public ComPortConverter(): base()
         {
-            //this._Enable = true;
+            //_Enable = true;
         }
-        //---------------------------------------------------------------------------
         public override bool GetPropertiesSupported(ITypeDescriptorContext context)
         {
             System.IO.Ports.SerialPort serialPort = ((ComPort)context.Instance).SerialPort;
             return true;
         }
-        //---------------------------------------------------------------------------
         public override bool CanConvertFrom(ITypeDescriptorContext context, 
             Type sourceType)
         {
@@ -41,7 +35,6 @@ namespace Modbus.OSIModel.DataLinkLayer.Master.RTU.SerialPort.ConverterType
             
             //return base.CanConvertFrom(context, sourceType);
         }
-        //---------------------------------------------------------------------------
         public override bool CanConvertTo(ITypeDescriptorContext context, 
             Type destinationType)
         {
@@ -56,7 +49,6 @@ namespace Modbus.OSIModel.DataLinkLayer.Master.RTU.SerialPort.ConverterType
             }
             //return base.CanConvertTo(context, destinationType);
         }
-        //---------------------------------------------------------------------------
         public override object ConvertFrom(ITypeDescriptorContext context, 
             System.Globalization.CultureInfo culture, 
             object value)
@@ -141,7 +133,6 @@ namespace Modbus.OSIModel.DataLinkLayer.Master.RTU.SerialPort.ConverterType
             }
             return base.ConvertFrom(context, culture, value);
         }
-        //---------------------------------------------------------------------------
         public override object ConvertTo(
             ITypeDescriptorContext context, 
             System.Globalization.CultureInfo culture, 
@@ -170,7 +161,6 @@ namespace Modbus.OSIModel.DataLinkLayer.Master.RTU.SerialPort.ConverterType
             }
             return base.ConvertTo(context, culture, value, destinationType);
         }
-        //---------------------------------------------------------------------------
         public override PropertyDescriptorCollection GetProperties(
             ITypeDescriptorContext context, 
             object value, 
@@ -195,9 +185,5 @@ namespace Modbus.OSIModel.DataLinkLayer.Master.RTU.SerialPort.ConverterType
             return cln;            
             //return base.GetProperties(context, value, attributes);
         }
-        //---------------------------------------------------------------------------
     }
-    //===============================================================================
 }
-//===================================================================================
-// End of file
