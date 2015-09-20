@@ -15,12 +15,6 @@
     {
         "Entry"
         {
-        "MsmKey" = "8:_28919A2EAF4A4007A4F4C925D98E2F94"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_2FA5136998308C1AB83BFB1AD3BD496D"
         "OwnerKey" = "8:_3D1C9DE0CBFEB68BC5514CBD18607FA3"
         "MsmSig" = "8:_UNDEFINED"
@@ -82,7 +76,7 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_49EE873CEBE5D484B299D30FB7BCB9A0"
+        "OwnerKey" = "8:_C3C66DABC6484A69AE1CFD998C12BC15"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -112,7 +106,7 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_C3C66DABC6484A69AE1CFD998C12BC15"
+        "OwnerKey" = "8:_49EE873CEBE5D484B299D30FB7BCB9A0"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -210,26 +204,6 @@
         }
         "File"
         {
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_28919A2EAF4A4007A4F4C925D98E2F94"
-            {
-            "SourcePath" = "8:..\\CorrosionMonitoringSystem\\bin\\Debug\\newtorkconfig.bin.nwc"
-            "TargetName" = "8:newtorkconfig.bin.nwc"
-            "Tag" = "8:"
-            "Folder" = "8:_B8E1CF5DF38F4B6F92F805CB4D9BDD11"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_2FA5136998308C1AB83BFB1AD3BD496D"
             {
             "AssemblyRegister" = "3:1"
