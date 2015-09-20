@@ -236,9 +236,10 @@ namespace ModbuSlaveDevicesNetwork
                     _TabControlDeviceProperties.Visible = true;
 
                     _TabControlDeviceProperties.Enabled = true;
+                    SetCurrentNetwork(device.NetworkController);
                     _BindingSourceDevices.Position = 
                         _BindingSourceDevices.IndexOf(device);
-                    Object obj = _DataGridViewHoldingRegisters.DataSource;
+                    //Object obj = _DataGridViewHoldingRegisters.DataSource;
                 }
                 else
                 {
@@ -687,8 +688,7 @@ namespace ModbuSlaveDevicesNetwork
                 dialog.Network = _Network;
                 result = dialog.ShowDialog();
 
-                this.ShowNetwork(ref _TreeViewNetwork, ref _Network);
-
+                ShowNetwork(ref _TreeViewNetwork, ref _Network);
             }
             return;
         }
