@@ -4,11 +4,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.50727</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{7AE5D6FB-7807-4E1B-AE63-68760F6DA5F3}</ProjectGuid>
+    <ProjectGuid>{61A07434-5F15-4719-991B-B884F1C3D212}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Fastwel</RootNamespace>
-    <AssemblyName>DioPort</AssemblyName>
+    <RootNamespace>Power</RootNamespace>
+    <AssemblyName>powerlib</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -33,9 +33,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CPC304\IO\Api.cs" />
-    <Compile Include="CPC304\IO\DioPort.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Win32\Api.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

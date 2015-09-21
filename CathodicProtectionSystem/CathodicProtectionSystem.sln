@@ -23,6 +23,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestCanPortNim351", "TestCa
 EndProject
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "SetupCathodicProtectionSystem", "SetupCathodicProtectionSystem\SetupCathodicProtectionSystem.vdproj", "{213C0BE4-7AFF-4807-A9FC-EAE9E035460D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fastwel", "Fastwel\Fastwel.csproj", "{7AE5D6FB-7807-4E1B-AE63-68760F6DA5F3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PowerWin32", "PowerWin32\PowerWin32.csproj", "{61A07434-5F15-4719-991B-B884F1C3D212}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -67,12 +71,20 @@ Global
 		{5805974B-8B2F-4B62-B6C7-4B9D2111083B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{213C0BE4-7AFF-4807-A9FC-EAE9E035460D}.Debug|Any CPU.ActiveCfg = Debug
 		{213C0BE4-7AFF-4807-A9FC-EAE9E035460D}.Release|Any CPU.ActiveCfg = Release
+		{7AE5D6FB-7807-4E1B-AE63-68760F6DA5F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7AE5D6FB-7807-4E1B-AE63-68760F6DA5F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7AE5D6FB-7807-4E1B-AE63-68760F6DA5F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7AE5D6FB-7807-4E1B-AE63-68760F6DA5F3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{61A07434-5F15-4719-991B-B884F1C3D212}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{61A07434-5F15-4719-991B-B884F1C3D212}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{61A07434-5F15-4719-991B-B884F1C3D212}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{61A07434-5F15-4719-991B-B884F1C3D212}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{4C4CE19F-961D-4D9A-B90C-BA154A34471D} = {5EB75C60-3E8E-493D-A95E-8C2680A877EC}
 		{353EAE55-C3C6-47B9-9AC8-5059F9302421} = {5EB75C60-3E8E-493D-A95E-8C2680A877EC}
+		{4C4CE19F-961D-4D9A-B90C-BA154A34471D} = {5EB75C60-3E8E-493D-A95E-8C2680A877EC}
 	EndGlobalSection
 EndGlobal
