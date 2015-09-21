@@ -118,6 +118,8 @@ namespace NGK.CorrosionMonitoringSystem.BL
             _GeneralTimer.Interval = 1000;
             _GeneralTimer.Tick += new EventHandler(EventHandler_GeneralTimer_Tick);
             _GeneralTimer.Start();
+
+            _ModbusNetworkAdapter.Start();
         }
 
         #endregion
@@ -593,21 +595,12 @@ namespace NGK.CorrosionMonitoringSystem.BL
         /// <param name="e"></param>
         private void EventHandler_Presenter_Loaded(object sender, EventArgs e)
         {
-            InitPivotTable(this._Presenter.DataGridViewPivotTable);
-            ConnectToDevices(this._CanNetworksManager);
+            InitPivotTable(_Presenter.DataGridViewPivotTable);
+            ConnectToDevices(_CanNetworksManager);
             _Presenter.FormClosing += 
                 new FormClosingEventHandler(EventHandler_Presenter_FormClosing);
             _Presenter.TabControlViews.SelectedIndexChanged += 
                 new EventHandler(EventHandler_Presenter_TabControlViews_SelectedIndexChanged);
-
-            // Настраиваем контролы гридов
-            //DataGridView dgv = _Presenter.DataGridViewDevicesList;
-            //dgv.StandardTab = true;
-            //dgv.MultiSelect = false;
-            //dgv.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            //dgv.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            //dgv.AllowUserToDeleteRows = false;
-            //dgv.AllowUserToAddRows = false;
 
             // Устанавливаем основную страницу;
             SetView(SystemView.PivotTableView);
@@ -615,13 +608,11 @@ namespace NGK.CorrosionMonitoringSystem.BL
 
             _Presenter.TotalDevices = _CanNetworkAdapter.Devices.Count; ;
 
-            //this._Presenter.DataGridViewDevicesList.ColumnWidthChanged += 
-            //    new DataGridViewColumnEventHandler(EventHandler_DataGridViewDevicesList_ColumnWidthChanged);
-
             // Запускаем систему
             Button btn = _Presenter.GetSystemButton(ButtonsPanel.ButtonNames.ButtonFour);
 #if !(DEBUG)
-            this.Start();
+            _Presenter.WindowState = FormWindowState.Maximized;
+            Start();
             btn.Text = "Остановить систему";
 #else
             btn.Text = "Запуск системы";

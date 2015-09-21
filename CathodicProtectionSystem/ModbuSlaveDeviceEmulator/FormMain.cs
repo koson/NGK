@@ -236,7 +236,6 @@ namespace ModbuSlaveDevicesNetwork
                     _TabControlDeviceProperties.Visible = true;
 
                     _TabControlDeviceProperties.Enabled = true;
-                    SetCurrentNetwork(device.NetworkController);
                     _BindingSourceDevices.Position = 
                         _BindingSourceDevices.IndexOf(device);
                     //Object obj = _DataGridViewHoldingRegisters.DataSource;
@@ -710,7 +709,8 @@ namespace ModbuSlaveDevicesNetwork
             }
             catch (Exception ex)
             {
-                DialogResult result = MessageBox.Show(this, "При загрузке файла конфигурации сети возникла ошибка: " + 
+                DialogResult result = MessageBox.Show(this, 
+                    "При загрузке файла конфигурации сети возникла ошибка: " + 
                     ex.Message + " Создать новую сеть или выйти из приложения?",
                     "Ошибка", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
                 
@@ -835,7 +835,7 @@ namespace ModbuSlaveDevicesNetwork
             return;
         }
         /// <summary>
-        /// Устанавливает сетк как текущую для работы программы
+        /// Устанавливает сеть как текущую для работы программы
         /// </summary>
         /// <param name="network"></param>
         private void SetCurrentNetwork(NetworkController network)
@@ -876,8 +876,16 @@ namespace ModbuSlaveDevicesNetwork
                 _ToolStripButtonStart.Enabled = true;
                 _ToolStripButtonStop.Enabled = false;
 
+                _DataGridViewCoils.DataSource = null;
+                _DataGridViewDiscretesInputs.DataSource = null;
+                _DataGridViewFiles.DataSource = null;
+                _DataGridViewHoldingRegisters.DataSource = null;
+                _DataGridViewInputRegisters.DataSource = null;
+                _DataGridViewRecords.DataSource = null;
+
                 _BindingSourceDevices.DataSource = null;
                 _BindingSourceDevices.DataSource = Network.Devices;
+
                 _DataGridViewCoils.DataSource = _BindingSourceDevices;
                 _DataGridViewDiscretesInputs.DataSource = _BindingSourceDevices;
                 _DataGridViewFiles.DataSource = _BindingSourceDevices;

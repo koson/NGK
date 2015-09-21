@@ -431,6 +431,20 @@ namespace NGK.CorrosionMonitoringSystem.DL
                 UdateDevice(modbusDevice, device);
             }
         }
+        /// <summary>
+        /// Запускает работу сети и устройства КССМУ
+        /// </summary>
+        public void Start()
+        {
+            // Запускает в работу
+            _Network.Start();
+            _DeviceKCCM.Start();
+        }
+        public void Stop()
+        {
+            // Останавливаем в работу
+            _Network.Stop();
+        }
         #endregion
     }
 }

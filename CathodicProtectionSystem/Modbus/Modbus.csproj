@@ -135,15 +135,18 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram1.cd" />
-    <None Include="OSIModel\ApplicationLayer\Slave\config.xsd">
+    <None Include="config.xsd">
       <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="OSIModel\ApplicationLayer\Slave\config.xsx">
+    <None Include="config.xsx">
       <DependentUpon>config.xsd</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="OSIModel\ApplicationLayer\Slave\config.xml">
+    <Content Include="config.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="Resources\faviconMy.ico" />
   </ItemGroup>

@@ -265,9 +265,31 @@ namespace Modbus.OSIModel.Transaction
         {
             if (!IsRunning)
             {
-                throw new InvalidOperationException(
-                    String.Format("Transaction ID: {0}; Попытка завершить не начатую транзакцию",
-                    Identifier));
+                switch (Status)
+                {
+                    case TransactionStatus.Aborted:
+                        {
+                            throw new InvalidOperationException(
+                                String.Format("Transaction ID: {0}; Попытка завершить прерванную транзакцию",
+                                Identifier));
+                        }
+                    case TransactionStatus.Completed:
+                        {
+                            throw new InvalidOperationException(
+                                String.Format("Transaction ID: {0}; Попытка завершить завершённую транзакцию",
+                                Identifier));
+                        }
+                    case TransactionStatus.NotInitialized:
+                        {
+                            throw new InvalidOperationException(
+                                String.Format("Transaction ID: {0}; Попытка завершить не начатую транзакцию",
+                                Identifier));
+                        }
+                    default:
+                        {
+                            throw new NotImplementedException();
+                        }
+                }
             }
             else
             {

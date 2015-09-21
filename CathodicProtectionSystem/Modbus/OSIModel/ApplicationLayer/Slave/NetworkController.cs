@@ -335,7 +335,11 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
             {
                 if (_Connection.IsOpen)
                 {
-                    Connection.Close();
+                    foreach (Device device in _Devices)
+                    {
+                        device.Stop();
+                    }
+                    Connection.Close();                    
                 }
                 else
                 {
@@ -363,7 +367,10 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
         /// </summary>
         public void SaveToXmlFile(String path)
         {
-            //String path = Environment.CurrentDirectory + @"\config.xml";
+            if (String.IsNullOrEmpty(path))
+            {
+                path = Environment.CurrentDirectory + @"\config.xml";
+            }
 
             using (XmlTextWriter writer = new XmlTextWriter(path, null))
             {

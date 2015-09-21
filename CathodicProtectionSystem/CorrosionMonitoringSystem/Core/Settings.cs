@@ -26,14 +26,26 @@ namespace NGK.CorrosionMonitoringSystem.Core
         /// </summary>
         public static Boolean CursorEnable
         {
-            get { return Boolean.Parse(GetParameter("CursorEnable")); }
+            get 
+            {
+#if DEBUG
+                return true;
+#endif
+                return Boolean.Parse(GetParameter("CursorEnable")); 
+            }
         }
         /// <summary>
         /// Разрешает/запрещает отображение приложения на панели задач
         /// </summary>
         public static Boolean ShowInTaskbar
         {
-            get { return Boolean.Parse(GetParameter("ShowInTaskbar")); }
+            get 
+            {
+#if DEBUG
+                return true;
+#endif
+                return Boolean.Parse(GetParameter("ShowInTaskbar")); 
+            }
         }
         /// <summary>
         /// Возвращает значение разрешающее/запрещающее основному 
@@ -41,7 +53,13 @@ namespace NGK.CorrosionMonitoringSystem.Core
         /// </summary>
         public static Boolean FormBorderEnable
         {
-            get { return Boolean.Parse(GetParameter("FormBorderEnable")); }
+            get
+            {
+#if DEBUG
+                return true;
+#endif
+                return Boolean.Parse(GetParameter("FormBorderEnable")); 
+            }
         }
 
         #endregion
