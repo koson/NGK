@@ -1,0 +1,39 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="NGK.MeasuringDeviceTech.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="WindowLocation" Description="Хранит расположение окна на экране" Type="System.Drawing.Point" Scope="User">
+      <Value Profile="(Default)">0, 0</Value>
+    </Setting>
+    <Setting Name="WindowSize" Description="Хранит размеры окна" Type="System.Drawing.Size" Scope="User">
+      <Value Profile="(Default)">600, 700</Value>
+    </Setting>
+    <Setting Name="SplitterDistance" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">300</Value>
+    </Setting>
+    <Setting Name="SplitterPropertyGrid" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">500</Value>
+    </Setting>
+    <Setting Name="COMPort" Type="System.String" Scope="User">
+      <Value Profile="(Default)">COM1</Value>
+    </Setting>
+    <Setting Name="Delay" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">500</Value>
+    </Setting>
+    <Setting Name="TimeOut" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">500</Value>
+    </Setting>
+    <Setting Name="BaudRate" Description="Скорость обмена COM-порта" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">19200</Value>
+    </Setting>
+    <Setting Name="DataBits" Description="Количество бит данных в фрайме" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">8</Value>
+    </Setting>
+    <Setting Name="Parity" Type="System.IO.Ports.Parity" Scope="User">
+      <Value Profile="(Default)">Even</Value>
+    </Setting>
+    <Setting Name="StopBits" Type="System.IO.Ports.StopBits" Scope="User">
+      <Value Profile="(Default)">One</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

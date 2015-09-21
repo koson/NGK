@@ -1,0 +1,3 @@
+#define IDH_FILE_NEW 21
+#define IDH_FILE_OPEN 22
+#define IDH_FILE_SAVE 23

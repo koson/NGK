@@ -1,0 +1,302 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{53371B9C-1303-4F65-8E04-AC854DB41088}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>NGK.MeasuringDeviceTech</RootNamespace>
+    <AssemblyName>NGKDevicesTerminal</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>NGK.MeasuringDeviceTech.Program</StartupObject>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Resources\faviconMy.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup>
+    <Win32Resource>
+    </Win32Resource>
+  </PropertyGroup>
+  <PropertyGroup />
+  <ItemGroup>
+    <Reference Include="Modbus, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Modbus\Modbus\bin\Release\Modbus.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Classes\MeasuringDevice\Converters\TypeConverterTypeOfDeviceNGK.cs" />
+    <Compile Include="Classes\MeasuringDevice\CallingCardOfDevice.cs" />
+    <Compile Include="Classes\MeasuringDevice\EnumOperationResult.cs" />
+    <Compile Include="Classes\MeasuringDevice\IMeasuringDevice.cs" />
+    <Compile Include="Classes\MeasuringDevice\OperationResult.cs" />
+    <Compile Include="Classes\MeasuringDevice\Converters\TypeConverterChannel4_20.cs" />
+    <Compile Include="Classes\MeasuringDevice\Converters\TypeConverterMeasuringPeriod.cs" />
+    <Compile Include="Classes\MeasuringDevice\EnumCANBaudRate.cs" />
+    <Compile Include="Classes\MeasuringDevice\EnumCurrentShuntValues.cs" />
+    <Compile Include="Classes\MeasuringDevice\EnumMeasuringDeviceType.cs" />
+    <Compile Include="Classes\MeasuringDevice\EventHandlerPropertyChanging.cs" />
+    <Compile Include="Classes\MeasuringDevice\StructAddressesOfDataMapDevice.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Classes\MeasuringDevice\UITypeEditors\Channel4_20UITypeEditor\Channel4_20Control.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Classes\MeasuringDevice\UITypeEditors\Channel4_20UITypeEditor\Channel4_20Control.Designer.cs">
+      <DependentUpon>Channel4_20Control.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Classes\MeasuringDevice\MeasuringDeviceMainPower.cs" />
+    <Compile Include="Classes\MeasuringDevice\Converters\TypeConverterState.cs" />
+    <Compile Include="Classes\MeasuringDevice\UITypeEditors\Channel4_20UITypeEditor\Channel4_20TypeEditor.cs" />
+    <Compile Include="Classes\MeasuringDevice\MeasuringDeviceBatteryPower.cs" />
+    <Compile Include="Classes\MeasuringDevice\UITypeEditors\MeasuringPeriodUITypeEditor\MeasuringPeriodMainPowerControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Classes\MeasuringDevice\UITypeEditors\MeasuringPeriodUITypeEditor\MeasuringPeriodMainPowerControl.Designer.cs">
+      <DependentUpon>MeasuringPeriodMainPowerControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Classes\MeasuringDevice\UITypeEditors\MeasuringPeriodUITypeEditor\MeasuringPeriodUITypeEditor.cs" />
+    <Compile Include="Classes\MeasuringDevice\UITypeEditors\ValueChangedEventHandler.cs" />
+    <Compile Include="Classes\Print\TextDocumentPrinter.cs" />
+    <Compile Include="FormMain.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormMain.Designer.cs">
+      <DependentUpon>FormMain.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormMainConnection.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\AboutBoxMain.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\AboutBoxMain.designer.cs">
+      <DependentUpon>AboutBoxMain.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormInitDevice.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormInitDevice.Designer.cs">
+      <DependentUpon>FormInitDevice.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormProgressBar.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormProgressBar.Designer.cs">
+      <DependentUpon>FormProgressBar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormSelectTypeDevice.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormSelectTypeDevice.Designer.cs">
+      <DependentUpon>FormSelectTypeDevice.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Settings.cs" />
+    <EmbeddedResource Include="Classes\MeasuringDevice\UITypeEditors\Channel4_20UITypeEditor\Channel4_20Control.resx">
+      <DependentUpon>Channel4_20Control.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Classes\MeasuringDevice\UITypeEditors\MeasuringPeriodUITypeEditor\MeasuringPeriodMainPowerControl.resx">
+      <DependentUpon>MeasuringPeriodMainPowerControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormMain.resx">
+      <DependentUpon>FormMain.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\AboutBoxMain.resx">
+      <DependentUpon>AboutBoxMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormInitDevice.resx">
+      <DependentUpon>FormInitDevice.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormProgressBar.resx">
+      <DependentUpon>FormProgressBar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormSelectTypeDevice.resx">
+      <DependentUpon>FormSelectTypeDevice.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <None Include="app.config" />
+    <None Include="Help\NGKDevicesTerminalHelp.hhp" />
+    <None Include="Help\Table of Contents.hhc" />
+    <None Include="Help\Руководство пользователя.doc" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\IconConnect.ico" />
+    <EmbeddedResource Include="Resources\IconDisconnect.ico" />
+    <EmbeddedResource Include="Resources\IconConnection.ico" />
+    <EmbeddedResource Include="Resources\IconWriteDevicePage.ico" />
+    <EmbeddedResource Include="Resources\IconReadDevicePage.ico" />
+    <EmbeddedResource Include="Resources\IconExchangePage.ico" />
+    <EmbeddedResource Include="Resources\IconLoadTo.ico" />
+    <EmbeddedResource Include="Resources\IconWriteDevice.ico" />
+    <EmbeddedResource Include="Resources\IconReadDevice.ico" />
+    <EmbeddedResource Include="Resources\IconExchange.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.0,Profile=Client">
+      <Visible>False</Visible>
+      <ProductName>Клиентский профиль Microsoft .NET Framework 4 %28x86 и x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>Клиентский профиль .NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Установщик Windows 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\faviconMy.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\IconLoadFrom.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\IconAddDevice.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\IconDeleteDevice.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\FloppyDisk.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\IconSave.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="ConetextMenu\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\history.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\IconUnknownDevice.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\IconUnknownDevice1.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\IconVerifyDevice.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Annotate_Help.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\075b_UpFolder.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\IconStop.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\IconStart.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ram.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Settings.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Help\Alias.h" />
+    <Content Include="Help\Context.h" />
+    <Content Include="Help\Map.h" />
+    <Content Include="Help\Popups.txt" />
+    <Content Include="Help\README.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AppLog\AppLog.csproj">
+      <Project>{B53A32B5-F220-4F0A-92A0-BFC892052A23}</Project>
+      <Name>AppLog</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

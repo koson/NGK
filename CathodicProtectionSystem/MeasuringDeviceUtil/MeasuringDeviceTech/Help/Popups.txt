@@ -1,0 +1,8 @@
+.topic IDH_FILE_OPEN
+Open a File
+
+.topic IDH_FILE_NEW
+Create A New File
+
+.topic IDH_FILE_SAVE
+Save a File

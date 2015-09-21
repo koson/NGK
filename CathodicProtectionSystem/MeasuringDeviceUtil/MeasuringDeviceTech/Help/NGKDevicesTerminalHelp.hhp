@@ -1,0 +1,38 @@
+[OPTIONS]
+Auto Index=Yes
+Compatibility=1.1 or later
+Compiled file=NGKDevicesTerminalHelp.chm
+Contents file=Table of Contents.hhc
+Default Font=Arial,8,204
+Default Window=WndHelp
+Default topic=HTML\Contents.html
+Display compile progress=No
+Full-text search=Yes
+Index file=Index.hhk
+Language=0x419 Русский (Россия)
+Title=Терминал для работы с КИП
+
+[WINDOWS]
+WndHelp="ПО для работы с устройствами НГК-КИП","Table of Contents.hhc","Index.hhk","HTML\Contents.html",,,,,,0x23520,,0x3006,,,,,,,,0
+
+
+[FILES]
+HTML\Contents.html
+HTML\Connection.html
+HTML\DescriptionOfWork.html
+HTML\InstallAndUninstall.html
+HTML\Introduction.html
+
+[ALIAS]
+#include Alias.h
+
+[MAP]
+#include Context.h
+#include Map.h
+
+[TEXT POPUPS]
+Context.h
+Popups.txt
+
+[INFOTYPES]
+
