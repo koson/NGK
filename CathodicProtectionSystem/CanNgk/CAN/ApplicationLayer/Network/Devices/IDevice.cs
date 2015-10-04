@@ -17,6 +17,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices
     /// </summary>
     public interface IDevice
     {
+        #region Propeties
         /// <summary>
         /// Сетевой идентификатор устройства 1...127
         /// </summary>
@@ -154,6 +155,9 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices
         {
             get;
         }
+        #endregion
+
+        #region Methods
         /// <summary>
         /// Метод отображает параметры устройства в графическом контроле формы
         /// </summary>
@@ -165,6 +169,10 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices
         /// <param name="address">Индекс объекта</param>
         /// <returns>Значение объекта</returns>
         ValueType GetObject(UInt16 index);
+
+        #endregion
+
+        #region Events
         /// <summary>
         /// Устройство изменило своё состояние
         /// </summary>
@@ -174,5 +182,6 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices
         /// или других параметров устройтсва
         /// </summary>
         event EventHandler DataWasChanged;
+        #endregion
     }
 }

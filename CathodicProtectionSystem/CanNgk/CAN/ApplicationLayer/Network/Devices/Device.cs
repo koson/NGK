@@ -539,6 +539,16 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices
             ObjectDictionary[index].Value = _Profile.ObjectInfoList[index]
                 .DataType.ConvertToBasis(value);
         }
+        /// <summary>
+        /// Проверяет содержит ли словарь объектов устройтсва
+        /// указанный объект
+        /// </summary>
+        /// <param name="index">индекс объекта</param>
+        /// <returns>true-содержит</returns>
+        public Boolean ContainsObject(UInt16 index)
+        {
+            return _ObjectDictionary.Contains(index); 
+        }
         #endregion
         
         #region Events

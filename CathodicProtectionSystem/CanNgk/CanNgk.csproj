@@ -72,6 +72,7 @@
     <Compile Include="CAN\ApplicationLayer\Network\Master\Services\ErrorMessageContext.cs" />
     <Compile Include="CAN\ApplicationLayer\Network\Master\Services\ServiceBootUp.cs" />
     <Compile Include="CAN\ApplicationLayer\Network\Master\Services\Context.cs" />
+    <Compile Include="CAN\ApplicationLayer\Network\Master\Services\ServiceEmcy.cs" />
     <Compile Include="CAN\ApplicationLayer\Network\Master\Services\ServiceNmt.cs" />
     <Compile Include="CAN\ApplicationLayer\Network\Master\Services\ServiceNodeGuard.cs" />
     <Compile Include="CAN\ApplicationLayer\Network\Master\Services\ServicePdoReceive.cs" />
