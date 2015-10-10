@@ -23,11 +23,40 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices
     /// все классы Slave-устройств
     /// </summary>
     //[Serializable]
-    public class Device: IDevice//, ISerializable
+    public class DeviceBase : IDevice, IEmcyErrors//, ISerializable
     {
         #region Fields And Properties
+
         [NonSerialized]
         protected ObjectCollection _ObjectDictionary;
+        [NonSerialized]
+        private DeviceType _DeviceType;
+        [NonSerialized]
+        protected Byte _NodeId;
+        [NonSerialized]
+        protected DeviceStatus _Status;
+        [NonSerialized]
+        protected INetworkController _Network;
+        [NonSerialized]
+        protected String _LocationName;
+        [NonSerialized]
+        private UInt16 _ElectrodeArea = 65486;
+        [NonSerialized]
+        private UInt32 _PollingInterval;
+        [NonSerialized]
+        private bool _ConnectedServiceConnector;
+        [NonSerialized]
+        private bool _DuplicateAddressError; // Only for БИУ-01
+        [NonSerialized]
+        private bool _RegistrationError; // Only for БИУ-01
+        [NonSerialized]
+        private IProfile _Profile;
+        /// <summary>
+        /// Объект для синхронизации доступа разделяемым между потоками ресурсам
+        /// </summary>
+        [NonSerialized]
+        protected static volatile Object _SyncRoot = new object();
+
         /// <summary>
         /// Словарь объектов устройства
         /// </summary>
@@ -35,8 +64,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices
         {
             get { return _ObjectDictionary; }
         }
-        [NonSerialized]
-        private DeviceType _DeviceType;
+
         /// <summary>
         /// Тип устройства
         /// </summary>
@@ -44,6 +72,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices
         {
             get { return _DeviceType; }
         }
+
         /// <summary>
         /// Серийный номер устройства
         /// </summary>
@@ -86,6 +115,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices
                 v.CRC16 = crc;
             }
         }
+        
         /// <summary>
         /// Возвращает визитную карточку устройства НГК
         /// </summary>
@@ -93,8 +123,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices
         {
             get { return new VisitingCard(this); }
         }
-        [NonSerialized]
-        protected Byte _NodeId;
+
         /// <summary>
         /// Сетевой идентификатор устройства
         /// </summary>
@@ -114,8 +143,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices
                 }
             }
         }
-        [NonSerialized]
-        protected DeviceStatus _Status;
+
         /// <summary>
         /// Статус устройства
         /// </summary>
@@ -138,8 +166,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices
                 }
             }
         }
-        [NonSerialized]
-        protected INetworkController _Network;
+
         /// <summary>
         /// Сеть
         /// </summary>
@@ -148,8 +175,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices
             get { return _Network; }
             set { _Network = value; }
         }
-        [NonSerialized]
-        protected String _LocationName;
+
         /// <summary>
         /// Описание расположения устройства
         /// </summary>
@@ -158,8 +184,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices
             get { return _LocationName; }
             set { _LocationName = value; }
         }
-        [NonSerialized]
-        private UInt32 _PollingInterval;
+
         /// <summary>
         /// Интервал опроса устройства
         /// </summary>
@@ -168,7 +193,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices
             get { return _PollingInterval; }
             set { _PollingInterval = value; }
         }
-        private UInt16 _ElectrodeArea = 65486;
+
         /// <summary>
         /// Площадь вспомогательного электрода
         /// </summary>
@@ -185,8 +210,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices
                 _ElectrodeArea = value;
             }
         }
-        [NonSerialized]
-        private IProfile _Profile;
+
         /// <summary>
         /// 
         /// </summary>
@@ -194,25 +218,97 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices
         {
             get { return _Profile; }
         }
-        /// <summary>
-        /// Объект для синхронизации доступа разделяемым между потоками ресурсам
-        /// </summary>
-        [NonSerialized]
-        protected static volatile Object _SyncRoot = new object();
+
+        #region IEmcyErrors Members
+
+        public bool Tamper
+        {
+            get
+            {
+                return (bool)GetObject(0x2015);
+            }
+            set
+            {
+                SetObject(0x2015, value);
+            }
+        }
+  
+        public bool MainSupplyPowerError
+        {
+            get
+            {
+                return (bool)GetObject(0x2016);
+            }
+            set
+            {
+                SetObject(0x2016, value);
+            }
+        }
+
+        public bool BatteryError
+        {
+            get
+            {
+                return (bool)GetObject(0x2017);
+            }
+            set
+            {
+                SetObject(0x2017, value);
+            }
+        }
+
+        public bool RegistrationError
+        {
+            get
+            {
+                return _RegistrationError;
+            }
+            set
+            {
+                _RegistrationError = value;
+            }
+        }
+
+        public bool DuplicateAddressError
+        {
+            get
+            {
+                return _DuplicateAddressError;
+            }
+            set
+            {
+                _DuplicateAddressError = value;
+            }
+        }
+
+        public bool ConnectedServiceConnector
+        {
+            get
+            {
+                return _ConnectedServiceConnector;
+            }
+            set
+            {
+                _ConnectedServiceConnector = value;
+            }
+        }
+
+        #endregion
+
         #endregion
 
         #region Constructors
         /// <summary>
         /// Конструктор
         /// </summary>
-        private Device()
+        private DeviceBase()
         {
             throw new NotImplementedException();
         }
         /// <summary>
         /// Конструктор
         /// </summary>
-        internal Device(IProfile profile)
+        internal DeviceBase(IProfile profile)
         {
             _Profile = profile;
             _LocationName = String.Empty;
@@ -277,17 +373,17 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices
         /// </summary>
         /// <param name="formatedString"></param>
         /// <returns></returns>
-        public static Device Create(string formattedString)
+        public static DeviceBase Create(string formattedString)
         {
-            Device device;
+            DeviceBase device;
 
             Dictionary<string, string> parameters = 
-                Device.GetParameters(formattedString);
+                DeviceBase.GetParameters(formattedString);
 
             DeviceType type = (DeviceType)Enum.Parse(typeof(DeviceType), 
                 parameters["Type"]);
 
-            device = Device.Create(type);
+            device = DeviceBase.Create(type);
             device._LocationName = parameters["Location"];
             device._NodeId = Byte.Parse(parameters["Address"]);
             device._PollingInterval = UInt32.Parse(parameters["PollingInterval"]);
@@ -343,19 +439,19 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices
         /// </summary>
         /// <param name="profile"></param>
         /// <returns></returns>
-        public static Device Create(IProfile profile)
+        public static DeviceBase Create(IProfile profile)
         {
-            return new Device(profile);
+            return new DeviceBase(profile);
         }
         /// <summary>
         /// Создаёт устройство на основе типа устройства
         /// </summary>
         /// <param name="type"></param>
         /// <returns></returns>
-        public static Device Create(DeviceType type)
+        public static DeviceBase Create(DeviceType type)
         {
             IProfile profile = Prototype.Create(type);
-            return new Device(profile);
+            return new DeviceBase(profile);
         }
         /// <summary>
         /// Метод который вызывается до вызова конструктора 
@@ -621,5 +717,6 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices
         //    return;
         //}
         #endregion
+
     }
 }

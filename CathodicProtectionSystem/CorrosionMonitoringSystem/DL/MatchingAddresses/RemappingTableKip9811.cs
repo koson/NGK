@@ -69,7 +69,7 @@ namespace NGK.CorrosionMonitoringSystem.DL.MatchingAddresses
             }
         }
 
-        public static void Copy(File modbusDevice, Device canDevice)
+        public static void Copy(File modbusDevice, DeviceBase canDevice)
         {
             Record rec;
             UInt16 index;

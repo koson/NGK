@@ -32,7 +32,7 @@ namespace NGK.CorrosionMonitoringSystem.Models
         /// <summary>
         /// Список устройств в сети относящихся к КИП 
         /// </summary>
-        private Device[] _KipList;
+        private DeviceBase[] _KipList;
         #endregion
 
         #region Constructors
@@ -40,7 +40,7 @@ namespace NGK.CorrosionMonitoringSystem.Models
         /// Конструктор
         /// </summary>
         /// <param name="networkController"></param>
-        public ParametersPivotTable(Device[] devices)
+        public ParametersPivotTable(DeviceBase[] devices)
         {
             // Создаём таблицу
             this.InitTable();
@@ -69,12 +69,12 @@ namespace NGK.CorrosionMonitoringSystem.Models
         /// <summary>
         /// Инициализирует список устройств типа КИП из устройств доступных в сети
         /// </summary>
-        private void InitKipList(Device[] devices)
+        private void InitKipList(DeviceBase[] devices)
         {
             DeviceType deviceType;
             DataRow row;
 
-            List<Device> result = new List<Device>();
+            List<DeviceBase> result = new List<DeviceBase>();
 
             if (devices != null)
             {                
@@ -108,7 +108,7 @@ namespace NGK.CorrosionMonitoringSystem.Models
         /// Обновляет данные из указанного устройства
         /// </summary>
         /// <param name="device">Сетевое устройство</param>
-        private void UpdateDivice(Device device)
+        private void UpdateDivice(DeviceBase device)
         {
             Boolean result;
             UInt16 index;

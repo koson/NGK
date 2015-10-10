@@ -13,7 +13,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices.Collections
 {
     [Editor(typeof(DevicesCollectionEditor), typeof(UITypeEditor))]
     [Serializable]
-    public class DevicesCollection: KeyedCollection<Byte, Device>
+    public class DevicesCollection: KeyedCollection<Byte, DeviceBase>
     {
         #region Fields And Properties
 
@@ -32,7 +32,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices.Collections
             {
                 int count = 0;
 
-                foreach (Device device in Items)
+                foreach (DeviceBase device in Items)
                 {
                     if ((device.Status == DeviceStatus.CommunicationError) ||
                         (device.Status == DeviceStatus.ConfigurationError))
@@ -66,7 +66,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices.Collections
 
         #region Methods
 
-        protected override byte GetKeyForItem(Device item)
+        protected override byte GetKeyForItem(DeviceBase item)
         {
             item.Network = _Network;
             return item.NodeId;
@@ -74,16 +74,16 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices.Collections
 
         protected override void ClearItems()
         {
-            IList<Device> list = Items;
+            IList<DeviceBase> list = Items;
 
-            foreach (Device device in Items)
+            foreach (DeviceBase device in Items)
             {
                 device.Network = null;
             }
 
             base.ClearItems();
 
-            foreach (Device device in list)
+            foreach (DeviceBase device in list)
             {
                 OnCollectionWasChanged(Action.Removing, device);
             }
@@ -91,7 +91,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices.Collections
 
         protected override void RemoveItem(int index)
         {
-            Device device = Items[index];
+            DeviceBase device = Items[index];
             if (device == null)
             {
                 return;
@@ -101,37 +101,37 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices.Collections
             OnCollectionWasChanged(Action.Removing, device); 
         }
 
-        protected override void InsertItem(int index, Device item)
+        protected override void InsertItem(int index, DeviceBase item)
         {
             base.InsertItem(index, item);
             item.Network = _Network;
             OnCollectionWasChanged(Action.Adding, item);
         }
 
-        protected override void SetItem(int index, Device item)
+        protected override void SetItem(int index, DeviceBase item)
         {
             //item.Network = _Network;
             //base.SetItem(index, item);
             throw new NotImplementedException();
         }
 
-        public Device[] ToArray()
+        public DeviceBase[] ToArray()
         {
-            List<Device> list = new List<Device>(base.Items);
+            List<DeviceBase> list = new List<DeviceBase>(base.Items);
             return list.ToArray();
         }
 
         private void OnCollectionWasChanged(
-            Action action, Device device)
+            Action action, DeviceBase device)
         {
-            KeyedCollectionWasChangedEventArgs<Device> args =
-                new KeyedCollectionWasChangedEventArgs<Device>(action, device);
-            EventHandler<KeyedCollectionWasChangedEventArgs<Device>> handler = 
+            KeyedCollectionWasChangedEventArgs<DeviceBase> args =
+                new KeyedCollectionWasChangedEventArgs<DeviceBase>(action, device);
+            EventHandler<KeyedCollectionWasChangedEventArgs<DeviceBase>> handler = 
                 CollectionWasChanged;
 
             if (handler != null)
             {
-                foreach (EventHandler<KeyedCollectionWasChangedEventArgs<Device>> SingleCast 
+                foreach (EventHandler<KeyedCollectionWasChangedEventArgs<DeviceBase>> SingleCast 
                     in handler.GetInvocationList())
                 {
                     System.ComponentModel.ISynchronizeInvoke syncInvoke =
@@ -161,7 +161,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices.Collections
         /// Событие происходит при изменении коллекции
         /// (добавлении, удалении элементов)
         /// </summary>
-        public event EventHandler<KeyedCollectionWasChangedEventArgs<Device>> CollectionWasChanged;
+        public event EventHandler<KeyedCollectionWasChangedEventArgs<DeviceBase>> CollectionWasChanged;
         #endregion
     }
 }

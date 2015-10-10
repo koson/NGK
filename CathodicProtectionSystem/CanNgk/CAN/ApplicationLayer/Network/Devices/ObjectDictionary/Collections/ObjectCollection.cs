@@ -11,9 +11,9 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices.ObjectDictionary.Collections
     {
         #region Fields And Properties
 
-        private Device _Device;
+        private DeviceBase _Device;
         
-        public Device Owner
+        public DeviceBase Owner
         {
             get { return _Device; }
         }
@@ -32,7 +32,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices.ObjectDictionary.Collections
         /// 
         /// </summary>
         /// <param name="owner"></param>
-        public ObjectCollection(Device owner)
+        public ObjectCollection(DeviceBase owner)
         {
             if (owner == null)
             {

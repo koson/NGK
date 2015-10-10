@@ -129,12 +129,12 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices.ObjectDictionary
         /// <summary>
         /// Устройство НГК, которому принадлежит данная визитная карточка
         /// </summary>
-        public Device _Device;
+        public DeviceBase _Device;
         /// <summary>
         /// Устройство НГК, которому принадлежит данная визитная карточка
         /// </summary>
         [Browsable(false)]
-        public Device Device
+        public DeviceBase Device
         {
             get { return _Device; }
             set { this._Device = value; }
@@ -146,7 +146,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices.ObjectDictionary
         /// Конструктор
         /// </summary>
         /// <param name="device"></param>
-        public VisitingCard(Device device)
+        public VisitingCard(DeviceBase device)
         {
             this._Device = device;
         }

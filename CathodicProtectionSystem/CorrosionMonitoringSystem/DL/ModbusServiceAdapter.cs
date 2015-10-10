@@ -109,8 +109,8 @@ namespace NGK.CorrosionMonitoringSystem.DL
         {
             network.Devices.Clear();
 
-            List<CAN.ApplicationLayer.Network.Devices.Device> canDevices =
-                new List<NGK.CAN.ApplicationLayer.Network.Devices.Device>();
+            List<CAN.ApplicationLayer.Network.Devices.DeviceBase> canDevices =
+                new List<NGK.CAN.ApplicationLayer.Network.Devices.DeviceBase>();
             CAN.ApplicationLayer.Network.Master.NetworksManager canNetworkManager =
                 CAN.ApplicationLayer.Network.Master.NetworksManager.Instance;
 
@@ -144,7 +144,7 @@ namespace NGK.CorrosionMonitoringSystem.DL
             File mDevice;
             ushort i = 1;
 
-            foreach (NGK.CAN.ApplicationLayer.Network.Devices.Device device in
+            foreach (NGK.CAN.ApplicationLayer.Network.Devices.DeviceBase device in
                 canDevices)
             {
                 switch(device.DeviceType) 
@@ -384,7 +384,7 @@ namespace NGK.CorrosionMonitoringSystem.DL
         /// <param name="modbusDevice"></param>
         /// <param name="canDevice"></param>
         private static void UdateDevice(
-            File modbusDevice, NGK.CAN.ApplicationLayer.Network.Devices.Device canDevice)
+            File modbusDevice, NGK.CAN.ApplicationLayer.Network.Devices.DeviceBase canDevice)
         {
             NGK.CAN.ApplicationLayer.Network.Devices.DeviceType type =
                 (NGK.CAN.ApplicationLayer.Network.Devices.DeviceType)modbusDevice.Records[ModbusAddresses
@@ -413,7 +413,7 @@ namespace NGK.CorrosionMonitoringSystem.DL
         /// <param name="e"></param>
         private void EventHandler_Timer_Elapsed(object sender, ElapsedEventArgs e)
         {
-            NGK.CAN.ApplicationLayer.Network.Devices.Device device;
+            NGK.CAN.ApplicationLayer.Network.Devices.DeviceBase device;
             File modbusDevice;
             NGK.CAN.ApplicationLayer.Network.Master.NetworksManager manager =
                 NGK.CAN.ApplicationLayer.Network.Master.NetworksManager.Instance;

@@ -209,7 +209,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Master.Services
         {
             String msg;
             IncomingMessageStuctureServicePdoTransmit msghelper;
-            Device device;
+            DeviceBase device;
             //ObjectInfo objInfo;
 
             if (_Status != Status.Running)

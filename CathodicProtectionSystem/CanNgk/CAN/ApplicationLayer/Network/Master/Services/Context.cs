@@ -29,10 +29,10 @@ namespace NGK.CAN.ApplicationLayer.Network.Master.Services
         /// 
         /// </summary>
         /// <param name="devices"></param>
-        public Context(Device[] devices)
+        public Context(DeviceBase[] devices)
         {
             _Devices = new LinkedList<DeviceContext>();
-            foreach (Device device in devices)
+            foreach (DeviceBase device in devices)
             {
                 _Devices.AddLast(new LinkedListNode<DeviceContext>(
                     new DeviceContext(device)));

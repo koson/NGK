@@ -38,7 +38,7 @@ namespace NGK.CorrosionMonitoringSystem.BL
         //DataTable _PivoteTable;
         private EventHandler _ControllerChangedStatus;
         private EventHandler _DeviceChangedStatus;
-        private EventHandler<KeyedCollectionWasChangedEventArgs<Device>> _DevicesAmountWasChanged;
+        private EventHandler<KeyedCollectionWasChangedEventArgs<DeviceBase>> _DevicesAmountWasChanged;
         #endregion
 
         #region Constructors
@@ -54,7 +54,7 @@ namespace NGK.CorrosionMonitoringSystem.BL
             _DeviceChangedStatus = 
                 new EventHandler(EventHandlerDeviceChangedStatus);
             _DevicesAmountWasChanged =
-                new EventHandler<KeyedCollectionWasChangedEventArgs<Device>>(
+                new EventHandler<KeyedCollectionWasChangedEventArgs<DeviceBase>>(
                 EventHandlerDevicesAmountWasChanged);
 
             _Devices = new List<NetworkDevice>();
@@ -64,7 +64,7 @@ namespace NGK.CorrosionMonitoringSystem.BL
                 network.ControllerChangedStatus += _ControllerChangedStatus;
                 network.Devices.CollectionWasChanged += _DevicesAmountWasChanged;
                 
-                foreach (Device device in network.Devices)
+                foreach (DeviceBase device in network.Devices)
                 {
                     device.DeviceChangedStatus += _DeviceChangedStatus;
                     // TODO:
@@ -95,7 +95,7 @@ namespace NGK.CorrosionMonitoringSystem.BL
         private void EventHandlerDeviceChangedStatus(
             object sender, EventArgs e)
         {
-            Device device = (Device)sender;
+            DeviceBase device = (DeviceBase)sender;
             // Устанавливаем статус модели
 
             foreach (NetworkDevice item in _Devices)
@@ -114,7 +114,7 @@ namespace NGK.CorrosionMonitoringSystem.BL
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void EventHandlerDevicesAmountWasChanged(
-            object sender, KeyedCollectionWasChangedEventArgs<Device> e)
+            object sender, KeyedCollectionWasChangedEventArgs<DeviceBase> e)
         {
             return;
         }
@@ -124,7 +124,7 @@ namespace NGK.CorrosionMonitoringSystem.BL
         /// <param name="device"></param>
         public void UpdateDevice(NetworkDevice device)
         {
-            Device dvc;
+            DeviceBase dvc;
 
             dvc = NetworksManager.Instance.Networks[device.NetworkId]
                 .Devices[device.NodeId];
@@ -138,7 +138,7 @@ namespace NGK.CorrosionMonitoringSystem.BL
         /// <param name="device"></param>
         public void UpdateObjectDictionary(NetworkDevice device)
         {
-            Device dvc;
+            DeviceBase dvc;
 
             dvc = NetworksManager.Instance.Networks[device.NetworkId]
                 .Devices[device.NodeId];

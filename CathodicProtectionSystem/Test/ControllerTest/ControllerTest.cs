@@ -23,7 +23,7 @@ namespace Test.ControllerTest
             port.Mode = PortMode.NORMAL;
 
             NetworkController controller = new NetworkController(port, 1);
-            controller.Devices.Add(Device.Create(DeviceType.KIP_MAIN_POWERED_v1));
+            controller.Devices.Add(DeviceBase.Create(DeviceType.KIP_MAIN_POWERED_v1));
             controller.Start();
             return;
         }
@@ -36,7 +36,7 @@ namespace Test.ControllerTest
             port.Mode = PortMode.NORMAL;
 
             NetworkController controller = new NetworkController(port, 1);
-            controller.Devices.Add(Device.Create(DeviceType.KIP_MAIN_POWERED_v1));
+            controller.Devices.Add(DeviceBase.Create(DeviceType.KIP_MAIN_POWERED_v1));
 
             NetworkControllersCollection collection = new NetworkControllersCollection();
             collection.Add(controller);

@@ -223,7 +223,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Master.Services
             _Context = new Context(_NetworkController.Devices.ToArray());
             
             _NetworkController.Devices.CollectionWasChanged += 
-                new EventHandler<KeyedCollectionWasChangedEventArgs<Device>>(
+                new EventHandler<KeyedCollectionWasChangedEventArgs<DeviceBase>>(
                 EventHandlerDevicesCollectionWasChanged);
         }
 
@@ -236,7 +236,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Master.Services
         /// <param name="sender"></param>
         /// <param name="e"></param>
         public void EventHandlerDevicesCollectionWasChanged(
-            object sender, KeyedCollectionWasChangedEventArgs<Device> e)
+            object sender, KeyedCollectionWasChangedEventArgs<DeviceBase> e)
         {
             // В случае изменения коллекции переопределяем контекст
             lock (_SyncRoot)
@@ -252,7 +252,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Master.Services
         {
             String msg;
             IncomingMessageStuctureNodeGuard msghelper;
-            Device device;
+            DeviceBase device;
 
             if (Status != Status.Running)
             {

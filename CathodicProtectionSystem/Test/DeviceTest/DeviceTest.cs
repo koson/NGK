@@ -10,8 +10,8 @@ namespace Test.DeviceTest
     {
         public static void ToStringTest()
         {
-            Device device = 
-                Device.Create(DeviceType.KIP_MAIN_POWERED_v1);
+            DeviceBase device = 
+                DeviceBase.Create(DeviceType.KIP_MAIN_POWERED_v1);
             //string str = device.ToString();
             Console.WriteLine(device.ToString());
         }
@@ -22,7 +22,7 @@ namespace Test.DeviceTest
             
             string str = "Type=KIP_MAIN_POWERED_v1; Network=; Address=1; " +
                 "Location=; PollingInterval=1";
-            Device device = Device.Create(str);
+            DeviceBase device = DeviceBase.Create(str);
         }
     }
 }

@@ -18,6 +18,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices
     public interface IDevice
     {
         #region Propeties
+
         /// <summary>
         /// Сетевой идентификатор устройства 1...127
         /// </summary>
@@ -33,6 +34,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices
             get;
             set;
         }
+
         /// <summary>
         /// Словарь объектов устройства
         /// </summary>
@@ -45,6 +47,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices
         {
             get;
         }
+
         /// <summary>
         /// Тип устройства
         /// </summary>
@@ -57,6 +60,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices
         {
             get;
         }
+
         /// <summary>
         /// Серийный номер устройства
         /// </summary>
@@ -70,6 +74,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices
             set;
             get;
         }
+
         /// <summary>
         /// Возвращает визитную карточку устройства НГК
         /// </summary>
@@ -83,6 +88,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices
         {
             get;
         }
+
         /// <summary>
         /// Статус устройства
         /// </summary>
@@ -96,6 +102,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices
             get;
             set;
         }
+
         /// <summary>
         /// Возвращает или устанавливает сеть (контроллер сети), которой пренадлежит данное устройство
         /// </summary>
@@ -109,6 +116,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices
             get;
             set; 
         }
+
         /// <summary>
         /// Наименование географической точки установки оборудования  
         /// </summary>
@@ -124,6 +132,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices
             get;
             set; 
         }
+
         /// <summary>
         /// Возвращает время (сек) опроса устройства (равно времени 
         /// измерения и передачи данных у БИ(У))
@@ -138,6 +147,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices
             get;
             set;
         }
+
         [Browsable(true)]
         [ReadOnly(false)]
         [Category("Настройки")]
@@ -148,6 +158,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices
             get;
             set;
         }
+
         /// <summary>
         /// Профиль устройства
         /// </summary>
@@ -155,14 +166,11 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices
         {
             get;
         }
+
         #endregion
 
         #region Methods
-        /// <summary>
-        /// Метод отображает параметры устройства в графическом контроле формы
-        /// </summary>
-        /// <param name="widget"></param>
-        void Show(System.Windows.Forms.Control widget, Boolean readOnly);
+
         /// <summary>
         /// Возвращает значение объекта словаря с указанным индексом
         /// </summary>
@@ -173,15 +181,18 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices
         #endregion
 
         #region Events
+
         /// <summary>
         /// Устройство изменило своё состояние
         /// </summary>
         event EventHandler DeviceChangedStatus;
+        
         /// <summary>
         /// Событие происходит при изменении параметров объектного словаря
         /// или других параметров устройтсва
         /// </summary>
         event EventHandler DataWasChanged;
+        
         #endregion
     }
 }

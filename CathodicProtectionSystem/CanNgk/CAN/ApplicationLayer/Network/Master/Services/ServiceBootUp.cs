@@ -155,7 +155,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Master.Services
         {
             String msg;
             IncomingMessageStuctureBootUp msghelper;
-            Device device;
+            DeviceBase device;
        
             if (Status != Status.Running)
             {

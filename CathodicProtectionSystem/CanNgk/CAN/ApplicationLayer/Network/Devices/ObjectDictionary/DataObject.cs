@@ -9,9 +9,9 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices.ObjectDictionary
     public class DataObject
     {
         #region Fields And Properties
-        private Device _Device;
+        private DeviceBase _Device;
         
-        public Device Device
+        public DeviceBase Device
         {
             get { return _Device; }
             set { _Device = value; }

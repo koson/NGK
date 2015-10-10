@@ -189,7 +189,7 @@ namespace NGK.CorrosionMonitoringSystem.BL
         /// —брасывает 
         /// </summary>
         /// <param name="device"></param>
-        private void ResetDeviceStatusError(Device device)
+        private void ResetDeviceStatusError(DeviceBase device)
         {
             if ((device.Status == DeviceStatus.CommunicationError) ||
             (device.Status == DeviceStatus.ConfigurationError))

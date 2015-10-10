@@ -27,6 +27,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fastwel", "Fastwel\Fastwel.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PowerWin32", "PowerWin32\PowerWin32.csproj", "{61A07434-5F15-4719-991B-B884F1C3D212}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documents", "Documents", "{6AC5B152-5CC2-45EE-AF4C-6C8F1655C4CF}"
+	ProjectSection(SolutionItems) = preProject
+		..\Documents\Протоколы обмена\Интерфейс и протокол обмена данными НГК-ЭХЗ\Интерфейс и протокол обмена данными НГК-ЭХЗ_v.1.4.pdf = ..\Documents\Протоколы обмена\Интерфейс и протокол обмена данными НГК-ЭХЗ\Интерфейс и протокол обмена данными НГК-ЭХЗ_v.1.4.pdf
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

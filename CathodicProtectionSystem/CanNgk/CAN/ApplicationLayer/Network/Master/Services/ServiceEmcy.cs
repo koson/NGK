@@ -55,6 +55,10 @@ namespace NGK.CAN.ApplicationLayer.Network.Master.Services
                 /// </summary>
                 ConnectedServiceConnector   = 0x0006
             }
+
+            /// <summary>
+            /// Флаги поля err_reg сообщения EMCY
+            /// </summary>
             [Flags]
             internal enum ErrReg: byte
             {
@@ -82,6 +86,120 @@ namespace NGK.CAN.ApplicationLayer.Network.Master.Services
                 /// Подключение сервисного разъёма.
                 /// </summary>
                 ConnectedServiceConnector   = 0x20
+            }
+
+            /// <summary>
+            /// Структура принимает байт поля err_reg и 
+            /// предствавляет его в виде флагов
+            /// </summary>
+            internal struct ErrorFlags
+            {
+                #region Fields And Properties
+
+                private Byte _FlagsByte;
+
+                public Byte FlagsByte
+                {
+                    get { return _FlagsByte; }
+                    set { _FlagsByte = value; }
+                }
+                
+                internal bool HasErrors
+                {
+                    get { return _FlagsByte == 0 ? false : true; }
+                }
+
+                /// <summary>
+                /// Есть Вскрытие 
+                /// </summary>
+                internal bool Tamper 
+                { 
+                    get 
+                    {
+                        return (_FlagsByte & (byte)ErrReg.Tamper) == 
+                            (byte)ErrReg.Tamper ? true : false;
+                    }
+                }
+ 
+                /// <summary>
+                /// Oшибка внешнего (основного) питания
+                /// </summary>
+                internal bool MainSupplyPowerError
+                {
+                    get
+                    {
+                        return (_FlagsByte & (byte)ErrReg.MainSupplyPowerError) ==
+                            (byte)ErrReg.MainSupplyPowerError ? true : false;
+                    }
+                }
+
+                /// <summary>
+                /// Неисправность внутренней батареи питания
+                /// </summary>
+                internal bool BatteryError
+                {
+                    get
+                    {
+                        return (_FlagsByte & (byte)ErrReg.BatteryError) ==
+                            (byte)ErrReg.BatteryError ? true : false;
+                    }
+                } 
+
+                /// <summary>
+                /// Ошибка регистрации БИ(У)-01
+                /// </summary>
+                internal bool RegistrationError
+                {
+                    get
+                    {
+                        return (_FlagsByte & (byte)ErrReg.RegistrationError) ==
+                            (byte)ErrReg.RegistrationError ? true : false;
+                    }
+                } 
+
+                /// <summary>
+                /// Ошибка дублирования адреса БИ(У)-01.
+                /// </summary>
+                internal bool DuplicateAddressError
+                {
+                    get
+                    {
+                        return (_FlagsByte & (byte)ErrReg.DuplicateAddressError) ==
+                            (byte)ErrReg.DuplicateAddressError ? true : false;
+                    }
+                } 
+
+                /// <summary>
+                /// Подключение сервисного разъёма.
+                /// </summary>
+                internal bool ConnectedServiceConnector
+                {
+                    get
+                    {
+                        return (_FlagsByte & (byte)ErrReg.ConnectedServiceConnector) ==
+                            (byte)ErrReg.ConnectedServiceConnector ? true : false;
+                    }
+                } 
+
+                #endregion
+
+                #region Constructors
+                
+                internal ErrorFlags(Byte flagsByte)
+                {
+                    _FlagsByte = flagsByte;
+                }
+
+                #endregion
+
+                #region Methods
+
+                internal static ErrorFlags Parse(Byte flagsByte)
+                {
+                    return new ErrorFlags(flagsByte);
+                }
+
+                #endregion 
             }
 
             #region Fields And Pproperties
@@ -154,11 +272,11 @@ namespace NGK.CAN.ApplicationLayer.Network.Master.Services
             /// <summary>
             /// Возвращает байт флагов ошибок устройтсва
             /// </summary>
-            internal ErrReg ErrorRegister
+            internal ErrorFlags ErrorRegister
             {
                 get
                 {
-                    return (ErrReg)Answer.Value.Data[2];
+                    return ErrorFlags.Parse(Answer.Value.Data[2]);
                 }
             }
             /// <summary>
@@ -252,7 +370,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Master.Services
         {
             String msg;
             IncomingMessageStuctureEmcy msghelper;
-            Device device;
+            DeviceBase device;
             UInt16 index;
 
 
@@ -302,43 +420,60 @@ namespace NGK.CAN.ApplicationLayer.Network.Master.Services
                     case IncomingMessageStuctureEmcy.ErrCode.NoError:
                         {
                             // Все ошибки исправлены
-                            if (msghelper.ErrorRegister != 0)
+                            if (msghelper.ErrorRegister.FlagsByte != 0)
                             {
                                 msg = String.Format(
                                     "Неверное состояние - передан ErrCode=0 и ожидается err_reg=0, a получено err_reg = {0}",
                                     msghelper.ErrorRegister);
                                 throw new Exception(msg);
                             }
-                            // Сбрасываем ошибки если были
-                            index = 0x2015; // Tamper
-                            lock (_SyncRoot)
-                            {
-                                device.SetObject(index, true);
-                                device.ObjectDictionary[index].TotalValue = false;
-                            }
 
-                            index = 0x2016; //supply_voltage_low
+                            // Сбрасываем ошибки в устройстве если были
+                            IEmcyErrors err = (IEmcyErrors)device;
+                            
                             lock (_SyncRoot)
                             {
-                                device.ObjectDictionary[index].TotalValue = false;
-                            }
+                                err.BatteryError = false;
+                                err.ConnectedServiceConnector = false;
+                                err.DuplicateAddressError = false;
+                                err.MainSupplyPowerError = false;
+                                err.RegistrationError = false;
+                                err.Tamper = false;
+                            }                            
 
-                            index = 0x2017; //battery_voltage_low
-                            lock (_SyncRoot)
-                            {
-                                device.ObjectDictionary[index].TotalValue = false;
-                            }
+                            break;
                         }
+                    case IncomingMessageStuctureEmcy.ErrCode.Tamper:
                     case IncomingMessageStuctureEmcy.ErrCode.BatteryError:
+                    case IncomingMessageStuctureEmcy.ErrCode.MainSupplyPowerError:
+                    case IncomingMessageStuctureEmcy.ErrCode.ConnectedServiceConnector:
+                    case IncomingMessageStuctureEmcy.ErrCode.DuplicateAddressError: // TODO: обработать поле Х - номер канала шлюза
+                    case IncomingMessageStuctureEmcy.ErrCode.RegistrationError: // TODO: обработать поле Х - номер канала шлюза
                         {
- 
+                            IEmcyErrors err = (IEmcyErrors)device;
+
+                            lock (_SyncRoot)
+                            {
+                                err.BatteryError = msghelper.ErrorRegister.BatteryError;
+                                err.ConnectedServiceConnector = 
+                                    msghelper.ErrorRegister.ConnectedServiceConnector;
+                                err.DuplicateAddressError = 
+                                    msghelper.ErrorRegister.DuplicateAddressError;
+                                err.MainSupplyPowerError = 
+                                    msghelper.ErrorRegister.MainSupplyPowerError;
+                                err.RegistrationError = 
+                                    msghelper.ErrorRegister.RegistrationError;
+                                err.Tamper = msghelper.ErrorRegister.Tamper;
+                            } 
+
+                            break;
+                        }
+                    default:
+                        {
+                            throw new NotImplementedException();
                         }
                 }
 
-                lock (_SyncRoot)
-                {
-                    
-                }
                 //TODO: Пишем в журнал... Не реализовано
             }
         }

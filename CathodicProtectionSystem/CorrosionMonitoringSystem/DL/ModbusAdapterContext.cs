@@ -35,7 +35,7 @@ namespace NGK.CorrosionMonitoringSystem.DL
         public readonly CAN CanDevice;
         public readonly Modbus ModbusDevice;
 
-        public ModbusAdapterContext(Device canDevice, File modbusDevice)
+        public ModbusAdapterContext(DeviceBase canDevice, File modbusDevice)
         {
             CanDevice = new CAN();
             CanDevice.NetworkId = canDevice.Network.NetworkId;

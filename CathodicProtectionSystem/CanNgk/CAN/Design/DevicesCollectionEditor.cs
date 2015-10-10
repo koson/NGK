@@ -55,13 +55,13 @@ namespace NGK.CAN.Design
                 if (!collection.Contains(address))
                 {
                     // Создаём экземпляр сетевого устройства
-                    Device device = null;
+                    DeviceBase device = null;
                     
                     switch (itemType.FullName)
                     {
                         case @"NGK.CAN.ApplicationLayer.Network.Devices.Profiles.KIP9810v1":
                             {
-                                device = Device.Create(DeviceType.KIP_MAIN_POWERED_v1);
+                                device = DeviceBase.Create(DeviceType.KIP_MAIN_POWERED_v1);
                                 device.NodeId = address;
                                 // Добавляем в массив
                                 collection.Add(device);
@@ -69,7 +69,7 @@ namespace NGK.CAN.Design
                             }
                         case @"NGK.CAN.ApplicationLayer.Network.Devices.Profiles.KIP9811v1":
                             {
-                                device = Device.Create(DeviceType.KIP_BATTERY_POWER_v1);
+                                device = DeviceBase.Create(DeviceType.KIP_BATTERY_POWER_v1);
                                 device.NodeId = address;
                                 // Добавляем в массив
                                 collection.Add(device);

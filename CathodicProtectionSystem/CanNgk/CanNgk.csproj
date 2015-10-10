@@ -48,6 +48,7 @@
     <Compile Include="CAN\ApplicationLayer\Network\Devices\DeviceStatusComparer.cs" />
     <Compile Include="CAN\ApplicationLayer\Network\Devices\DeviceType.cs" />
     <Compile Include="CAN\ApplicationLayer\Network\Devices\IDevice.cs" />
+    <Compile Include="CAN\ApplicationLayer\Network\Devices\IEmcyErrors.cs" />
     <Compile Include="CAN\ApplicationLayer\Network\Devices\ObjectDictionary\Category.cs" />
     <Compile Include="CAN\ApplicationLayer\Network\Devices\ObjectDictionary\Collections\ObjectCollection.cs" />
     <Compile Include="CAN\ApplicationLayer\Network\Devices\ObjectDictionary\ComponentModel\VisitingCardTypeConverter.cs" />

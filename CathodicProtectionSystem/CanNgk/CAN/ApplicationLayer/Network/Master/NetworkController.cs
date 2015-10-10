@@ -297,7 +297,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Master
             // Инициализируем спусок устройств в сети
             _DevicesList = new DevicesCollection(this);
             _DevicesList.CollectionWasChanged +=
-                new EventHandler<KeyedCollectionWasChangedEventArgs<Device>>
+                new EventHandler<KeyedCollectionWasChangedEventArgs<DeviceBase>>
                 (EventHandler_DevicesListWasChanged);
 
             // Инициализируем список сетевых сервисов
@@ -332,7 +332,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Master
             // Инициализируем спусок устройств в сети
             _DevicesList = new DevicesCollection(this);
             _DevicesList.CollectionWasChanged +=
-                new EventHandler<KeyedCollectionWasChangedEventArgs<Device>>
+                new EventHandler<KeyedCollectionWasChangedEventArgs<DeviceBase>>
                 (EventHandler_DevicesListWasChanged);
 
             // Инициализируем список сетевых сервисов
@@ -353,7 +353,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Master
         /// <param name="context"></param>
         private NetworkController(SerializationInfo info, StreamingContext context)
         {
-            Device device;
+            DeviceBase device;
 
             // Восстанавливаем сохранённые параметры
             _NetworkId = info.GetUInt32("NetworkId");
@@ -379,7 +379,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Master
 
             foreach (string str in list)
             {
-                device = Device.Create(str);
+                device = DeviceBase.Create(str);
                 _DevicesList.Add(device);
             }
             // Запускаем сетевые сервисы
@@ -434,7 +434,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Master
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void EventHandler_DevicesListWasChanged(
-            object sender, KeyedCollectionWasChangedEventArgs<Device> e)
+            object sender, KeyedCollectionWasChangedEventArgs<DeviceBase> e)
         {
             switch (e.Action)
             {
@@ -681,7 +681,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Master
                 }
 
                 // Устанавливаем статус всем устройствам в сети
-                foreach (Device device in _DevicesList)
+                foreach (DeviceBase device in _DevicesList)
                 {
                     device.Status = DeviceStatus.Stopped;
                 }
@@ -1015,7 +1015,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Master
             // Сериализуем устройства
             List<string> list = new List<string>();
             
-            foreach (Device device in Devices)
+            foreach (DeviceBase device in Devices)
             {
                 list.Add(device.ToString());
             }

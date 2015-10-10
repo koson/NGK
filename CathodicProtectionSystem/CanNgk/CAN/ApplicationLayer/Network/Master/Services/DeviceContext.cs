@@ -55,11 +55,11 @@ namespace NGK.CAN.ApplicationLayer.Network.Master.Services
         /// <summary>
         /// 
         /// </summary>
-        private Device _Device;
+        private DeviceBase _Device;
         /// <summary>
         /// 
         /// </summary>
-        public Device Device 
+        public DeviceBase Device 
         { 
             get { return _Device; } 
         }
@@ -86,7 +86,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Master.Services
         /// Конструктор
         /// </summary>
         /// <param name="device">Модель устройства для которого создаётся данный контекст</param>
-        public DeviceContext(Device device)
+        public DeviceContext(DeviceBase device)
         {            
             _Device = device;
             _Objects = new LinkedList<ObjectInfo>(_Device.Profile.ObjectInfoList);
