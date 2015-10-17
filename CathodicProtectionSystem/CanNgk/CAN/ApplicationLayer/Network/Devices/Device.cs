@@ -597,16 +597,17 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices
         /// <param name="widget">Контрол для отображения параметров устройства</param>
         /// <exception cref="InvalidOperationException">Генерируется если метод не поддерживает
         /// работу с контролом</exception>
-        public virtual void Show(System.Windows.Forms.Control widget, Boolean readOnly)
-        {
-            String msg;
-            msg = String.Format(
-                "Метод Show устройства NodeId: {0} выполнил недопустимую операцию. "+
-                "Виджет типа: {1} не поддеживается в текущей реализации",
-                this.NodeId, widget);
-            Trace.TraceError(msg);
-            throw new NotImplementedException(msg);
-        }
+        //public virtual void Show(System.Windows.Forms.Control widget, Boolean readOnly)
+        //{
+        //    String msg;
+        //    msg = String.Format(
+        //        "Метод Show устройства NodeId: {0} выполнил недопустимую операцию. "+
+        //        "Виджет типа: {1} не поддеживается в текущей реализации",
+        //        this.NodeId, widget);
+        //    Trace.TraceError(msg);
+        //    throw new NotImplementedException(msg);
+        //}
+
         /// <summary>
         /// 
         /// </summary>
