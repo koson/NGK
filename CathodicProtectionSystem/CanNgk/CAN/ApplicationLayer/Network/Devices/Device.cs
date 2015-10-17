@@ -229,7 +229,11 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices
             }
             set
             {
-                SetObject(0x2015, value);
+                if ((bool)GetObject(0x2015) != value)
+                {
+                    SetObject(0x2015, value);
+                    OnRaiseErrors();
+                }
             }
         }
   
@@ -241,7 +245,11 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices
             }
             set
             {
-                SetObject(0x2016, value);
+                if ((bool)GetObject(0x2016) != value)
+                {
+                    SetObject(0x2016, value);
+                    OnRaiseErrors();
+                }
             }
         }
 
@@ -253,7 +261,11 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices
             }
             set
             {
-                SetObject(0x2017, value);
+                if ((bool)GetObject(0x2017) != value)
+                {
+                    SetObject(0x2017, value);
+                    OnRaiseErrors();
+                }
             }
         }
 
@@ -265,7 +277,11 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices
             }
             set
             {
-                _RegistrationError = value;
+                if (_RegistrationError != value)
+                {
+                    _RegistrationError = value;
+                    OnRaiseErrors();
+                }
             }
         }
 
@@ -277,7 +293,11 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices
             }
             set
             {
-                _DuplicateAddressError = value;
+                if (_DuplicateAddressError != value)
+                {
+                    _DuplicateAddressError = value;
+                    OnRaiseErrors();
+                }
             }
         }
 
@@ -298,6 +318,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices
         #endregion
 
         #region Constructors
+        
         /// <summary>
         /// Конструктор
         /// </summary>
@@ -305,6 +326,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices
         {
             throw new NotImplementedException();
         }
+
         /// <summary>
         /// Конструктор
         /// </summary>
@@ -335,6 +357,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices
             ushort crc = vc.GetCRC16();
             vc.CRC16 = crc;
         }
+
         /// <summary>
         /// Конструктор для десериализации
         /// </summary>
@@ -364,9 +387,11 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices
         //    version.Version = profile.HardwareVersion;
         //    SetObject(0x2002, version);
         //}
+
         #endregion
         
         #region Methods
+        
         /// <summary>
         /// Создаём устойство на основе строки в формате
         /// Type={0}; Network={1}; Address={2}; Location={3}; PollingInterval={4} 
@@ -400,6 +425,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices
 
             return device;
         }
+        
         /// <summary>
         /// Возвращает список прараметров из строки созданой в ToString()
         /// </summary>
@@ -434,6 +460,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices
             }
             return parametersTable;
         }
+        
         /// <summary>
         /// Создаёт устройство на основе профиля устройства
         /// </summary>
@@ -443,6 +470,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices
         {
             return new DeviceBase(profile);
         }
+        
         /// <summary>
         /// Создаёт устройство на основе типа устройства
         /// </summary>
@@ -453,6 +481,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices
             IProfile profile = Prototype.Create(type);
             return new DeviceBase(profile);
         }
+        
         /// <summary>
         /// Метод который вызывается до вызова конструктора 
         /// для десериализации Device(SerializationInfo info, StreamingContext context)
@@ -464,6 +493,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices
         //    // Устанавливаем статус устройства
         //    this._Status = DeviceStatus.Stopped;
         //}
+
         /// <summary>
         /// Метод генерирует событие DeviceChangedStatus
         /// </summary>
@@ -502,6 +532,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices
 
             return;
         }
+
         /// <summary>
         /// Метод генерирует событие DataWasChanged
         /// </summary>
@@ -533,6 +564,19 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices
             }
             return;
         }
+
+        /// <summary>
+        /// Генерирует событие возникновения или сброс 
+        /// ошибки в удалённом устройтсве
+        /// </summary>
+        protected void OnRaiseErrors()
+        {
+            if (DeviceHasErrors != null)
+            {
+                DeviceHasErrors(this, new EventArgs());
+            }
+        }
+
         /// <summary>
         /// Обработчик события изменения значения объекта объектного словаря устройства.
         /// </summary>
@@ -544,6 +588,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices
             // Генерируем событие
             OnDataWasChanged();
         }
+
         /// <summary>
         /// Отображает параметры устройства 
         /// КИП в котроле формы. Если данный контрол
@@ -648,15 +693,23 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices
         #endregion
         
         #region Events
+        
         /// <summary>
         /// Собтытие происходит при изменении состояния (статуса) устройства
         /// </summary>
         public event EventHandler DeviceChangedStatus;
+        
         /// <summary>
         /// Событие происходит при изменении параметров объектного словаря
         /// или других параметров устройтсва
         /// </summary>
         public event EventHandler DataWasChanged;
+        
+        /// <summary>
+        /// IEmcyErrors Members
+        /// </summary>
+        public event EventHandler DeviceHasErrors;
+
         #endregion
 
         #region Члены IDevice

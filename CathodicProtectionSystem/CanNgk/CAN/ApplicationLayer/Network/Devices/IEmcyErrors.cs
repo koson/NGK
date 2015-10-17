@@ -34,5 +34,11 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices
         /// Подключение сервисного разъёма.
         /// </summary>
         bool ConnectedServiceConnector { get; set; }
+
+        /// <summary>
+        /// Возникает при возникновении или исчезновении
+        /// ошибкок в удалённом устройтсве
+        /// </summary>
+        event EventHandler DeviceHasErrors;
     }
 }
