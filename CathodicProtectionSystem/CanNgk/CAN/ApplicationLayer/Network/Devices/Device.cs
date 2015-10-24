@@ -653,6 +653,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices
             return _Profile.ObjectInfoList[index]
                 .DataType.ConvertToTotalValue(ObjectDictionary[index].Value);
         }
+
         /// <summary>
         /// Устанавливает значение объекта словаря
         /// </summary>
@@ -681,6 +682,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices
             ObjectDictionary[index].Value = _Profile.ObjectInfoList[index]
                 .DataType.ConvertToBasis(value);
         }
+        
         /// <summary>
         /// Проверяет содержит ли словарь объектов устройтсва
         /// указанный объект
@@ -691,6 +693,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices
         {
             return _ObjectDictionary.Contains(index); 
         }
+        
         #endregion
         
         #region Events

@@ -37,6 +37,7 @@ namespace NGK.CorrosionMonitoringSystem
 
             // Data base layer 
             _NetworkManager = NetworksManager.Instance;
+
             try
             {
                 _NetworkManager.LoadConfig(Application.StartupPath + 

@@ -117,7 +117,6 @@ namespace NGK.CorrosionMonitoringSystem.BL
             _GeneralTimer = new Timer();
             _GeneralTimer.Interval = 1000;
             _GeneralTimer.Tick += new EventHandler(EventHandler_GeneralTimer_Tick);
-            _GeneralTimer.Start();
 
             _ModbusNetworkAdapter.Start();
         }
@@ -617,6 +616,8 @@ namespace NGK.CorrosionMonitoringSystem.BL
 #else
             btn.Text = "Запуск системы";
 #endif
+            _GeneralTimer.Start();
+
             return;
         }
         /// <summary>
