@@ -351,6 +351,19 @@ namespace NGK.CorrosionMonitoringSystem.Forms
             {
                 switch (keyData)
                 {
+                    case Keys.F1:
+                        {
+#if DEBUG
+                            // Показываем окно управления сетями
+                            FormNetworkControl frm = FormNetworkControl.Instance;
+                            frm.TopMost = true;
+                            frm.Show();
+                            return false;
+#else
+                            return true;
+#endif
+                          
+                        }
                     case Keys.F2:
                         {
                             // По нажатию F2 исполняем программный клик по кнопке F2
@@ -384,13 +397,6 @@ namespace NGK.CorrosionMonitoringSystem.Forms
                             {
                                 this._SplitContainerMainFrame.Panel2Collapsed = true;
                             }
-                            return false;
-                        }
-                    case Keys.F1:
-                        {
-                            // Показываем окно управления сетями
-                            FormNetworkControl frm = FormNetworkControl.Instance;
-                            frm.Show();
                             return false;
                         }
                 }

@@ -1790,5 +1790,6 @@ namespace NGK.CorrosionMonitoringSystem.BL
         }
 
         #endregion
+
     }// End Of Class
 }// End Of Namespace

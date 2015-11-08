@@ -1,0 +1,19 @@
+После установки ПО:
+1. Увеличить размер диска C до (Macrorit Disk Partition Expert v3.9.0)
+2. Перенастроить файл подкачки на диск E:
+	HKLM\System\CurrentControlSet\Control\Session Manager\Memory Management\
+	PagingFiles = E:\pagefile.sys 200 400
+	или "Свойства системы" -> "Дополнительно" -> "Быстродействие" -> "Параметры" -> "Дополнительно" -> "Виртуальная память" -> "Изменить" ...
+3. Скопировать файл конфигурации (newtorkconfig.bin) в папку приложения.
+4. Настроить использование удалённого конфигурационного файла приложения:
+	4.1 Скоприовать файл MonitoringSystem.exe.config из папки приложения
+	на диск E. Переименовать его в MonitoringSystemRemote.exe.config
+	4.2 Открыть файл MonitoringSystem.exe.config (при помощи "блокнот") и 
+	изменить следующие параметры как указано ниже:
+		<add key="EnableRemoteConfigFile" value="true"/>
+		<add key="PathToRemoteConfigFile" value="E:\MonitoringSystem.exe.config"/>
+5. Скопировать файлы в папку приложения:
+	5.1 config.xml, config.xsd, config.xsx
+	5.2 fwcan.dll
+	5.3 NLog.config
+6. Установить vci_3_5_2_4268.exe (если требуется работа с IXXAT)

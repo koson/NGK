@@ -531,6 +531,10 @@ namespace NGK.CAN.ApplicationLayer.Network.Master
             service.TotalAttempts = this.TotalAttempts;
             this._NetworkServices.Add(service);
 
+            //service = new ServiceEmcy(this);
+            //service.TotalAttempts = this.TotalAttempts;
+            //this._NetworkServices.Add(service);
+
             return;
         }
         /// <summary>
@@ -617,8 +621,10 @@ namespace NGK.CAN.ApplicationLayer.Network.Master
                     // Запускаем доступные сервисы
                     foreach (Service service in _NetworkServices)
                     {
-                        // !!! Для отладки будем управляеть работой сервисо в ручную
-                        //service.Start();
+                        // !!! Для отладки будем управляеть работой сервисов в ручную
+#if !DEBUG 
+                        service.Start();
+#endif
                     }
                     
                     //_NetworkServices[ServiceType.NodeGuard].Start();
