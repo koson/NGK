@@ -4,11 +4,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.50727</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{78E073B6-AD50-429C-9261-4DE3438D8EAE}</ProjectGuid>
+    <ProjectGuid>{44DF6B58-4BDD-40D8-993C-7B61AECF0510}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Common</RootNamespace>
-    <AssemblyName>common</AssemblyName>
+    <RootNamespace>MVP</RootNamespace>
+    <AssemblyName>MVP</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -28,29 +28,16 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Collections\ObjectModel\Actions.cs" />
-    <Compile Include="Collections\ObjectModel\KeyedCollectionWasChangedEventArgs.cs" />
-    <Compile Include="ComponentModel\EnumTypeConverter.cs" />
-    <Compile Include="Controlling\Status.cs" />
-    <Compile Include="Controlling\IManageable.cs" />
-    <Compile Include="MVP\IPresenter.cs" />
-    <Compile Include="MVP\IView.cs" />
-    <Compile Include="MVP\PresenterBase.cs" />
-    <Compile Include="MVP\ViewBase.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="MVP\ViewBase.Designer.cs">
-      <DependentUpon>ViewBase.cs</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Presenter\" />
+    <Folder Include="View\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

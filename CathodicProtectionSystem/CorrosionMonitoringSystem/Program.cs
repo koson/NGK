@@ -6,6 +6,7 @@ using NLog;
 using NGK.CorrosionMonitoringSystem.BL;
 using NGK.CorrosionMonitoringSystem.Forms;
 using NGK.CAN.ApplicationLayer.Network.Master;
+using Microsoft.VisualBasic.ApplicationServices;
 
 namespace NGK.CorrosionMonitoringSystem
 {
@@ -13,20 +14,28 @@ namespace NGK.CorrosionMonitoringSystem
     {
         private static NetworksManager _NetworkManager;
         private static Logger _Logger;
+        private static WindowsFormsApplicationBase Me;
+
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
+        /// <remarks>
+        /// https://exceptionalcode.wordpress.com/2010/03/25/splash-screen-for-windows-forms-application/
+        /// </remarks>
         [STAThread]
         static void Main()
         {
-            Application.CurrentCulture = new System.Globalization.CultureInfo("ru-Ru");
-            Application.SetUnhandledExceptionMode(UnhandledExceptionMode.Automatic);
+            Me = new WindowsFormsApplicationBase(AuthenticationMode.Windows);
+            Me.Culture = new System.Globalization.CultureInfo("ru-Ru");
+            Me.UnhandledException += 
+                new UnhandledExceptionEventHandler(EventHandler_Application_UnhandledException);
 
-            AppDomain.CurrentDomain.UnhandledException +=
-                new UnhandledExceptionEventHandler(EventHandler_CurrentDomain_UnhandledException);
-            Application.ThreadException +=
-                new System.Threading.ThreadExceptionEventHandler(EventHandler_Application_ThreadException);
-
+            //Application.CurrentCulture = new System.Globalization.CultureInfo("ru-Ru");
+            //Application.SetUnhandledExceptionMode(UnhandledExceptionMode.Automatic);
+            //AppDomain.CurrentDomain.UnhandledException +=
+            //    new UnhandledExceptionEventHandler(EventHandler_CurrentDomain_UnhandledException);
+            //Application.ThreadException +=
+            //    new System.Threading.ThreadExceptionEventHandler(EventHandler_Application_ThreadException);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
@@ -57,9 +66,15 @@ namespace NGK.CorrosionMonitoringSystem
             // Business layer
             BLController controller = new BLController(_NetworkManager, _PresentationForm);
 
-            Application.Run(_PresentationForm);
-            
+            //Application.Run(_PresentationForm);
+            Me.ApplicationContext.MainForm = _PresentationForm;
+            Me.Run(Environment.GetCommandLineArgs());
             _Logger.Info("Приложение остановлено");
+        }
+
+        static void EventHandler_Application_UnhandledException(object sender, Microsoft.VisualBasic.ApplicationServices.UnhandledExceptionEventArgs e)
+        {
+            throw new Exception("The method or operation is not implemented.");
         }
         /// <summary>
         /// 
