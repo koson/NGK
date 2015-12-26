@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MvpApplication", "MvpApplic
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "VbApplication", "VbApplication\VbApplication.vbproj", "{38C5D8D9-AFC2-4E93-8C5D-02D7FBEADCA2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "M:\GitWork\CathodicProtectionSystem\Common\Common.csproj", "{78E073B6-AD50-429C-9261-4DE3438D8EAE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MvpApplication2", "MvpApplication2\MvpApplication2.csproj", "{7461D0BF-8D8B-48B1-A711-D21B18482424}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -25,6 +29,14 @@ Global
 		{38C5D8D9-AFC2-4E93-8C5D-02D7FBEADCA2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{38C5D8D9-AFC2-4E93-8C5D-02D7FBEADCA2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{38C5D8D9-AFC2-4E93-8C5D-02D7FBEADCA2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{78E073B6-AD50-429C-9261-4DE3438D8EAE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{78E073B6-AD50-429C-9261-4DE3438D8EAE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{78E073B6-AD50-429C-9261-4DE3438D8EAE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{78E073B6-AD50-429C-9261-4DE3438D8EAE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7461D0BF-8D8B-48B1-A711-D21B18482424}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7461D0BF-8D8B-48B1-A711-D21B18482424}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7461D0BF-8D8B-48B1-A711-D21B18482424}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7461D0BF-8D8B-48B1-A711-D21B18482424}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

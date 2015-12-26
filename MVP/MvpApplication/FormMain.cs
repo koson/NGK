@@ -37,5 +37,9 @@ namespace MvpApplication
         {
             Program.ApplicationController.Exit();
         }
+
+        private void FormMain_Load(object sender, EventArgs e)
+        {
+        }
     }
 }

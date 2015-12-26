@@ -7,7 +7,7 @@
     <ProjectGuid>{44DF6B58-4BDD-40D8-993C-7B61AECF0510}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MVP</RootNamespace>
+    <RootNamespace>Mvp</RootNamespace>
     <AssemblyName>MVP</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -30,14 +30,20 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Presenter\Command.cs" />
+    <Compile Include="Presenter\ICommand.cs" />
+    <Compile Include="Presenter\IPresenter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WinApplication\WinFormsApplication.cs" />
+    <Compile Include="View\IView.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Presenter\" />
-    <Folder Include="View\" />
+    <Content Include="Documents\usefulreference.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
