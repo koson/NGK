@@ -39,6 +39,7 @@
     <Compile Include="Presenter\ICommand.cs" />
     <Compile Include="Presenter\IPresenter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WinApplication\IApplicationController.cs" />
     <Compile Include="WinApplication\WinFormsApplication.cs" />
     <Compile Include="View\IView.cs" />
   </ItemGroup>

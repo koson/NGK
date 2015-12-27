@@ -18,7 +18,6 @@ namespace MvpApplication2
             WinFormsApplication app = new WinFormsApplication();
             app.ApplicationRunning += 
                 new EventHandler(EventHandler_app_ApplicationRunning);
-
             app.Run();
         }
 

@@ -2,19 +2,24 @@
 using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Drawing;
+using System.Globalization;
 using NLog;
-using NGK.CorrosionMonitoringSystem.BL;
-using NGK.CorrosionMonitoringSystem.Forms;
+using Mvp.WinApplication;
+using Mvp.View;
+using Mvp.Presenter;
+using NGK.CorrosionMonitoringSystem.Presenter;
+using NGK.CorrosionMonitoringSystem.View;
 using NGK.CAN.ApplicationLayer.Network.Master;
-using Microsoft.VisualBasic.ApplicationServices;
+using NGK.CorrosionMonitoringSystem.Managers;
 
 namespace NGK.CorrosionMonitoringSystem
 {
     static class Program
     {
-        private static NetworksManager _NetworkManager;
-        private static Logger _Logger;
-        private static WindowsFormsApplicationBase Me;
+        public static NetworksManager _NetworkManager;
+        public static Logger _Logger;
+        public static WinFormsApplication _Application;
+        public static IManagers Managers;
 
         /// <summary>
         /// The main entry point for the application.
@@ -25,67 +30,94 @@ namespace NGK.CorrosionMonitoringSystem
         [STAThread]
         static void Main()
         {
-            Me = new WindowsFormsApplicationBase(AuthenticationMode.Windows);
-            Me.Culture = new System.Globalization.CultureInfo("ru-Ru");
-            Me.UnhandledException += 
-                new UnhandledExceptionEventHandler(EventHandler_Application_UnhandledException);
+            AppDomain.CurrentDomain.UnhandledException +=
+                new UnhandledExceptionEventHandler(EventHandler_CurrentDomain_UnhandledException);
+            
+            _Application = new WinFormsApplication();
+            _Application.CurrentCulture = new CultureInfo("ru-Ru");
+            _Application.ApplicationStarting += 
+                new EventHandler(EventHandler_Application_ApplicationRunning);
+            _Application.ApplicationClosing += 
+                new EventHandler(EventHandler_Application_ApplicationClosing);
+            _Application.Run();
+        }
 
-            //Application.CurrentCulture = new System.Globalization.CultureInfo("ru-Ru");
-            //Application.SetUnhandledExceptionMode(UnhandledExceptionMode.Automatic);
-            //AppDomain.CurrentDomain.UnhandledException +=
-            //    new UnhandledExceptionEventHandler(EventHandler_CurrentDomain_UnhandledException);
-            //Application.ThreadException +=
-            //    new System.Threading.ThreadExceptionEventHandler(EventHandler_Application_ThreadException);
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
+        /// <summary>
+        /// Инициализация приложения
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        static void EventHandler_Application_ApplicationRunning(object sender, EventArgs e)
+        {
+            WinFormsApplication app = (WinFormsApplication)sender;
+
+            Managers = new AppManagers();
+
+            if (Managers.ConfigManager.CursorEnable)
+            {
+                Cursor.Show();
+            }
+            else
+            {
+                Cursor.Hide();
+            }
+
+            //Создаём presenter splash screen 
+            SplashScreenView splashscreenView = new SplashScreenView();
+            SplashScreenPresenter splashscreenPresenter =
+                new SplashScreenPresenter(app, splashscreenView, null, Managers);
+            //Подключем метод для выполнения инициализации приложения
+            splashscreenPresenter.SystemInitializationRunning += 
+                new EventHandler(EventHandler_SplashscreenPresenter_SystemInitializationRunning);
+            app.CurrentScreen = splashscreenPresenter;
+        }
+
+        static void EventHandler_Application_ApplicationClosing(object sender, EventArgs e)
+        {
+            _Logger.Info("Приложение остановлено");
+        }
+
+        static void EventHandler_SplashscreenPresenter_SystemInitializationRunning(object sender, EventArgs e)
+        {
+            SplashScreenPresenter presenter = (SplashScreenPresenter)sender;
 
             // Создаём объект для ведения логов приложения
-            //_Logger = LogManager.GetCurrentClassLogger();
+            presenter.WtriteText("Инициализация системы логирования...");
+
             _Logger = LogManager.GetLogger("CorrosionMonitoringSystemLogger");
             _Logger.Info("Приложение запущено");
 
-            // Data base layer 
+            //Загружаем конфигурацию сети
+            presenter.WtriteText("Загрузка конфигурации сети...");
+            //LoadNetworkConfig();
+
+            System.Threading.Thread.Sleep(2000);
+            presenter.WtriteText("Загрузка БД...");
+            System.Threading.Thread.Sleep(2000);
+            presenter.WtriteText("Загрузка журнала событий...");
+            System.Threading.Thread.Sleep(2000);
+            presenter.WtriteText("Запуск системы мониторинга...");
+            System.Threading.Thread.Sleep(2000);
+        }
+
+        static void LoadNetworkConfig()
+        {
             _NetworkManager = NetworksManager.Instance;
 
             try
             {
-                _NetworkManager.LoadConfig(Application.StartupPath + 
+                _NetworkManager.LoadConfig(Application.StartupPath +
                     @"\newtorkconfig.bin.nwc");
             }
             catch
             {
-                MessageBox.Show("Ошибка при конфигурировании системы. " + 
-                    "Приложение будет закрыто", 
+                MessageBox.Show("Ошибка при конфигурировании системы. " +
+                    "Приложение будет закрыто",
                     "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                throw;
+                _Application.Exit();
             }
-
-            // Presentation layer
-            CorrosionMonitoringSystemForm _PresentationForm = new CorrosionMonitoringSystemForm();
-
-            // Business layer
-            BLController controller = new BLController(_NetworkManager, _PresentationForm);
-
-            //Application.Run(_PresentationForm);
-            Me.ApplicationContext.MainForm = _PresentationForm;
-            Me.Run(Environment.GetCommandLineArgs());
-            _Logger.Info("Приложение остановлено");
         }
 
-        static void EventHandler_Application_UnhandledException(object sender, Microsoft.VisualBasic.ApplicationServices.UnhandledExceptionEventArgs e)
-        {
-            throw new Exception("The method or operation is not implemented.");
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        static void EventHandler_Application_ThreadException(object sender, 
-            System.Threading.ThreadExceptionEventArgs e)
-        {
-            return;
-        }
         /// <summary>
         /// Обработчик события возникновения необработанного исключеия
         /// </summary>
@@ -111,5 +143,5 @@ namespace NGK.CorrosionMonitoringSystem
             #endif
             return;
         }
-    } //End of Class
-}// End Of Namespace
+    }
+}

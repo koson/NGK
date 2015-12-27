@@ -41,15 +41,6 @@
     <Compile Include="ComponentModel\EnumTypeConverter.cs" />
     <Compile Include="Controlling\Status.cs" />
     <Compile Include="Controlling\IManageable.cs" />
-    <Compile Include="MVP\IPresenter.cs" />
-    <Compile Include="MVP\IView.cs" />
-    <Compile Include="MVP\PresenterBase.cs" />
-    <Compile Include="MVP\ViewBase.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="MVP\ViewBase.Designer.cs">
-      <DependentUpon>ViewBase.cs</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

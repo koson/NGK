@@ -3,19 +3,12 @@ using System.Collections.Generic;
 using System.Text;
 using System.Windows.Forms;
 using System.Diagnostics;
+using System.Globalization;
 using Mvp.Presenter;
 using Mvp.View;
 
 namespace Mvp.WinApplication
 {
-    public interface IApplicationController
-    {
-        /// <summary>
-        /// Возвращает или устанавливаем текущий экран
-        /// </summary>
-        IPresenter CurrentScreen { get; set; }
-    }
-
     public class WinFormsApplication : IApplicationController
     {
         #region Constructors
@@ -26,9 +19,6 @@ namespace Mvp.WinApplication
             Application.SetCompatibleTextRenderingDefault(false);
 
             _AppContext = new ApplicationContext();
-
-            AppDomain.CurrentDomain.UnhandledException += 
-                new UnhandledExceptionEventHandler(CurrentDomain_UnhandledException);
         }
         
         #endregion
@@ -37,6 +27,14 @@ namespace Mvp.WinApplication
 
         private ApplicationContext _AppContext;
         private IPresenter _CurrentScreen;
+
+        public ApplicationContext AppContext 
+        { 
+            get 
+            { 
+                return _AppContext; 
+            } 
+        } 
 
         /// <summary>
         /// Возвращает или устанавливаем текущий экран
@@ -68,17 +66,15 @@ namespace Mvp.WinApplication
             }
         }
 
+        public CultureInfo CurrentCulture 
+        {
+            get { return Application.CurrentCulture; }
+            set { Application.CurrentCulture = value; }
+        }
+
         #endregion
 
         #region EventHadler
-
-        private void CurrentDomain_UnhandledException(
-            object sender, UnhandledExceptionEventArgs e)
-        {
-            OnUnhandledExceptionRasing();
-            Application.Exit();
-        }
-
         #endregion
 
         #region Methods
@@ -88,35 +84,48 @@ namespace Mvp.WinApplication
         /// </summary>
         public void Run() 
         {
-            OnApplicationRunning();
+            OnApplicationStarting();
             Application.Run(_AppContext); 
         }
 
         /// <summary>
-        /// Метод выполняется при возникновении необработанного 
-        /// исключения перед закрытием приложения.
+        /// Завершает работу приложения
         /// </summary>
-        protected virtual void OnUnhandledExceptionRasing() { }
-        
-        /// <summary>
-        /// Генерирует событие ApplicationRunning 
-        /// </summary>
-        private void OnApplicationRunning()
+        public void Exit()
         {
-            if (ApplicationRunning != null)
+            OnApplicationClosing();
+            Application.Exit();
+        }
+        
+        private void OnApplicationStarting()
+        {
+            if (ApplicationStarting != null)
             {
-                ApplicationRunning(this, new EventArgs());
+                ApplicationStarting(this, new EventArgs());
+            }
+        }
+
+        private void OnApplicationClosing()
+        {
+            if (ApplicationClosing != null)
+            {
+                ApplicationClosing(this, new EventArgs());
             }
         }
 
         #endregion
 
         #region Events
+
         /// <summary>
-        /// Забытие происходит сразу после вызова метода Run,
+        /// Событие происходит сразу после вызова метода Run,
         /// но до запуска приложения
         /// </summary>
-        public event EventHandler ApplicationRunning;
+        public event EventHandler ApplicationStarting;
+        /// <summary>
+        /// Событие происходит перед закрытием приложения
+        /// </summary>
+        public event EventHandler ApplicationClosing;
 
         #endregion
     }

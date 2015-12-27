@@ -67,9 +67,9 @@ namespace NGK.CorrosionMonitoringSystem.Properties {
             }
         }
         
-        internal static System.Drawing.Bitmap LOGO {
+        internal static System.Drawing.Bitmap Logo {
             get {
-                object obj = ResourceManager.GetObject("LOGO", resourceCulture);
+                object obj = ResourceManager.GetObject("Logo", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

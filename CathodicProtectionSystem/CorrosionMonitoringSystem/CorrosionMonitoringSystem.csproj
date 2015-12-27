@@ -72,6 +72,12 @@
     <Compile Include="DL\ModbusServiceAdapter.cs" />
     <Compile Include="DL\ModbusAddresses\ModbusVisitingCard.cs" />
     <Compile Include="DL\Modbus\mKIP9811.cs" />
+    <Compile Include="Managers\ConfigurationManager\ConfigManager.cs" />
+    <Compile Include="Managers\ConfigurationManager\IConfigManager.cs" />
+    <Compile Include="Managers\IManagers.cs" />
+    <Compile Include="Managers\LogManager\ILogManager.cs" />
+    <Compile Include="Managers\AppManagers.cs" />
+    <Compile Include="Managers\SysLogManager\ISysLogManager.cs" />
     <Compile Include="PL\FormNetworkControl.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -94,7 +100,8 @@
     </Compile>
     <Compile Include="PL\SystemButtonClickEventHandler.cs" />
     <Compile Include="BL\Messages.cs" />
-    <Compile Include="Presenter\MainPresenter.cs" />
+    <Compile Include="Presenter\SpalshScreenPresenter.cs" />
+    <Compile Include="Presenter\MainScreenPresenter.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="PL\FormNetworkControl.resx">
@@ -110,24 +117,50 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="View\SplashScreenView.resx">
+      <DependentUpon>SplashScreenView.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\MainScreenView.resx">
+      <DependentUpon>MainScreenView.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="View\SplashScreenView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\SplashScreenView.designer.cs">
+      <DependentUpon>SplashScreenView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\ISplashScreenView.cs" />
+    <Compile Include="View\IMainScreenView.cs" />
+    <Compile Include="View\MainScreenView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\MainScreenView.designer.cs">
+      <DependentUpon>MainScreenView.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\MVP\MVP\MVP.csproj">
+      <Project>{44DF6B58-4BDD-40D8-993C-7B61AECF0510}</Project>
+      <Name>MVP</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CanNgk\CanNgk.csproj">
       <Project>{95234605-221A-41A5-A9BA-ED933C75C30E}</Project>
       <Name>CanNgk</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Common\Common.csproj">
-      <Project>{78E073B6-AD50-429C-9261-4DE3438D8EAE}</Project>
-      <Name>Common</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Modbus\Modbus.csproj">
       <Project>{B5A4D2E6-8BCF-40E2-BD06-0DB320E688B0}</Project>
       <Name>Modbus</Name>
+    </ProjectReference>
+    <ProjectReference Include="M:\GitWork\CathodicProtectionSystem\Common\Common.csproj">
+      <Project>{78E073B6-AD50-429C-9261-4DE3438D8EAE}</Project>
+      <Name>Common</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -154,7 +187,7 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="View\" />
+    <Folder Include="Model\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
