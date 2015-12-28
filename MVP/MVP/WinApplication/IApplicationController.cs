@@ -8,8 +8,13 @@ namespace Mvp.WinApplication
     public interface IApplicationController
     {
         /// <summary>
-        /// Возвращает или устанавливаем текущий экран
+        /// Возвращает текущее окно системы
         /// </summary>
-        IPresenter CurrentScreen { get; set; }
+        IPresenter CurrentWindow { get; }
+        /// <summary>
+        /// Отображает новое окно системы 
+        /// </summary>
+        /// <param name="presenter"></param>
+        void ShowWindow(IPresenter presenter);
     }
 }

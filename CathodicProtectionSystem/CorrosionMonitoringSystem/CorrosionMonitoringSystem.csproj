@@ -100,6 +100,7 @@
     </Compile>
     <Compile Include="PL\SystemButtonClickEventHandler.cs" />
     <Compile Include="BL\Messages.cs" />
+    <Compile Include="Presenter\INavigationMenuPresenter.cs" />
     <Compile Include="Presenter\SpalshScreenPresenter.cs" />
     <Compile Include="Presenter\MainScreenPresenter.cs" />
     <Compile Include="Program.cs" />
@@ -117,6 +118,10 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="View\NavigationMenuForm.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>NavigationMenuForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="View\SplashScreenView.resx">
       <DependentUpon>SplashScreenView.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -129,6 +134,21 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Presenter\NavigationMenuPresenter.cs" />
+    <Compile Include="Services\ApplicationServices.cs" />
+    <Compile Include="Services\IApplicationServices.cs" />
+    <Compile Include="Services\INavigationService.cs" />
+    <Compile Include="Services\IShowAppMenuService.cs" />
+    <Compile Include="Services\IWindowsService.cs" />
+    <Compile Include="Services\NavigationService.cs" />
+    <Compile Include="Services\WindowsService.cs" />
+    <Compile Include="View\INavigationMenuView.cs" />
+    <Compile Include="View\NavigationMenuForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\NavigationMenuForm.Designer.cs">
+      <DependentUpon>NavigationMenuForm.cs</DependentUpon>
     </Compile>
     <Compile Include="View\SplashScreenView.cs">
       <SubType>Form</SubType>
@@ -176,7 +196,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="ModbusRequests.txt" />
-    <None Include="CorrosionMonitoringSystem_TemporaryKey.pfx" />
     <None Include="Resources\LOGO.jpg" />
   </ItemGroup>
   <ItemGroup>

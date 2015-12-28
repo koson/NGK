@@ -51,7 +51,7 @@ namespace NGK.CorrosionMonitoringSystem
         {
             WinFormsApplication app = (WinFormsApplication)sender;
 
-            Managers = new AppManagers();
+            Managers = new AppManagers(app);
 
             if (Managers.ConfigManager.CursorEnable)
             {
@@ -69,7 +69,7 @@ namespace NGK.CorrosionMonitoringSystem
             //Подключем метод для выполнения инициализации приложения
             splashscreenPresenter.SystemInitializationRunning += 
                 new EventHandler(EventHandler_SplashscreenPresenter_SystemInitializationRunning);
-            app.CurrentScreen = splashscreenPresenter;
+            app.ShowWindow(splashscreenPresenter);
         }
 
         static void EventHandler_Application_ApplicationClosing(object sender, EventArgs e)

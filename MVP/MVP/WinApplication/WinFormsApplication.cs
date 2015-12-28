@@ -26,7 +26,7 @@ namespace Mvp.WinApplication
         #region Fields And Properties
 
         private ApplicationContext _AppContext;
-        private IPresenter _CurrentScreen;
+        private IPresenter _CurrentWindow;
 
         public ApplicationContext AppContext 
         { 
@@ -39,31 +39,9 @@ namespace Mvp.WinApplication
         /// <summary>
         /// Возвращает или устанавливаем текущий экран
         /// </summary>
-        public IPresenter CurrentScreen 
+        public IPresenter CurrentWindow 
         {
-            get { return _CurrentScreen; }
-            set 
-            {
-                IView lastForm = null;
-
-                if (_CurrentScreen != value)
-                {
-                    _CurrentScreen = value;
-
-                    if (_AppContext.MainForm != null)
-                    {
-                        lastForm = (IView)_AppContext.MainForm;
-                    }
-
-                    _AppContext.MainForm = (Form)_CurrentScreen.View;
-
-                    if (lastForm != null)
-                    {
-                        lastForm.Close();
-                    }
-                    ((IView)_AppContext.MainForm).Show();
-                }
-            }
+            get { return _CurrentWindow; }
         }
 
         public CultureInfo CurrentCulture 
@@ -78,6 +56,29 @@ namespace Mvp.WinApplication
         #endregion
 
         #region Methods
+
+        public void ShowWindow(IPresenter presenter)
+        {
+            IView lastForm = null;
+            
+            if (_CurrentWindow != presenter)
+            {
+                _CurrentWindow = presenter;
+
+                if (_AppContext.MainForm != null)
+                {
+                    lastForm = (IView)_AppContext.MainForm;
+                }
+                
+                _AppContext.MainForm = (Form)_CurrentWindow.View;
+                
+                if (lastForm != null)
+                {
+                    lastForm.Close();
+                }
+                ((IView)_AppContext.MainForm).Show();
+            }
+        }
 
         /// <summary>
         /// Запускает приложение на выполение

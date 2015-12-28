@@ -70,7 +70,7 @@ namespace NGK.CorrosionMonitoringSystem.Presenter
 
             MainScreenPresenter mainScreenPresenter =
                 new MainScreenPresenter(_Application, mainScreenView, null, _Managers);
-            _Application.CurrentScreen = mainScreenPresenter;
+            _Application.ShowWindow(mainScreenPresenter);
         }
 
         void EventHandler_Worker_DoWork(object sender, DoWorkEventArgs e)

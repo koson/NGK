@@ -4,6 +4,8 @@ using System.Text;
 using NGK.CorrosionMonitoringSystem.Managers.AppConfigManager;
 using NGK.CorrosionMonitoringSystem.Managers.LogManager;
 using NGK.CorrosionMonitoringSystem.Managers.SysLogManager;
+using NGK.CorrosionMonitoringSystem.Services;
+using Mvp.WinApplication;
 
 namespace NGK.CorrosionMonitoringSystem.Managers
 {
@@ -11,7 +13,7 @@ namespace NGK.CorrosionMonitoringSystem.Managers
     {
         #region Constructor
 
-        public AppManagers()
+        public AppManagers(IApplicationController application)
         {
             _ConfigManager = new ConfigManager();
             _Logger = null; //TODO: Не реализовано
