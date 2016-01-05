@@ -10,16 +10,6 @@ namespace NGK.CorrosionMonitoringSystem.Forms.Controls
     /// </summary>
     public class ButtonsPanel
     {
-        //public enum SystemButtons
-        //{
-        //    Unknown = 0,
-        //    ButtonOne = 1,
-        //    ButtonTwo = 2,
-        //    ButtonThree = 3,
-        //    ButtonFour = 4,
-        //    ButtonFive = 5
-        //}
-
         public struct ButtonNames
         {
             public const string ButtonOne = "ButtonOne";
@@ -33,24 +23,6 @@ namespace NGK.CorrosionMonitoringSystem.Forms.Controls
                 return new string[] { ButtonOne, ButtonTwo, 
                     ButtonThree, ButtonFour, ButtonFive };
             }
-
-            //public static SystemButtons GetButtonByName(String buttonName)
-            //{
-            //    switch (buttonName)
-            //    {
-            //        case ButtonOne: { return SystemButtons.ButtonOne; }
-            //        case ButtonTwo: { return SystemButtons.ButtonTwo; }
-            //        case ButtonThree: { return SystemButtons.ButtonThree; }
-            //        case ButtonFour: { return SystemButtons.ButtonFour; }
-            //        case ButtonFive: { return SystemButtons.ButtonFive; }
-            //        default:
-            //            {
-            //                throw new ArgumentException(String.Format(
-            //                  "Невозможно преобразовать. Кнопка с наименованием {0} не существует", 
-            //                  buttonName), "buttonName");
-            //            }
-            //    }
-            //}
         }
 
         #region Fields And Properties

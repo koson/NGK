@@ -67,17 +67,19 @@ namespace NGK.CorrosionMonitoringSystem
             SplashScreenPresenter splashscreenPresenter =
                 new SplashScreenPresenter(app, splashscreenView, null, Managers);
             //Подключем метод для выполнения инициализации приложения
-            splashscreenPresenter.SystemInitializationRunning += 
-                new EventHandler(EventHandler_SplashscreenPresenter_SystemInitializationRunning);
+            splashscreenPresenter.SystemInitializationRunning += new EventHandler(
+                EventHandler_SplashscreenPresenter_SystemInitializationRunning);
             app.ShowWindow(splashscreenPresenter);
         }
 
-        static void EventHandler_Application_ApplicationClosing(object sender, EventArgs e)
+        static void EventHandler_Application_ApplicationClosing(
+            object sender, EventArgs e)
         {
             _Logger.Info("Приложение остановлено");
         }
 
-        static void EventHandler_SplashscreenPresenter_SystemInitializationRunning(object sender, EventArgs e)
+        static void EventHandler_SplashscreenPresenter_SystemInitializationRunning(
+            object sender, EventArgs e)
         {
             SplashScreenPresenter presenter = (SplashScreenPresenter)sender;
 
@@ -91,13 +93,13 @@ namespace NGK.CorrosionMonitoringSystem
             presenter.WtriteText("Загрузка конфигурации сети...");
             //LoadNetworkConfig();
 
-            System.Threading.Thread.Sleep(2000);
+            System.Threading.Thread.Sleep(300);
             presenter.WtriteText("Загрузка БД...");
-            System.Threading.Thread.Sleep(2000);
+            System.Threading.Thread.Sleep(300);
             presenter.WtriteText("Загрузка журнала событий...");
-            System.Threading.Thread.Sleep(2000);
+            System.Threading.Thread.Sleep(300);
             presenter.WtriteText("Запуск системы мониторинга...");
-            System.Threading.Thread.Sleep(2000);
+            System.Threading.Thread.Sleep(300);
         }
 
         static void LoadNetworkConfig()

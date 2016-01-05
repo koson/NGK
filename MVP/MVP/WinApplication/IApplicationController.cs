@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Windows.Forms;
+using Mvp.View;
 using Mvp.Presenter;
 
 namespace Mvp.WinApplication
@@ -16,5 +18,11 @@ namespace Mvp.WinApplication
         /// </summary>
         /// <param name="presenter"></param>
         void ShowWindow(IPresenter presenter);
+        /// <summary>
+        /// Отображает модальное окно
+        /// </summary>
+        /// <param name="view"></param>
+        /// <returns></returns>
+        void ShowDialog(IPresenter presenter);
     }
 }

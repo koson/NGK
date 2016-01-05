@@ -16,7 +16,7 @@ namespace MvpApplication2
         static void Main()
         {
             WinFormsApplication app = new WinFormsApplication();
-            app.ApplicationRunning += 
+            app.ApplicationStarting += 
                 new EventHandler(EventHandler_app_ApplicationRunning);
             app.Run();
         }
@@ -39,7 +39,7 @@ namespace MvpApplication2
             //MainScreenPresenter mainScreenPresenter =
             //    new MainScreenPresenter(app, mainScreenPresenter, null);
 
-            app.CurrentScreen = bootstrapperPresenter;
+            app.ShowWindow(bootstrapperPresenter);
         }
 
         // Здесь код инициализации системы. Выполняется в отдельном потоке

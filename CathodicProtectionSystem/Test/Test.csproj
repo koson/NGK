@@ -45,7 +45,7 @@
       <Project>{95234605-221A-41A5-A9BA-ED933C75C30E}</Project>
       <Name>CanNgk</Name>
     </ProjectReference>
-    <ProjectReference Include="M:\GitWork\CathodicProtectionSystem\Common\Common.csproj">
+    <ProjectReference Include="..\Common\Common.csproj">
       <Project>{78E073B6-AD50-429C-9261-4DE3438D8EAE}</Project>
       <Name>Common</Name>
     </ProjectReference>

@@ -12,13 +12,15 @@ using NGK.CorrosionMonitoringSystem.Managers;
 
 namespace NGK.CorrosionMonitoringSystem.Presenter
 {
-    public class SplashScreenPresenter: IPresenter
+    public class SplashScreenPresenter: Presenter<ISplashScreenView>
     {
         #region Constructors
 
         public SplashScreenPresenter(IApplicationController application,
-            ISplashScreenView view, object model, IManagers managers)
+            ISplashScreenView view, object model, IManagers managers):
+            base(view)
         {
+            _Name = "SplashScreen";
             _Application = application;
             _Managers = managers;
             _View = view;
@@ -32,10 +34,9 @@ namespace NGK.CorrosionMonitoringSystem.Presenter
         
         BackgroundWorker _Worker;
         IApplicationController _Application;
-        ISplashScreenView _View;
         IManagers _Managers;
-        
-        public IView View
+
+        public ISplashScreenView ViewConcrete
         {
             get { return _View; }
         }
@@ -59,18 +60,20 @@ namespace NGK.CorrosionMonitoringSystem.Presenter
         void EventHandler_Worker_RunWorkerCompleted(
             object sender, RunWorkerCompletedEventArgs e)
         {
-            // Отображаем основную форму приложения
-            MainScreenView mainScreenView = new MainScreenView();
+            //// Отображаем основную форму приложения
+            //PivotTableView mainScreenView = new PivotTableView();
 
-            // Настраиваем окно
-            mainScreenView.ShowInTaskbar = _Managers.ConfigManager.ShowInTaskbar;
-            mainScreenView.FormBorderStyle =
-                _Managers.ConfigManager.FormBorderEnable ?
-                FormBorderStyle.Sizable : FormBorderStyle.None;
+            //// Настраиваем окно
+            //mainScreenView.ShowInTaskbar = _Managers.ConfigManager.ShowInTaskbar;
+            //mainScreenView.FormBorderStyle =
+            //    _Managers.ConfigManager.FormBorderEnable ?
+            //    FormBorderStyle.Sizable : FormBorderStyle.None;
 
-            MainScreenPresenter mainScreenPresenter =
-                new MainScreenPresenter(_Application, mainScreenView, null, _Managers);
-            _Application.ShowWindow(mainScreenPresenter);
+            //PivoteTablePresenter mainScreenPresenter =
+            //    new PivoteTablePresenter(_Application, mainScreenView, null, _Managers);
+            //_Application.ShowWindow(mainScreenPresenter);
+
+            _Managers.NavigationService.GoToWindow(NavigationMenuItems.PivoteTable);
         }
 
         void EventHandler_Worker_DoWork(object sender, DoWorkEventArgs e)

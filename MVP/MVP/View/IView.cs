@@ -9,6 +9,8 @@ namespace Mvp.View
     /// </summary>
     public interface IView
     {
+        string Name { get; set; }
+
         void Show();
         void Close();
     }

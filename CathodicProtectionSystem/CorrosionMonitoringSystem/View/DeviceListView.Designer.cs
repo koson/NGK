@@ -1,6 +1,6 @@
 namespace NGK.CorrosionMonitoringSystem.View
 {
-    partial class MainScreenView
+    partial class DeviceListView
     {
         /// <summary>
         /// Required designer variable.
@@ -28,18 +28,9 @@ namespace NGK.CorrosionMonitoringSystem.View
         /// </summary>
         private void InitializeComponent()
         {
-            this.SuspendLayout();
-            // 
-            // MainScreenView
-            // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.components = new System.ComponentModel.Container();
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(489, 323);
-            this.Name = "MainScreenView";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "MainScreenView";
-            this.ResumeLayout(false);
-
+            this.Text = "DeviceListView";
         }
 
         #endregion

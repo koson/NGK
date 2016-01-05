@@ -80,6 +80,12 @@ namespace Mvp.WinApplication
             }
         }
 
+        public void ShowDialog(IPresenter presenter)
+        {
+            Form form = (Form)presenter.View;
+            form.ShowDialog();
+        }
+
         /// <summary>
         /// Запускает приложение на выполение
         /// </summary>

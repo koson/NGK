@@ -59,7 +59,7 @@ namespace MvpApplication2.Presenter
             MainScreenView mainScreenView = new MainScreenView();
             MainScreenPresenter mainScreenPresenter =
                 new MainScreenPresenter(_Application, mainScreenView, null);
-            _Application.CurrentScreen = mainScreenPresenter;
+            _Application.ShowWindow(mainScreenPresenter);
         }
 
         void EventHandler_Worker_DoWork(object sender, DoWorkEventArgs e)
@@ -104,7 +104,7 @@ namespace MvpApplication2.Presenter
             MainScreenView mainScreenView = new MainScreenView();
             MainScreenPresenter mainScreenPresenter =
                 new MainScreenPresenter(_Application, mainScreenView, null);
-            _Application.CurrentScreen = mainScreenPresenter;
+            _Application.ShowWindow(mainScreenPresenter);
         }
 
         void OnInitSystemRunning()

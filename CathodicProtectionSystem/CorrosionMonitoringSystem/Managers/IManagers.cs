@@ -4,6 +4,7 @@ using System.Text;
 using NGK.CorrosionMonitoringSystem.Managers.LogManager;
 using NGK.CorrosionMonitoringSystem.Managers.SysLogManager;
 using NGK.CorrosionMonitoringSystem.Managers.AppConfigManager;
+using NGK.CorrosionMonitoringSystem.Managers.Factory;
 using NGK.CorrosionMonitoringSystem.Services;
 
 namespace NGK.CorrosionMonitoringSystem.Managers
@@ -24,5 +25,13 @@ namespace NGK.CorrosionMonitoringSystem.Managers
         /// приложения
         /// </summary>
         IConfigManager ConfigManager { get; }
+        /// <summary>
+        /// Навигация по приложению
+        /// </summary>
+        INavigationService NavigationService { get; }
+        /// <summary>
+        /// Фабрика по созданию окон приложения
+        /// </summary>
+        IWindowsFactory WindowsFactory { get; } 
     }
 }

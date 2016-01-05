@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Mvp.WinApplication;
+using NGK.CorrosionMonitoringSystem.Managers;
 
 namespace NGK.CorrosionMonitoringSystem.Services
 {
@@ -9,11 +10,12 @@ namespace NGK.CorrosionMonitoringSystem.Services
     {
         #region Constructors
 
-        public ApplicationServices(IApplicationController application) 
+        public ApplicationServices(IApplicationController application, 
+            IManagers managers) 
         {
             _Application = application;
             _IWindowService = new WindowsService(application);
-            _INavigationService = new NavigationService(application, this);
+            _INavigationService = new NavigationService(application, managers);
         }
         
         #endregion

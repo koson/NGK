@@ -9,35 +9,57 @@ using NGK.CorrosionMonitoringSystem.Managers;
 
 namespace NGK.CorrosionMonitoringSystem.Presenter
 {
-    public class NavigationMenuPresenter : INavigationMenuPresenter
+    public class NavigationMenuPresenter : Presenter<INavigationMenuView>, 
+        INavigationMenuPresenter
     {
         #region Constructors
 
         public NavigationMenuPresenter(IApplicationController application,
-            INavigationMenuView view, object model, IManagers managers) 
+            INavigationMenuView view, object model, IManagers managers) :
+            base (view)
         {
-            _View = view;
+            _Managers = managers;
+
+            ViewConcrete.MenuClosed += 
+                new EventHandler(EventHandler_View_MenuClosed);
         }
         
         #endregion
 
         #region Fields And Properties
 
-        INavigationMenuView _View;
-        
-        public IView View
+        IManagers _Managers;
+
+        public INavigationMenuView ViewConcrete
         {
-            get { return _View; }
+            get { return (INavigationMenuView)base._View; }
         }
 
-        IPresenter _SelectedWindow;
+        NavigationMenuItems _SelectedWindow;
 
-        public IPresenter SelectedWindow
+        public NavigationMenuItems SelectedWindow
         {
             get { return _SelectedWindow; }
-            set { _SelectedWindow = value; }
+            set 
+            { 
+                _SelectedWindow = value;
+                if (ViewConcrete != null)
+                {
+                    ViewConcrete.SelectedMenuItem = _SelectedWindow;
+                }
+            }
         }
 
+        #endregion
+
+        #region Event Handlers
+        
+        void EventHandler_View_MenuClosed(object sender, EventArgs e)
+        {
+            INavigationMenuView view = (INavigationMenuView)sender;
+            SelectedWindow = view.SelectedMenuItem;
+        }
+        
         #endregion
 
         #region Methods

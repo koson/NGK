@@ -5,8 +5,8 @@ using Mvp.View;
 
 namespace NGK.CorrosionMonitoringSystem.View
 {
-    public interface IMainScreenView: IView
+    public interface IDeviceListView: IView
     {
-        void SomeMethod();
+        event EventHandler<ButtonClickEventArgs> ButtonClick;
     }
 }

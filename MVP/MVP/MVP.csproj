@@ -35,9 +35,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Presenter\Command.cs" />
-    <Compile Include="Presenter\ICommand.cs" />
+    <Compile Include="Command\Command.cs" />
+    <Compile Include="Command\CommandAttribute.cs" />
+    <Compile Include="Command\ICommand.cs" />
     <Compile Include="Presenter\IPresenter.cs" />
+    <Compile Include="Presenter\Presenter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WinApplication\IApplicationController.cs" />
     <Compile Include="WinApplication\WinFormsApplication.cs" />
@@ -45,6 +47,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Documents\usefulreference.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\CathodicProtectionSystem\Common\Common.csproj">
+      <Project>{78E073B6-AD50-429C-9261-4DE3438D8EAE}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

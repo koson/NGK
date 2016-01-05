@@ -5,12 +5,25 @@ using Mvp.View;
 
 namespace NGK.CorrosionMonitoringSystem.View
 {
+    public enum NavigationMenuItems
+    {
+        /// <summary>
+        /// Отмена (переход не выбран)
+        /// </summary>
+        NoSelection,
+        PivoteTable,
+        DeviceList,
+        DeviceDetail,
+        LogViewer,
+    }
+
     public interface INavigationMenuView: IView
     {
-        void ShowPivotTableScreen();
-        void ShowDeviceListScreen();
-        void ShowDeviceDetailScreen();
-        //void ShowTimeDiagramScreen();
-        //void ShowLogViewerScreen();
+        NavigationMenuItems SelectedMenuItem { get; set; }
+        bool PivoteTableMenuEnabled { get; set;}
+        bool DeviceListEnabled { get; set;}
+        bool DeviceDetailEnabled { get; set;}
+        bool LogViewerEnabled { get; set;}
+        event EventHandler MenuClosed;
     }
 }

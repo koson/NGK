@@ -11,5 +11,6 @@ namespace Mvp.Presenter
     public interface IPresenter
     {
         IView View { get; }
+        String Name { get; }
     }
 }

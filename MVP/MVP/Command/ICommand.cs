@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Mvp.Presenter
+namespace Mvp
 {
     public interface ICommand
     {
