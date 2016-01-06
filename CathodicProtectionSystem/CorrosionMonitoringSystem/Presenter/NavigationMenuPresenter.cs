@@ -43,9 +43,46 @@ namespace NGK.CorrosionMonitoringSystem.Presenter
             set 
             { 
                 _SelectedWindow = value;
+                
                 if (ViewConcrete != null)
                 {
                     ViewConcrete.SelectedMenuItem = _SelectedWindow;
+                    // Блокируем элементы меню
+                    switch (_SelectedWindow)
+                    {
+                        case NavigationMenuItems.DeviceList:
+                            {
+                                ViewConcrete.DeviceListMenuEnabled = false;
+                                ViewConcrete.DeviceDetailMenuEnabled = true;
+                                ViewConcrete.LogViewerMenuEnabled = true;
+                                ViewConcrete.PivoteTableMenuEnabled = true;
+                                break;
+                            }
+                        case NavigationMenuItems.DeviceDetail:
+                            {
+                                ViewConcrete.DeviceListMenuEnabled = true;
+                                ViewConcrete.DeviceDetailMenuEnabled = false;
+                                ViewConcrete.LogViewerMenuEnabled = false;
+                                ViewConcrete.PivoteTableMenuEnabled = false;
+                                break;
+                            }
+                        case NavigationMenuItems.PivoteTable:
+                            {
+                                ViewConcrete.DeviceListMenuEnabled = true;
+                                ViewConcrete.DeviceDetailMenuEnabled = false;
+                                ViewConcrete.LogViewerMenuEnabled = true;
+                                ViewConcrete.PivoteTableMenuEnabled = false;
+                                break;
+                            }
+                        case NavigationMenuItems.LogViewer:
+                            {
+                                ViewConcrete.DeviceListMenuEnabled = true;
+                                ViewConcrete.DeviceDetailMenuEnabled = false;
+                                ViewConcrete.LogViewerMenuEnabled = false;
+                                ViewConcrete.PivoteTableMenuEnabled = true;
+                                break;
+                            }
+                    }
                 }
             }
         }
@@ -63,26 +100,6 @@ namespace NGK.CorrosionMonitoringSystem.Presenter
         #endregion
 
         #region Methods
-
-        public void SetPivotTableScreen()
-        {
-            throw new Exception("The method or operation is not implemented.");
-        }
-
-        public void SetDeviceListScreen()
-        {
-            throw new Exception("The method or operation is not implemented.");
-        }
-
-        public void SetDeviceDetailScreen()
-        {
-            throw new Exception("The method or operation is not implemented.");
-        }
-
-        public void TimeDiagramScreen()
-        {
-            throw new Exception("The method or operation is not implemented.");
-        }
 
         #endregion
     }

@@ -29,36 +29,7 @@ namespace NGK.CorrosionMonitoringSystem.View
         public NavigationMenuItems SelectedMenuItem
         {
             get { return _SelectedMenuItem; }
-            set 
-            { 
-                _SelectedMenuItem = value;
-                
-                _ButtonDeviceDetail.Enabled = true;
-                _ButtonDeviceList.Enabled = true;
-                _ButtonLogViewer.Enabled = true;
-                _ButtonPivotTable.Enabled = true;
-                
-                switch (_SelectedMenuItem)
-                {
-                    case NavigationMenuItems.NoSelection: { break; }
-                    case NavigationMenuItems.PivoteTable: 
-                        { 
-                            _ButtonPivotTable.Enabled = false; break; 
-                        }
-                    case NavigationMenuItems.DeviceList:
-                        {
-                            _ButtonDeviceList.Enabled = false; break;
-                        }
-                    case NavigationMenuItems.DeviceDetail:
-                        {
-                            _ButtonDeviceDetail.Enabled = false; break;
-                        }
-                    case NavigationMenuItems.LogViewer:
-                        {
-                            _ButtonLogViewer.Enabled = false; break;
-                        }
-                }
-            }
+            set { _SelectedMenuItem = value; }
         }
 
         public bool PivoteTableMenuEnabled
@@ -67,19 +38,19 @@ namespace NGK.CorrosionMonitoringSystem.View
             set { _ButtonPivotTable.Enabled = value; }
         }
 
-        public bool DeviceListEnabled
+        public bool DeviceListMenuEnabled
         {
             get { return _ButtonDeviceList.Enabled; }
             set { _ButtonDeviceList.Enabled = value; }
         }
 
-        public bool DeviceDetailEnabled
+        public bool DeviceDetailMenuEnabled
         {
             get { return _ButtonDeviceDetail.Enabled; }
             set { _ButtonDeviceDetail.Enabled = value; }
         }
 
-        public bool LogViewerEnabled
+        public bool LogViewerMenuEnabled
         {
             get { return _ButtonLogViewer.Enabled; }
             set { _ButtonLogViewer.Enabled = value; }

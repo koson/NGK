@@ -22,6 +22,7 @@ namespace NGK.CorrosionMonitoringSystem.Presenter
             _Name = NavigationMenuItems.PivoteTable.ToString();
             _Managers = managers;
             _Application = application;
+            // настраиваем кнопки
             _View.ButtonF3IsAccessible = false;
 
             _ShowMenuCommand = new Command(

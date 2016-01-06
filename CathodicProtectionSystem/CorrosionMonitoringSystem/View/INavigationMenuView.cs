@@ -21,9 +21,9 @@ namespace NGK.CorrosionMonitoringSystem.View
     {
         NavigationMenuItems SelectedMenuItem { get; set; }
         bool PivoteTableMenuEnabled { get; set;}
-        bool DeviceListEnabled { get; set;}
-        bool DeviceDetailEnabled { get; set;}
-        bool LogViewerEnabled { get; set;}
+        bool DeviceListMenuEnabled { get; set;}
+        bool DeviceDetailMenuEnabled { get; set;}
+        bool LogViewerMenuEnabled { get; set;}
         event EventHandler MenuClosed;
     }
 }
