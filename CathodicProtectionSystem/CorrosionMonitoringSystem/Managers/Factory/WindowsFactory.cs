@@ -11,6 +11,8 @@ namespace NGK.CorrosionMonitoringSystem.Managers.Factory
 {
     public class WindowsFactory: IWindowsFactory
     {
+        #region Constructors
+
         public WindowsFactory(IApplicationController application, 
             IManagers managers)
         {
@@ -18,8 +20,16 @@ namespace NGK.CorrosionMonitoringSystem.Managers.Factory
             _Managers = managers;
         }
 
+        #endregion
+
+        #region Fields And Properties
+
         IApplicationController _Application;
         IManagers _Managers;
+
+        #endregion
+
+        #region Methods
 
         public IPresenter Create(NavigationMenuItems window)
         {
@@ -58,9 +68,35 @@ namespace NGK.CorrosionMonitoringSystem.Managers.Factory
                         break;
                     }
                 case NavigationMenuItems.DeviceDetail:
-                //{ break; }
+                    {
+                        DeviceDetailView ddView = new DeviceDetailView();
+
+                        // Настраиваем окно
+                        ddView.ShowInTaskbar = _Managers.ConfigManager.ShowInTaskbar;
+                        ddView.FormBorderStyle =
+                            _Managers.ConfigManager.FormBorderEnable ?
+                            FormBorderStyle.Sizable : FormBorderStyle.None;
+
+                        DeviceDetailPresenter ddPresenter =
+                            new DeviceDetailPresenter(_Application, ddView, null, _Managers);
+                        presenter = ddPresenter;
+                        break; 
+                    }
                 case NavigationMenuItems.LogViewer:
-                //{ break; }
+                    {
+                        LogViewerView lvView = new LogViewerView();
+
+                        // Настраиваем окно
+                        lvView.ShowInTaskbar = _Managers.ConfigManager.ShowInTaskbar;
+                        lvView.FormBorderStyle =
+                            _Managers.ConfigManager.FormBorderEnable ?
+                            FormBorderStyle.Sizable : FormBorderStyle.None;
+
+                        LogViewerPresenter lvPresenter =
+                            new LogViewerPresenter(_Application, lvView, null, _Managers);
+                        presenter = lvPresenter;
+                        break; 
+                    }
                 default:
                     {
                         throw new NotSupportedException();
@@ -68,5 +104,20 @@ namespace NGK.CorrosionMonitoringSystem.Managers.Factory
             }
             return presenter;
         }
+        
+        public INavigationMenuPresenter CreateNavigationMenu()
+        {
+            NavigationMenuView view = new NavigationMenuView();
+            view.ShowInTaskbar = false;
+            view.FormBorderStyle = FormBorderStyle.FixedDialog;
+            view.StartPosition = FormStartPosition.CenterScreen;
+
+            INavigationMenuPresenter presenter =
+                new NavigationMenuPresenter(_Application, view, null, null);
+
+            return presenter;
+        }
+
+        #endregion
     }
 }

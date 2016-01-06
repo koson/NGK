@@ -105,8 +105,10 @@
     </Compile>
     <Compile Include="PL\SystemButtonClickEventHandler.cs" />
     <Compile Include="BL\Messages.cs" />
+    <Compile Include="Presenter\DeviceDetailPresenter.cs" />
     <Compile Include="Presenter\DeviceListPresenter.cs" />
     <Compile Include="Presenter\INavigationMenuPresenter.cs" />
+    <Compile Include="Presenter\LogViewerPresenter.cs" />
     <Compile Include="Presenter\SpalshScreenPresenter.cs" />
     <Compile Include="Presenter\PivoteTablePresenter.cs" />
     <Compile Include="Program.cs" />
@@ -153,14 +155,28 @@
     <Compile Include="Services\IWindowsService.cs" />
     <Compile Include="Services\NavigationService.cs" />
     <Compile Include="Services\WindowsService.cs" />
+    <Compile Include="View\DeviceDetailView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\DeviceDetailView.Designer.cs">
+      <DependentUpon>DeviceDetailView.cs</DependentUpon>
+    </Compile>
     <Compile Include="View\DeviceListView.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="View\DeviceListView.Designer.cs">
       <DependentUpon>DeviceListView.cs</DependentUpon>
     </Compile>
+    <Compile Include="View\IDeviceDetailView.cs" />
     <Compile Include="View\IDeviceListView.cs" />
+    <Compile Include="View\ILogViewerView.cs" />
     <Compile Include="View\INavigationMenuView.cs" />
+    <Compile Include="View\LogViewerView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\LogViewerView.Designer.cs">
+      <DependentUpon>LogViewerView.cs</DependentUpon>
+    </Compile>
     <Compile Include="View\NavigationMenuView.cs">
       <SubType>Form</SubType>
     </Compile>

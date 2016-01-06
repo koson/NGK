@@ -60,19 +60,6 @@ namespace NGK.CorrosionMonitoringSystem.Presenter
         void EventHandler_Worker_RunWorkerCompleted(
             object sender, RunWorkerCompletedEventArgs e)
         {
-            //// Отображаем основную форму приложения
-            //PivotTableView mainScreenView = new PivotTableView();
-
-            //// Настраиваем окно
-            //mainScreenView.ShowInTaskbar = _Managers.ConfigManager.ShowInTaskbar;
-            //mainScreenView.FormBorderStyle =
-            //    _Managers.ConfigManager.FormBorderEnable ?
-            //    FormBorderStyle.Sizable : FormBorderStyle.None;
-
-            //PivoteTablePresenter mainScreenPresenter =
-            //    new PivoteTablePresenter(_Application, mainScreenView, null, _Managers);
-            //_Application.ShowWindow(mainScreenPresenter);
-
             _Managers.NavigationService.GoToWindow(NavigationMenuItems.PivoteTable);
         }
 

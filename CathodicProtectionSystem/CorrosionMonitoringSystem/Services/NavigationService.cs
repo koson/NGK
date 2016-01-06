@@ -34,18 +34,13 @@ namespace NGK.CorrosionMonitoringSystem.Services
 
         public void ShowNavigationMenu()
         {
-            NavigationMenuView view = new NavigationMenuView();
-            view.ShowInTaskbar = false;
-            view.FormBorderStyle = FormBorderStyle.FixedDialog;
-            view.StartPosition = FormStartPosition.CenterScreen;
-
             INavigationMenuPresenter presenter = 
-                new NavigationMenuPresenter(_Application, view, null, null);
+                _Managers.WindowsFactory.CreateNavigationMenu();
             
             // Устанавливаем окно (кнопку привязанную к нему заблокируем)
             presenter.SelectedWindow = (NavigationMenuItems)Enum.Parse(
                 typeof(NavigationMenuItems), _Application.CurrentWindow.Name, true);
-            
+
             _Application.ShowDialog(presenter);
 
             GoToWindow(presenter.SelectedWindow);
@@ -74,31 +69,37 @@ namespace NGK.CorrosionMonitoringSystem.Services
             switch (window)
             {
                 case NavigationMenuItems.NoSelection:
-                    { break; }
+                    { return; }
                 case NavigationMenuItems.PivoteTable:
                     {
                         presenter = _Managers.WindowsFactory
                             .Create(NavigationMenuItems.PivoteTable);
-                        _Application.ShowWindow(presenter);
                         break;
                     }
                 case NavigationMenuItems.DeviceList:
                     {
-
                         presenter = _Managers.WindowsFactory
                             .Create(NavigationMenuItems.DeviceList);
-                        _Application.ShowWindow(presenter);
                         break;
                     }
                 case NavigationMenuItems.DeviceDetail:
-                //{ break; }
+                    {
+                        presenter = _Managers.WindowsFactory
+                            .Create(NavigationMenuItems.DeviceDetail);
+                        break; 
+                    }
                 case NavigationMenuItems.LogViewer:
-                //{ break; }
+                    {
+                        presenter = _Managers.WindowsFactory
+                            .Create(NavigationMenuItems.LogViewer);
+                        break; 
+                    }
                 default:
                     {
                         throw new NotSupportedException();
                     }
             }
+            _Application.ShowWindow(presenter);
         }
 
         #endregion
