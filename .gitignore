@@ -2,3 +2,11 @@
 bin
 obj
 /CathodicProtectionSystem/*.suo
+*.application
+*.deploy
+*.manifest
+*.exe
+*.msi
+/CathodicProtectionSystem/CorrosionMonitoringSystem/CorrosionMonitoringSystem.csproj.user
+*.pfx
+*.suo
