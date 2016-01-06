@@ -36,14 +36,28 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Form1.cs">
+    <Compile Include="ChildOneForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="ChildOneForm.Designer.cs">
+      <DependentUpon>ChildOneForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MdiMainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MdiMainForm.Designer.cs">
+      <DependentUpon>MdiMainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="ChildOneForm.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>ChildOneForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MdiMainForm.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>MdiMainForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

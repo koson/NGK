@@ -8,11 +8,16 @@ using System.Windows.Forms;
 
 namespace MdiApplication
 {
-    public partial class Form1 : Form
+    public partial class ChildOneForm : Form
     {
-        public Form1()
+        public ChildOneForm()
         {
             InitializeComponent();
+        }
+
+        private void _ButtonExit_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }
