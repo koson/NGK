@@ -28,11 +28,49 @@ namespace NGK.CorrosionMonitoringSystem.View
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this._SplitContainerMain.Panel1.SuspendLayout();
+            this._SplitContainerMain.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            this.SuspendLayout();
+            // 
+            // _SplitContainerMain
+            // 
+            // 
+            // _SplitContainerMain.Panel1
+            // 
+            this._SplitContainerMain.Panel1.Controls.Add(this.dataGridView1);
+            // 
+            // dataGridView1
+            // 
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dataGridView1.Location = new System.Drawing.Point(5, 5);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.RowTemplate.Height = 24;
+            this.dataGridView1.Size = new System.Drawing.Size(394, 398);
+            this.dataGridView1.TabIndex = 1;
+            // 
+            // DeviceListView
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Text = "DeviceListView";
+            this.ButtonF3IsAccessible = true;
+            this.ButtonF4IsAccessible = true;
+            this.ButtonF5IsAccessible = true;
+            this.ClientSize = new System.Drawing.Size(543, 408);
+            this.Name = "DeviceListView";
+            this.Text = "Список устройств";
+            this._SplitContainerMain.Panel1.ResumeLayout(false);
+            this._SplitContainerMain.Panel1.PerformLayout();
+            this._SplitContainerMain.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            this.ResumeLayout(false);
+
         }
 
         #endregion
+
+        private System.Windows.Forms.DataGridView dataGridView1;
     }
 }

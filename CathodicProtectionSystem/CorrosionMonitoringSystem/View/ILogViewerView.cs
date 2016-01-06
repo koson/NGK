@@ -5,16 +5,7 @@ using Mvp.View;
 
 namespace NGK.CorrosionMonitoringSystem.View
 {
-    public interface ILogViewerView: IView
+    public interface ILogViewerView : IView, IButtonsPanel
     {
-        #region Menu buttons
-
-        Boolean ButtonF3IsAccessible { get; set; }
-        Boolean ButtonF4IsAccessible { get; set; }
-        Boolean ButtonF5IsAccessible { get; set; }
-
-        event EventHandler<ButtonClickEventArgs> ButtonClick;
-
-        #endregion
     }
 }

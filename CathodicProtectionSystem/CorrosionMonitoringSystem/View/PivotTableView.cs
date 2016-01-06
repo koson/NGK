@@ -44,7 +44,7 @@ namespace NGK.CorrosionMonitoringSystem.View
 
         #region IPivotTableView Members
 
-        event EventHandler<ButtonClickEventArgs> IPivotTableView.ButtonClick
+        event EventHandler<ButtonClickEventArgs> IButtonsPanel.ButtonClick
         {
             add
             {

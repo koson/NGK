@@ -126,6 +126,10 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="View\DeviceListView.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>DeviceListView.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="View\NavigationMenuView.resx">
       <SubType>Designer</SubType>
       <DependentUpon>NavigationMenuView.cs</DependentUpon>
@@ -167,6 +171,7 @@
     <Compile Include="View\DeviceListView.Designer.cs">
       <DependentUpon>DeviceListView.cs</DependentUpon>
     </Compile>
+    <Compile Include="View\IButtonsPanel.cs" />
     <Compile Include="View\IDeviceDetailView.cs" />
     <Compile Include="View\IDeviceListView.cs" />
     <Compile Include="View\ILogViewerView.cs" />
