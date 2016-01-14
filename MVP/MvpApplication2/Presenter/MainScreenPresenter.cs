@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
 using System.Windows.Forms;
-using Mvp;
+using Mvp.Input;
 using Mvp.Presenter;
 using Mvp.View;
 using Mvp.WinApplication;
@@ -21,6 +21,7 @@ namespace MvpApplication2.Presenter
             _Application = application;
             _RunCommand = new Command(OnRunCommand, CanRunCommand);
             view.RunCommand = _RunCommand;
+            InitializeCommands();
         }
         
         #endregion

@@ -4,9 +4,12 @@ using System.Text;
 using System.Timers;
 using System.Reflection;
 using Mvp.View;
+using Mvp.Input;
 
 namespace Mvp.Presenter
 {
+    [CommandsControlMode(TimersPeriod=200, 
+        UpdatingCanExecuteMode=CommandsControlModeAttribute.Mode.Manual)]
     public class Presenter<T> : IPresenter, IDisposable 
         where T: IView
     {
@@ -14,18 +17,60 @@ namespace Mvp.Presenter
 
         public Presenter(T view)
         {
+            // Настраиваем режим проверки доступности команд
+            Type type = this.GetType();
+            object[] attrs = 
+                type.GetCustomAttributes(typeof(CommandsControlModeAttribute), true);
+            CommandsControlModeAttribute attr = (CommandsControlModeAttribute)attrs[0];
+            CommandsControlMode = attr.UpdatingCanExecuteMode;
+            TimersPeriod = attr.TimersPeriod;
+
             _View = view;
 
-            _Timer = new Timer(300);
-            _Timer.AutoReset = true;
-            _Timer.Elapsed += 
-                new ElapsedEventHandler(EventHandler_Timer_Elapsed);
-            _Timer.Start();
+            switch (CommandsControlMode)
+            {
+                case CommandsControlModeAttribute.Mode.ByTimer:
+                    {
+                        _Timer = new Timer(TimersPeriod);
+                        _Timer.AutoReset = true;
+                        _Timer.Elapsed +=
+                            new ElapsedEventHandler(EventHandler_Timer_Elapsed);
+                        _Timer.Start();
+                        break;
+                    }
+                case CommandsControlModeAttribute.Mode.Manual:
+                    {
+                        break;
+                    }
+                default:
+                    {
+                        throw new NotSupportedException();
+                    }
+            }
         }
 
         #endregion
 
         #region Fields And Properties
+
+        /// <summary>
+        /// Режим обновления доступности команд 
+        /// </summary>
+        public readonly CommandsControlModeAttribute.Mode CommandsControlMode;
+        /// <summary>
+        /// Период обновления по доступности команд по таймеру 
+        /// (при соотвествующем режиме)
+        /// </summary>
+        public readonly double TimersPeriod;
+        
+        ICommand[] _Commands;
+        /// <summary>
+        /// Массив зарегистрированных комманд представителя
+        /// </summary>
+        public ICommand[] Commands
+        {
+            get { return _Commands; }
+        }
 
         Timer _Timer;
         protected T _View;
@@ -83,6 +128,17 @@ namespace Mvp.Presenter
             tmr.Start();
         }
 
+        public void UpdateStatusCommands()
+        {
+            if (CommandsControlMode == CommandsControlModeAttribute.Mode.Manual)
+            { }
+            else
+            {
+                throw new InvalidOperationException(
+                    "Запрещённый вызов метода ручного обновления доступности команд, при не ручном режиме");
+            }
+        }
+
         public void Dispose()
         {
             if (_Timer != null)
@@ -91,6 +147,26 @@ namespace Mvp.Presenter
                 _Timer.Dispose();
                 _Timer = null;
             }
+        }
+
+        protected void InitializeCommands()
+        {
+            List<ICommand> commands = new List<ICommand>();
+
+            FieldInfo[] fields = this.GetType().GetFields(
+                BindingFlags.Instance |
+                BindingFlags.NonPublic |
+                BindingFlags.GetField);
+
+            foreach (FieldInfo field in fields)
+            {
+                if (field.FieldType == typeof(Command))
+                {
+                    Command cmd = (Command)field.GetValue(this);
+                    commands.Add(cmd);
+                }
+            }
+            _Commands = commands.ToArray();
         }
 
         #endregion

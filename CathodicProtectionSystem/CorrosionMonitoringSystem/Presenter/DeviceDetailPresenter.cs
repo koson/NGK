@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Mvp;
+using Mvp.Input;
 using Mvp.Presenter;
 using Mvp.WinApplication;
 using NGK.CorrosionMonitoringSystem.Managers;

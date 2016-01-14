@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using System.Text;
 using System.ComponentModel;
 
-namespace Mvp
+namespace Mvp.Input
 {
     public delegate void CommandAction();
     public delegate bool Condition();
 
-    [Command]
     public class Command: ICommand
     {
         #region Constructors
@@ -35,13 +34,6 @@ namespace Mvp
         protected Condition _OnCanExecute;
         protected bool _CanExecute;
         
-        public bool CanExecute
-        {
-            get 
-            {
-                return _CanExecute;
-            }
-        }
 
         #endregion
 
@@ -52,7 +44,7 @@ namespace Mvp
             _OnExecute();
         }
 
-        protected virtual void CheckCondition()
+        public bool CanExecute()
         {
             if (_OnCanExecute != null)
             {
@@ -61,8 +53,25 @@ namespace Mvp
                     _CanExecute = !_CanExecute;
                     OnCanExecuteChanged();
                 }
+                return _CanExecute;
+            }
+            else
+            {
+                return true;
             }
         }
+
+        //protected virtual void CheckCondition()
+        //{
+        //    if (_OnCanExecute != null)
+        //    {
+        //        if (_CanExecute != _OnCanExecute())
+        //        {
+        //            _CanExecute = !_CanExecute;
+        //            OnCanExecuteChanged();
+        //        }
+        //    }
+        //}
 
         protected virtual void OnCanExecuteChanged()
         {

@@ -2,8 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Mvp
+namespace Mvp.Input
 {
+    [Command]
     public interface ICommand
     {
         /// <summary>
@@ -14,7 +15,7 @@ namespace Mvp
         /// Возвращает значение, которое показывает может ли
         /// быть выполнена данная команда 
         /// </summary>
-        bool CanExecute { get; }
+        bool CanExecute();
         /// <summary>
         /// Событие возваникает при изменении свойства CanExecute
         /// </summary>

@@ -5,7 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
-using Mvp;
+using Mvp.Input;
 using Mvp.View;
 
 namespace MvpApplication2.View
@@ -83,7 +83,7 @@ namespace MvpApplication2.View
         void _RunCommand_CanExecuteChanged(object sender, EventArgs e)
         {
             ICommand cmd = (ICommand)sender;
-            _Button.Enabled = cmd.CanExecute;
+            _Button.Enabled = cmd.CanExecute();
         }
 
         #endregion

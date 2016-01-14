@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows.Forms;
-using Mvp;
+using Mvp.Input;
 using Mvp.Presenter;
 using Mvp.View;
 using Mvp.WinApplication;

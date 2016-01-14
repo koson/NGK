@@ -1,9 +1,10 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Mvp
+namespace Mvp.Input
 {
+    [AttributeUsage(AttributeTargets.Interface)]
     public class CommandAttribute: Attribute
     {
     }

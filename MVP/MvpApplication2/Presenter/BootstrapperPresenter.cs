@@ -36,6 +36,11 @@ namespace MvpApplication2.Presenter
             get { return _View; }
         }
 
+        public string Name
+        {
+            get { return "Bootstrapper"; }
+        }
+
         #endregion
 
         #region EventHandler
@@ -128,5 +133,6 @@ namespace MvpApplication2.Presenter
         public event EventHandler SystemInitializationRunning;
 
         #endregion
+
     }
 }

@@ -35,9 +35,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Command\Command.cs" />
-    <Compile Include="Command\CommandAttribute.cs" />
-    <Compile Include="Command\ICommand.cs" />
+    <Compile Include="Input\Command.cs" />
+    <Compile Include="Input\CommandAttribute.cs" />
+    <Compile Include="Input\CommandsControlModeAttribute.cs" />
+    <Compile Include="Input\ICommand.cs" />
     <Compile Include="Presenter\IPresenter.cs" />
     <Compile Include="Presenter\Presenter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

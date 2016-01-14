@@ -48,15 +48,15 @@ namespace MvpApplication2
             BootstrapperPresenter presenter = (BootstrapperPresenter)sender;
 
             presenter.WtriteText("Загрузка конфигурации...");
-            System.Threading.Thread.Sleep(2000);
+            System.Threading.Thread.Sleep(300);
             presenter.WtriteText("Применение конфигурации...");
-            System.Threading.Thread.Sleep(2000);
+            System.Threading.Thread.Sleep(300);
             presenter.WtriteText("Загрузка БД...");
-            System.Threading.Thread.Sleep(2000);
+            System.Threading.Thread.Sleep(300);
             presenter.WtriteText("Загрузка журнала событий...");
-            System.Threading.Thread.Sleep(2000);
+            System.Threading.Thread.Sleep(300);
             presenter.WtriteText("Запуск системы мониторинга...");
-            System.Threading.Thread.Sleep(2000);
+            System.Threading.Thread.Sleep(300);
         }
     }
 }
