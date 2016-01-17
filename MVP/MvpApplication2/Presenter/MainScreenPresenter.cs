@@ -20,8 +20,10 @@ namespace MvpApplication2.Presenter
         {
             _Application = application;
             _RunCommand = new Command(OnRunCommand, CanRunCommand);
-            view.RunCommand = _RunCommand;
-            InitializeCommands();
+            _Commands.Add(_RunCommand);
+            view.CheckBoxChanged += new EventHandler(view_CheckBoxChanged);
+            UpdateStatusCommands();
+            //InitializeCommands();
         }
         
         #endregion
@@ -30,6 +32,15 @@ namespace MvpApplication2.Presenter
 
         IApplicationController _Application;
         IMainScreenView _ConcreteView { get { return (IMainScreenView)View; } }
+        #endregion
+
+        #region Event Handlers
+
+        void view_CheckBoxChanged(object sender, EventArgs e)
+        {
+            UpdateStatusCommands();
+        }
+
         #endregion
 
         #region Commands
@@ -44,7 +55,7 @@ namespace MvpApplication2.Presenter
         bool CanRunCommand()
         {
             bool val = _ConcreteView.CommandIsEnabled;
-            //_ConcreteView.ButtonEnabled = val;
+            _ConcreteView.ButtonEnabled = val;
             return val;
         }
         #endregion

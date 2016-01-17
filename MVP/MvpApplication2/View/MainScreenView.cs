@@ -46,8 +46,6 @@ namespace MvpApplication2.View
 
         #endregion
 
-
-
         #region IView Members
 
         void IView.Show()
@@ -64,28 +62,25 @@ namespace MvpApplication2.View
 
         #region IMainScreenView Members
 
-        ICommand _RunCommand;
+        public event EventHandler CheckBoxChanged;
 
-        public ICommand RunCommand
+        #endregion
+
+        #region Methods
+
+        void OnCheckBoxChanged()
         {
-            get { return _RunCommand; }
-            set 
-            { 
-                _RunCommand = value;
-                if (_RunCommand != null)
-                {
-                    _RunCommand.CanExecuteChanged += 
-                        new EventHandler(_RunCommand_CanExecuteChanged);
-                }
+            if (CheckBoxChanged != null)
+            {
+                CheckBoxChanged(this, new EventArgs());
             }
         }
 
-        void _RunCommand_CanExecuteChanged(object sender, EventArgs e)
-        {
-            ICommand cmd = (ICommand)sender;
-            _Button.Enabled = cmd.CanExecute();
-        }
-
         #endregion
+
+        private void EventHandler_CheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            OnCheckBoxChanged();
+        }
     }
 }

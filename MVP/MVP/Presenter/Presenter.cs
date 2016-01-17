@@ -8,8 +8,6 @@ using Mvp.Input;
 
 namespace Mvp.Presenter
 {
-    [CommandsControlMode(TimersPeriod=200, 
-        UpdatingCanExecuteMode=CommandsControlModeAttribute.Mode.Manual)]
     public class Presenter<T> : IPresenter, IDisposable 
         where T: IView
     {
@@ -17,62 +15,23 @@ namespace Mvp.Presenter
 
         public Presenter(T view)
         {
-            // Ќастраиваем режим проверки доступности команд
-            Type type = this.GetType();
-            object[] attrs = 
-                type.GetCustomAttributes(typeof(CommandsControlModeAttribute), true);
-            CommandsControlModeAttribute attr = (CommandsControlModeAttribute)attrs[0];
-            CommandsControlMode = attr.UpdatingCanExecuteMode;
-            TimersPeriod = attr.TimersPeriod;
-
+            _Commands = new List<ICommand>();
             _View = view;
-
-            switch (CommandsControlMode)
-            {
-                case CommandsControlModeAttribute.Mode.ByTimer:
-                    {
-                        _Timer = new Timer(TimersPeriod);
-                        _Timer.AutoReset = true;
-                        _Timer.Elapsed +=
-                            new ElapsedEventHandler(EventHandler_Timer_Elapsed);
-                        _Timer.Start();
-                        break;
-                    }
-                case CommandsControlModeAttribute.Mode.Manual:
-                    {
-                        break;
-                    }
-                default:
-                    {
-                        throw new NotSupportedException();
-                    }
-            }
         }
 
         #endregion
 
         #region Fields And Properties
-
-        /// <summary>
-        /// –ежим обновлени€ доступности команд 
-        /// </summary>
-        public readonly CommandsControlModeAttribute.Mode CommandsControlMode;
-        /// <summary>
-        /// ѕериод обновлени€ по доступности команд по таймеру 
-        /// (при соотвествующем режиме)
-        /// </summary>
-        public readonly double TimersPeriod;
         
-        ICommand[] _Commands;
+        protected List<ICommand> _Commands;
         /// <summary>
         /// ћассив зарегистрированных комманд представител€
         /// </summary>
         public ICommand[] Commands
         {
-            get { return _Commands; }
+            get { return _Commands.ToArray(); }
         }
 
-        Timer _Timer;
         protected T _View;
 
         public IView View
@@ -92,17 +51,25 @@ namespace Mvp.Presenter
         #region Methods
 
         /// <summary>
+        /// ќбновл€ет состо€ние команд
+        /// </summary>
+        protected void UpdateStatusCommands()
+        {
+            foreach (ICommand cmd in _Commands)
+            {
+                cmd.CanExecute();
+            }
+        }
+
+        /// <summary>
         /// ѕровер€ем в классе (в его наследника) наличие полей с
         /// атрибутоа CommandAttribute и если такой найден, то
         /// запускаем в нЄм проверку услови€ выполени€ команды
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        void EventHandler_Timer_Elapsed(object sender, ElapsedEventArgs e)
+        public void FindCommands()
         {
-            Timer tmr = (Timer)sender;
-            tmr.Stop();
-
             FieldInfo[] fields = this.GetType().GetFields(
                 BindingFlags.Instance | 
                 BindingFlags.NonPublic |
@@ -124,30 +91,9 @@ namespace Mvp.Presenter
                 //{ 
                 //}
             }
-
-            tmr.Start();
         }
 
-        public void UpdateStatusCommands()
-        {
-            if (CommandsControlMode == CommandsControlModeAttribute.Mode.Manual)
-            { }
-            else
-            {
-                throw new InvalidOperationException(
-                    "«апрещЄнный вызов метода ручного обновлени€ доступности команд, при не ручном режиме");
-            }
-        }
-
-        public void Dispose()
-        {
-            if (_Timer != null)
-            {
-                _Timer.Stop();
-                _Timer.Dispose();
-                _Timer = null;
-            }
-        }
+        public virtual void Dispose() {}
 
         protected void InitializeCommands()
         {
@@ -166,7 +112,7 @@ namespace Mvp.Presenter
                     commands.Add(cmd);
                 }
             }
-            _Commands = commands.ToArray();
+            _Commands = commands;
         }
 
         #endregion

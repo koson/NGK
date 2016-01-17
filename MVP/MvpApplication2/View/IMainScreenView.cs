@@ -10,6 +10,6 @@ namespace MvpApplication2.View
     {
         bool CommandIsEnabled { get; }
         bool ButtonEnabled { get; set; }
-        ICommand RunCommand { get; set; } 
+        event EventHandler CheckBoxChanged;
     }
 }

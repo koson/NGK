@@ -41,6 +41,7 @@ namespace MvpApplication2.View
             this._CheckBox.TabIndex = 0;
             this._CheckBox.Text = "Разрешить выполнение комманды";
             this._CheckBox.UseVisualStyleBackColor = true;
+            this._CheckBox.CheckedChanged += new System.EventHandler(this.EventHandler_CheckBox_CheckedChanged);
             // 
             // _Button
             // 
