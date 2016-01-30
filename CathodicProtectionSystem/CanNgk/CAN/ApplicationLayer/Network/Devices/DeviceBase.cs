@@ -51,6 +51,8 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices
         private bool _RegistrationError; // Only for БИУ-01
         [NonSerialized]
         private IProfile _Profile;
+        [NonSerialized]
+        private Guid _Id;
         /// <summary>
         /// Объект для синхронизации доступа разделяемым между потоками ресурсам
         /// </summary>
@@ -219,6 +221,11 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices
             get { return _Profile; }
         }
 
+        public Guid Id
+        {
+            get { return _Id; }
+        }
+
         #region IEmcyErrors Members
 
         public bool Tamper
@@ -322,16 +329,17 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices
         /// <summary>
         /// Конструктор
         /// </summary>
-        private DeviceBase()
-        {
-            throw new NotImplementedException();
-        }
+        //private DeviceBase()
+        //{
+        //    throw new NotImplementedException();
+        //}
 
         /// <summary>
         /// Конструктор
         /// </summary>
         internal DeviceBase(IProfile profile)
         {
+            _Id = Guid.NewGuid();
             _Profile = profile;
             _LocationName = String.Empty;
             _NodeId = 1;
@@ -693,7 +701,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices
         {
             return _ObjectDictionary.Contains(index); 
         }
-        
+
         #endregion
         
         #region Events
@@ -774,6 +782,5 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices
         //    return;
         //}
         #endregion
-
     }
 }

@@ -83,6 +83,8 @@
     <Compile Include="Managers\LogManager\ILogManager.cs" />
     <Compile Include="Managers\AppManagers.cs" />
     <Compile Include="Managers\SysLogManager\ISysLogManager.cs" />
+    <Compile Include="Models\Device.cs" />
+    <Compile Include="Models\Devices.cs" />
     <Compile Include="PL\FormNetworkControl.cs">
       <SubType>Form</SubType>
     </Compile>

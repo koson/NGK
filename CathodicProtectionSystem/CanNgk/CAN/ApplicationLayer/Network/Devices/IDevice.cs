@@ -162,10 +162,12 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices
         /// <summary>
         /// Профиль устройства
         /// </summary>
-        IProfile Profile
-        {
-            get;
-        }
+        IProfile Profile{ get; }
+
+        /// <summary>
+        /// Уникальный идентификатор объекта
+        /// </summary>
+        Guid Id { get; }
 
         #endregion
 

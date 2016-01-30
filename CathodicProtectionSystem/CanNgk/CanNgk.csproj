@@ -43,7 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CAN\ApplicationLayer\Network\Devices\Collections\DevicesCollection.cs" />
-    <Compile Include="CAN\ApplicationLayer\Network\Devices\Device.cs" />
+    <Compile Include="CAN\ApplicationLayer\Network\Devices\DeviceBase.cs" />
     <Compile Include="CAN\ApplicationLayer\Network\Devices\DeviceStatus.cs" />
     <Compile Include="CAN\ApplicationLayer\Network\Devices\DeviceStatusComparer.cs" />
     <Compile Include="CAN\ApplicationLayer\Network\Devices\DeviceType.cs" />

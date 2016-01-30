@@ -16,6 +16,11 @@ namespace NGK.CAN.ApplicationLayer.Network.Master
         int TotalDevices { get; }
 
         /// <summary>
+        /// Неисправных устройств в системе
+        /// </summary>
+        int FaultyDevices { get; }
+
+        /// <summary>
         /// Сохраняет конфигурацию в файл
         /// </summary>
         /// <param name="pathToFile"></param>

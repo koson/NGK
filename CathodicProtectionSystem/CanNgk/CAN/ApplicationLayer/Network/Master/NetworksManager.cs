@@ -70,6 +70,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Master
         {
             get { return _NetworksList; }
         }
+
         [Browsable(true)]
         [ReadOnly(true)]
         [DisplayName("Общее количество устройств")]
@@ -86,6 +87,32 @@ namespace NGK.CAN.ApplicationLayer.Network.Master
                     total += network.Devices.Count;
                 }
                 return total;
+            }
+        }
+
+        [Browsable(true)]
+        [ReadOnly(true)]
+        [DisplayName("Неисправных устройств")]
+        [Description("Общее количество неисправных устройств в системе ")]
+        [Category("Система")]
+        public int FaultyDevices
+        {
+            get 
+            {
+                int mount = 0;
+ 
+                foreach (NetworkController network in _NetworksList)
+                {
+                    foreach (IDevice device in network.Devices)
+                    {
+                        if ((device.Status == DeviceStatus.CommunicationError) ||
+                            (device.Status == DeviceStatus.ConfigurationError))
+                        {
+                            mount++;
+                        }
+                    }
+                }
+                return mount;
             }
         }
 
@@ -234,5 +261,6 @@ namespace NGK.CAN.ApplicationLayer.Network.Master
             return;
         }
         #endregion
+
     }
 }
