@@ -7,6 +7,7 @@ using NGK.CorrosionMonitoringSystem.Managers.SysLogManager;
 using NGK.CorrosionMonitoringSystem.Managers.Factory;
 using NGK.CorrosionMonitoringSystem.Services;
 using Mvp.WinApplication;
+using NGK.CAN.ApplicationLayer.Network.Master;
 
 namespace NGK.CorrosionMonitoringSystem.Managers
 {
@@ -21,6 +22,7 @@ namespace NGK.CorrosionMonitoringSystem.Managers
             _SystemLogger = null; //TODO: Не реализовано
             _NavigationService = new NavigationService(application, this);
             _WindowsFactory = new WindowsFactory(application, this);
+            _NetwrokManager = NetworksManager.Instance;
         }
 
         #endregion
@@ -32,6 +34,7 @@ namespace NGK.CorrosionMonitoringSystem.Managers
         ILogManager _Logger;
         NavigationService _NavigationService;
         WindowsFactory _WindowsFactory;
+        NetworksManager _NetwrokManager;
 
         public ILogManager Logger
         {
@@ -56,6 +59,11 @@ namespace NGK.CorrosionMonitoringSystem.Managers
         public IWindowsFactory WindowsFactory
         {
             get { return _WindowsFactory; }
+        }
+
+        public INetworksManager NetworksService
+        {
+            get { return _NetwrokManager; }
         }
 
         #endregion

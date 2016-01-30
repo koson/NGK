@@ -10,9 +10,21 @@ namespace NGK.CorrosionMonitoringSystem.View
 {
     public partial class DeviceListView : TemplateView, IDeviceListView
     {
+        #region Constructors
+
         public DeviceListView()
         {
             InitializeComponent();
         }
+
+        #endregion
+
+        #region Event Handlers
+
+        private void EventHandler_DeviceListView_Load(object sender, EventArgs e)
+        {
+        }
+
+        #endregion
     }
 }

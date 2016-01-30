@@ -6,6 +6,7 @@ using NGK.CorrosionMonitoringSystem.Managers.SysLogManager;
 using NGK.CorrosionMonitoringSystem.Managers.AppConfigManager;
 using NGK.CorrosionMonitoringSystem.Managers.Factory;
 using NGK.CorrosionMonitoringSystem.Services;
+using NGK.CAN.ApplicationLayer.Network.Master;
 
 namespace NGK.CorrosionMonitoringSystem.Managers
 {
@@ -32,6 +33,7 @@ namespace NGK.CorrosionMonitoringSystem.Managers
         /// <summary>
         /// Фабрика по созданию окон приложения
         /// </summary>
-        IWindowsFactory WindowsFactory { get; } 
+        IWindowsFactory WindowsFactory { get; }
+        INetworksManager NetworksService { get; }
     }
 }

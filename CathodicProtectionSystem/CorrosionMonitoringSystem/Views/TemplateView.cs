@@ -8,7 +8,7 @@ using System.Windows.Forms;
 
 namespace NGK.CorrosionMonitoringSystem.View
 {
-    public partial class TemplateView : Form
+    public partial class TemplateView : Form, IButtonsPanel, IStatusPanel
     {
         #region ButtonsPanel
         
@@ -41,6 +41,7 @@ namespace NGK.CorrosionMonitoringSystem.View
         #region Fields And Properties
 
         protected static object SyncRoot = new object();
+        Timer _Timer;
 
         /// <summary>
         /// Всего устройств в системе
@@ -49,8 +50,8 @@ namespace NGK.CorrosionMonitoringSystem.View
         { 
             set 
             {
-                throw new NotImplementedException();
-                //this._StatusStripSystemInfo.TotalDevices = value;
+                _ToolStripButtonTotalDevices.Text = 
+                    String.Format("Всего устройств: {0}", value);
             }
         }
 
@@ -61,8 +62,16 @@ namespace NGK.CorrosionMonitoringSystem.View
         {
             set
             {
-                throw new NotImplementedException();
-                //this._StatusStripSystemInfo.FaultyDevices = value;
+                _ToolStripButtonFaultyDevices.Text =
+                    String.Format("Нейсправных устройств: {0}", value);
+                if (value > 0)
+                {
+                    _ToolStripButtonFaultyDevices.BackColor = Color.Red;
+                }
+                else
+                {
+                    _ToolStripButtonFaultyDevices.BackColor = Control.DefaultBackColor;
+                }
             }
         }
 
@@ -120,11 +129,22 @@ namespace NGK.CorrosionMonitoringSystem.View
 
         void TemplateView_Load(object sender, EventArgs e)
         {
+            _Timer = new Timer();
+            _Timer.Interval = 1000;
+            _Timer.Tick += new EventHandler(EventHandler_Timer_Tick);
+            _Timer.Start();
+
             _ButtonF2.Click += new EventHandler(EventHandler_Button_Click);
             _ButtonF3.Click += new EventHandler(EventHandler_Button_Click);
             _ButtonF4.Click += new EventHandler(EventHandler_Button_Click);
             _ButtonF5.Click += new EventHandler(EventHandler_Button_Click);
             _ButtonF6.Click += new EventHandler(EventHandler_Button_Click);
+        }
+
+        void EventHandler_Timer_Tick(object sender, EventArgs e)
+        {
+            _ToolStripStatusLabelDateTime.Text = 
+                DateTime.Now.ToString(new System.Globalization.CultureInfo("ru-RU", false));
         }
 
         void EventHandler_Button_Click(object sender, EventArgs e)

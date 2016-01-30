@@ -16,7 +16,6 @@ namespace NGK.CorrosionMonitoringSystem
 {
     static class Program
     {
-        public static NetworksManager _NetworkManager;
         public static Logger _Logger;
         public static WinFormsApplication _Application;
         public static IManagers Managers;
@@ -91,7 +90,7 @@ namespace NGK.CorrosionMonitoringSystem
 
             //Загружаем конфигурацию сети
             presenter.WtriteText("Загрузка конфигурации сети...");
-            //LoadNetworkConfig();
+            LoadNetworkConfig();
 
             System.Threading.Thread.Sleep(300);
             presenter.WtriteText("Загрузка БД...");
@@ -104,11 +103,9 @@ namespace NGK.CorrosionMonitoringSystem
 
         static void LoadNetworkConfig()
         {
-            _NetworkManager = NetworksManager.Instance;
-
             try
             {
-                _NetworkManager.LoadConfig(Application.StartupPath +
+                Managers.NetworksService.LoadConfig(Application.StartupPath +
                     @"\newtorkconfig.bin.nwc");
             }
             catch

@@ -62,8 +62,7 @@ namespace NGK.CorrosionMonitoringSystem.View
             this.ButtonF5IsAccessible = true;
             this.ClientSize = new System.Drawing.Size(670, 436);
             this.Name = "PivotTableView";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "MainScreenView";
+            this.Text = "Параметры системы";
             this.Load += new System.EventHandler(this.EventHandler_PivotTableView_Load);
             this._SplitContainerMain.Panel1.ResumeLayout(false);
             this._SplitContainerMain.Panel1.PerformLayout();

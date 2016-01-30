@@ -67,6 +67,7 @@
     <Compile Include="CAN\ApplicationLayer\Network\Devices\TransmitPdoEnable.cs" />
     <Compile Include="CAN\ApplicationLayer\Network\Master\Collections\NetworkControllersCollection.cs" />
     <Compile Include="CAN\ApplicationLayer\Network\Master\INetworkController.cs" />
+    <Compile Include="CAN\ApplicationLayer\Network\Master\INetworksManager.cs" />
     <Compile Include="CAN\ApplicationLayer\Network\Master\NetworkController.cs" />
     <Compile Include="CAN\ApplicationLayer\Network\Master\NetworksManager.cs" />
     <Compile Include="CAN\ApplicationLayer\Network\Master\Services\Collections\NetworkServicesCollection.cs" />

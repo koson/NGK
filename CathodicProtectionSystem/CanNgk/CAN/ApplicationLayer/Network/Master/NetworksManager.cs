@@ -21,11 +21,12 @@ namespace NGK.CAN.ApplicationLayer.Network.Master
     /// </summary>
     /// <remarks>Реализует паттерн Singlton</remarks>
     [Serializable]
-    public sealed class NetworksManager
+    public sealed class NetworksManager : INetworksManager
     {
         #region Fields And Properties
 
         private static NetworksManager _Instance;
+        
         /// <summary>
         /// Возвращает менеджер сетей.
         /// </summary>
@@ -46,14 +47,17 @@ namespace NGK.CAN.ApplicationLayer.Network.Master
                 return NetworksManager._Instance; 
             }
         }
+        
         /// <summary>
         /// Объект для синхронизации доступа к ресурсам
         /// </summary>
         private static Object _SyncLock = new object();
+        
         /// <summary>
         /// Список сетей CAN НГК-ЭХЗ
         /// </summary>
         private NetworkControllersCollection _NetworksList;
+
         /// <summary>
         /// Сети CAN НГК-ЭХЗ
         /// </summary>
@@ -66,6 +70,25 @@ namespace NGK.CAN.ApplicationLayer.Network.Master
         {
             get { return _NetworksList; }
         }
+        [Browsable(true)]
+        [ReadOnly(true)]
+        [DisplayName("Общее количество устройств")]
+        [Description("Общее количество устройств в системе ")]
+        [Category("Система")]
+        public int TotalDevices
+        {
+            get 
+            {
+                int total = 0;
+
+                foreach (NetworkController network in _NetworksList)
+                {
+                    total += network.Devices.Count;
+                }
+                return total;
+            }
+        }
+
         #endregion
 
         #region Constructors
@@ -211,6 +234,5 @@ namespace NGK.CAN.ApplicationLayer.Network.Master
             return;
         }
         #endregion
-
     }
 }

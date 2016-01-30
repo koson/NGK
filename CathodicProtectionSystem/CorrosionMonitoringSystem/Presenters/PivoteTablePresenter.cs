@@ -22,6 +22,7 @@ namespace NGK.CorrosionMonitoringSystem.Presenter
             _Name = NavigationMenuItems.PivoteTable.ToString();
             _Managers = managers;
             _Application = application;
+            
             // настраиваем кнопки
             _View.ButtonF3IsAccessible = false;
 
@@ -30,6 +31,8 @@ namespace NGK.CorrosionMonitoringSystem.Presenter
 
             view.ButtonClick += 
                 new EventHandler<ButtonClickEventArgs>(EventHandler_View_ButtonClick);
+
+            _View.TotalDevices = _Managers.NetworksService.TotalDevices;
         }
         
         #endregion

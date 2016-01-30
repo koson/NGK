@@ -28,9 +28,22 @@ namespace NGK.CorrosionMonitoringSystem.View
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
+            this._SplitContainerMain.SuspendLayout();
+            this.SuspendLayout();
+            // 
+            // LogViewerView
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Text = "LogViewerView";
+            this.ButtonF3IsAccessible = true;
+            this.ButtonF4IsAccessible = true;
+            this.ButtonF5IsAccessible = true;
+            this.ClientSize = new System.Drawing.Size(543, 408);
+            this.Name = "LogViewerView";
+            this.Text = "Журнал событий";
+            this._SplitContainerMain.ResumeLayout(false);
+            this.ResumeLayout(false);
+
         }
 
         #endregion
