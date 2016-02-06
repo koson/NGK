@@ -10,54 +10,38 @@ namespace NGK.CorrosionMonitoringSystem.Models
     /// <summary>
     /// Модель - плоский список всех устройтсв в сети
     /// </summary>
-    public class Devices: IDisposable
+    public class Devices
     {
         #region Constructors
 
         public Devices(INetworksManager netwroks)
         {
-            _Devices = new List<Device>();
+            _NetworkManager = netwroks;
+            List<IDevice> list = new List<IDevice>();
 
-            _Timer = new Timer();
-            _Timer.Interval = 300;
-            _Timer.Tick += new EventHandler(EventHandler_Timer_Tick);
-            _Timer.Start();
+            foreach (INetworkController network in _NetworkManager.Networks)
+            {
+                list.AddRange(network.Devices);
+            }
+
+            _Devices = list.ToArray();
         }
 
         #endregion
 
         #region Fields And Properties
         
-        Timer _Timer;
         INetworksManager _NetworkManager;
-        List<Device> _Devices;
+        IDevice[] _Devices;
 
-        #endregion
-
-        #region Event Handlers
-
-        void EventHandler_Timer_Tick(object sender, EventArgs e)
+        public IDevice[] Devices
         {
-            // Обновляем модель
-            foreach (INetworkController controller in _NetworkManager.Networks)
-            {
-                foreach (IDevice device in controller.Devices)
-                {
-                   //controller.Devices[0].Cl
-                }
-            }
+            get { return _Devices; }
         }
 
         #endregion
 
         #region Methods
-
-        public void Dispose()
-        {
-            _Timer.Stop();
-            _Timer.Dispose();
-        }
-
         #endregion
     }
 }
