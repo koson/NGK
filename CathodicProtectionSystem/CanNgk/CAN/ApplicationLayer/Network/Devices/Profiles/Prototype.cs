@@ -10,11 +10,35 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices.Profiles
     /// </summary>
     public abstract class Prototype : IProfile
     {
+        #region Fields And Properties
+
+        protected ObjectInfoCollection _ObjectInfoList;
+
+        public abstract DeviceType DeviceType { get; }
+
+        public abstract string Description { get; }
+
+        public abstract Version SoftwareVersion { get; }
+
+        public abstract Version HardwareVersion { get; }
+
+        public ObjectInfoCollection ObjectInfoList { get { return _ObjectInfoList; } }
+
+        protected static object SyncRoot = new object(); 
+
+        #endregion
+
         #region Constructors
+
+        public Prototype()
+        {
+            CreateObjectDictionary();
+        }
 
         #endregion
 
         #region Methods
+
         /// <summary>
         /// ¬озвращает профиль устройства на основе известного типа
         /// устройства
@@ -43,33 +67,10 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices.Profiles
                     }
             }
         }
-        #endregion
 
-        #region IProfile Members
-
-        public abstract DeviceType DeviceType
+        protected virtual void CreateObjectDictionary()
         {
-            get;
-        }
-
-        public abstract string Description
-        {
-            get;
-        }
-
-        public abstract Version SoftwareVersion
-        {
-            get;
-        }
-
-        public abstract Version HardwareVersion
-        {
-            get;
-        }
-
-        public abstract ObjectInfoCollection ObjectInfoList
-        {
-            get; 
+            _ObjectInfoList = new ObjectInfoCollection();
         }
 
         #endregion

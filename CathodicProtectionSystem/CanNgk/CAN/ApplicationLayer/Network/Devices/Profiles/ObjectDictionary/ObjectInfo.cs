@@ -10,6 +10,28 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices.Profiles.ObjectDictionary
     /// </summary>
     public class ObjectInfo
     {
+        #region Constructors
+
+        public ObjectInfo(UInt16 index, string name, string description,
+            bool readOnly, bool sdoCanRead, bool visible, string displayedName,
+            string measureUnit, Category category, ICanDataTypeConvertor convertor,
+            UInt32 defaultValue)
+        {
+            Index = index;
+            Name = name;
+            Description = description;
+            ReadOnly = readOnly;
+            SdoCanRead = sdoCanRead;
+            Visible = visible;
+            DisplayedName = displayedName;
+            MeasureUnit = measureUnit;
+            Category = category;
+            DataTypeConvertor = convertor;
+            DefaultValue = defaultValue;
+        }
+
+        #endregion
+
         #region Fields And Properties
         /// <summary>
         /// Адрес объекта
@@ -51,32 +73,12 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices.Profiles.ObjectDictionary
         /// <summary>
         /// Тип данных значения объекта
         /// </summary>
-        public DataConvertor DataType;
+        public ICanDataTypeConvertor DataTypeConvertor;
         /// <summary>
-        /// Значение по умолчнию
+        /// Значение по умолчнию (Значение в формате передаваемого посети)
         /// </summary>
         public UInt32 DefaultValue;
 
-        #endregion
-
-        #region Constructors
-        public ObjectInfo(UInt16 index, string name, string description,
-            bool readOnly, bool sdoCanRead, bool visible, string displayedName,
-            string measureUnit, Category category, DataConvertor convertor,
-            UInt32 defaultValue)
-        {
-            Index = index;
-            Name = name;
-            Description = description;
-            ReadOnly = readOnly;
-            SdoCanRead = sdoCanRead;
-            Visible = visible;
-            DisplayedName = displayedName;
-            MeasureUnit = measureUnit;
-            Category = category;
-            DataType = convertor;
-            DefaultValue = defaultValue;
-        }
         #endregion
     }
 }

@@ -354,7 +354,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices
                 _ObjectDictionary.Add(new DataObject(info));
             }
             // Устанавливаем версии ПО и аппаратуры
-            ProductVersion version = new ProductVersion();
+            NgkProductVersion version = new NgkProductVersion();
             version.Version = profile.SoftwareVersion;
             SetObject(0x2001, version);
             version.Version = profile.HardwareVersion;
@@ -535,7 +535,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices
             String traceMessage = String.Format(
                 "{0}: Сеть {1}: Устройство NodeId {2}: Приняло новое состояние - {3}",
                 DateTime.Now.ToString(new System.Globalization.CultureInfo("ru-Ru")),
-                this._Network.Description, this._NodeId, this._Status);
+                this._Network.NetworkName, this._NodeId, this._Status);
             Trace.TraceInformation(traceMessage);
 
             return;
@@ -646,7 +646,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices
             {
                 msg = String.Format("Network {0}: Устройство NodeId {1}: " +
                     "Не найдено описание объекта с индексом {2} в профиле",
-                    _Network.Description, _NodeId, index);
+                    _Network.NetworkName, _NodeId, index);
                 throw new InvalidOperationException(msg);
             }
 
@@ -654,12 +654,12 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices
             {
                 msg = String.Format("Network {0}: Устройство NodeId {1}: " +
                     "Не найден объект с индексом {2}",
-                    _Network.Description, _NodeId, index);
+                    _Network.NetworkName, _NodeId, index);
                 throw new InvalidOperationException(msg);
             }
 
             return _Profile.ObjectInfoList[index]
-                .DataType.ConvertToTotalValue(ObjectDictionary[index].Value);
+                .DataTypeConvertor.ConvertToOutputValue(ObjectDictionary[index].Value);
         }
 
         /// <summary>
@@ -675,7 +675,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices
             {
                 msg = String.Format("Network {0}: Устройство NodeId {1}: " +
                     "Не найдено описание объекта с индексом {2} в профиле",
-                    _Network.Description, _NodeId, index);
+                    _Network.NetworkName, _NodeId, index);
                 throw new InvalidOperationException(msg);
             }
 
@@ -683,12 +683,12 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices
             {
                 msg = String.Format("Network {0}: Устройство NodeId {1}: " +
                     "Не найден объект с индексом {2}",
-                    _Network.Description, _NodeId, index);
+                    _Network.NetworkName, _NodeId, index);
                 throw new InvalidOperationException(msg);
             }
 
             ObjectDictionary[index].Value = _Profile.ObjectInfoList[index]
-                .DataType.ConvertToBasis(value);
+                .DataTypeConvertor.ConvertToBasis(value);
         }
         
         /// <summary>

@@ -13,7 +13,7 @@ namespace NGK.CAN.DataTypes
     /// Мажорная часть формируется: 100 * текущий номер. Диапазон допустимых значений 100…65500;
     /// Минорная  часть формируется: 1 * текущий номер. Диапазон допустимых значений 1…99;
     /// </remarks>
-    public struct ProductVersion
+    public struct NgkProductVersion
     {
         #region Fields And Properties
         /// <summary>
@@ -103,7 +103,7 @@ namespace NGK.CAN.DataTypes
         /// Конструктор
         /// </summary>
         /// <param name="versionBasis">Верисия продукта в формате DDD.DD [Major.Minor]</param>
-        public ProductVersion(UInt16 versionBasis)
+        public NgkProductVersion(UInt16 versionBasis)
         {
             this._Version = versionBasis;
         }
@@ -111,7 +111,7 @@ namespace NGK.CAN.DataTypes
         /// 
         /// </summary>
         /// <param name="version"></param>
-        public ProductVersion(Version version)
+        public NgkProductVersion(Version version)
         {
             _Version = 0;
             Major = Convert.ToUInt16(version.Major);

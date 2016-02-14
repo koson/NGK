@@ -405,7 +405,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Master.Services
                     msg = String.Format(
                         "Network {0}: ѕришло сообщение от устройства с NodeId {1}, " +
                         "данное устройство не найдено конфигурации в сети. Message - {2}",
-                        this.NetworkController.Description, msghelper.CobeId, message.ToString());
+                        this.NetworkController.NetworkName, msghelper.CobeId, message.ToString());
                     //Logger.Error(msg);
                     continue;
                 }

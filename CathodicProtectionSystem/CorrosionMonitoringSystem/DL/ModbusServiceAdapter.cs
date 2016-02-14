@@ -120,7 +120,7 @@ namespace NGK.CorrosionMonitoringSystem.DL
             foreach (CAN.ApplicationLayer.Network.Master.NetworkController controller
                 in canNetworkManager.Networks)
             {
-                _CanNetworksTable.Add(controller.Description,
+                _CanNetworksTable.Add(controller.NetworkName,
                     canNetworkManager.Networks.IndexOf(controller));
             }
 
@@ -134,9 +134,9 @@ namespace NGK.CorrosionMonitoringSystem.DL
             // Создаём slave-устройства и добавляем его в Modbus-сеть
             _DeviceKCCM = CreateKCCM(1);
             _DeviceKCCM.InputRegisters[KCCM.InputRegister.SoftwareVersion].Value =
-                new ProductVersion(new Version(1, 0)).TotalVersion; //TODO
+                new NgkProductVersion(new Version(1, 0)).TotalVersion; //TODO
             _DeviceKCCM.InputRegisters[KCCM.InputRegister.HardwareVersion].Value =
-                new ProductVersion(new Version(1, 0)).TotalVersion; //TODO
+                new NgkProductVersion(new Version(1, 0)).TotalVersion; //TODO
             _DeviceKCCM.InputRegisters[KCCM.InputRegister.TotalDevices].Value =
                 System.Convert.ToUInt16(canDevices.Count);
             network.Devices.Add(_DeviceKCCM);
@@ -155,9 +155,9 @@ namespace NGK.CorrosionMonitoringSystem.DL
                             // Инициализируем его 
                             mDevice.Number = i++;
                             mDevice.Records[KIP9811Address.VisitingCard.HardwareVersion].Value =
-                                ((ProductVersion)device.GetObject(KIP9811v1.Indexes.hw_version)).TotalVersion;
+                                ((NgkProductVersion)device.GetObject(KIP9811v1.Indexes.hw_version)).TotalVersion;
                             mDevice.Records[KIP9811Address.VisitingCard.SoftwareVersion].Value = 
-                                ((ProductVersion)device.GetObject(KIP9811v1.Indexes.fw_version)).TotalVersion;
+                                ((NgkProductVersion)device.GetObject(KIP9811v1.Indexes.fw_version)).TotalVersion;
                             mDevice.Records[KIP9811Address.VisitingCard.SerialNumberHigh].Value = 
                                 System.Convert.ToUInt16(device.GetObject(KIP9811v1.Indexes.serial_number1));
                             mDevice.Records[KIP9811Address.VisitingCard.SerialNumberMiddle].Value =
@@ -166,7 +166,7 @@ namespace NGK.CorrosionMonitoringSystem.DL
                                 System.Convert.ToUInt16(device.GetObject(KIP9811v1.Indexes.serial_number3));
                             mDevice.Records[KIP9811Address.VisitingCard.CRC16].Value = 0; //TODO (сделать рассчёт CRC16)
                             mDevice.Records[KIP9811Address.ServiceInformation.NetworkNumber].Value = 
-                                System.Convert.ToUInt16(_CanNetworksTable[device.Network.Description]);
+                                System.Convert.ToUInt16(_CanNetworksTable[device.Network.NetworkName]);
                             mDevice.Records[KIP9811Address.ServiceInformation.NetwrokAddress].Value =
                                 System.Convert.ToUInt16(device.NodeId);
                             mDevice.Records[KIP9811Address.ServiceInformation.ConectionStatus].Value = 0; // 0-норма 1-ошибка
@@ -201,10 +201,10 @@ namespace NGK.CorrosionMonitoringSystem.DL
             // Инициализируем данные устройства
             device.InputRegisters.Add(new InputRegister(0x0000, 0x2620, "Тип устройства"));
             device.InputRegisters.Add(new InputRegister(0x0001,
-                (new ProductVersion(new Version(1, 0))).TotalVersion,
+                (new NgkProductVersion(new Version(1, 0))).TotalVersion,
                 "Версия ПО"));
             device.InputRegisters.Add(new InputRegister(0x0002,
-                (new ProductVersion(new Version(1, 0))).TotalVersion,
+                (new NgkProductVersion(new Version(1, 0))).TotalVersion,
                 "Версия аппаратной части"));
             device.InputRegisters.Add(new InputRegister(0x0003, 0, "Серийный номер: High"));
             device.InputRegisters.Add(new InputRegister(0x0004, 0, "Серийный номер: Middle"));

@@ -1,11 +1,24 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using NGK.CAN.DataTypes.Helper;
 
 namespace NGK.CAN.DataTypes
 {
-    public sealed class NgkUFloat: DataConvertor
+    public sealed class NgkInt16Converter : CanDataTypeConvertorBase
     {
+        #region Constructors
+        /// <summary>
+        /// 
+        /// </summary>
+        public NgkInt16Converter()
+        {
+            _Signed = true;
+            _Scaler = ScalerTypes.x1;
+        }
+
+        #endregion
+
         #region Fields And Properties
 
         public override bool IsBoolean
@@ -13,42 +26,31 @@ namespace NGK.CAN.DataTypes
             get { return false; }
         }
 
-        #endregion
-
-        #region Constructors
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="scaler">см. struct Scaler</param>
-        public NgkUFloat(decimal scaler)
+        public override Type OutputDataType
         {
-            _Signed = false;
-            _Scaler = scaler;
+            get { return typeof(Int16); }
         }
-        
+
         #endregion
         
         #region Methods
 
-        public override ValueType ConvertToTotalValue(uint basis)
+        public override ValueType ConvertToOutputValue(uint basis)
         {
-            UInt16 basis16 = System.Convert.ToUInt16(basis);
-
-            return Convert.ToSingle(basis * _Scaler);
+            return System.Convert.ToInt16(basis);
         }
 
         public override uint ConvertToBasis(ValueType totalValue)
         {
             String msg;
 
-            if (totalValue is Single)
+            if (totalValue is Int16)
             {
-                return Convert.ToUInt32(
-                    ((Single)totalValue) / Convert.ToSingle(_Scaler));
+                return (UInt32)totalValue;
             }
 
             msg = String.Format("Преобразование невозможно. Передан тип {0}, ожидается {1}",
-                totalValue.GetType(), typeof(Single));
+                totalValue.GetType(), typeof(UInt32));
             throw new InvalidCastException(msg);
 
         }
@@ -90,11 +92,9 @@ namespace NGK.CAN.DataTypes
             }
             
             msg = String.Format("Невозможно преобразовать массив в значение типа {0}. " + 
-                "Размер массива равен {1}, ожидается 2", typeof(NgkUInt16), array.Length);
+                "Размер массива равен {1}, ожидается 2", typeof(NgkInt16Converter), array.Length);
             throw new InvalidCastException(msg);
         }
-
         #endregion
-
     }
 }

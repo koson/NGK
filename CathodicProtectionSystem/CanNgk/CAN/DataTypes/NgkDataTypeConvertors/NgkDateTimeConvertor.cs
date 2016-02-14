@@ -6,8 +6,19 @@ using NGK.CAN.DataTypes.DateTimeConvertor;
 
 namespace NGK.CAN.DataTypes
 {
-    public sealed class NgkDateTime: DataConvertor
+    public sealed class NgkDateTimeConverter : CanDataTypeConvertorBase
     {
+        #region Constructors
+        /// <summary>
+        /// 
+        /// </summary>
+        public NgkDateTimeConverter()
+        {
+            _Signed = false;
+            _Scaler = ScalerTypes.x1;
+        }
+        #endregion
+
         #region Fields And Properties
 
         public override bool IsBoolean
@@ -15,22 +26,16 @@ namespace NGK.CAN.DataTypes
             get { return false; }
         }
 
-        #endregion
-
-        #region Constructors
-        /// <summary>
-        /// 
-        /// </summary>
-        public NgkDateTime()
+        public override Type OutputDataType
         {
-            _Signed = false;
-            _Scaler = ScalerTypes.x1;
+            get { return typeof(DateTime); }
         }
+
         #endregion
 
         #region Methods
 
-        public override ValueType ConvertToTotalValue(uint basis)
+        public override ValueType ConvertToOutputValue(uint basis)
         {
             return Unix.ToDateTime(basis);
         }

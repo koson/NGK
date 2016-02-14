@@ -86,7 +86,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Master
         /// <summary>
         /// Описание сети
         /// </summary>
-        public String Description
+        public String NetworkName
         {
             get { return _Description; }
             set 
@@ -745,7 +745,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Master
                         traceMessage = String.Format(
                             "{0}: Сеть {1}: CAN-порт изменил свое состояние на {2}",
                             DateTime.Now.ToString(new System.Globalization.CultureInfo("ru-Ru")),
-                            this.Description, CanPortStatus.IsClosed);
+                            this.NetworkName, CanPortStatus.IsClosed);
                         Trace.TraceInformation(traceMessage);
 
                         // СAN-порт в активном состоянии можно работать
@@ -757,7 +757,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Master
                         traceMessage = String.Format(
                             "{0}: Сеть {1}: CAN-порт изменил свое состояние на {2}",
                             DateTime.Now.ToString(new System.Globalization.CultureInfo("ru-Ru")),
-                            this.Description, CanPortStatus.IsClosed);
+                            this.NetworkName, CanPortStatus.IsClosed);
                         Trace.TraceInformation(traceMessage);
 
                         // CAN-порт закрыт, останавливаем службы
@@ -769,7 +769,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Master
                         traceMessage = String.Format(
                             "{0}: Сеть {1}: CAN-порт изменил свое состояние на {2}",
                             DateTime.Now.ToString(new System.Globalization.CultureInfo("ru-Ru")),
-                            this.Description, CanPortStatus.IsClosed);
+                            this.NetworkName, CanPortStatus.IsClosed);
                         Trace.TraceInformation(traceMessage);
 
                         // CAN-порт закрыт, останавливаем службы
@@ -781,7 +781,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Master
                         traceMessage = String.Format(
                             "{0}: Сеть {1}: CAN-порт изменил свое состояние на {2}",
                             DateTime.Now.ToString(new System.Globalization.CultureInfo("ru-Ru")),
-                            this.Description, CanPortStatus.IsClosed);
+                            this.NetworkName, CanPortStatus.IsClosed);
                         Trace.TraceInformation(traceMessage);
 
                         // CAN-порт закрыт, останавливаем службы
@@ -793,7 +793,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Master
                         traceMessage = String.Format(
                             "{0}: Сеть {1}: CAN-порт изменил свое состояние на {2}",
                             DateTime.Now.ToString(new System.Globalization.CultureInfo("ru-Ru")),
-                            this.Description, CanPortStatus.IsClosed);
+                            this.NetworkName, CanPortStatus.IsClosed);
                         Trace.TraceInformation(traceMessage);
 
                         // CAN-порт закрыт, останавливаем службы
@@ -805,7 +805,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Master
                         traceMessage = String.Format(
                             "{0}: Сеть {1}: CAN-порт изменил свое состояние на {2}",
                             DateTime.Now.ToString(new System.Globalization.CultureInfo("ru-Ru")),
-                            this.Description, CanPortStatus.IsClosed);
+                            this.NetworkName, CanPortStatus.IsClosed);
                         Trace.TraceError(traceMessage);
 
                         // CAN-порт закрыт, останавливаем службы

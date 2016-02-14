@@ -231,7 +231,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Master.Services
                     // ‘ормат сообщени€ неверен.
                     msg = String.Format(
                         "Network {0}: ѕрин€то сообщение с неверным форматом данных {1}",
-                        _NetworkController.Description, message.ToString());
+                        _NetworkController.NetworkName, message.ToString());
                     //_Logger.Error(msg);
                     return;
                 }
@@ -242,7 +242,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Master.Services
                     msg = String.Format(
                         "Network {0}: ѕришло сообщение от устройства с NodeId {1}, " +
                         "данное устройство не зарегистрировано в сети. Message - {2}",
-                        this.NetworkController.Description, msghelper.NodeId, message.ToString());
+                        this.NetworkController.NetworkName, msghelper.NodeId, message.ToString());
                     //Logger.Error(msg);
                     continue;
                 }

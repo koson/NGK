@@ -49,7 +49,7 @@ namespace NGK.CAN.Design
                 {
                     if (value is INetworkController)
                     {
-                        return ((INetworkController)value).Description;
+                        return ((INetworkController)value).NetworkName;
                     }
                 }
             }

@@ -84,14 +84,15 @@
     <Compile Include="Managers\AppManagers.cs" />
     <Compile Include="Managers\SysLogManager\ISysLogManager.cs" />
     <Compile Include="Models\CanDevice.cs" />
+    <Compile Include="Models\NgkCanDevice.cs" />
+    <Compile Include="Models\ParametersCollection.cs" />
     <Compile Include="PL\FormNetworkControl.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="PL\FormNetworkControl.Designer.cs">
       <DependentUpon>FormNetworkControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Models\NetworkDevice.cs" />
-    <Compile Include="Models\DataObjectInfo.cs" />
+    <Compile Include="Models\Parameter.cs" />
     <Compile Include="Models\ParametersPivotTable.cs" />
     <Compile Include="PL\Controls\ButtonsPanel.cs">
     </Compile>
@@ -261,9 +262,6 @@
       <ProductName>.NET Framework 2.0</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Model\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

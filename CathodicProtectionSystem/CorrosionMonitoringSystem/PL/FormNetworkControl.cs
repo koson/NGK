@@ -100,7 +100,7 @@ namespace NGK.CorrosionMonitoringSystem.Forms
                 node = new TreeNode();
                 node.Name = "NodeNetworkId" + controller.NetworkId.ToString();
                 node.Text = String.Format("NetwrokId {0} ({1})", 
-                    controller.NetworkId, controller.Description);
+                    controller.NetworkId, controller.NetworkName);
                 node.Tag = controller.NetworkId;
  
                 foreach (Service service in controller.Services)

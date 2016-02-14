@@ -76,7 +76,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Master.Services
                             //break;
                             msg = String.Format("Network {0}: Service {1}: Попытка установить свойству " +
                                 "Status значение неподдерживаемое в данной версии ПО - {1}",
-                                this._NetworkController.Description, this.ServiceType.ToString(),
+                                this._NetworkController.NetworkName, this.ServiceType.ToString(),
                                 value.ToString());
                             throw new NotSupportedException(msg);
                         }
@@ -84,7 +84,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Master.Services
                         {
                             msg = String.Format("Network {0}: Service {1}: Попытка установить свойству " +
                                 "Status значение неподдерживаемое в данной версии ПО - {2}",
-                                this._NetworkController.Description, this.ServiceType.ToString(),
+                                this._NetworkController.NetworkName, this.ServiceType.ToString(),
                                 value.ToString());
                             throw new Exception(msg);
                         }
@@ -143,7 +143,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Master.Services
                 {
                     msg = String.Format(
                         "Network {0}: Service {1}: Попытка установить свойству недопустимое значение меньше 1",
-                        this._NetworkController.Description, this.ServiceType.ToString());
+                        this._NetworkController.NetworkName, this.ServiceType.ToString());
                     throw new ArgumentOutOfRangeException("TotalAttempts", msg);
                 }
                 else
@@ -243,7 +243,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Master.Services
                                 if (Logger != null)
                                 {
                                     msg = String.Format("Network {0}: Sevrice {1}: Сервис был запущен",
-                                        this._NetworkController.Description, this.ServiceType);
+                                        this._NetworkController.NetworkName, this.ServiceType);
                                     Logger.Info(msg);
                                 }
 
@@ -253,7 +253,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Master.Services
                             {
                                 msg = String.Format(
                                     "{0}: Network {1}: Service {2}: Start() обнаружил состояние севриса неподдерживаемое в данной версии ПО - {3}",
-                                    DateTime.Now.ToString(new System.Globalization.CultureInfo("ru-Ru")), this._NetworkController.Description,
+                                    DateTime.Now.ToString(new System.Globalization.CultureInfo("ru-Ru")), this._NetworkController.NetworkName,
                                     this.ServiceType.ToString(), this.Status.ToString());
                                 throw new NotImplementedException(msg);
                             }
@@ -261,7 +261,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Master.Services
                             {
                                 msg = String.Format(
                                     "{0}: Network {1}: Service {2}: Start() обнаружил состояние севриса неподдерживаемое в данной версии ПО - {3}",
-                                    DateTime.Now.ToString(new System.Globalization.CultureInfo("ru-Ru")), this._NetworkController.Description,
+                                    DateTime.Now.ToString(new System.Globalization.CultureInfo("ru-Ru")), this._NetworkController.NetworkName,
                                     this.ServiceType.ToString(), this.Status.ToString());
                                 throw new NotImplementedException(msg);
                             }
@@ -272,7 +272,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Master.Services
                     msg = String.Format(
                         "{0}: Network {1}: {2}.Start(): Невозмножно выполнить запуск сервиса. Контроллер сети не запущен",
                         DateTime.Now.ToString(new System.Globalization.CultureInfo("ru-Ru", false)),
-                        this._NetworkController.Description, this.ServiceType.ToString());
+                        this._NetworkController.NetworkName, this.ServiceType.ToString());
                     throw new InvalidOperationException(msg);
                 }
             }
@@ -299,7 +299,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Master.Services
                 this.OnStatusChanged();
 
                 msg = String.Format("Network {0}: Service {1}: Сервис был остановлен",
-                    this._NetworkController.Description, this.ServiceType);
+                    this._NetworkController.NetworkName, this.ServiceType);
                 //Logger.Info(msg);
                 return;
             }
@@ -315,7 +315,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Master.Services
             msg = String.Format(
                 "{0}: Network {1}: Service {2}: Метод севриса неподдерживается в данной версии ПО",
                 DateTime.Now.ToString(new System.Globalization.CultureInfo("ru-Ru")), 
-                _NetworkController.Description, ServiceType);
+                _NetworkController.NetworkName, ServiceType);
             throw new NotImplementedException(msg);
         }
         /// <summary>

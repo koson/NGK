@@ -20,11 +20,11 @@ namespace NGK.CorrosionMonitoringSystem.BL
         /// <summary>
         /// Список устройств
         /// </summary>
-        List<NetworkDevice> _Devices;
+        List<NgkCanDevice> _Devices;
         /// <summary>
         /// Список устройств
         /// </summary>
-        public List<NetworkDevice> Devices
+        public List<NgkCanDevice> Devices
         {
             get { return _Devices; }
         }
@@ -57,7 +57,7 @@ namespace NGK.CorrosionMonitoringSystem.BL
                 new EventHandler<KeyedCollectionWasChangedEventArgs<DeviceBase>>(
                 EventHandlerDevicesAmountWasChanged);
 
-            _Devices = new List<NetworkDevice>();
+            _Devices = new List<NgkCanDevice>();
             // Собираем все устройства из всех сетей            
             foreach (NetworkController network in manager.Networks)
             {
@@ -69,7 +69,7 @@ namespace NGK.CorrosionMonitoringSystem.BL
                     device.DeviceChangedStatus += _DeviceChangedStatus;
                     // TODO:
                     //device.DataWasChanged += new EventHandler(device_DataWasChanged);
-                    _Devices.Add(new NetworkDevice(device));
+                    _Devices.Add(new NgkCanDevice(device));
                 }
             }
         }
@@ -98,7 +98,7 @@ namespace NGK.CorrosionMonitoringSystem.BL
             DeviceBase device = (DeviceBase)sender;
             // Устанавливаем статус модели
 
-            foreach (NetworkDevice item in _Devices)
+            foreach (NgkCanDevice item in _Devices)
             {
                 if ((item.NetworkId == device.Network.NetworkId) &&
                     (item.NodeId == device.NodeId))
@@ -122,7 +122,7 @@ namespace NGK.CorrosionMonitoringSystem.BL
         /// Обновляет поля модели из сетевого сервиса
         /// </summary>
         /// <param name="device"></param>
-        public void UpdateDevice(NetworkDevice device)
+        public void UpdateDevice(NgkCanDevice device)
         {
             DeviceBase dvc;
 
@@ -136,26 +136,27 @@ namespace NGK.CorrosionMonitoringSystem.BL
         /// Обновляет значения объектного словаря устройства
         /// </summary>
         /// <param name="device"></param>
-        public void UpdateObjectDictionary(NetworkDevice device)
+        public void UpdateObjectDictionary(NgkCanDevice device)
         {
             DeviceBase dvc;
 
             dvc = NetworksManager.Instance.Networks[device.NetworkId]
                 .Devices[device.NodeId];
             // Обновляем словарь объектов модели
-            foreach (DataObjectInfo parameter in device.ObjectDictionary)
+            foreach (Parameter parameter in device.Parameters)
             { 
                 DataObject param = dvc.ObjectDictionary[parameter.Index];
                 parameter.Modified = param.Modified;
                 parameter.Status = param.Status;
-                if (param.TotalValue is Boolean)
-                {
-                    parameter.Value = (Boolean)param.TotalValue ? "Да" : "Нет";
-                }
-                else
-                {
-                    parameter.Value = param.TotalValue.ToString();
-                }
+                //if (param.TotalValue is Boolean)
+                //{
+                //    parameter.Value = (Boolean)param.TotalValue ? "Да" : "Нет";
+                //}
+                //else
+                //{
+                //    parameter.Value = param.TotalValue.ToString();
+                //}
+                parameter.Value = param.TotalValue;
             }
         }
 

@@ -173,7 +173,7 @@ namespace NGK.CorrosionMonitoringSystem.BL
         private void UpdateDetailsDevice()
         {
             //List<DataObjectInfo> objectDictionary;
-            NetworkDevice device;
+            NgkCanDevice device;
 
             if (_View != SystemView.DetailsDeviceView)
             {
@@ -181,7 +181,7 @@ namespace NGK.CorrosionMonitoringSystem.BL
             }
             
             // ѕолучаем устройство
-            device = (NetworkDevice)_Presenter.DataGridViewDevicesList.DataSource;
+            device = (NgkCanDevice)_Presenter.DataGridViewDevicesList.DataSource;
             _CanNetworkAdapter.UpdateObjectDictionary(device);
         }
         /// <summary>
@@ -240,7 +240,7 @@ namespace NGK.CorrosionMonitoringSystem.BL
                                 }
                             case ButtonsPanel.ButtonNames.ButtonThree:
                                 {
-                                    NetworkDevice device = GetCurrentDevice();
+                                    NgkCanDevice device = GetCurrentDevice();
                                     this.ResetDeviceStatusError(
                                     _CanNetworksManager.Networks[device.NetworkId]
                                         .Devices[device.NodeId]);
@@ -470,7 +470,7 @@ namespace NGK.CorrosionMonitoringSystem.BL
                         //_Presenter.DataGridViewDevicesList.AutoGenerateColumns = true;
 
                         dgv.DataSource = null;
-                        foreach(NetworkDevice item in _CanNetworkAdapter.Devices)
+                        foreach (NgkCanDevice item in _CanNetworkAdapter.Devices)
                         {
                             if (item.NodeId == id)
                             {
@@ -1130,14 +1130,14 @@ namespace NGK.CorrosionMonitoringSystem.BL
         /// ¬озвращает текущее устройство в списке устройств сети. 
         /// </summary>
         /// <returns></returns>
-        private NetworkDevice GetCurrentDevice()
+        private NgkCanDevice GetCurrentDevice()
         {
             DataGridView control = this._Presenter.DataGridViewDevicesList;
             CurrencyManager manager = 
                 control.BindingContext[control.DataSource, control.DataMember] as CurrencyManager;
             if ((manager != null) && (manager.Count > 0))
             {
-                return (NetworkDevice)manager.Current;
+                return (NgkCanDevice)manager.Current;
             }
             else
             {
@@ -1152,7 +1152,7 @@ namespace NGK.CorrosionMonitoringSystem.BL
             if (this.View == SystemView.DevicesListView)
             {
                 Button btn = this._Presenter.GetSystemButton(ButtonsPanel.ButtonNames.ButtonThree);
-                NetworkDevice device = GetCurrentDevice();
+                NgkCanDevice device = GetCurrentDevice();
 
                 if (device != null)
                 {

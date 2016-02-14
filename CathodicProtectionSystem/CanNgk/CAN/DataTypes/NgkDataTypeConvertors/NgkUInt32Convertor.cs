@@ -5,8 +5,22 @@ using NGK.CAN.DataTypes.Helper;
 
 namespace NGK.CAN.DataTypes
 {
-    public sealed class NgkUInt32: DataConvertor
+    public sealed class NgkUInt32Convertor : CanDataTypeConvertorBase
     {
+        #region Constructors
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="scaler">см. struct Scaler</param>
+        /// <param name="precision"></param>
+        public NgkUInt32Convertor()
+        {
+            _Signed = false;
+            _Scaler = ScalerTypes.x1;
+        }
+
+        #endregion
+
         #region Fields And Properties
 
         public override bool IsBoolean
@@ -14,25 +28,16 @@ namespace NGK.CAN.DataTypes
             get { return false; }
         }
 
-        #endregion
-
-        #region Constructors
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="scaler">см. struct Scaler</param>
-        /// <param name="precision"></param>
-        public NgkUInt32()
+        public override Type OutputDataType
         {
-            _Signed = false;
-            _Scaler = ScalerTypes.x1;
+            get { return typeof(UInt32); }
         }
-        
+
         #endregion
         
         #region Methods
 
-        public override ValueType ConvertToTotalValue(uint basis)
+        public override ValueType ConvertToOutputValue(uint basis)
         {
             return basis;
         }
@@ -91,7 +96,7 @@ namespace NGK.CAN.DataTypes
             }
             
             msg = String.Format("Ќевозможно преобразовать массив в значение типа {0}. " + 
-                "–азмер массива не равен {1}, ожидаетс€ 4", typeof(NgkUInt32), array.Length);
+                "–азмер массива не равен {1}, ожидаетс€ 4", typeof(NgkUInt32Convertor), array.Length);
             throw new InvalidCastException(msg);
         }
 

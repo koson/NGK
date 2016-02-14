@@ -39,7 +39,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Master
         [ReadOnly(false)]
         [Browsable(true)]
         [Category("Сетевые настройки")]
-        String Description
+        String NetworkName
         {
             get;
         }

@@ -344,7 +344,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Master.Services
                     // Устройство не найдено.
                     msg = String.Format(
                         "Network {0}: SDO Service: Получено сообщение от незарегистрированного устройства. " +
-                        "Message - {1}", _NetworkController.Description, message.ToString());
+                        "Message - {1}", _NetworkController.NetworkName, message.ToString());
                     //Trace.TraceError(msg);
                     continue;                
                 }
@@ -410,7 +410,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Master.Services
                    {
                        msg = String.Format("Network {0}: SDO Service: " +
                            "Ненайдено описание объекта c индексом {1} в профиле устройства {2}",
-                           _NetworkController.Description, msghelper.Index, deviceContex.Device.Profile.DeviceType);
+                           _NetworkController.NetworkName, msghelper.Index, deviceContex.Device.Profile.DeviceType);
                        deviceContex.CurrentTransaction.Abort(msghelper.Answer, msg);
                        throw new InvalidOperationException(msg);
                    }
@@ -423,7 +423,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Master.Services
                     {
                         msg = String.Format("Network {0}: SDO Service: " +
                             "Ненайден объект c индексом {1} в словаре устройства {2}",
-                           _NetworkController.Description, msghelper.Index, deviceContex.Device.NodeId);
+                           _NetworkController.NetworkName, msghelper.Index, deviceContex.Device.NodeId);
                        deviceContex.CurrentTransaction.Abort(msghelper.Answer, msg);
                        throw new InvalidOperationException(msg);
                     }

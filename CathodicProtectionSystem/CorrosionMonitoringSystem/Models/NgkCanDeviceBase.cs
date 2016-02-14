@@ -8,13 +8,19 @@ using Common.ComponentModel;
 
 namespace NGK.CorrosionMonitoringSystem.Models
 {
-    /// <summary>
-    /// 
-    /// </summary>
-    public class NetworkDevice
+    public abstract class NgkCanDeviceBase
     {
-        #region Fields And Propetries
+        #region Helper
         
+        public struct Indexes
+        {
+            public static UInt16 NODE_ID = 0x0000;
+        }
+
+        #endregion
+
+        #region Fields And Propetries
+
         private byte _NodeId;
         /// <summary>
         /// 
@@ -23,6 +29,7 @@ namespace NGK.CorrosionMonitoringSystem.Models
         {
             get { return _NodeId; }
         }
+
         private DeviceStatus _Status;
         /// <summary>
         /// 
@@ -70,45 +77,29 @@ namespace NGK.CorrosionMonitoringSystem.Models
             get { return _PollingInterval; }
             set { _PollingInterval = value; }
         }
-        private List<DataObjectInfo> _ObjectDictionary;
-        /// <summary>
-        /// Словарь объектов
-        /// </summary>
-        public List<DataObjectInfo> ObjectDictionary
+        
+        private List<Parameter> _Parameters;
+
+        public Parameter[] Parameters
         {
-            get { return _ObjectDictionary; }
+            get { return _Parameters.ToArray(); }
         }
+
         #endregion
 
-        #region Constructors
-        /// <summary>
-        /// 
-        /// </summary>
-        private NetworkDevice()
-        {
-            throw new NotImplementedException();
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="device"></param>
-        public NetworkDevice(IDevice device)
-        {
-            _NetworkId = device.Network.NetworkId;
-            _NetworkDescription = device.Network.Description;
-            _NodeId = device.NodeId;
-            _Location = device.LocationName;
-            _PollingInterval = device.PollingInterval;
-            _Status = device.Status;
+        #region Constructor
 
-            // Создаём оъектный словаря устройства
-            _ObjectDictionary = new List<DataObjectInfo>();
+        public NgkCanDeviceBase()
+        {
+            _Parameters = new List<Parameter>();
 
-            foreach(ObjectInfo info in device.Profile.ObjectInfoList)
-            {
-                _ObjectDictionary.Add(new DataObjectInfo(info));
-            }
+            // Добавляем общие для всех устройств параметры 
+            
+            // Добавляем визитную карточку устройства
+            _Parameters.Add(new Parameter(Indexes.NODE_ID, "NodeId", "Сетевой идентификатор устройтсва",
+                true, false, true, "Сетевой адрес", string.Empty, Category.System, (byte)1));
         }
+
         #endregion
     }
 }

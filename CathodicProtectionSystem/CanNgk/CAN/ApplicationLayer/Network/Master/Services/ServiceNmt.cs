@@ -178,7 +178,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Master.Services
                             {
                                 msg = String.Format(
                                     "Network {0}: ServiceNmt - Обнаружен статус запроса {1} не поддерживаемый " +
-                                    "в данной версии ПО", _NetworkController.Description,
+                                    "в данной версии ПО", _NetworkController.NetworkName,
                                     device.CurrentTransaction.Status);
                                 throw new Exception(msg);
                             }
