@@ -6,7 +6,6 @@ using NGK.CorrosionMonitoringSystem.Managers.SysLogManager;
 using NGK.CorrosionMonitoringSystem.Managers.AppConfigManager;
 using NGK.CorrosionMonitoringSystem.Managers.Factory;
 using NGK.CorrosionMonitoringSystem.Services;
-using NGK.CAN.ApplicationLayer.Network.Master;
 
 namespace NGK.CorrosionMonitoringSystem.Managers
 {
@@ -34,6 +33,9 @@ namespace NGK.CorrosionMonitoringSystem.Managers
         /// ‘абрика по созданию окон приложени€
         /// </summary>
         IWindowsFactory WindowsFactory { get; }
-        INetworksManager NetworksService { get; }
+        /// <summary>
+        /// —обытие возникает при изменении состо€ни€ сетевого контроллера
+        /// </summary>
+        ICanNetworkService CanNetworkService { get; }
     }
 }

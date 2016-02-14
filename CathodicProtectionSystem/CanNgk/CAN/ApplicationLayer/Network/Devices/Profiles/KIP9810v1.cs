@@ -300,14 +300,5 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices.Profiles
         }
 
         #endregion
-
-        #region Indexes
-        /// <summary>
-        /// Индексы объектов словаря устройства
-        /// </summary>
-        public class Indexes
-        {
-        }
-        #endregion
     }
 }

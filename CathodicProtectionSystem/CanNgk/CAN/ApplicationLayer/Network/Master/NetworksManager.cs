@@ -119,102 +119,16 @@ namespace NGK.CAN.ApplicationLayer.Network.Master
         #endregion
 
         #region Constructors
-        /// <summary>
-        /// Конструктор по умолчанию
-        /// </summary>
+
         private NetworksManager()
         {
-            //this._NetworksList = new ListWithEvents<NetworkController>();
-            //// Подключаем события для ферификации добавляемых сетей в список.
-            //this._NetworksList.ItemIsAdding += 
-            //    new GenericCancelEventHandler<NetworkController>(EventHandler_NetworksList_ItemIsAdding);
-            //this._NetworksList.ItemIsReplacing += 
-            //    new GenericCancelEventHandler<NetworkController>(_NetworksList_ItemIsReplacing);
-
-            this._NetworksList = new NetworkControllersCollection();
+            _NetworksList = new NetworkControllersCollection();
         }
+
         #endregion
         
         #region Methods
-        /// <summary>
-        /// Обработчик события добавления сети в список сетей.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="args"></param>
-        //private void EventHandler_NetworksList_ItemIsAdding(object sender, 
-        //    GenericCancelEventArgs<NetworkController> args)
-        //{
-        //    // Проверяем существует ли добавляемая сеть в списке (проверка по ссылке).
-        //    if (-1 != this._NetworksList.IndexOf(args.Item))
-        //    {
-        //        // Данный объект уже содержится в списке. Отменяем добавление/замену
-        //        args.Cancel = true;
-        //        return;
-        //    }
-            
-        //    foreach (NetworkController controller in this._NetworksList)
-        //    {
-        //        // Проверяем существует ли добавляемая
-        //        // сеть в списке (проверка по имени сети)
-        //        if (controller.NetworkName == args.Item.NetworkName)
-        //        {
-        //            // Сеть с данным именем уже существует. Запрещаем добавление
-        //            // сети в список
-        //            args.Cancel = true;
-        //            return;
-        //        }
-        //        // Проверяем существует ли добавляемая сеть  
-        //        // в списке (проверка по типу и имени CAN порта)
-        //        if (args.Item.CanPort != null)
-        //        {
-        //            if (controller.CanPort.Equals(args.Item.CanPort))
-        //            {
-        //                // Сеть с данным CAN-портом уже существует. Запрещаем добавление
-        //                args.Cancel = true;
-        //                return;
-        //            }
-        //        }
-        //        else
-        //        {
-        //            args.Cancel = false;
-        //            return;
-        //        }
-        //    }
-        //    // Если всё нормально, разрешаем добавление сети в список
-        //    args.Cancel = false;
-        //    return;
-        //}
-        /// <summary>
-        /// Обработчик события замены сети в списке сетей. 
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="args"></param>
-        //private void _NetworksList_ItemIsReplacing(object sender, 
-        //    GenericCancelEventArgs<NetworkController> args)
-        //{
-        //    // Проверяем существует ли заменяемая сеть в списке (проверка по ссылке).
-        //    if (-1 != this._NetworksList.IndexOf(args.Item))
-        //    {
-        //        // Данный объект уже содержится в списке. Отменяем замену сети в списке
-        //        args.Cancel = true;
-        //        return;
-        //    }
 
-        //    foreach (NetworkController controller in this._NetworksList)
-        //    {
-        //        // Проверяем существует ли заменяемая
-        //        // сеть в списке (проверка по имени сети)
-        //        if (controller.NetworkName == args.Item.NetworkName)
-        //        {
-        //            // Сеть с данным именем уже существует. Запрещаем замену сети в списке
-        //            args.Cancel = true;
-        //            return;
-        //        }
-        //    }
-        //    // Если всё нормально, разрешаем замену сети в списке
-        //    args.Cancel = false;
-        //    return;
-        //}
         /// <summary>
         /// Метод сохраняет конфигурацию сетей в указанный файл
         /// </summary>
@@ -243,24 +157,35 @@ namespace NGK.CAN.ApplicationLayer.Network.Master
             {       
                 BinaryFormatter bf = new BinaryFormatter();
                 _NetworksList = (NetworkControllersCollection)bf.Deserialize(fs);
+
+                foreach (NetworkController network in _NetworksList)
+                {
+                    network.ControllerChangedStatus += new EventHandler(EventHandler_ControllerChangedStatus);
+                }
             }
-
-            // Код для отладки
-            //CanPort port = new CanPort("HW318371");
-            //port.BitRate = BaudRate.BR10;
-            //port.FrameFormat = FrameFormat.StandardFrame;
-            //port.Mode = PortMode.NORMAL;
-
-            //NetworkController controller = new NetworkController(port, "NetworkTest");
-            //Device device;
-            //device = Device.Create(DeviceType.KIP_MAIN_POWERED_v1);
-            //controller.Devices.Add(device);
-
-            //Networks.Add(controller);
-
             return;
         }
+
+        void EventHandler_ControllerChangedStatus(object sender, EventArgs e)
+        {
+            INetworkController network = (INetworkController)sender;
+            OnNetworkChangedStatus(new NetworkChangedStatusEventAgrs(network));
+        }
+
+        void OnNetworkChangedStatus(NetworkChangedStatusEventAgrs args)
+        {
+            if (NetworkChangedStatus != null)
+            {
+                NetworkChangedStatus(this, args);
+            }
+        }
+
         #endregion
 
+        #region Events
+
+        public event EventHandler<NetworkChangedStatusEventAgrs> NetworkChangedStatus;
+
+        #endregion
     }
 }

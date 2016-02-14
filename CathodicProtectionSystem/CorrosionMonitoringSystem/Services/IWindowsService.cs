@@ -10,5 +10,6 @@ namespace NGK.CorrosionMonitoringSystem.Services
     {
         DialogResult ShowDialog(IPresenter presenter);
         void Show(IPresenter presenter);
+        Form CurrentWindow { get; }
     }
 }

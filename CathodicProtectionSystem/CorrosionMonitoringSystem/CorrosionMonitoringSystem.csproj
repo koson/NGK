@@ -83,7 +83,7 @@
     <Compile Include="Managers\LogManager\ILogManager.cs" />
     <Compile Include="Managers\AppManagers.cs" />
     <Compile Include="Managers\SysLogManager\ISysLogManager.cs" />
-    <Compile Include="Models\Devices.cs" />
+    <Compile Include="Models\CanDevice.cs" />
     <Compile Include="PL\FormNetworkControl.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -163,7 +163,9 @@
     </Compile>
     <Compile Include="Presenters\NavigationMenuPresenter.cs" />
     <Compile Include="Services\ApplicationServices.cs" />
+    <Compile Include="Services\CanNetworkService.cs" />
     <Compile Include="Services\IApplicationServices.cs" />
+    <Compile Include="Services\ICanNetworkService.cs" />
     <Compile Include="Services\INavigationService.cs" />
     <Compile Include="Services\IShowAppMenuService.cs" />
     <Compile Include="Services\IWindowsService.cs" />

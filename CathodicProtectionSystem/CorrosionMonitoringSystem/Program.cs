@@ -105,7 +105,7 @@ namespace NGK.CorrosionMonitoringSystem
         {
             try
             {
-                Managers.NetworksService.LoadConfig(Application.StartupPath +
+                NetworksManager.Instance.LoadConfig(Application.StartupPath +
                     @"\newtorkconfig.bin.nwc");
             }
             catch

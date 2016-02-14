@@ -8,7 +8,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices.ObjectDictionary
     /// <summary>
     /// Состояния объекта словаря
     /// </summary>
-    public enum ObjectStatus: int
+    public enum ObjectStatus
     {
         /// <summary>
         /// Нет ошибок

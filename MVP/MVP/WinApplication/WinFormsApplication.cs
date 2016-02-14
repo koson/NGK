@@ -26,7 +26,7 @@ namespace Mvp.WinApplication
         #region Fields And Properties
 
         private ApplicationContext _AppContext;
-        private IPresenter _CurrentWindow;
+        private IPresenter _CurrentPresenter;
 
         public ApplicationContext AppContext 
         { 
@@ -39,9 +39,14 @@ namespace Mvp.WinApplication
         /// <summary>
         /// Возвращает или устанавливаем текущий экран
         /// </summary>
-        public IPresenter CurrentWindow 
+        public IPresenter CurrentPresenter 
         {
-            get { return _CurrentWindow; }
+            get { return _CurrentPresenter; }
+        }
+
+        public Form CurrentForm
+        {
+            get { return _AppContext.MainForm; }
         }
 
         public CultureInfo CurrentCulture 
@@ -61,16 +66,16 @@ namespace Mvp.WinApplication
         {
             IView lastForm = null;
             
-            if (_CurrentWindow != presenter)
+            if (_CurrentPresenter != presenter)
             {
-                _CurrentWindow = presenter;
+                _CurrentPresenter = presenter;
 
                 if (_AppContext.MainForm != null)
                 {
                     lastForm = (IView)_AppContext.MainForm;
                 }
                 
-                _AppContext.MainForm = (Form)_CurrentWindow.View;
+                _AppContext.MainForm = (Form)_CurrentPresenter.View;
                 
                 if (lastForm != null)
                 {

@@ -12,7 +12,8 @@ namespace Mvp.WinApplication
         /// <summary>
         /// Возвращает текущее окно системы
         /// </summary>
-        IPresenter CurrentWindow { get; }
+        IPresenter CurrentPresenter { get; }
+        Form CurrentForm { get; }
         /// <summary>
         /// Отображает новое окно системы 
         /// </summary>

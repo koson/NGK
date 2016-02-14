@@ -39,7 +39,7 @@ namespace NGK.CorrosionMonitoringSystem.Services
             
             // Устанавливаем окно (кнопку привязанную к нему заблокируем)
             presenter.SelectedWindow = (NavigationMenuItems)Enum.Parse(
-                typeof(NavigationMenuItems), _Application.CurrentWindow.Name, true);
+                typeof(NavigationMenuItems), _Application.CurrentPresenter.Name, true);
 
             _Application.ShowDialog(presenter);
 
@@ -54,7 +54,7 @@ namespace NGK.CorrosionMonitoringSystem.Services
             try
             {
                 current = (NavigationMenuItems)Enum.Parse(
-                    typeof(NavigationMenuItems), _Application.CurrentWindow.Name, true);
+                    typeof(NavigationMenuItems), _Application.CurrentPresenter.Name, true);
             }
             catch
             {

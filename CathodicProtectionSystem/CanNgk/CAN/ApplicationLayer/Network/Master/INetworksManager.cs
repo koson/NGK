@@ -3,6 +3,21 @@ using NGK.CAN.ApplicationLayer.Network.Master.Collections;
 
 namespace NGK.CAN.ApplicationLayer.Network.Master
 {
+    public class NetworkChangedStatusEventAgrs : EventArgs
+    {
+        public NetworkChangedStatusEventAgrs(INetworkController network)
+        {
+            _Network = network;
+        }
+
+        INetworkController _Network;
+
+        public INetworkController Network
+        {
+            get { return _Network; }
+        }
+    }
+
     public interface INetworksManager
     {
         /// <summary>
@@ -31,5 +46,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Master
         /// </summary>
         /// <param name="pathToFile"></param>
         void LoadConfig(string pathToFile);
+
+        event EventHandler<NetworkChangedStatusEventAgrs> NetworkChangedStatus;
     }
 }

@@ -36,6 +36,11 @@ namespace NGK.CorrosionMonitoringSystem.Services
             _Application.ShowWindow(presenter);
         }
 
+        public Form CurrentWindow
+        {
+            get { return _Application.CurrentForm; }
+        }
+
         #endregion
     }
 }
