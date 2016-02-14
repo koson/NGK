@@ -84,6 +84,7 @@
     <Compile Include="Managers\AppManagers.cs" />
     <Compile Include="Managers\SysLogManager\ISysLogManager.cs" />
     <Compile Include="Models\Devices.cs" />
+    <Compile Include="Models\NgkCanDeviceBase.cs" />
     <Compile Include="PL\FormNetworkControl.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -91,7 +92,7 @@
       <DependentUpon>FormNetworkControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\NetworkDevice.cs" />
-    <Compile Include="Models\DataObjectInfo.cs" />
+    <Compile Include="Models\Parameter.cs" />
     <Compile Include="Models\ParametersPivotTable.cs" />
     <Compile Include="PL\Controls\ButtonsPanel.cs">
     </Compile>

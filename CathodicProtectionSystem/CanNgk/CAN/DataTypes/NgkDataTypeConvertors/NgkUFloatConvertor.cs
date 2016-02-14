@@ -4,8 +4,21 @@ using System.Text;
 
 namespace NGK.CAN.DataTypes
 {
-    public sealed class NgkFloat: DataConvertor
+    public sealed class NgkUFloatConvertor : CanDataTypeConvertorBase
     {
+        #region Constructors
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="scaler">см. struct Scaler</param>
+        public NgkUFloatConvertor(decimal scaler)
+        {
+            _Signed = false;
+            _Scaler = scaler;
+        }
+
+        #endregion
+        
         #region Fields And Properties
 
         public override bool IsBoolean
@@ -13,28 +26,19 @@ namespace NGK.CAN.DataTypes
             get { return false; }
         }
 
+        public override Type OutputDataType
+        {
+            get { return typeof(Single); }
+        }
         #endregion
 
-        #region Constructors
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="scaler">см. struct Scaler</param>
-        public NgkFloat(decimal scaler)
-        {
-            _Signed = false;
-            _Scaler = scaler;
-        }
-        
-        #endregion
-        
         #region Methods
 
-        public override ValueType ConvertToTotalValue(uint basis)
+        public override ValueType ConvertToOutputValue(uint basis)
         {
-            //Int16 value = Convert.ToInt16(basis);
-            Int16 value = (Int16)basis;
-            return Convert.ToSingle(value * _Scaler);
+            UInt16 basis16 = System.Convert.ToUInt16(basis);
+
+            return Convert.ToSingle(basis * _Scaler);
         }
 
         public override uint ConvertToBasis(ValueType totalValue)
@@ -90,7 +94,7 @@ namespace NGK.CAN.DataTypes
             }
             
             msg = String.Format("Ќевозможно преобразовать массив в значение типа {0}. " + 
-                "–азмер массива равен {1}, ожидаетс€ 2", typeof(NgkUInt16), array.Length);
+                "–азмер массива равен {1}, ожидаетс€ 2", typeof(NgkUInt16Convertor), array.Length);
             throw new InvalidCastException(msg);
         }
 

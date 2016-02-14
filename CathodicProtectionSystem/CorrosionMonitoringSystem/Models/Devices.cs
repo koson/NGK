@@ -19,10 +19,10 @@ namespace NGK.CorrosionMonitoringSystem.Models
             _NetworkManager = netwroks;
             List<IDevice> list = new List<IDevice>();
 
-            foreach (INetworkController network in _NetworkManager.Networks)
-            {
-                list.AddRange(network.Devices);
-            }
+            //foreach (INetworkController network in _NetworkManager.Networks)
+            //{
+            //    list.AddRange(network.Devices);
+            //}
 
             _Devices = list.ToArray();
         }
@@ -34,7 +34,7 @@ namespace NGK.CorrosionMonitoringSystem.Models
         INetworksManager _NetworkManager;
         IDevice[] _Devices;
 
-        public IDevice[] Devices
+        public IDevice[] DeviceList
         {
             get { return _Devices; }
         }

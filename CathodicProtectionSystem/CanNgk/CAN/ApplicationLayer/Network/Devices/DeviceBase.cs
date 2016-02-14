@@ -354,7 +354,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices
                 _ObjectDictionary.Add(new DataObject(info));
             }
             // Устанавливаем версии ПО и аппаратуры
-            ProductVersion version = new ProductVersion();
+            NgkProductVersion version = new NgkProductVersion();
             version.Version = profile.SoftwareVersion;
             SetObject(0x2001, version);
             version.Version = profile.HardwareVersion;
@@ -659,7 +659,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices
             }
 
             return _Profile.ObjectInfoList[index]
-                .DataType.ConvertToTotalValue(ObjectDictionary[index].Value);
+                .DataTypeConvertor.ConvertToOutputValue(ObjectDictionary[index].Value);
         }
 
         /// <summary>
@@ -688,7 +688,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices
             }
 
             ObjectDictionary[index].Value = _Profile.ObjectInfoList[index]
-                .DataType.ConvertToBasis(value);
+                .DataTypeConvertor.ConvertToBasis(value);
         }
         
         /// <summary>

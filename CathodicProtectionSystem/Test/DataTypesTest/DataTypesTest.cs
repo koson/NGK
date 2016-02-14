@@ -10,18 +10,18 @@ namespace Test.DataTypes
     {
         public static void TestDataTypeInfo_GetTotalValue()
         {
-            NgkUInt16 info = new NgkUInt16(ScalerTypes.x005);
-            decimal value = (Decimal)info.ConvertToTotalValue(4);
+            NgkUInt16Convertor info = new NgkUInt16Convertor(ScalerTypes.x005);
+            decimal value = (Decimal)info.ConvertToOutputValue(4);
 
             Console.WriteLine("Результат: {0}", value);
 
-            info = new NgkUInt16((1M / 3M));
-            value = (Decimal)info.ConvertToTotalValue(4);
+            info = new NgkUInt16Convertor((1M / 3M));
+            value = (Decimal)info.ConvertToOutputValue(4);
 
             Console.WriteLine("Результат: {0}", value);
 
-            info = new NgkUInt16(0.3333333M);
-            value = (decimal)info.ConvertToTotalValue(4);
+            info = new NgkUInt16Convertor(0.3333333M);
+            value = (decimal)info.ConvertToOutputValue(4);
 
             Console.WriteLine("Результат: {0}", value);
         }
@@ -30,9 +30,9 @@ namespace Test.DataTypes
         {
             decimal value;
 
-            NgkUInt16 info = new NgkUInt16(ScalerTypes.x005);
+            NgkUInt16Convertor info = new NgkUInt16Convertor(ScalerTypes.x005);
 
-            value = (Decimal)info.ConvertToTotalValue(2000);
+            value = (Decimal)info.ConvertToOutputValue(2000);
             Console.WriteLine("Результат: {0}", value);
 
             //value = DataTypeInfo.SetValue((int)100, info);

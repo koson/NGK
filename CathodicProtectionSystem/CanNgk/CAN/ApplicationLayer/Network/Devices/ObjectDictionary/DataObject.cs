@@ -63,8 +63,8 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices.ObjectDictionary
         /// </summary>
         public ValueType TotalValue
         {
-            get { return _Info.DataType.ConvertToTotalValue(_Value); }
-            set { _Value = _Info.DataType.ConvertToBasis(value); }
+            get { return _Info.DataTypeConvertor.ConvertToOutputValue(_Value); }
+            set { _Value = _Info.DataTypeConvertor.ConvertToBasis(value); }
         }
         #endregion
 

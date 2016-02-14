@@ -12,8 +12,21 @@ namespace NGK.CAN.DataTypes
     /// Предстваляет собой целое число UInt32 = основа числа (Basis) * множитель (Scaler) 
     /// </summary>
     [Serializable]
-    public sealed class NgkUInt16: DataConvertor
+    public sealed class NgkUInt16Convertor : CanDataTypeConvertorBase
     {
+        #region Constructors
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="scaler">см. struct Scaler</param>
+        public NgkUInt16Convertor(decimal scaler)
+        {
+            _Signed = false;
+            _Scaler = scaler;
+        }
+
+        #endregion
+
         #region Fields And Properties
 
         public override bool IsBoolean
@@ -21,24 +34,16 @@ namespace NGK.CAN.DataTypes
             get { return false; }
         }
 
-        #endregion
-
-        #region Constructors
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="scaler">см. struct Scaler</param>
-        public NgkUInt16(decimal scaler)
+        public override Type OutputDataType
         {
-            _Signed = false;
-            _Scaler = scaler;
+            get { return typeof(UInt32); }
         }
-        
+
         #endregion
         
         #region Methods
 
-        public override ValueType ConvertToTotalValue(uint basis)
+        public override ValueType ConvertToOutputValue(uint basis)
         {
             return Convert.ToUInt32(basis * _Scaler);
         }
@@ -103,7 +108,7 @@ namespace NGK.CAN.DataTypes
             }
             
             msg = String.Format("Невозможно преобразовать массив в значение типа {0}. " + 
-                "Размер массива равен {1}, ожидается 2", typeof(NgkUInt16), array.Length);
+                "Размер массива равен {1}, ожидается 2", typeof(NgkUInt16Convertor), array.Length);
             throw new InvalidCastException(msg);
         }
 

@@ -61,7 +61,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices.ObjectDictionary
             {
                 //String msg;
 
-                return ((ProductVersion)_Device.GetObject(
+                return ((NgkProductVersion)_Device.GetObject(
                     Indexes.SoftwareVersion)).Version;
             }
         }
@@ -79,7 +79,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices.ObjectDictionary
             get
             {
                 //String msg;
-                return ((ProductVersion)_Device.GetObject(
+                return ((NgkProductVersion)_Device.GetObject(
                     Indexes.HardwareVersion)).Version;                
             }
         }
@@ -212,11 +212,11 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices.ObjectDictionary
             array.Add((byte)x);
             array.Add((byte)(x >> 8));
             
-            x = (new ProductVersion(SoftwareVersion)).TotalVersion;
+            x = (new NgkProductVersion(SoftwareVersion)).TotalVersion;
             array.Add((byte)x);
             array.Add((byte)(x >> 8));
 
-            x = (new ProductVersion(HardwareVersion)).TotalVersion;
+            x = (new NgkProductVersion(HardwareVersion)).TotalVersion;
             array.Add((byte)x);
             array.Add((byte)(x >> 8));
 

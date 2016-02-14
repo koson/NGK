@@ -8,7 +8,7 @@ using Common.ComponentModel;
 
 namespace NGK.CorrosionMonitoringSystem.Models
 {
-    public class DataObjectInfo
+    public class Parameter
     {
         #region Fields And Propetries
         
@@ -105,9 +105,9 @@ namespace NGK.CorrosionMonitoringSystem.Models
         /// <summary>
         /// Значение объкта
         /// </summary>
-        private string _Value;
+        private object _Value;
 
-        public string Value
+        public object Value
         {
             get { return _Value; }
             set { _Value = value; }
@@ -124,6 +124,10 @@ namespace NGK.CorrosionMonitoringSystem.Models
         }
 
         private ObjectStatus _Status;
+
+        /// <summary>
+        /// Состояние объекта
+        /// </summary>
         [TypeConverter(typeof(EnumTypeConverter))]
         public ObjectStatus Status
         {
@@ -133,18 +137,12 @@ namespace NGK.CorrosionMonitoringSystem.Models
         #endregion
 
         #region Constructors
-        /// <summary>
-        /// 
-        /// </summary>
-        private DataObjectInfo()
-        {
-            throw new NotImplementedException();
-        }
+
         /// <summary>
         /// 
         /// </summary>
         /// <param name="info"></param>
-        public DataObjectInfo(ObjectInfo info)
+        public Parameter(ObjectInfo info)
         {
             _Index = info.Index;
             _Name = info.Name;
@@ -155,10 +153,29 @@ namespace NGK.CorrosionMonitoringSystem.Models
             _DisplayedName = info.DisplayedName;
             _MeasureUnit = info.MeasureUnit;
             _Category = info.Category;
-            _Value = String.Empty;
+            _Value = Activator.CreateInstance(info.DataTypeConvertor.OutputDataType);
             _Modified = DateTime.Now;
             _Status = ObjectStatus.NoError;
         }
+
+        public Parameter(UInt16 index, string name, string description, bool readOnly,
+            bool sdoCanRead, bool visible, string displayedName, string measureUnit,
+            Category category, object value)
+        {
+            _Index = index;
+            _Name = name == null ? string.Empty : name;
+            _Description = description == null ? string.Empty : description;
+            _ReadOnly = readOnly;
+            _SdoCanRead = sdoCanRead;
+            _Visible = visible;
+            _DisplayedName = displayedName == null ? string.Empty : displayedName;
+            _MeasureUnit = measureUnit == null ? string.Empty : measureUnit;
+            _Category = category;
+            _Value = null;
+            _Modified = DateTime.Now;
+            _Status = ObjectStatus.NoError;
+        }
+
         #endregion
     }
 }

@@ -5,8 +5,20 @@ using NGK.CAN.DataTypes.Helper;
 
 namespace NGK.CAN.DataTypes
 {
-    public sealed class NgkByte: DataConvertor
+    public sealed class NgkByteConverter : CanDataTypeConvertorBase
     {
+        #region Constructors
+        /// <summary>
+        /// 
+        /// </summary>
+        public NgkByteConverter()
+        {
+            _Signed = false;
+            _Scaler = ScalerTypes.x1;
+        }
+
+        #endregion
+
         #region Fields And Properties
 
         public override bool IsBoolean
@@ -14,23 +26,16 @@ namespace NGK.CAN.DataTypes
             get { return false; }
         }
 
-        #endregion
-
-        #region Constructors
-        /// <summary>
-        /// 
-        /// </summary>
-        public NgkByte()
+        public override Type OutputDataType
         {
-            _Signed = false;
-            _Scaler = ScalerTypes.x1;
+            get { return typeof(Byte); }
         }
-        
+
         #endregion
         
         #region Methods
 
-        public override ValueType ConvertToTotalValue(uint basis)
+        public override ValueType ConvertToOutputValue(uint basis)
         {
             return Convert.ToByte(basis);
         }
@@ -71,7 +76,7 @@ namespace NGK.CAN.DataTypes
             }
             
             msg = String.Format("Ќевозможно преобразовать массив в значение типа {0}. " + 
-                "–азмер массива равен {1}, ожидаетс€ 2", typeof(NgkByte), array.Length);
+                "–азмер массива равен {1}, ожидаетс€ 2", typeof(NgkByteConverter), array.Length);
             throw new InvalidCastException(msg);
         }
 
