@@ -96,3 +96,6 @@
 14.10.2015 - 8 В - разбирался с RS485 NIM-351
 9*8*416 = 29952р
 
+// Сортировака BindingSource
+https://msdn.microsoft.com/en-us/library/aa480736.aspx#wfbindp2_rl2_topic5
+http://stackoverflow.com/questions/1699642/how-to-sort-databound-datagridview-column
