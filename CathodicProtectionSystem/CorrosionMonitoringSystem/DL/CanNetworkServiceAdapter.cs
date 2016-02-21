@@ -128,9 +128,7 @@ namespace NGK.CorrosionMonitoringSystem.BL
 
             dvc = NetworksManager.Instance.Networks[device.NetworkId]
                 .Devices[device.NodeId];
-            device.Location = dvc.LocationName;
-            device.PollingInterval = dvc.PollingInterval;
-            device.Status = dvc.Status;
+            NgkCanDevice.Update(device, dvc);
         }
         /// <summary>
         /// Обновляет значения объектного словаря устройства

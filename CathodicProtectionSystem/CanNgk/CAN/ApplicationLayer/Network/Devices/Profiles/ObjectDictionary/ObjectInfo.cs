@@ -14,7 +14,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices.Profiles.ObjectDictionary
 
         public ObjectInfo(UInt16 index, string name, string description,
             bool readOnly, bool sdoCanRead, bool visible, string displayedName,
-            string measureUnit, Category category, ICanDataTypeConvertor convertor,
+            string measureUnit, ObjectCategory category, ICanDataTypeConvertor convertor,
             UInt32 defaultValue)
         {
             Index = index;
@@ -69,7 +69,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices.Profiles.ObjectDictionary
         /// <summary>
         /// Категория объекта объекта
         /// </summary>
-        public Category Category;
+        public ObjectCategory Category;
         /// <summary>
         /// Тип данных значения объекта
         /// </summary>

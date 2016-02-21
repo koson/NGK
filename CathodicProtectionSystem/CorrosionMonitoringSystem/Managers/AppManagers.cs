@@ -22,7 +22,7 @@ namespace NGK.CorrosionMonitoringSystem.Managers
             _SystemLogger = null; //TODO: Не реализовано
             _NavigationService = new NavigationService(application, this);
             _WindowsFactory = new WindowsFactory(application, this);
-            _NetwrokService = new CanNetworkService(application, 
+            _CanNetwrokService = new CanNetworkService(application, 
                 NetworksManager.Instance, 300);
         }
 
@@ -35,7 +35,7 @@ namespace NGK.CorrosionMonitoringSystem.Managers
         ILogManager _Logger;
         NavigationService _NavigationService;
         WindowsFactory _WindowsFactory;
-        CanNetworkService _NetwrokService;
+        CanNetworkService _CanNetwrokService;
 
         public ILogManager Logger
         {
@@ -64,7 +64,7 @@ namespace NGK.CorrosionMonitoringSystem.Managers
 
         public ICanNetworkService CanNetworkService
         {
-            get { return _NetwrokService; }
+            get { return _CanNetwrokService; }
         }
 
         #endregion

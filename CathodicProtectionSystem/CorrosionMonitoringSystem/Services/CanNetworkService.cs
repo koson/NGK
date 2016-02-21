@@ -2,15 +2,19 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Timers;
+using System.ComponentModel;
 using NGK.CAN.ApplicationLayer.Network.Master;
 using NGK.CAN.ApplicationLayer.Network.Devices;
 using NGK.CorrosionMonitoringSystem.Models;
 using Mvp.WinApplication;
+using Common.Controlling;
 
 namespace NGK.CorrosionMonitoringSystem.Services
 {
     public class CanNetworkService: ICanNetworkService, IDisposable
     {
+        #region Constructors
+
         public CanNetworkService(IApplicationController application, 
             INetworksManager networkManager, double pollingInterval)
         {
@@ -19,32 +23,25 @@ namespace NGK.CorrosionMonitoringSystem.Services
                 new EventHandler<NetworkChangedStatusEventAgrs>(
                 EventHandler_NetworkManager_NetworkChangedStatus);
             _Application = application;
-            List<CanDevice> allDevices = new List<CanDevice>();
-            foreach (INetworkController network in _NetworkManager.Networks)
-            {
-                foreach (IDevice device in network.Devices)
-                {
-                    allDevices.Add(new CanDevice(device));
-                }
-            }
-            _Devices = allDevices.ToArray();
+
+            _Devices = new BindingList<NgkCanDevice>();
+
             _Timer = new Timer();
             _Timer.AutoReset = true;
             _Timer.Interval = pollingInterval;
             _Timer.Elapsed += new ElapsedEventHandler(EventHandler_Timer_Elapsed);
         }
 
+        #endregion
+
+        #region Fields And Properties
+
         INetworksManager _NetworkManager;
         IApplicationController _Application;
-        CanDevice[] _Devices;
+        BindingList<NgkCanDevice> _Devices;
         Timer _Timer;
 
-        #region ICanNetworkService Members
-
-        public CanDevice[] Devices
-        {
-            get { return _Devices; }
-        }
+        public BindingList<NgkCanDevice> Devices { get { return _Devices; } }
 
         #endregion
 
@@ -52,6 +49,18 @@ namespace NGK.CorrosionMonitoringSystem.Services
 
         public void Start()
         {
+            StartCanNetwork();
+
+            _Devices.Clear();
+
+            foreach (INetworkController network in _NetworkManager.Networks)
+            {
+                foreach (IDevice device in network.Devices)
+                {
+                    _Devices.Add(new NgkCanDevice(device));
+                }
+            }
+
             if (_Status == Common.Controlling.Status.Running)
                 return;
 
@@ -62,6 +71,8 @@ namespace NGK.CorrosionMonitoringSystem.Services
 
         public void Stop()
         {
+            StopCanNetwork();
+
             if (_Status == Common.Controlling.Status.Stopped)
                 return;
 
@@ -75,17 +86,26 @@ namespace NGK.CorrosionMonitoringSystem.Services
                 "The method or operation is not implemented.");
         }
 
-        Common.Controlling.Status _Status;
-        public Common.Controlling.Status Status
+        Status _Status;
+        public Status Status
         {
             get { return _Status; }
             set
             {
                 switch (value)
                 {
-                    case Common.Controlling.Status.Running: { Start(); break; }
-                    case Common.Controlling.Status.Stopped: { Start(); break; }
-                    default: { throw new NotSupportedException(); }
+                    case Common.Controlling.Status.Running: 
+                        { 
+                            Start();
+                            break; 
+                        }
+                    case Common.Controlling.Status.Stopped: 
+                        { 
+                            Start(); 
+                            break; 
+                        }
+                    default: 
+                        { throw new NotSupportedException(); }
                 }
             }
         }
@@ -93,6 +113,29 @@ namespace NGK.CorrosionMonitoringSystem.Services
         public event EventHandler StatusWasChanged;
 
         #endregion
+
+        void StartCanNetwork()
+        {
+            foreach (INetworkController network in NetworksManager.Instance.Networks)
+            {
+                if (network.CanPort != null)
+                {
+                    network.Start();
+                }
+                else
+                {
+                    //TODO: Сообщение пользователю и запись в журнал.
+                }
+            }
+        }
+
+        void StopCanNetwork()
+        {
+            foreach (INetworkController network in NetworksManager.Instance.Networks)
+            {
+                network.Stop();
+            }
+        }
 
         void EventHandler_NetworkManager_NetworkChangedStatus(
             object sender, NetworkChangedStatusEventAgrs e)
@@ -102,20 +145,21 @@ namespace NGK.CorrosionMonitoringSystem.Services
 
         void EventHandler_Timer_Elapsed(object sender, ElapsedEventArgs e)
         {
+            IDevice canDevice;
 
             if (_Application.CurrentForm.InvokeRequired)
             {
                 _Application.CurrentForm.Invoke((System.Windows.Forms.MethodInvoker)
                     delegate() {
-                        foreach (CanDevice device in _Devices)
+                        foreach (NgkCanDevice device in _Devices)
                         {
-                            //device.
+                            canDevice = NetworksManager.Instance.Networks[device.NetworkId]
+                                .Devices[device.NodeId];
+                            NgkCanDevice.Update(device, canDevice);
                         }
                     });
             }
-            throw new Exception("The method or operation is not implemented.");
         }
-
 
         #region IDisposable Members
 

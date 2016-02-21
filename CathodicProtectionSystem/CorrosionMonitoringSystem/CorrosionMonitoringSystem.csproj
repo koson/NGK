@@ -67,8 +67,6 @@
     <Compile Include="DL\ModbusAddresses\KIP9811Address.cs" />
     <Compile Include="DL\ModbusAddresses\KIP00.cs" />
     <Compile Include="DL\CanNetworkServiceAdapter.cs" />
-    <Compile Include="BL\BLController.cs" />
-    <Compile Include="BL\FieldNamesOfObjectDictionary.cs" />
     <Compile Include="Core\Settings.cs" />
     <Compile Include="DL\ModbusAddresses\KCCM.cs" />
     <Compile Include="DL\ModbusAdapterParameterContext.cs" />
@@ -83,30 +81,10 @@
     <Compile Include="Managers\LogManager\ILogManager.cs" />
     <Compile Include="Managers\AppManagers.cs" />
     <Compile Include="Managers\SysLogManager\ISysLogManager.cs" />
-    <Compile Include="Models\CanDevice.cs" />
     <Compile Include="Models\NgkCanDevice.cs" />
     <Compile Include="Models\ParametersCollection.cs" />
-    <Compile Include="PL\FormNetworkControl.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="PL\FormNetworkControl.Designer.cs">
-      <DependentUpon>FormNetworkControl.cs</DependentUpon>
-    </Compile>
     <Compile Include="Models\Parameter.cs" />
     <Compile Include="Models\ParametersPivotTable.cs" />
-    <Compile Include="PL\Controls\ButtonsPanel.cs">
-    </Compile>
-    <Compile Include="PL\Controls\SystemStatusBar.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="PL\FormCorrosionMonitoringSystem.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="PL\FormCorrosionMonitoringSystem.Designer.cs">
-      <DependentUpon>FormCorrosionMonitoringSystem.cs</DependentUpon>
-    </Compile>
-    <Compile Include="PL\SystemButtonClickEventHandler.cs" />
-    <Compile Include="BL\Messages.cs" />
     <Compile Include="Presenters\DeviceDetailPresenter.cs" />
     <Compile Include="Presenters\DeviceListPresenter.cs" />
     <Compile Include="Presenters\INavigationMenuPresenter.cs" />
@@ -116,14 +94,6 @@
     <Compile Include="Presenters\TemplatePresenter.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="PL\FormNetworkControl.resx">
-      <SubType>Designer</SubType>
-      <DependentUpon>FormNetworkControl.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="PL\FormCorrosionMonitoringSystem.resx">
-      <SubType>Designer</SubType>
-      <DependentUpon>FormCorrosionMonitoringSystem.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

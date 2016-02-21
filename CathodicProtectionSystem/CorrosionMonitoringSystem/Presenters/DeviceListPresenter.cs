@@ -5,7 +5,9 @@ using Mvp.Input;
 using Mvp.Presenter;
 using Mvp.WinApplication;
 using NGK.CorrosionMonitoringSystem.View;
+using NGK.CorrosionMonitoringSystem.Models;
 using NGK.CorrosionMonitoringSystem.Managers;
+using System.Windows.Forms;
 
 namespace NGK.CorrosionMonitoringSystem.Presenter
 {
@@ -23,9 +25,48 @@ namespace NGK.CorrosionMonitoringSystem.Presenter
 
             _ShowMenuCommand = new Command(
                 new CommandAction(OnShowMenu), new Condition(CanShowMenu));
+            _DeviceDetailCommand = new Command(new CommandAction(OnDeviceDetail),
+                new Condition(CanDeviceDetail));
 
+            _BindingSourceDevices = new BindingSource();
+            _BindingSourceDevices.CurrentItemChanged += 
+                new EventHandler(EventHandler_BindingSourceDevices_CurrentItemChanged);
+            _BindingSourceDevices.ListChanged += new System.ComponentModel.ListChangedEventHandler(_BindingSourceDevices_ListChanged);
+            _BindingSourceDevices.DataSource = _Managers.CanNetworkService.Devices;
+
+            view.ButtonF3Text = "Подробно";
+            view.ButtonF4Text = "Сбросить ошибку";
+            view.ButtonF5Text = "Запуск системы";
             view.ButtonClick +=
                 new EventHandler<ButtonClickEventArgs>(EventHandler_View_ButtonClick);
+            view.Devices = _BindingSourceDevices;
+        }
+
+        void _BindingSourceDevices_ListChanged(object sender, System.ComponentModel.ListChangedEventArgs e)
+        {
+            _View.ButtonF3IsAccessible = _DeviceDetailCommand.CanExecute();
+            return;
+        }
+
+        #endregion
+
+        #region Fields And Properties
+
+        IManagers _Managers;
+        BindingSource _BindingSourceDevices;
+
+        IDeviceListView ViewConcrete
+        {
+            get { return (IDeviceListView)_View; }
+        }
+
+        public NgkCanDevice SelectedDevice
+        {
+            get 
+            {
+                return _BindingSourceDevices.Current == null ? null : 
+                    (NgkCanDevice)_BindingSourceDevices.Current; 
+            }
         }
 
         #endregion
@@ -44,16 +85,11 @@ namespace NGK.CorrosionMonitoringSystem.Presenter
             }
         }
 
-        #endregion
-
-        #region Fields And Properties
-        
-        IManagers _Managers;
-
-        IDeviceListView ViewConcrete
+        void EventHandler_BindingSourceDevices_CurrentItemChanged(object sender, EventArgs e)
         {
-            get { return (IDeviceListView)_View; }
+            _View.ButtonF3IsAccessible = _DeviceDetailCommand.CanExecute();
         }
+
         #endregion
 
         #region Commands
@@ -68,6 +104,18 @@ namespace NGK.CorrosionMonitoringSystem.Presenter
         bool CanShowMenu()
         {
             return true;
+        }
+
+        Command _DeviceDetailCommand;
+
+        void OnDeviceDetail()
+        {
+            //_Managers.NavigationService.GoToWindow(NavigationMenuItems.DeviceDetail);
+        }
+
+        bool CanDeviceDetail()
+        {
+            return SelectedDevice != null;
         }
 
         #endregion

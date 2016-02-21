@@ -28,7 +28,10 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documents", "Documents", "{6AC5B152-5CC2-45EE-AF4C-6C8F1655C4CF}"
 	ProjectSection(SolutionItems) = preProject
 		..\Documents\ToDo.txt = ..\Documents\ToDo.txt
+		..\Documents\Useful references.txt = ..\Documents\Useful references.txt
 		..\Documents\Протоколы обмена\Интерфейс и протокол обмена данными НГК-ЭХЗ\Интерфейс и протокол обмена данными НГК-ЭХЗ_v.1.4.pdf = ..\Documents\Протоколы обмена\Интерфейс и протокол обмена данными НГК-ЭХЗ\Интерфейс и протокол обмена данными НГК-ЭХЗ_v.1.4.pdf
+		..\Documents\Порядок формирования версий NGK.docx = ..\Documents\Порядок формирования версий NGK.docx
+		..\Documents\установка ПО.txt = ..\Documents\установка ПО.txt
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MVP", "..\MVP\MVP\MVP.csproj", "{44DF6B58-4BDD-40D8-993C-7B61AECF0510}"

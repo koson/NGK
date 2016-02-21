@@ -13,6 +13,10 @@ namespace NGK.CorrosionMonitoringSystem.View
         Boolean ButtonF4IsAccessible { get; set; }
         Boolean ButtonF5IsAccessible { get; set; }
 
+        String ButtonF3Text { set; }
+        String ButtonF4Text { set; }
+        String ButtonF5Text { set; }
+
         event EventHandler<ButtonClickEventArgs> ButtonClick;
     }
 }

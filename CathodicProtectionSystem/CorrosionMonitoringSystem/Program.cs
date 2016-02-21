@@ -74,6 +74,7 @@ namespace NGK.CorrosionMonitoringSystem
         static void EventHandler_Application_ApplicationClosing(
             object sender, EventArgs e)
         {
+            Managers.CanNetworkService.Stop();
             _Logger.Info("Приложение остановлено");
         }
 
@@ -86,7 +87,6 @@ namespace NGK.CorrosionMonitoringSystem
             presenter.WtriteText("Инициализация системы логирования...");
 
             _Logger = LogManager.GetLogger("CorrosionMonitoringSystemLogger");
-            _Logger.Info("Приложение запущено");
 
             //Загружаем конфигурацию сети
             presenter.WtriteText("Загрузка конфигурации сети...");
@@ -97,8 +97,11 @@ namespace NGK.CorrosionMonitoringSystem
             System.Threading.Thread.Sleep(300);
             presenter.WtriteText("Загрузка журнала событий...");
             System.Threading.Thread.Sleep(300);
+            
             presenter.WtriteText("Запуск системы мониторинга...");
-            System.Threading.Thread.Sleep(300);
+            Managers.CanNetworkService.Start();
+
+            _Logger.Info("Приложение запущено");
         }
 
         static void LoadNetworkConfig()

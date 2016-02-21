@@ -436,8 +436,8 @@ namespace NGK.CAN.ApplicationLayer.Network.Master.Services
                     // В этом случае сравниваем прочитанное значение со значением объета словаря. 
                     // Если они не совпадают, устанавливаем статус "Ошибка конфигурации"
                     // Если тип Measured, то читаем и устанавливаем данное значение из устройства
-                    if ((objInfo.ReadOnly) && (objInfo.Category == Category.Configuration ||
-                        objInfo.Category == Category.System))
+                    if ((objInfo.ReadOnly) && (objInfo.Category == ObjectCategory.Configuration ||
+                        objInfo.Category == ObjectCategory.System))
                     {
                         if (notHandledIndexes.Contains(obj.Index))
                         {

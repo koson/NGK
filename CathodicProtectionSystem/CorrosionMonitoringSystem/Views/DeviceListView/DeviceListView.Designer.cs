@@ -28,10 +28,10 @@ namespace NGK.CorrosionMonitoringSystem.View
         /// </summary>
         private void InitializeComponent()
         {
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this._DataGridViewDevices = new System.Windows.Forms.DataGridView();
             this._SplitContainerMain.Panel1.SuspendLayout();
             this._SplitContainerMain.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this._DataGridViewDevices)).BeginInit();
             this.SuspendLayout();
             // 
             // _SplitContainerMain
@@ -39,17 +39,17 @@ namespace NGK.CorrosionMonitoringSystem.View
             // 
             // _SplitContainerMain.Panel1
             // 
-            this._SplitContainerMain.Panel1.Controls.Add(this.dataGridView1);
+            this._SplitContainerMain.Panel1.Controls.Add(this._DataGridViewDevices);
             // 
-            // dataGridView1
+            // _DataGridViewDevices
             // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGridView1.Location = new System.Drawing.Point(5, 5);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.RowTemplate.Height = 24;
-            this.dataGridView1.Size = new System.Drawing.Size(394, 398);
-            this.dataGridView1.TabIndex = 1;
+            this._DataGridViewDevices.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this._DataGridViewDevices.Dock = System.Windows.Forms.DockStyle.Fill;
+            this._DataGridViewDevices.Location = new System.Drawing.Point(5, 5);
+            this._DataGridViewDevices.Name = "_DataGridViewDevices";
+            this._DataGridViewDevices.RowTemplate.Height = 24;
+            this._DataGridViewDevices.Size = new System.Drawing.Size(394, 398);
+            this._DataGridViewDevices.TabIndex = 1;
             // 
             // DeviceListView
             // 
@@ -65,13 +65,13 @@ namespace NGK.CorrosionMonitoringSystem.View
             this._SplitContainerMain.Panel1.ResumeLayout(false);
             this._SplitContainerMain.Panel1.PerformLayout();
             this._SplitContainerMain.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this._DataGridViewDevices)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridView _DataGridViewDevices;
     }
 }

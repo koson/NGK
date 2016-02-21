@@ -95,9 +95,9 @@ namespace NGK.CorrosionMonitoringSystem.Models
         /// <summary>
         /// Категория объекта объекта
         /// </summary>
-        private Category _Category;
+        private ObjectCategory _Category;
 
-        public Category Category
+        public ObjectCategory Category
         {
             get { return _Category; }
             set { _Category = value; }
@@ -160,7 +160,7 @@ namespace NGK.CorrosionMonitoringSystem.Models
 
         public Parameter(UInt16 index, string name, string description, bool readOnly,
             bool sdoCanRead, bool visible, string displayedName, string measureUnit,
-            Category category, object value)
+            ObjectCategory category, object value)
         {
             _Index = index;
             _Name = name == null ? string.Empty : name;
@@ -171,7 +171,7 @@ namespace NGK.CorrosionMonitoringSystem.Models
             _DisplayedName = displayedName == null ? string.Empty : displayedName;
             _MeasureUnit = measureUnit == null ? string.Empty : measureUnit;
             _Category = category;
-            _Value = null;
+            _Value = value;
             _Modified = DateTime.Now;
             _Status = ObjectStatus.NoError;
         }

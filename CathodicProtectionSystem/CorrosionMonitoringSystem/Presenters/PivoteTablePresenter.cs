@@ -32,7 +32,7 @@ namespace NGK.CorrosionMonitoringSystem.Presenter
             view.ButtonClick += 
                 new EventHandler<ButtonClickEventArgs>(EventHandler_View_ButtonClick);
 
-            _View.TotalDevices = _Managers.CanNetworkService.Devices.Length;
+            _View.TotalDevices = _Managers.CanNetworkService.Devices.Count;
         }
         
         #endregion

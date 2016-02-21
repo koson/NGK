@@ -8,7 +8,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices.Profiles.ObjectDictionary
     /// Категория объекта словаря объектов устройства CAN НГК-ЭХЗ
     /// </summary>
     [Serializable]
-    public enum Category: int
+    public enum ObjectCategory: int
     {
         /// <summary>
         /// Категория объекту словаря не присвоина.

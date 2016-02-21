@@ -1,0 +1,4 @@
+// Сортировака BindingSource
+https://msdn.microsoft.com/en-us/library/aa480736.aspx#wfbindp2_rl2_topic5
+http://stackoverflow.com/questions/1699642/how-to-sort-databound-datagridview-column
+http://stackoverflow.com/questions/29107/generic-ibindinglistview-implementations

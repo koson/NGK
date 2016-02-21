@@ -123,6 +123,21 @@ namespace NGK.CorrosionMonitoringSystem.View
             }
         }
 
+        public String ButtonF3Text
+        {
+            set { _ButtonF3.Text = value; } 
+        }
+
+        public String ButtonF4Text
+        {
+            set { _ButtonF4.Text = value; }
+        }
+
+        public String ButtonF5Text
+        {
+            set { _ButtonF5.Text = value; }
+        }
+
         #endregion
 
         #region Event Handlers
