@@ -96,6 +96,12 @@
 14.10.2015 - 8 В - разбирался с RS485 NIM-351
 9*8*416 = 29952р
 
+30.01.2016 - 8 B
+06.02.2016 - 8 В
+14.02.2016 - 8 В
+16.02.2016 - 4 Р (Для коммисии помог разобраться как настраивать Modbus)
+21.02.2016 - 8 B
+
 // Сортировака BindingSource
 https://msdn.microsoft.com/en-us/library/aa480736.aspx#wfbindp2_rl2_topic5
 http://stackoverflow.com/questions/1699642/how-to-sort-databound-datagridview-column
