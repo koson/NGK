@@ -16,107 +16,162 @@ namespace NGK.CorrosionMonitoringSystem.Models
         /// <summary>
         /// Адрес объекта
         /// </summary>
+        [Browsable(false)]
+        [ReadOnly(true)]
+        [Category("Параметр")]
+        [DisplayName("Индекс объекта")]
+        [Description("Индекс объекта")]
         public UInt16 Index
         {
             get { return _Index; }
             set { _Index = value; }
         }
+
+        private string _Name;
         /// <summary>
         /// Название объекта
         /// </summary>
-        private string _Name;
-
+        [Browsable(false)]
+        [ReadOnly(true)]
+        [Category("Параметр")]
+        [DisplayName("Наименование объекта")]
+        [Description("Наименование параметра (объекта словаря)")]
         public string Name
         {
             get { return _Name; }
             set { _Name = value; }
         }
+
+        private string _Description;
+        [Browsable(true)]
+        [ReadOnly(true)]
+        [Category("Параметр")]
+        [DisplayName("Описание")]
+        [Description("Описание параметра (объекта словаря)")]
         /// <summary>
         /// Описание объекта
         /// </summary>
-        private string _Description;
-
         public string Description
         {
             get { return _Description; }
             set { _Description = value; }
         }
+
+        private bool _ReadOnly;
         /// <summary>
         /// Только чтение (нельзя записать значение в удалёном устройстве)
         /// </summary>
-        private bool _ReadOnly;
-
+        [Browsable(false)]
+        [ReadOnly(true)]
+        [Category("Параметр")]
+        [DisplayName("Доступность")]
+        [Description("Модификатор доступа к параметру (объекту словаря)")]
         public bool ReadOnly
         {
             get { return _ReadOnly; }
             set { _ReadOnly = value; }
         }
+
+        private bool _SdoCanRead;
         /// <summary>
         /// Для работы SDO сервиса
         /// </summary>
-        private bool _SdoCanRead;
-
+        [Browsable(false)]
+        [ReadOnly(true)]
+        [Category("Параметр")]
+        [DisplayName("Доступ для SDO")]
+        [Description("Разрешает/запрещает чтение параметра (объекта словаря) сетевым сервисом SDO")]
         public bool SdoCanRead
         {
             get { return _SdoCanRead; }
             set { _SdoCanRead = value; }
         }
+
+        private bool _Visible;
         /// <summary>
         /// Разрешить/запретить отображение 
         /// данного индекса в GUI
         /// </summary>
-        private bool _Visible;
-
+        [Browsable(false)]
+        [ReadOnly(true)]
+        [Category("Параметр")]
+        [DisplayName("Видимость в GUI")]
+        [Description("Разрешает/запрещает отображение параметра (объекта словаря) GUI")]
         public bool Visible
         {
             get { return _Visible; }
             set { _Visible = value; }
         }
+
+        private string _DisplayedName;
         /// <summary>
         /// Наименование объекта в GUI
         /// </summary>
-        private string _DisplayedName;
-
+        [Browsable(true)]
+        [ReadOnly(true)]
+        [Category("Параметр")]
+        [DisplayName("Параметр")]
+        [Description("Наименование параметра (объекта словаря) в GUI")]
         public string DisplayedName
         {
             get { return _DisplayedName; }
             set { _DisplayedName = value; }
         }
+
+        private string _MeasureUnit;
         /// <summary>
         /// Единица измерения
         /// </summary>
-        private string _MeasureUnit;
-
+        [Browsable(true)]
+        [ReadOnly(true)]
+        [Category("Параметр")]
+        [DisplayName("Размерность")]
+        [Description("Единица измерения значения параметра (объекта словаря)")]
         public string MeasureUnit
         {
             get { return _MeasureUnit; }
             set { _MeasureUnit = value; }
         }
+
+        private ObjectCategory _Category;
         /// <summary>
         /// Категория объекта объекта
         /// </summary>
-        private ObjectCategory _Category;
-
+        [Browsable(true)]
+        [ReadOnly(true)]
+        [Category("Параметр")]
+        [DisplayName("Категория")]
+        [Description("Категория параметра (объекта словаря)")]
         public ObjectCategory Category
         {
             get { return _Category; }
             set { _Category = value; }
         }
+
+        private object _Value;
         /// <summary>
         /// Значение объкта
         /// </summary>
-        private object _Value;
-
+        [Browsable(true)]
+        [ReadOnly(true)]
+        [Category("Параметр")]
+        [DisplayName("Значение")]
+        [Description("Значение параметра (объекта словаря)")]
         public object Value
         {
             get { return _Value; }
             set { _Value = value; }
         }
+
+        private DateTime _Modified;
         /// <summary>
         /// Время последнего получения значения объекта
         /// </summary>
-        private DateTime _Modified;
-
+        [Browsable(true)]
+        [ReadOnly(true)]
+        [Category("Параметр")]
+        [DisplayName("Время обновления")]
+        [Description("Дата и время последнего чтения объекта из устройтсва (объекта словаря)")]
         public DateTime Modified
         {
             get { return _Modified; }
@@ -124,24 +179,25 @@ namespace NGK.CorrosionMonitoringSystem.Models
         }
 
         private ObjectStatus _Status;
-
         /// <summary>
         /// Состояние объекта
         /// </summary>
+        [Browsable(true)]
+        [ReadOnly(true)]
+        [Category("Параметр")]
+        [DisplayName("Статус")]
+        [Description("Статус параметра (объекта словаря)")]
         [TypeConverter(typeof(EnumTypeConverter))]
         public ObjectStatus Status
         {
             get { return _Status; }
             set { _Status = value; }
         }
+
         #endregion
 
         #region Constructors
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="info"></param>
         public Parameter(ObjectInfo info)
         {
             _Index = info.Index;

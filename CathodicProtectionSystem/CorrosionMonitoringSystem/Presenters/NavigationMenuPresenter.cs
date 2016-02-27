@@ -16,7 +16,7 @@ namespace NGK.CorrosionMonitoringSystem.Presenter
 
         public NavigationMenuPresenter(IApplicationController application,
             INavigationMenuView view, object model, IManagers managers) :
-            base (view)
+            base (view, application)
         {
             _Managers = managers;
 

@@ -32,7 +32,7 @@ namespace NGK.CorrosionMonitoringSystem.Managers
         /// <summary>
         /// ‘абрика по созданию окон приложени€
         /// </summary>
-        IWindowsFactory WindowsFactory { get; }
+        IPresentersFactory PresentersFactory { get; }
         /// <summary>
         /// —обытие возникает при изменении состо€ни€ сетевого контроллера
         /// </summary>

@@ -84,6 +84,8 @@ namespace NGK.CorrosionMonitoringSystem.View
             }
         }
 
+        public ViewType ViewType { get { return ViewType.Window; } }
+
         #endregion
 
         #region EventHandler

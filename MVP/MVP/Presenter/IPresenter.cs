@@ -12,5 +12,10 @@ namespace Mvp.Presenter
     {
         IView View { get; }
         String Name { get; }
+        ViewType ViewType { get; }
+        /// <summary>
+        /// Показывает окно
+        /// </summary>
+        void Show();
     }
 }

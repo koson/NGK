@@ -35,7 +35,7 @@ namespace NGK.CorrosionMonitoringSystem.Services
         public void ShowNavigationMenu()
         {
             INavigationMenuPresenter presenter = 
-                _Managers.WindowsFactory.CreateNavigationMenu();
+                _Managers.PresentersFactory.CreateNavigationMenu();
             
             // Устанавливаем окно (кнопку привязанную к нему заблокируем)
             presenter.SelectedWindow = (NavigationMenuItems)Enum.Parse(
@@ -72,25 +72,25 @@ namespace NGK.CorrosionMonitoringSystem.Services
                     { return; }
                 case NavigationMenuItems.PivoteTable:
                     {
-                        presenter = _Managers.WindowsFactory
+                        presenter = _Managers.PresentersFactory
                             .Create(NavigationMenuItems.PivoteTable);
                         break;
                     }
                 case NavigationMenuItems.DeviceList:
                     {
-                        presenter = _Managers.WindowsFactory
+                        presenter = _Managers.PresentersFactory
                             .Create(NavigationMenuItems.DeviceList);
                         break;
                     }
                 case NavigationMenuItems.DeviceDetail:
                     {
-                        presenter = _Managers.WindowsFactory
+                        presenter = _Managers.PresentersFactory
                             .Create(NavigationMenuItems.DeviceDetail);
                         break; 
                     }
                 case NavigationMenuItems.LogViewer:
                     {
-                        presenter = _Managers.WindowsFactory
+                        presenter = _Managers.PresentersFactory
                             .Create(NavigationMenuItems.LogViewer);
                         break; 
                     }

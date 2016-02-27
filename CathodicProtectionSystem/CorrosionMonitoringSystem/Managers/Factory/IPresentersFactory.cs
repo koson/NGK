@@ -7,7 +7,7 @@ using NGK.CorrosionMonitoringSystem.View;
 
 namespace NGK.CorrosionMonitoringSystem.Managers.Factory
 {
-    public interface IWindowsFactory
+    public interface IPresentersFactory
     {
         IPresenter Create(NavigationMenuItems window);
         INavigationMenuPresenter CreateNavigationMenu();

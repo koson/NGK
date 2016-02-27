@@ -18,7 +18,7 @@ namespace NGK.CorrosionMonitoringSystem.Presenter
         public DeviceListPresenter(IApplicationController application,
             IDeviceListView view, object model, IManagers managers)
             : 
-            base(view)
+            base(view, application)
         {
             _Name = NavigationMenuItems.DeviceList.ToString();
             _Managers = managers;
@@ -82,6 +82,11 @@ namespace NGK.CorrosionMonitoringSystem.Presenter
                         _ShowMenuCommand.Execute();
                         break;
                     }
+                case TemplateView.Buttons.F3:
+                    {
+                        _DeviceDetailCommand.Execute();
+                        break;
+                    }
             }
         }
 
@@ -110,7 +115,10 @@ namespace NGK.CorrosionMonitoringSystem.Presenter
 
         void OnDeviceDetail()
         {
-            //_Managers.NavigationService.GoToWindow(NavigationMenuItems.DeviceDetail);
+            DeviceDetailPresenter presenter = 
+                (DeviceDetailPresenter)_Managers.PresentersFactory.Create(NavigationMenuItems.DeviceDetail);
+            presenter.Device = SelectedDevice;
+            presenter.Show();
         }
 
         bool CanDeviceDetail()

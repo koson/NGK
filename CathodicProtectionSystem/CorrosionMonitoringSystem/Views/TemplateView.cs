@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
+using Mvp.View;
 
 namespace NGK.CorrosionMonitoringSystem.View
 {
@@ -137,6 +138,8 @@ namespace NGK.CorrosionMonitoringSystem.View
         {
             set { _ButtonF5.Text = value; }
         }
+
+        public ViewType ViewType { get { return ViewType.Window; } }
 
         #endregion
 

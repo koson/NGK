@@ -9,11 +9,11 @@ using NGK.CorrosionMonitoringSystem.Presenter;
 
 namespace NGK.CorrosionMonitoringSystem.Managers.Factory
 {
-    public class WindowsFactory: IWindowsFactory
+    public class PresentersFactory: IPresentersFactory
     {
         #region Constructors
 
-        public WindowsFactory(IApplicationController application, 
+        public PresentersFactory(IApplicationController application, 
             IManagers managers)
         {
             _Application = application;
@@ -78,7 +78,7 @@ namespace NGK.CorrosionMonitoringSystem.Managers.Factory
                             FormBorderStyle.Sizable : FormBorderStyle.None;
 
                         DeviceDetailPresenter ddPresenter =
-                            new DeviceDetailPresenter(_Application, ddView, null, _Managers);
+                            new DeviceDetailPresenter(_Application, ddView, null, _Managers, null);
                         presenter = ddPresenter;
                         break; 
                     }

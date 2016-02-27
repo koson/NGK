@@ -15,8 +15,24 @@ namespace NGK.CorrosionMonitoringSystem.View
         public DeviceDetailView()
         {
             InitializeComponent();
+
+            _DataGridViewParametersViewer.AutoGenerateColumns = true;
         }
 
+        #endregion
+
+        #region Fields And Properties
+        
+        BindingSource _ParametersContext;
+        public BindingSource ParametersContext
+        {
+            set 
+            { 
+                _ParametersContext = value;
+                _DataGridViewParametersViewer.DataSource = _ParametersContext;
+            }
+        }
+        
         #endregion
     }
 }

@@ -9,9 +9,18 @@ namespace Mvp.View
     /// </summary>
     public interface IView
     {
+        #region Properties
+
         string Name { get; set; }
+        ViewType ViewType { get;}
+
+        #endregion
+
+        #region Methods
 
         void Show();
         void Close();
+
+        #endregion
     }
 }

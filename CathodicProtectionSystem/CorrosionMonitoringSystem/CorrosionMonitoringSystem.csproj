@@ -75,12 +75,14 @@
     <Compile Include="DL\Modbus\mKIP9811.cs" />
     <Compile Include="Managers\ConfigurationManager\ConfigManager.cs" />
     <Compile Include="Managers\ConfigurationManager\IConfigManager.cs" />
-    <Compile Include="Managers\Factory\IWindowsFactory.cs" />
-    <Compile Include="Managers\Factory\WindowsFactory.cs" />
+    <Compile Include="Managers\Factory\IPresentersFactory.cs" />
+    <Compile Include="Managers\Factory\PresentersFactory.cs" />
     <Compile Include="Managers\IManagers.cs" />
     <Compile Include="Managers\LogManager\ILogManager.cs" />
     <Compile Include="Managers\AppManagers.cs" />
     <Compile Include="Managers\SysLogManager\ISysLogManager.cs" />
+    <Compile Include="Models\CompositeParameter.cs" />
+    <Compile Include="Models\IObjectsCombiner.cs" />
     <Compile Include="Models\NgkCanDevice.cs" />
     <Compile Include="Models\ParametersCollection.cs" />
     <Compile Include="Models\Parameter.cs" />

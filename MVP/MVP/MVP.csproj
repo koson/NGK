@@ -42,6 +42,7 @@
     <Compile Include="Presenter\IPresenter.cs" />
     <Compile Include="Presenter\Presenter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="View\ViewType.cs" />
     <Compile Include="WinApplication\IApplicationController.cs" />
     <Compile Include="WinApplication\WinFormsApplication.cs" />
     <Compile Include="View\IView.cs" />

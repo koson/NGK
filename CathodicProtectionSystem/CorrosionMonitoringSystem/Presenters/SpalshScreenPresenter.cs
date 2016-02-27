@@ -18,10 +18,9 @@ namespace NGK.CorrosionMonitoringSystem.Presenter
 
         public SplashScreenPresenter(IApplicationController application,
             ISplashScreenView view, object model, IManagers managers):
-            base(view)
+            base(view, application)
         {
             _Name = "SplashScreen";
-            _Application = application;
             _Managers = managers;
             _View = view;
             _View.ViewShown += 
@@ -33,7 +32,6 @@ namespace NGK.CorrosionMonitoringSystem.Presenter
         #region Fields And Properties
         
         BackgroundWorker _Worker;
-        IApplicationController _Application;
         IManagers _Managers;
 
         public ISplashScreenView ViewConcrete

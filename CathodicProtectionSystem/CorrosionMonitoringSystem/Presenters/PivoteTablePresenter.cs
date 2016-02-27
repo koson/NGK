@@ -17,11 +17,10 @@ namespace NGK.CorrosionMonitoringSystem.Presenter
         
         public PivoteTablePresenter(IApplicationController application,
             IPivotTableView view, object model, IManagers managers):
-            base(view)
+            base(view, application)
         {
             _Name = NavigationMenuItems.PivoteTable.ToString();
             _Managers = managers;
-            _Application = application;
             
             // настраиваем кнопки
             _View.ButtonF3IsAccessible = false;
@@ -39,7 +38,6 @@ namespace NGK.CorrosionMonitoringSystem.Presenter
 
         #region Fields And Properties
 
-        IApplicationController _Application;
         IManagers _Managers;
 
         public IPivotTableView ViewConcrete

@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using Mvp.WinApplication;
+using Mvp.View;
 
 namespace NGK.CorrosionMonitoringSystem.View
 {
@@ -55,6 +56,8 @@ namespace NGK.CorrosionMonitoringSystem.View
             get { return _ButtonLogViewer.Enabled; }
             set { _ButtonLogViewer.Enabled = value; }
         }
+
+        public ViewType ViewType { get { return ViewType.Window; } }
 
         #endregion
 

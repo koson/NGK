@@ -5,6 +5,7 @@ using System.Timers;
 using System.Reflection;
 using Mvp.View;
 using Mvp.Input;
+using Mvp.WinApplication;
 
 namespace Mvp.Presenter
 {
@@ -13,10 +14,11 @@ namespace Mvp.Presenter
     {
         #region Constructor
 
-        public Presenter(T view)
+        public Presenter(T view, IApplicationController application)
         {
             _Commands = new List<ICommand>();
             _View = view;
+            _Application = application;
         }
 
         #endregion
@@ -44,6 +46,20 @@ namespace Mvp.Presenter
         public string Name
         {
             get { return _Name; }
+        }
+
+        protected ViewType _ViewType;
+
+        public ViewType ViewType 
+        {
+            get { return _ViewType; } 
+        }
+
+        protected IApplicationController _Application;
+        
+        public IApplicationController Application
+        {
+            get { return _Application; }
         }
 
         #endregion
@@ -113,6 +129,11 @@ namespace Mvp.Presenter
                 }
             }
             _Commands = commands;
+        }
+
+        public void Show()
+        {
+            Application.ShowWindow(this);
         }
 
         #endregion

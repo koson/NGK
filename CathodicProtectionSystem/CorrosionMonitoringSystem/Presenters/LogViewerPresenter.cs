@@ -16,10 +16,9 @@ namespace NGK.CorrosionMonitoringSystem.Presenter
         public LogViewerPresenter(IApplicationController application,
             ILogViewerView view, object model, IManagers managers)
             :
-            base(view)
+            base(view, application)
         {
             _Name = NavigationMenuItems.LogViewer.ToString();
-            _Application = application;
             _Managers = managers;
 
             _ShowMenuCommand = new Command(
@@ -34,7 +33,6 @@ namespace NGK.CorrosionMonitoringSystem.Presenter
 
         #region Fields And Properties
 
-        IApplicationController _Application;
         IManagers _Managers;
 
         public ILogViewerView ViewConcrete
