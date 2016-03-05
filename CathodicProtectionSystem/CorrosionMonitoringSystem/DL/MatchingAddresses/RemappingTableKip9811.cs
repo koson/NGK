@@ -165,7 +165,10 @@ namespace NGK.CorrosionMonitoringSystem.DL.MatchingAddresses
             var32 = Unix.ToUnixTime((DateTime)canDevice.GetObject(_TableAddress[0x0036]));
             modbusDevice.Records[0x0036].Value = (UInt16)(var32 >> 16);
             var32 = Unix.ToUnixTime((DateTime)canDevice.GetObject(_TableAddress[0x0037]));
-            modbusDevice.Records[0x0037].Value = (UInt16)var32;
+            unchecked
+            {
+                modbusDevice.Records[0x0037].Value = (UInt16)var32;
+            }
             return;
         }
 
