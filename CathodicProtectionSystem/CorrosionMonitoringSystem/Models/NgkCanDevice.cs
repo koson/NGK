@@ -14,16 +14,24 @@ namespace NGK.CorrosionMonitoringSystem.Models
     {
         #region Helper
         
-        public struct Indexes
+        public struct ParameterNames
         {
-            public const UInt16 ID = 0x0000;
-            public const UInt16 DEVICE_TYPE = 0x0001;
-            public const UInt16 NODE_ID = 0x0002;
-            public const UInt16 LOCATION = 0x0003;
-            public const UInt16 POLLING_INTERVAL = 0x0004;
-            public const UInt16 DEVICE_STATUS = 0x0005;
-            public const UInt16 NETWORK_ID = 0x0006;
-            public const UInt16 NETWORK_NAME = 0x0007;
+            public const UInt16 ID_ADR = 0x0000;
+            public const string ID = "Id";
+            public const UInt16 DEVICE_TYPE_ADR = 0x0001;
+            public const string DEVICE_TYPE = "Device type";
+            public const UInt16 NODE_ID_ADR = 0x0002;
+            public const string NODE_ID = "Node Id";
+            public const UInt16 LOCATION_ADR = 0x0003;
+            public const string LOCATION = "Location";
+            public const UInt16 POLLING_INTERVAL_ADR = 0x0004;
+            public const string POLLING_INTERVAL = "Polling interval";
+            public const UInt16 DEVICE_STATUS_ADR = 0x0005;
+            public const string DEVICE_STATUS = "Device status";
+            public const UInt16 NETWORK_ID_ADR = 0x0006;
+            public const string NETWORK_ID = "Network Id";
+            public const UInt16 NETWORK_NAME_ADR = 0x0007;
+            public const string NETWORK_NAME = "Network Name";
         }
 
         #endregion
@@ -37,7 +45,7 @@ namespace NGK.CorrosionMonitoringSystem.Models
         [Description("Уникальный идентификатор устройства")]
         public Guid Id
         {
-            get { return (Guid)_Parameters[Indexes.ID].Value; }
+            get { return (Guid)_Parameters[ParameterNames.ID].Value; }
         }
 
         [Browsable(false)]
@@ -47,8 +55,12 @@ namespace NGK.CorrosionMonitoringSystem.Models
         [Description("Тип сетевого устройства")]
         public DeviceType DeviceType
         {
-            get { return (DeviceType)_Parameters[Indexes.DEVICE_TYPE].Value; }
-            set { _Parameters[Indexes.DEVICE_TYPE].Value = value; }
+            get { return (DeviceType)_Parameters[ParameterNames.DEVICE_TYPE].Value; }
+            set 
+            {
+                _Parameters[ParameterNames.DEVICE_TYPE]
+                    .SetObjectValue(ParameterNames.DEVICE_TYPE_ADR, value);
+            }
         }
         /// <summary>
         /// Сетевой идентификатор устройства 1...127
@@ -60,8 +72,12 @@ namespace NGK.CorrosionMonitoringSystem.Models
         [Description("Сетевой идентификатор устройства")]
         public byte NodeId
         {
-            get { return Convert.ToByte(_Parameters[Indexes.NODE_ID].Value); }
-            set { _Parameters[Indexes.NODE_ID].Value = value; }
+            get { return Convert.ToByte(_Parameters[ParameterNames.NODE_ID].Value); }
+            set 
+            {
+                _Parameters[ParameterNames.NODE_ID]
+                    .SetObjectValue(ParameterNames.NODE_ID_ADR, value); 
+            }
         }
 
         [Browsable(true)]
@@ -71,8 +87,12 @@ namespace NGK.CorrosionMonitoringSystem.Models
         [Description("Текущее состояние устройства")]
         public DeviceStatus Status
         {
-            get { return (DeviceStatus)_Parameters[Indexes.DEVICE_STATUS].Value; }
-            set { _Parameters[Indexes.DEVICE_STATUS].Value = value; }
+            get { return (DeviceStatus)_Parameters[ParameterNames.DEVICE_STATUS].Value; }
+            set 
+            {
+                _Parameters[ParameterNames.DEVICE_STATUS]
+                    .SetObjectValue(ParameterNames.DEVICE_STATUS_ADR, value); 
+            }
         }
 
         [Browsable(false)]
@@ -82,8 +102,12 @@ namespace NGK.CorrosionMonitoringSystem.Models
         [Description("Уникальный идентификатор сети")]
         public UInt32 NetworkId
         {
-            get { return Convert.ToUInt32(_Parameters[Indexes.NETWORK_ID].Value); }
-            set { _Parameters[Indexes.DEVICE_STATUS].Value = value; }
+            get { return Convert.ToUInt32(_Parameters[ParameterNames.NETWORK_ID].Value); }
+            set 
+            { 
+                _Parameters[ParameterNames.NETWORK_ID]
+                    .SetObjectValue(ParameterNames.NETWORK_ID_ADR, value); 
+            }
         }
 
         [Browsable(true)]
@@ -93,8 +117,12 @@ namespace NGK.CorrosionMonitoringSystem.Models
         [Description("Пользовательское название сети")]
         public string NetworkName
         {
-            get { return Convert.ToString(_Parameters[Indexes.NETWORK_NAME].Value); }
-            private set { _Parameters[Indexes.NETWORK_NAME].Value = value; }
+            get { return Convert.ToString(_Parameters[ParameterNames.NETWORK_NAME].Value); }
+            private set 
+            { 
+                _Parameters[ParameterNames.NETWORK_NAME]
+                    .SetObjectValue(ParameterNames.NETWORK_NAME_ADR, value); 
+            }
         }
 
         [Browsable(true)]
@@ -104,8 +132,12 @@ namespace NGK.CorrosionMonitoringSystem.Models
         [Description("Наименование географического места расположения КИП")]
         public string Location
         {
-            get { return Convert.ToString(_Parameters[Indexes.LOCATION].Value); }
-            private set { _Parameters[Indexes.LOCATION].Value = value; }
+            get { return Convert.ToString(_Parameters[ParameterNames.LOCATION].Value); }
+            private set 
+            { 
+                _Parameters[ParameterNames.LOCATION]
+                    .SetObjectValue(ParameterNames.LOCATION_ADR, value); 
+            }
         }
 
         [Browsable(false)]
@@ -115,8 +147,12 @@ namespace NGK.CorrosionMonitoringSystem.Models
         [Description("Период опроса устройства")]
         public uint PollingInterval
         {
-            get { return Convert.ToUInt32(_Parameters[Indexes.POLLING_INTERVAL].Value); }
-            set { _Parameters[Indexes.POLLING_INTERVAL].Value = value; }
+            get { return Convert.ToUInt32(_Parameters[ParameterNames.POLLING_INTERVAL].Value); }
+            set 
+            {
+                _Parameters[ParameterNames.POLLING_INTERVAL]
+                    .SetObjectValue(ParameterNames.POLLING_INTERVAL_ADR, value);
+            }
         }
         
         private ParametersCollection _Parameters;
@@ -140,22 +176,22 @@ namespace NGK.CorrosionMonitoringSystem.Models
             _Parameters = new ParametersCollection();
 
             // Добавляем общие для всех устройств параметры 
-            _Parameters.Add(new Parameter(Indexes.ID, "GUID", "Уникальный идентификатор устройства", 
+            _Parameters.Add(new Parameter(ParameterNames.ID, "GUID", "Уникальный идентификатор устройства", 
                 true, false, false, "ID", string.Empty, ObjectCategory.System, device.Id));
-            _Parameters.Add(new Parameter(Indexes.DEVICE_TYPE, "DeviceType", "Тип устройства",
+            _Parameters.Add(new Parameter(ParameterNames.DEVICE_TYPE, "DeviceType", "Тип устройства",
                 true, false, true, "Тип устройства", string.Empty, ObjectCategory.System, device.DeviceType));
-            _Parameters.Add(new Parameter(Indexes.NODE_ID, "NodeId", "Сетевой идентификатор устройтсва",
+            _Parameters.Add(new Parameter(ParameterNames.NODE_ID, "NodeId", "Сетевой идентификатор устройтсва",
                 true, false, true, "Сетевой адрес", string.Empty, ObjectCategory.System, device.NodeId));
-            _Parameters.Add(new Parameter(Indexes.LOCATION, "Location", "Наименование места установки оборудования",
+            _Parameters.Add(new Parameter(ParameterNames.LOCATION, "Location", "Наименование места установки оборудования",
                 true, false, true, "Расположение", string.Empty, ObjectCategory.System, device.LocationName));
-            _Parameters.Add(new Parameter(Indexes.POLLING_INTERVAL, "PollingInterval", "Период опроса устройства, мсек",
+            _Parameters.Add(new Parameter(ParameterNames.POLLING_INTERVAL, "PollingInterval", "Период опроса устройства, мсек",
                 true, false, true, "Периуд опроса", "мсек", ObjectCategory.System, device.PollingInterval));
-            _Parameters.Add(new Parameter(Indexes.DEVICE_STATUS, "DeviceStatus", "Состояние устройства", 
+            _Parameters.Add(new Parameter(ParameterNames.DEVICE_STATUS, "DeviceStatus", "Состояние устройства", 
                 true, false, true, "Состояние устройства", string.Empty, ObjectCategory.System, device.Status));
-            _Parameters.Add(new Parameter(Indexes.NETWORK_ID, "NetworkId", "ID CAN сети", 
+            _Parameters.Add(new Parameter(ParameterNames.NETWORK_ID, "NetworkId", "ID CAN сети", 
                 true, false, false, "ID сети", string.Empty, ObjectCategory.System,
                 device.Network == null ? 0 : device.Network.NetworkId));
-            _Parameters.Add(new Parameter(Indexes.NETWORK_NAME, "NetworkName", "Наименование сети",
+            _Parameters.Add(new Parameter(ParameterNames.NETWORK_NAME, "NetworkName", "Наименование сети",
                 true, false, true, "Сеть CAN", string.Empty, ObjectCategory.System, 
                 device.Network == null ? "Не установлена" : device.Network.NetworkName));
 

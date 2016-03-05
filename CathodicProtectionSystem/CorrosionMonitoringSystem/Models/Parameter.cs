@@ -10,21 +10,96 @@ namespace NGK.CorrosionMonitoringSystem.Models
 {
     public class Parameter
     {
+        #region Constructors
+
+        public Parameter(ObjectInfo info)
+        {
+            //_Index = info.Index;
+            _Name = info.Name;
+            _Description = info.Description;
+            _ReadOnly = info.ReadOnly;
+            //_SdoCanRead = info.SdoCanRead;
+            _Visible = info.Visible;
+            _DisplayedName = info.DisplayedName;
+            _MeasureUnit = info.MeasureUnit;
+            _Category = info.Category;
+            _Value = Activator.CreateInstance(info.DataTypeConvertor.OutputDataType);
+            _Modified = DateTime.Now;
+            _Status = ObjectStatus.NoError;
+        }
+
+        //public Parameter(UInt16 index, string name, string description, bool readOnly,
+        //    bool sdoCanRead, bool visible, string displayedName, string measureUnit,
+        //    ObjectCategory category, object value)
+        //{
+        //    //_Index = index;
+        //    _Name = name == null ? string.Empty : name;
+        //    _Description = description == null ? string.Empty : description;
+        //    _ReadOnly = readOnly;
+        //    //_SdoCanRead = sdoCanRead;
+        //    _Visible = visible;
+        //    _DisplayedName = displayedName == null ? string.Empty : displayedName;
+        //    _MeasureUnit = measureUnit == null ? string.Empty : measureUnit;
+        //    _Category = category;
+        //    _Value = value;
+        //    _Modified = DateTime.Now;
+        //    _Status = ObjectStatus.NoError;
+        //}
+
+        public Parameter(String parameterName, String description,
+            String displayedName, String measureUnit, Boolean visible,
+            ObjectCategory category, ObjectInfo[] objectInfos, 
+            IObjectsCombiner combiner)
+        {
+            _Combiner = combiner;
+
+            if ((objectInfos.Length > 0) && (_Combiner == null))
+            {
+                throw new ArgumentNullException("combiner", String.Format(
+                    "Системый параметр {0}. IObjectsCombiner не может быть null, " +
+                    "Эесли параметр состоит более чем одного объекта словаря", parameterName)); 
+            }
+
+            _Objects = new Dictionary<ushort, object>();
+
+            foreach (ObjectInfo info in objectInfos)
+            {
+                _Objects.Add(info.Index, Activator.CreateInstance(info.DataTypeConvertor.OutputDataType));
+            }
+
+            _Name = parameterName;
+            _Description = description;
+            _Visible = visible;
+            _DisplayedName = displayedName;
+            _MeasureUnit = measureUnit == null ? String.Empty : measureUnit;
+            _Category = category;
+            _Modified = DateTime.Now;
+            _Status = ObjectStatus.NoError;
+        }
+
+        #endregion
+
         #region Fields And Propetries
-        
-        private UInt16 _Index;
+
+        Dictionary<UInt16, Object> _Objects;
+        IObjectsCombiner _Combiner;
+
         /// <summary>
         /// Адрес объекта
         /// </summary>
         [Browsable(false)]
         [ReadOnly(true)]
         [Category("Параметр")]
-        [DisplayName("Индекс объекта")]
-        [Description("Индекс объекта")]
-        public UInt16 Index
+        [DisplayName("Индексы объекта")]
+        [Description("Индексы объекта")]
+        public UInt16[] Indexes
         {
-            get { return _Index; }
-            set { _Index = value; }
+            get
+            {
+                UInt16[] array = new ushort[_Objects.Keys.Count];
+                _Objects.Keys.CopyTo(array, 0);
+                return array;
+            }
         }
 
         private string _Name;
@@ -70,21 +145,6 @@ namespace NGK.CorrosionMonitoringSystem.Models
         {
             get { return _ReadOnly; }
             set { _ReadOnly = value; }
-        }
-
-        private bool _SdoCanRead;
-        /// <summary>
-        /// Для работы SDO сервиса
-        /// </summary>
-        [Browsable(false)]
-        [ReadOnly(true)]
-        [Category("Параметр")]
-        [DisplayName("Доступ для SDO")]
-        [Description("Разрешает/запрещает чтение параметра (объекта словаря) сетевым сервисом SDO")]
-        public bool SdoCanRead
-        {
-            get { return _SdoCanRead; }
-            set { _SdoCanRead = value; }
         }
 
         private bool _Visible;
@@ -157,10 +217,10 @@ namespace NGK.CorrosionMonitoringSystem.Models
         [Category("Параметр")]
         [DisplayName("Значение")]
         [Description("Значение параметра (объекта словаря)")]
-        public object Value
+        public Object Value
         {
             get { return _Value; }
-            set { _Value = value; }
+            private set { _Value = value; }
         }
 
         private DateTime _Modified;
@@ -196,40 +256,48 @@ namespace NGK.CorrosionMonitoringSystem.Models
 
         #endregion
 
-        #region Constructors
+        #region Methods
 
-        public Parameter(ObjectInfo info)
+        public void Combine()
         {
-            _Index = info.Index;
-            _Name = info.Name;
-            _Description = info.Description;
-            _ReadOnly = info.ReadOnly;
-            _SdoCanRead = info.SdoCanRead;
-            _Visible = info.Visible;
-            _DisplayedName = info.DisplayedName;
-            _MeasureUnit = info.MeasureUnit;
-            _Category = info.Category;
-            _Value = Activator.CreateInstance(info.DataTypeConvertor.OutputDataType);
-            _Modified = DateTime.Now;
-            _Status = ObjectStatus.NoError;
+            if (_Combiner != null)
+                Value = _Combiner.Combine(_Objects);
+            else
+                Value = _Objects[Indexes[0]];
         }
 
-        public Parameter(UInt16 index, string name, string description, bool readOnly,
-            bool sdoCanRead, bool visible, string displayedName, string measureUnit,
-            ObjectCategory category, object value)
+        public bool SetObjectValue(UInt16 index, Object value)
         {
-            _Index = index;
-            _Name = name == null ? string.Empty : name;
-            _Description = description == null ? string.Empty : description;
-            _ReadOnly = readOnly;
-            _SdoCanRead = sdoCanRead;
-            _Visible = visible;
-            _DisplayedName = displayedName == null ? string.Empty : displayedName;
-            _MeasureUnit = measureUnit == null ? string.Empty : measureUnit;
-            _Category = category;
-            _Value = value;
-            _Modified = DateTime.Now;
-            _Status = ObjectStatus.NoError;
+            if (_Objects.ContainsKey(index))
+            {
+                if (_Objects[index].GetType() == value.GetType())
+                {
+                    _Objects[index] = value;
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public bool SetParamValue(Object value)
+        {
+            if (_Combiner != null)
+            {
+                Dictionary<UInt16, Object> objects = _Combiner.Decombine(value);
+                if (objects.Count == _Objects.Count)
+                {
+                    foreach (KeyValuePair<UInt16, Object> pair in objects)
+                    {
+                        _Objects[pair.Key] = pair.Value;
+                    }
+                }
+                else
+                    throw new InvalidCastException();
+            }
+            else
+            {
+                _Objects[Indexes[0]] = value;
+            }
         }
 
         #endregion

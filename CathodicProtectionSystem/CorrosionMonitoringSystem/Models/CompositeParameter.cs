@@ -17,7 +17,12 @@ namespace NGK.CorrosionMonitoringSystem.Models
 
         public UInt16[] Indexes
         {
-            get { return _Objects.Keys; }
+            get 
+            {
+                UInt16[] array = new ushort[_Objects.Keys.Count];
+                _Objects.Keys.CopyTo(array, 0);
+                return array; 
+            }
         }
 
         IObjectsCombiner _Combiner;
@@ -36,7 +41,7 @@ namespace NGK.CorrosionMonitoringSystem.Models
             if (_Combiner != null)
                 Value = _Combiner.Combine(_Objects);
             else
-                Value = _Objects[_Objects.Keys[0]];
+                Value = _Objects[Indexes[0]];
         }
 
         public bool SetObjectValue(UInt16 index, Object value)
@@ -78,14 +83,14 @@ namespace NGK.CorrosionMonitoringSystem.Models
                 _Objects.Add(info.Index, Activator.CreateInstance(info.DataTypeConvertor.OutputDataType));
             }
 
-            _Name = parameterName;
-            _Description = description;
-            _Visible = info.Visible;
-            _DisplayedName = displayedName;
-            _MeasureUnit = measureUnit == null ? String.Empty : measureUnit;
+            //_Name = parameterName;
+            //_Description = description;
+            //_Visible = info.Visible;
+            //_DisplayedName = displayedName;
+            //_MeasureUnit = measureUnit == null ? String.Empty : measureUnit;
             //_Category = info.Category;
-            _Modified = DateTime.Now;
-            _Status = ObjectStatus.NoError;
+            //_Modified = DateTime.Now;
+            //_Status = ObjectStatus.NoError;
         }
     }
 }

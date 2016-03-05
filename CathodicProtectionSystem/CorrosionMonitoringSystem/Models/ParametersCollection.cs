@@ -6,11 +6,11 @@ using System.Text;
 
 namespace NGK.CorrosionMonitoringSystem.Models
 {
-    public class ParametersCollection: KeyedCollection<UInt16, Parameter>
+    public class ParametersCollection: KeyedCollection<string, Parameter>
     {
-        protected override ushort GetKeyForItem(Parameter item)
+        protected override string GetKeyForItem(Parameter item)
         {
-            return item.Index;
+            return item.Name;
         }
     }
 }
