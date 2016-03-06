@@ -20,7 +20,7 @@ namespace NGK.CorrosionMonitoringSystem.Models
             _ReadOnly = info.ReadOnly;
             //_SdoCanRead = info.SdoCanRead;
             _Visible = info.Visible;
-            _DisplayedName = info.DisplayedName;
+            _DisplayName = info.DisplayName;
             _MeasureUnit = info.MeasureUnit;
             _Category = info.Category;
             _Value = Activator.CreateInstance(info.DataTypeConvertor.OutputDataType);
@@ -70,7 +70,7 @@ namespace NGK.CorrosionMonitoringSystem.Models
             _Name = parameterName;
             _Description = description;
             _Visible = visible;
-            _DisplayedName = displayedName;
+            _DisplayName = displayedName;
             _MeasureUnit = measureUnit == null ? String.Empty : measureUnit;
             _Category = category;
             _Modified = DateTime.Now;
@@ -163,7 +163,7 @@ namespace NGK.CorrosionMonitoringSystem.Models
             set { _Visible = value; }
         }
 
-        private string _DisplayedName;
+        private string _DisplayName;
         /// <summary>
         /// Наименование объекта в GUI
         /// </summary>
@@ -172,10 +172,10 @@ namespace NGK.CorrosionMonitoringSystem.Models
         [Category("Параметр")]
         [DisplayName("Параметр")]
         [Description("Наименование параметра (объекта словаря) в GUI")]
-        public string DisplayedName
+        public string DisplayName
         {
-            get { return _DisplayedName; }
-            set { _DisplayedName = value; }
+            get { return _DisplayName; }
+            set { _DisplayName = value; }
         }
 
         private string _MeasureUnit;

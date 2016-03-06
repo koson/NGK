@@ -32,6 +32,11 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices.Profiles
         /// Описание объектов словаря устройства
         /// </summary>
         ObjectInfoCollection ObjectInfoList { get; }
+        /// <summary>
+        /// Описание сложных праметров устройтсва 
+        /// (т.е состоящих из нескольких объектов словаря)
+        /// </summary>
+        ComplexParameterCollection ComplexParameters { get; }
 
         #endregion
     }

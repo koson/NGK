@@ -55,12 +55,15 @@
     <Compile Include="CAN\ApplicationLayer\Network\Devices\ObjectDictionary\VisitingCard.cs" />
     <Compile Include="CAN\ApplicationLayer\Network\Devices\ObjectDictionary\ObjectStatus.cs" />
     <Compile Include="CAN\ApplicationLayer\Network\Devices\Profiles\KIP9811v1.cs" />
+    <Compile Include="CAN\ApplicationLayer\Network\Devices\Profiles\ObjectDictionary\Collections\ComplexParameterCollection.cs" />
     <Compile Include="CAN\ApplicationLayer\Network\Devices\Profiles\ObjectDictionary\Collections\ObjectInfoCollection.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="CAN\ApplicationLayer\Network\Devices\ObjectDictionary\DataObject.cs" />
     <Compile Include="CAN\ApplicationLayer\Network\Devices\Profiles\IProfile.cs" />
     <Compile Include="CAN\ApplicationLayer\Network\Devices\Profiles\KIP9810v1.cs" />
+    <Compile Include="CAN\ApplicationLayer\Network\Devices\Profiles\ObjectDictionary\ComplexParameter.cs" />
+    <Compile Include="CAN\ApplicationLayer\Network\Devices\Profiles\ObjectDictionary\IObjectsCombiner.cs" />
     <Compile Include="CAN\ApplicationLayer\Network\Devices\Profiles\ObjectDictionary\ObjectInfo.cs" />
     <Compile Include="CAN\ApplicationLayer\Network\Devices\Profiles\Prototype.cs" />
     <Compile Include="CAN\ApplicationLayer\Network\Devices\StatusUSIKPST.cs" />

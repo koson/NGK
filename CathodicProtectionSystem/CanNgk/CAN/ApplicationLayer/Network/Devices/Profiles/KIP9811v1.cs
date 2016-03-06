@@ -88,6 +88,10 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices.Profiles
         {
             base.CreateObjectDictionary();
 
+            // Определяем сложные (составные) объекты:
+            _ComplexParameters.Add(new ComplexParameter("SerialNumber", new ushort[] { 0x2003, 0x2004, 0x2005 }, null));
+
+            
             _ObjectInfoList.Add(new ObjectInfo(0x2000, "device_type", "Тип устройства",
                 true, true, true, "Тип устройства", String.Empty, ObjectCategory.System,
                 new NgkUInt16Convertor(ScalerTypes.x1), (UInt16)this.DeviceType));

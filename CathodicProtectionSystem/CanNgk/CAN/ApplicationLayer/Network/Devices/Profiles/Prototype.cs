@@ -13,6 +13,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices.Profiles
         #region Fields And Properties
 
         protected ObjectInfoCollection _ObjectInfoList;
+        protected ComplexParameterCollection _ComplexParameters;
 
         public abstract DeviceType DeviceType { get; }
 
@@ -23,6 +24,8 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices.Profiles
         public abstract Version HardwareVersion { get; }
 
         public ObjectInfoCollection ObjectInfoList { get { return _ObjectInfoList; } }
+
+        public ComplexParameterCollection ComplexParameters { get { return _ComplexParameters; } }
 
         protected static object SyncRoot = new object(); 
 
@@ -70,6 +73,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices.Profiles
 
         protected virtual void CreateObjectDictionary()
         {
+            _ComplexParameters = new ComplexParameterCollection();
             _ObjectInfoList = new ObjectInfoCollection();
         }
 
