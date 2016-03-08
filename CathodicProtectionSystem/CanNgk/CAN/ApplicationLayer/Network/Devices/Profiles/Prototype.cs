@@ -48,7 +48,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices.Profiles
         /// </summary>
         /// <param name="type">Тип устройства</param>
         /// <returns>Профиль устройства</returns>
-        public static IProfile Create(DeviceType type)
+        public static IProfile GetProfile(DeviceType type)
         {
             string msg;
 

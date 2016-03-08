@@ -5,6 +5,8 @@ using System.ComponentModel;
 using NGK.CAN.ApplicationLayer.Network.Devices.Profiles.ObjectDictionary;
 using NGK.CAN.ApplicationLayer.Network.Devices.ObjectDictionary;
 using Common.ComponentModel;
+using NGK.CAN.ApplicationLayer.Network.Devices;
+using NGK.CAN.ApplicationLayer.Network.Devices.Profiles;
 
 namespace NGK.CorrosionMonitoringSystem.Models
 {
@@ -14,76 +16,120 @@ namespace NGK.CorrosionMonitoringSystem.Models
 
         public Parameter(ObjectInfo info)
         {
-            //_Index = info.Index;
-            _Name = info.Name;
-            _Description = info.Description;
-            _ReadOnly = info.ReadOnly;
-            //_SdoCanRead = info.SdoCanRead;
-            _Visible = info.Visible;
-            _DisplayName = info.DisplayName;
-            _MeasureUnit = info.MeasureUnit;
-            _Category = info.Category;
-            _Value = Activator.CreateInstance(info.DataTypeConvertor.OutputDataType);
+            _IsSpecialParameter = false;
+            _IsComplexParameter = info.IsComplexParameter;
+
+            if (_IsComplexParameter)
+            {
+                _Name = info.ComplexParameterName;
+                _Description = info.Description;
+                _ReadOnly = info.ReadOnly;
+                _Visible = info.Visible;
+                _DisplayName = info.DisplayName;
+                _MeasureUnit = info.MeasureUnit;
+                _Category = info.Category;
+                _ValueType = Prototype.GetProfile(_DeviceType)
+                    .ComplexParameters[_Name].Converter.ValueType;
+            }
+            else
+            {
+                _Indexes = new ushort[] { info.Index };
+                _Name = info.Name;
+                _Description = info.Description;
+                _ReadOnly = info.ReadOnly;
+                _Visible = info.Visible;
+                _DisplayName = info.DisplayName;
+                _MeasureUnit = info.MeasureUnit;
+                _Category = info.Category;
+                _ValueType = info.DataTypeConvertor.OutputDataType;
+            }
+
+            _Value = Activator.CreateInstance(_ValueType); 
+            _DeviceType = info.DeviceProfile.DeviceType;
             _Modified = DateTime.Now;
             _Status = ObjectStatus.NoError;
         }
 
-        //public Parameter(UInt16 index, string name, string description, bool readOnly,
-        //    bool sdoCanRead, bool visible, string displayedName, string measureUnit,
-        //    ObjectCategory category, object value)
-        //{
-        //    //_Index = index;
-        //    _Name = name == null ? string.Empty : name;
-        //    _Description = description == null ? string.Empty : description;
-        //    _ReadOnly = readOnly;
-        //    //_SdoCanRead = sdoCanRead;
-        //    _Visible = visible;
-        //    _DisplayedName = displayedName == null ? string.Empty : displayedName;
-        //    _MeasureUnit = measureUnit == null ? string.Empty : measureUnit;
-        //    _Category = category;
-        //    _Value = value;
-        //    _Modified = DateTime.Now;
-        //    _Status = ObjectStatus.NoError;
-        //}
-
-        public Parameter(String parameterName, String description,
-            String displayedName, String measureUnit, Boolean visible,
-            ObjectCategory category, ObjectInfo[] objectInfos, 
-            IObjectsCombiner combiner)
+        private Parameter(bool isSpecialParam, bool isComplexParam, string paramName, 
+            string displayName, string description, bool readOnly, bool visible, 
+            string measureUnit, ObjectCategory category, DeviceType deviceType, 
+            UInt16 index, object value)
         {
-            _Combiner = combiner;
-
-            if ((objectInfos.Length > 0) && (_Combiner == null))
-            {
-                throw new ArgumentNullException("combiner", String.Format(
-                    "Системый параметр {0}. IObjectsCombiner не может быть null, " +
-                    "Эесли параметр состоит более чем одного объекта словаря", parameterName)); 
-            }
-
-            _Objects = new Dictionary<ushort, object>();
-
-            foreach (ObjectInfo info in objectInfos)
-            {
-                _Objects.Add(info.Index, Activator.CreateInstance(info.DataTypeConvertor.OutputDataType));
-            }
-
-            _Name = parameterName;
+            _IsSpecialParameter = isSpecialParam;
+            _IsComplexParameter = isComplexParam;
+            _Name = paramName;
             _Description = description;
-            _Visible = visible;
-            _DisplayName = displayedName;
-            _MeasureUnit = measureUnit == null ? String.Empty : measureUnit;
-            _Category = category;
+            _DisplayName = displayName;
+            _MeasureUnit = measureUnit;
+            _Category = Category;
+            _DeviceType = deviceType;
             _Modified = DateTime.Now;
             _Status = ObjectStatus.NoError;
+            if (_IsSpecialParameter)
+            {
+                _ValueType = value.GetType();
+                _Value = value;
+            }
+            else
+            {
+                _ValueType = _IsComplexParameter ? Prototype.GetProfile(_DeviceType)
+                    .ComplexParameters[_Name].Converter.ValueType :
+                    Prototype.GetProfile(_DeviceType)
+                        .ObjectInfoList[index].DataTypeConvertor.OutputDataType;
+
+                _Value = Activator.CreateInstance(_ValueType);
+            }
+            if ((isComplexParam == true) && (isSpecialParam == true))
+            {
+                throw new ArgumentException();
+            }
+
+            if (index> 0)
+            {
+                _IsComplexParameter = true;
+            }
+            else
+            {
+                _IsComplexParameter = false;
+                _Indexes = new ushort[] { index };
+            }
         }
 
         #endregion
 
         #region Fields And Propetries
 
-        Dictionary<UInt16, Object> _Objects;
-        IObjectsCombiner _Combiner;
+        DeviceType _DeviceType;
+        Type _ValueType;
 
+        public Type ValueType 
+        {
+            get { return _ValueType; }
+        } 
+
+        bool _IsSpecialParameter;
+        [Browsable(false)]
+        [ReadOnly(true)]
+        [Category("Параметр")]
+        [DisplayName("Спец. параметр")]
+        [Description("Признак, что параметр без индекса, т.е. не имеет объет сопоставления в словаре устройства")]
+        public bool IsSpecialParameter
+        {
+            get { return _IsSpecialParameter; }
+        }
+
+        bool _IsComplexParameter;
+        [Browsable(false)]
+        [ReadOnly(true)]
+        [Category("Параметр")]
+        [DisplayName("Комплексный параметр")]
+        [Description("Признак, что параметр состоит из нескольких объектов словаря устройства")]
+        public bool IsComplexParameter 
+        { 
+            get { return _IsComplexParameter; } 
+        } 
+
+        UInt16[] _Indexes;
         /// <summary>
         /// Адрес объекта
         /// </summary>
@@ -96,9 +142,9 @@ namespace NGK.CorrosionMonitoringSystem.Models
         {
             get
             {
-                UInt16[] array = new ushort[_Objects.Keys.Count];
-                _Objects.Keys.CopyTo(array, 0);
-                return array;
+                return _IsComplexParameter ? 
+                    Prototype.GetProfile(_DeviceType).ComplexParameters[Name].LinkedIndexes : 
+                    _Indexes;
             }
         }
 
@@ -258,48 +304,19 @@ namespace NGK.CorrosionMonitoringSystem.Models
 
         #region Methods
 
-        public void Combine()
+        public static Parameter CreateSpecialParameter(string paramName,
+            string displayName, string description, string measureUnit, 
+            bool readOnly, bool visible, ObjectCategory category, 
+            DeviceType deviceType, object value)
         {
-            if (_Combiner != null)
-                Value = _Combiner.Combine(_Objects);
-            else
-                Value = _Objects[Indexes[0]];
+            return new Parameter(true, false, paramName, displayName,
+                description, readOnly, visible, measureUnit, category, deviceType, 0, value);
         }
 
-        public bool SetObjectValue(UInt16 index, Object value)
+        public void SetObjectValue(UInt16 index, object value)
         {
-            if (_Objects.ContainsKey(index))
-            {
-                if (_Objects[index].GetType() == value.GetType())
-                {
-                    _Objects[index] = value;
-                    return true;
-                }
-            }
-            return false;
+            throw new NotImplementedException();
         }
-
-        public bool SetParamValue(Object value)
-        {
-            if (_Combiner != null)
-            {
-                Dictionary<UInt16, Object> objects = _Combiner.Decombine(value);
-                if (objects.Count == _Objects.Count)
-                {
-                    foreach (KeyValuePair<UInt16, Object> pair in objects)
-                    {
-                        _Objects[pair.Key] = pair.Value;
-                    }
-                }
-                else
-                    throw new InvalidCastException();
-            }
-            else
-            {
-                _Objects[Indexes[0]] = value;
-            }
-        }
-
         #endregion
     }
 }

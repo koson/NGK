@@ -81,8 +81,6 @@
     <Compile Include="Managers\LogManager\ILogManager.cs" />
     <Compile Include="Managers\AppManagers.cs" />
     <Compile Include="Managers\SysLogManager\ISysLogManager.cs" />
-    <Compile Include="Models\CompositeParameter.cs" />
-    <Compile Include="Models\IObjectsCombiner.cs" />
     <Compile Include="Models\NgkCanDevice.cs" />
     <Compile Include="Models\ParametersCollection.cs" />
     <Compile Include="Models\Parameter.cs" />

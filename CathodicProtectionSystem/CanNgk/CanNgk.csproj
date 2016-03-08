@@ -63,7 +63,8 @@
     <Compile Include="CAN\ApplicationLayer\Network\Devices\Profiles\IProfile.cs" />
     <Compile Include="CAN\ApplicationLayer\Network\Devices\Profiles\KIP9810v1.cs" />
     <Compile Include="CAN\ApplicationLayer\Network\Devices\Profiles\ObjectDictionary\ComplexParameter.cs" />
-    <Compile Include="CAN\ApplicationLayer\Network\Devices\Profiles\ObjectDictionary\IObjectsCombiner.cs" />
+    <Compile Include="CAN\ApplicationLayer\Network\Devices\Profiles\ObjectDictionary\ComplexParameterConverters\SerialNumberConverter.cs" />
+    <Compile Include="CAN\ApplicationLayer\Network\Devices\Profiles\ObjectDictionary\IComplexParameterConverter.cs" />
     <Compile Include="CAN\ApplicationLayer\Network\Devices\Profiles\ObjectDictionary\ObjectInfo.cs" />
     <Compile Include="CAN\ApplicationLayer\Network\Devices\Profiles\Prototype.cs" />
     <Compile Include="CAN\ApplicationLayer\Network\Devices\StatusUSIKPST.cs" />

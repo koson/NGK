@@ -175,24 +175,32 @@ namespace NGK.CorrosionMonitoringSystem.Models
         {
             _Parameters = new ParametersCollection();
 
-            // Добавляем общие для всех устройств параметры 
-            _Parameters.Add(new Parameter(ParameterNames.ID, "GUID", "Уникальный идентификатор устройства", 
-                true, false, false, "ID", string.Empty, ObjectCategory.System, device.Id));
-            _Parameters.Add(new Parameter(ParameterNames.DEVICE_TYPE, "DeviceType", "Тип устройства",
-                true, false, true, "Тип устройства", string.Empty, ObjectCategory.System, device.DeviceType));
-            _Parameters.Add(new Parameter(ParameterNames.NODE_ID, "NodeId", "Сетевой идентификатор устройтсва",
-                true, false, true, "Сетевой адрес", string.Empty, ObjectCategory.System, device.NodeId));
-            _Parameters.Add(new Parameter(ParameterNames.LOCATION, "Location", "Наименование места установки оборудования",
-                true, false, true, "Расположение", string.Empty, ObjectCategory.System, device.LocationName));
-            _Parameters.Add(new Parameter(ParameterNames.POLLING_INTERVAL, "PollingInterval", "Период опроса устройства, мсек",
-                true, false, true, "Периуд опроса", "мсек", ObjectCategory.System, device.PollingInterval));
-            _Parameters.Add(new Parameter(ParameterNames.DEVICE_STATUS, "DeviceStatus", "Состояние устройства", 
-                true, false, true, "Состояние устройства", string.Empty, ObjectCategory.System, device.Status));
-            _Parameters.Add(new Parameter(ParameterNames.NETWORK_ID, "NetworkId", "ID CAN сети", 
-                true, false, false, "ID сети", string.Empty, ObjectCategory.System,
+            // Добавляем общие для всех устройств параметры
+            _Parameters.Add(Parameter.CreateSpecialParameter(ParameterNames.ID, 
+                "GUID", "Уникальный идентификатор устройства", string.Empty, 
+                true, false, ObjectCategory.System, device.DeviceType, device.Id));
+            _Parameters.Add(Parameter.CreateSpecialParameter(ParameterNames.DEVICE_TYPE,
+                "Тип устройства", "Тип устройства", string.Empty,
+                true, false, ObjectCategory.System, device.DeviceType, device.DeviceType));
+            _Parameters.Add(Parameter.CreateSpecialParameter(ParameterNames.NODE_ID, 
+                "Сетевой адрес", "Сетевой идентификатор устройтсва", string.Empty,
+                true, true, ObjectCategory.System, device.DeviceType, device.NodeId));
+            _Parameters.Add(Parameter.CreateSpecialParameter(ParameterNames.LOCATION,
+                "Расположение", "Наименование места установки оборудования", string.Empty,
+                true, true, ObjectCategory.System, device.DeviceType, device.LocationName));
+            _Parameters.Add(Parameter.CreateSpecialParameter(ParameterNames.POLLING_INTERVAL,
+                "Периуд опроса", "Период опроса устройства, мсек", "мсек",
+                true, true, ObjectCategory.System, device.DeviceType, device.PollingInterval));
+            _Parameters.Add(Parameter.CreateSpecialParameter(ParameterNames.DEVICE_STATUS,
+                "Состояние устройства", "Состояние устройства", string.Empty,
+                true, true, ObjectCategory.System, device.DeviceType, device.Status));
+            _Parameters.Add(Parameter.CreateSpecialParameter(ParameterNames.NETWORK_ID,
+                "ID сети", "ID CAN сети", string.Empty,
+                true, true, ObjectCategory.System, device.DeviceType,
                 device.Network == null ? 0 : device.Network.NetworkId));
-            _Parameters.Add(new Parameter(ParameterNames.NETWORK_NAME, "NetworkName", "Наименование сети",
-                true, false, true, "Сеть CAN", string.Empty, ObjectCategory.System, 
+            _Parameters.Add(Parameter.CreateSpecialParameter(ParameterNames.NETWORK_NAME, 
+                "Сеть CAN", "Наименование сети", string.Empty,
+                true, true, ObjectCategory.System, device.DeviceType,
                 device.Network == null ? "Не установлена" : device.Network.NetworkName));
 
             foreach (ObjectInfo info in device.Profile.ObjectInfoList)
@@ -228,10 +236,11 @@ namespace NGK.CorrosionMonitoringSystem.Models
 
             foreach (Parameter parameter in device.Parameters)
             {
-                DataObject dataObject = canDevice.ObjectDictionary[parameter.Index];
-                parameter.Modified = dataObject.Modified;
-                parameter.Status = dataObject.Status;
-                parameter.Value = dataObject.TotalValue;
+                throw new NotImplementedException();
+                //DataObject dataObject = canDevice.ObjectDictionary[parameter.Index];
+                //parameter.Modified = dataObject.Modified;
+                //parameter.Status = dataObject.Status;
+                //parameter.Value = dataObject.TotalValue;
             }
         }
     }

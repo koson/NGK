@@ -486,7 +486,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices
         /// <returns></returns>
         public static DeviceBase Create(DeviceType type)
         {
-            IProfile profile = Prototype.Create(type);
+            IProfile profile = Prototype.GetProfile(type);
             return new DeviceBase(profile);
         }
         

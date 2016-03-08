@@ -12,11 +12,12 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices.Profiles.ObjectDictionary
     {
         #region Constructors
 
-        public ObjectInfo(UInt16 index, string name, string description,
+        public ObjectInfo(IProfile deviceProfile, UInt16 index, string name, string description,
             bool readOnly, bool sdoCanRead, bool visible, string displayName,
             string measureUnit, ObjectCategory category, ICanDataTypeConvertor convertor,
             UInt32 defaultValue)
         {
+            DeviceProfile = deviceProfile;
             Index = index;
             Name = name;
             Description = description;
@@ -28,14 +29,15 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices.Profiles.ObjectDictionary
             Category = category;
             DataTypeConvertor = convertor;
             DefaultValue = defaultValue;
-            ComplexParameterId = null;
+            ComplexParameterName = null;
         }
 
-        public ObjectInfo(UInt16 index, string name, string description,
+        public ObjectInfo(IProfile deviceProfile, UInt16 index, string name, string description,
             bool readOnly, bool sdoCanRead, bool visible, string displayName,
             string measureUnit, ObjectCategory category, ICanDataTypeConvertor convertor,
             UInt32 defaultValue, String complexParameterName)
         {
+            DeviceProfile = deviceProfile;
             Index = index;
             Name = name;
             Description = description;
@@ -56,7 +58,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices.Profiles.ObjectDictionary
         /// <summary>
         /// Адрес объекта
         /// </summary>
-        public UInt16 Index { get { return LinkedIndexes[0]; } }
+        public UInt16 Index;
         /// <summary>
         /// Название объекта
         /// </summary>
@@ -97,7 +99,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices.Profiles.ObjectDictionary
         /// <summary>
         /// Значение по умолчнию (Значение в формате передаваемого посети)
         /// </summary>
-        public readonly UInt32 DefaultValue;
+        public UInt32 DefaultValue;
         /// <summary>
         /// 
         /// </summary>
@@ -110,6 +112,8 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices.Profiles.ObjectDictionary
         {
             get { return ComplexParameterName != null; }
         }
+
+        public readonly IProfile DeviceProfile;
 
         #endregion
     }

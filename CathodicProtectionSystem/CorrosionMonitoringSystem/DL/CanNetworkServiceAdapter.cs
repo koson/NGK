@@ -156,7 +156,8 @@ namespace NGK.CorrosionMonitoringSystem.BL
                     //{
                     //    parameter.Value = param.TotalValue.ToString();
                     //}
-                    parameter.SetObjectValue(index, param.TotalValue);
+                    //parameter.SetObjectValue(index, param.TotalValue);
+                    throw new NotImplementedException();
                 }
             }
         }
