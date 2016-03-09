@@ -266,7 +266,7 @@ namespace NGK.CorrosionMonitoringSystem.Models
         public Object Value
         {
             get { return _Value; }
-            private set { _Value = value; }
+            set { _Value = value; }
         }
 
         private DateTime _Modified;
@@ -313,10 +313,6 @@ namespace NGK.CorrosionMonitoringSystem.Models
                 description, readOnly, visible, measureUnit, category, deviceType, 0, value);
         }
 
-        public void SetObjectValue(UInt16 index, object value)
-        {
-            throw new NotImplementedException();
-        }
         #endregion
     }
 }

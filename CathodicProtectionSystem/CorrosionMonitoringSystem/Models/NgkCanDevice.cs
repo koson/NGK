@@ -6,6 +6,7 @@ using NGK.CAN.ApplicationLayer.Network.Devices;
 using NGK.CAN.ApplicationLayer.Network.Devices.Profiles.ObjectDictionary;
 using Common.ComponentModel;
 using NGK.CAN.ApplicationLayer.Network.Devices.ObjectDictionary;
+using NGK.CAN.ApplicationLayer.Network.Devices.Profiles;
 
 namespace NGK.CorrosionMonitoringSystem.Models
 {
@@ -56,11 +57,10 @@ namespace NGK.CorrosionMonitoringSystem.Models
         public DeviceType DeviceType
         {
             get { return (DeviceType)_Parameters[ParameterNames.DEVICE_TYPE].Value; }
-            set 
-            {
-                _Parameters[ParameterNames.DEVICE_TYPE]
-                    .SetObjectValue(ParameterNames.DEVICE_TYPE_ADR, value);
-            }
+            //set
+            //{
+            //    _Parameters[ParameterNames.DEVICE_TYPE].Value = value;
+            //}
         }
         /// <summary>
         /// Сетевой идентификатор устройства 1...127
@@ -73,11 +73,10 @@ namespace NGK.CorrosionMonitoringSystem.Models
         public byte NodeId
         {
             get { return Convert.ToByte(_Parameters[ParameterNames.NODE_ID].Value); }
-            set 
-            {
-                _Parameters[ParameterNames.NODE_ID]
-                    .SetObjectValue(ParameterNames.NODE_ID_ADR, value); 
-            }
+            //set
+            //{
+            //    _Parameters[ParameterNames.NODE_ID].Value = value;
+            //}
         }
 
         [Browsable(true)]
@@ -90,8 +89,7 @@ namespace NGK.CorrosionMonitoringSystem.Models
             get { return (DeviceStatus)_Parameters[ParameterNames.DEVICE_STATUS].Value; }
             set 
             {
-                _Parameters[ParameterNames.DEVICE_STATUS]
-                    .SetObjectValue(ParameterNames.DEVICE_STATUS_ADR, value); 
+                _Parameters[ParameterNames.DEVICE_STATUS].Value = value;
             }
         }
 
@@ -103,11 +101,10 @@ namespace NGK.CorrosionMonitoringSystem.Models
         public UInt32 NetworkId
         {
             get { return Convert.ToUInt32(_Parameters[ParameterNames.NETWORK_ID].Value); }
-            set 
-            { 
-                _Parameters[ParameterNames.NETWORK_ID]
-                    .SetObjectValue(ParameterNames.NETWORK_ID_ADR, value); 
-            }
+            //set
+            //{
+            //    _Parameters[ParameterNames.NETWORK_ID].Value = value;
+            //}
         }
 
         [Browsable(true)]
@@ -118,11 +115,11 @@ namespace NGK.CorrosionMonitoringSystem.Models
         public string NetworkName
         {
             get { return Convert.ToString(_Parameters[ParameterNames.NETWORK_NAME].Value); }
-            private set 
-            { 
-                _Parameters[ParameterNames.NETWORK_NAME]
-                    .SetObjectValue(ParameterNames.NETWORK_NAME_ADR, value); 
-            }
+            //private set 
+            //{ 
+            //    _Parameters[ParameterNames.NETWORK_NAME]
+            //        .SetObjectValue(ParameterNames.NETWORK_NAME_ADR, value); 
+            //}
         }
 
         [Browsable(true)]
@@ -133,11 +130,11 @@ namespace NGK.CorrosionMonitoringSystem.Models
         public string Location
         {
             get { return Convert.ToString(_Parameters[ParameterNames.LOCATION].Value); }
-            private set 
-            { 
-                _Parameters[ParameterNames.LOCATION]
-                    .SetObjectValue(ParameterNames.LOCATION_ADR, value); 
-            }
+            //private set 
+            //{ 
+            //    _Parameters[ParameterNames.LOCATION]
+            //        .SetObjectValue(ParameterNames.LOCATION_ADR, value); 
+            //}
         }
 
         [Browsable(false)]
@@ -148,11 +145,11 @@ namespace NGK.CorrosionMonitoringSystem.Models
         public uint PollingInterval
         {
             get { return Convert.ToUInt32(_Parameters[ParameterNames.POLLING_INTERVAL].Value); }
-            set 
-            {
-                _Parameters[ParameterNames.POLLING_INTERVAL]
-                    .SetObjectValue(ParameterNames.POLLING_INTERVAL_ADR, value);
-            }
+            //set 
+            //{
+            //    _Parameters[ParameterNames.POLLING_INTERVAL]
+            //        .SetObjectValue(ParameterNames.POLLING_INTERVAL_ADR, value);
+            //}
         }
         
         private ParametersCollection _Parameters;
@@ -228,19 +225,52 @@ namespace NGK.CorrosionMonitoringSystem.Models
                 return;
             }
 
-            //device.Location = canDevice.LocationName;
-            //device.PollingInterval = canDevice.PollingInterval;
-            //device.Status = canDevice.Status;
-            //device.NetworkId = canDevice.Network == null ? 0 : canDevice.Network.NetworkId;
-            //device.NetworkName = canDevice.Network == null ? 0 : canDevice.Network.NetworkName;
+            device.Status = canDevice.Status;
+
+            if (!((device.Status == DeviceStatus.ConfigurationError) || 
+                (device.Status == DeviceStatus.Operational)))
+            {
+                return;
+            }
 
             foreach (Parameter parameter in device.Parameters)
             {
-                throw new NotImplementedException();
-                //DataObject dataObject = canDevice.ObjectDictionary[parameter.Index];
-                //parameter.Modified = dataObject.Modified;
-                //parameter.Status = dataObject.Status;
-                //parameter.Value = dataObject.TotalValue;
+                if (parameter.IsSpecialParameter)
+                {
+                    continue;
+                }
+                else
+                {
+                    if (parameter.IsComplexParameter)
+                    {
+                        List<object> values = new List<object>();
+                        DateTime modified = new DateTime();
+                        ObjectStatus status = ObjectStatus.NoError;
+
+                        foreach (UInt16 index in parameter.Indexes)
+                        {
+                            DataObject dataObject = canDevice.ObjectDictionary[index];
+                            values.Add(canDevice.GetObject(index));
+
+                            if (dataObject.Modified > modified)
+                                modified = dataObject.Modified;
+
+                            if (dataObject.Status != ObjectStatus.NoError)
+                                status = dataObject.Status;
+                        }
+
+                        parameter.Modified = modified;
+                        parameter.Value = Prototype.GetProfile(device.DeviceType)
+                            .ComplexParameters[parameter.Name].Converter.ConvertTo(values.ToArray());
+                    }
+                    else
+                    {
+                        DataObject dataObject = canDevice.ObjectDictionary[parameter.Indexes[0]];
+                        parameter.Modified = dataObject.Modified;
+                        parameter.Status = dataObject.Status;
+                        parameter.Value = dataObject.TotalValue;
+                    }
+                }
             }
         }
     }

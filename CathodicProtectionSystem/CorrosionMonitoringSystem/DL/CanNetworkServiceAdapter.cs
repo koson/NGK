@@ -141,25 +141,7 @@ namespace NGK.CorrosionMonitoringSystem.BL
             dvc = NetworksManager.Instance.Networks[device.NetworkId]
                 .Devices[device.NodeId];
             // Обновляем словарь объектов модели
-            foreach (Parameter parameter in device.Parameters)
-            {
-                foreach (UInt16 index in parameter.Indexes)
-                {
-                    DataObject param = dvc.ObjectDictionary[index];
-                    parameter.Modified = param.Modified;
-                    parameter.Status = param.Status;
-                    //if (param.TotalValue is Boolean)
-                    //{
-                    //    parameter.Value = (Boolean)param.TotalValue ? "Да" : "Нет";
-                    //}
-                    //else
-                    //{
-                    //    parameter.Value = param.TotalValue.ToString();
-                    //}
-                    //parameter.SetObjectValue(index, param.TotalValue);
-                    throw new NotImplementedException();
-                }
-            }
+            NgkCanDevice.Update(device, dvc);
         }
 
         #endregion
