@@ -552,7 +552,7 @@ namespace NGK.MeasuringDeviceTech.Classes.MeasuringDevice
             get { return _SupplyVoltage; }
             set
             {
-                _SupplyVoltage = (float)(value * 0.05);
+                _SupplyVoltage = value; // (float)(value * 0.05);
                 // Генерируем событие
                 OnPropertyChanged(new PropertyChangedEventArgs("SupplyVoltage"));
             }
@@ -731,8 +731,8 @@ namespace NGK.MeasuringDeviceTech.Classes.MeasuringDevice
         [Browsable(true)]
         [ReadOnly(true)]
         [Category("Состояние блока измерений")]
-        [Description("Состояние напряжения притания устройства БИ,  Discretes Input	0x0001")]
-        [DisplayName("Состояние напряжения притания устройства БИ")]
+        [Description("Состояние напряжения питания устройства БИ,  Discretes Input	0x0001")]
+        [DisplayName("Состояние напряжения питания устройства БИ")]
         [TypeConverter(typeof(BooleanTypeConverter))]
         [RefreshProperties(System.ComponentModel.RefreshProperties.All)]
         public Boolean SupplyVoltageStatus
