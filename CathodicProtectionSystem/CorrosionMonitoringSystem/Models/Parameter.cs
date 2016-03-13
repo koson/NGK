@@ -18,18 +18,21 @@ namespace NGK.CorrosionMonitoringSystem.Models
         {
             _IsSpecialParameter = false;
             _IsComplexParameter = info.IsComplexParameter;
+            _DeviceType = info.DeviceProfile.DeviceType;
 
             if (_IsComplexParameter)
             {
-                _Name = info.ComplexParameterName;
-                _Description = info.Description;
-                _ReadOnly = info.ReadOnly;
-                _Visible = info.Visible;
-                _DisplayName = info.DisplayName;
-                _MeasureUnit = info.MeasureUnit;
-                _Category = info.Category;
-                _ValueType = Prototype.GetProfile(_DeviceType)
-                    .ComplexParameters[_Name].Converter.ValueType;
+                ComplexParameter complexParam = Prototype.GetProfile(_DeviceType)
+                    .ComplexParameters[info.ComplexParameterName];
+
+                _Name = complexParam.Name;
+                _Description = complexParam.Description;
+                _ReadOnly = complexParam.ReadOnly;
+                _Visible = complexParam.Visible;
+                _DisplayName = complexParam.DisplayName;
+                _MeasureUnit = complexParam.MeasureUnit;
+                _Category = complexParam.Category;
+                _ValueType = complexParam.Converter.ValueType;
             }
             else
             {
@@ -45,7 +48,6 @@ namespace NGK.CorrosionMonitoringSystem.Models
             }
 
             _Value = Activator.CreateInstance(_ValueType); 
-            _DeviceType = info.DeviceProfile.DeviceType;
             _Modified = DateTime.Now;
             _Status = ObjectStatus.NoError;
         }
@@ -61,7 +63,7 @@ namespace NGK.CorrosionMonitoringSystem.Models
             _Description = description;
             _DisplayName = displayName;
             _MeasureUnit = measureUnit;
-            _Category = Category;
+            _Category = category;
             _DeviceType = deviceType;
             _Modified = DateTime.Now;
             _Status = ObjectStatus.NoError;
@@ -100,8 +102,13 @@ namespace NGK.CorrosionMonitoringSystem.Models
         #region Fields And Propetries
 
         DeviceType _DeviceType;
+        
         Type _ValueType;
-
+        [Browsable(false)]
+        [ReadOnly(true)]
+        [Category("Параметр")]
+        [DisplayName("Тип данных")]
+        [Description("Тип данных значения параметра")]
         public Type ValueType 
         {
             get { return _ValueType; }

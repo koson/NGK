@@ -202,7 +202,50 @@ namespace NGK.CorrosionMonitoringSystem.Models
 
             foreach (ObjectInfo info in device.Profile.ObjectInfoList)
             {
-                _Parameters.Add(new Parameter(info));
+                Parameter prm = new Parameter(info);
+                if (!_Parameters.Contains(prm.Name))
+                    _Parameters.Add(prm);
+            }
+
+            foreach (Parameter parameter in _Parameters)
+            {
+                if ((parameter.Category == ObjectCategory.Configuration) ||
+                    (parameter.Category == ObjectCategory.System))
+                {
+                    DateTime modified = DateTime.Now;
+
+                    if (parameter.IsComplexParameter)
+                    {
+                        List<object> values = new List<object>();
+                        ObjectStatus status = ObjectStatus.NoError;
+
+                        foreach (UInt16 index in parameter.Indexes)
+                        {
+                            DataObject dataObject = device.ObjectDictionary[index];
+                            values.Add(device.GetObject(index));
+
+                            if (dataObject.Modified > modified)
+                                modified = dataObject.Modified;
+
+                            if (dataObject.Status != ObjectStatus.NoError)
+                                status = dataObject.Status;
+                        }
+
+                        parameter.Modified = modified;
+                        parameter.Value = Prototype.GetProfile(device.DeviceType)
+                            .ComplexParameters[parameter.Name].Converter.ConvertTo(values.ToArray());
+                    }
+                    else
+                    {
+                        if (!parameter.IsSpecialParameter)
+                        {
+                            DataObject dataObject = device.ObjectDictionary[parameter.Indexes[0]];
+                            parameter.Modified = modified;
+                            parameter.Status = dataObject.Status;
+                            parameter.Value = dataObject.TotalValue;
+                        }
+                    }
+                }
             }
         }
 
@@ -265,10 +308,13 @@ namespace NGK.CorrosionMonitoringSystem.Models
                     }
                     else
                     {
-                        DataObject dataObject = canDevice.ObjectDictionary[parameter.Indexes[0]];
-                        parameter.Modified = dataObject.Modified;
-                        parameter.Status = dataObject.Status;
-                        parameter.Value = dataObject.TotalValue;
+                        if (!parameter.IsSpecialParameter)
+                        {
+                            DataObject dataObject = canDevice.ObjectDictionary[parameter.Indexes[0]];
+                            parameter.Modified = dataObject.Modified;
+                            parameter.Status = dataObject.Status;
+                            parameter.Value = dataObject.TotalValue;
+                        }
                     }
                 }
             }
