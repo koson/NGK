@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace NGK.CorrosionMonitoringSystem.View
+namespace NGK.CorrosionMonitoringSystem.Views
 {
     /// <summary>
     /// Реализует взаимодействие с кнопками панели приложения

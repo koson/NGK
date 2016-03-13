@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Drawing;
 
-namespace NGK.CorrosionMonitoringSystem.View
+namespace NGK.CorrosionMonitoringSystem.Views
 {
     public interface IStatusPanel
     {

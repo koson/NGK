@@ -4,7 +4,7 @@ using System.Text;
 using Mvp.Input;
 using Mvp.Presenter;
 using Mvp.WinApplication;
-using NGK.CorrosionMonitoringSystem.View;
+using NGK.CorrosionMonitoringSystem.Views;
 using NGK.CorrosionMonitoringSystem.Models;
 using NGK.CorrosionMonitoringSystem.Managers;
 using System.Windows.Forms;
@@ -34,18 +34,12 @@ namespace NGK.CorrosionMonitoringSystem.Presenter
             _BindingSourceDevices.ListChanged += new System.ComponentModel.ListChangedEventHandler(_BindingSourceDevices_ListChanged);
             _BindingSourceDevices.DataSource = _Managers.CanNetworkService.Devices;
 
-            view.ButtonF3Text = "Подробно";
-            view.ButtonF4Text = "Сбросить ошибку";
-            view.ButtonF5Text = "Запуск системы";
-            view.ButtonClick +=
-                new EventHandler<ButtonClickEventArgs>(EventHandler_View_ButtonClick);
+            //view.ButtonF3Text = "Подробно";
+            //view.ButtonF4Text = "Сбросить ошибку";
+            //view.ButtonF5Text = "Запуск системы";
+            //view.ButtonClick +=
+            //    new EventHandler<ButtonClickEventArgs>(EventHandler_View_ButtonClick);
             view.Devices = _BindingSourceDevices;
-        }
-
-        void _BindingSourceDevices_ListChanged(object sender, System.ComponentModel.ListChangedEventArgs e)
-        {
-            _View.ButtonF3IsAccessible = _DeviceDetailCommand.CanExecute();
-            return;
         }
 
         #endregion
@@ -92,7 +86,13 @@ namespace NGK.CorrosionMonitoringSystem.Presenter
 
         void EventHandler_BindingSourceDevices_CurrentItemChanged(object sender, EventArgs e)
         {
-            _View.ButtonF3IsAccessible = _DeviceDetailCommand.CanExecute();
+            //_View.ButtonF3IsAccessible = _DeviceDetailCommand.CanExecute();
+        }
+
+        void _BindingSourceDevices_ListChanged(object sender, System.ComponentModel.ListChangedEventArgs e)
+        {
+            //_View.ButtonF3IsAccessible = _DeviceDetailCommand.CanExecute();
+            return;
         }
 
         #endregion

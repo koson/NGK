@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Mvp.Presenter;
 using NGK.CorrosionMonitoringSystem.Presenter;
-using NGK.CorrosionMonitoringSystem.View;
+using NGK.CorrosionMonitoringSystem.Views;
 
 namespace NGK.CorrosionMonitoringSystem.Managers.Factory
 {

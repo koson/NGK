@@ -7,7 +7,7 @@ using System.Text;
 using System.Windows.Forms;
 using Mvp.View;
 
-namespace NGK.CorrosionMonitoringSystem.View
+namespace NGK.CorrosionMonitoringSystem.Views
 {
     public partial class SplashScreenView : Form, ISplashScreenView
     {

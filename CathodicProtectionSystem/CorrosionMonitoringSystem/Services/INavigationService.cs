@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using NGK.CorrosionMonitoringSystem.View;
+using NGK.CorrosionMonitoringSystem.Views;
 
 namespace NGK.CorrosionMonitoringSystem.Services
 {

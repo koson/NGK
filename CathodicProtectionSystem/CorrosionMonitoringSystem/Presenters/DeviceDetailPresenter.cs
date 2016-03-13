@@ -6,7 +6,7 @@ using Mvp.Input;
 using Mvp.Presenter;
 using Mvp.WinApplication;
 using NGK.CorrosionMonitoringSystem.Managers;
-using NGK.CorrosionMonitoringSystem.View;
+using NGK.CorrosionMonitoringSystem.Views;
 using NGK.CorrosionMonitoringSystem.Models;
 using System.Windows.Forms;
 

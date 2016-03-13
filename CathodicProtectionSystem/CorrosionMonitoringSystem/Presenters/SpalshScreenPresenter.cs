@@ -7,7 +7,7 @@ using System.Windows.Forms;
 using Mvp.Presenter;
 using Mvp.View;
 using Mvp.WinApplication;
-using NGK.CorrosionMonitoringSystem.View;
+using NGK.CorrosionMonitoringSystem.Views;
 using NGK.CorrosionMonitoringSystem.Managers;
 
 namespace NGK.CorrosionMonitoringSystem.Presenter
@@ -58,7 +58,9 @@ namespace NGK.CorrosionMonitoringSystem.Presenter
         void EventHandler_Worker_RunWorkerCompleted(
             object sender, RunWorkerCompletedEventArgs e)
         {
-            _Managers.NavigationService.GoToWindow(NavigationMenuItems.PivoteTable);
+            IPresenter presenter = 
+                _Managers.PresentersFactory.Create(NavigationMenuItems.NoSelection);
+            presenter.Show();
         }
 
         void EventHandler_Worker_DoWork(object sender, DoWorkEventArgs e)

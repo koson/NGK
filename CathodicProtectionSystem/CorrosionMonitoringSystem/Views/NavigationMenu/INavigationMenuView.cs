@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Mvp.View;
 
-namespace NGK.CorrosionMonitoringSystem.View
+namespace NGK.CorrosionMonitoringSystem.Views
 {
     public enum NavigationMenuItems
     {
@@ -14,7 +14,7 @@ namespace NGK.CorrosionMonitoringSystem.View
         PivoteTable,
         DeviceList,
         DeviceDetail,
-        LogViewer,
+        LogViewer
     }
 
     public interface INavigationMenuView: IView

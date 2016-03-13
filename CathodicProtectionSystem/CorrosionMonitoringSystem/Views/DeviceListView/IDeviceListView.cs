@@ -7,9 +7,9 @@ using System.Windows.Forms;
 using Mvp.Input;
 using NGK.CorrosionMonitoringSystem.Models;
 
-namespace NGK.CorrosionMonitoringSystem.View
+namespace NGK.CorrosionMonitoringSystem.Views
 {
-    public interface IDeviceListView : IView, IButtonsPanel
+    public interface IDeviceListView : IView
     {
         BindingSource Devices { set; }
     }

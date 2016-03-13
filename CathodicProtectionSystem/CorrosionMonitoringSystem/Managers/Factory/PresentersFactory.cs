@@ -4,7 +4,7 @@ using System.Text;
 using System.Windows.Forms;
 using Mvp.Presenter;
 using Mvp.WinApplication;
-using NGK.CorrosionMonitoringSystem.View;
+using NGK.CorrosionMonitoringSystem.Views;
 using NGK.CorrosionMonitoringSystem.Presenter;
 
 namespace NGK.CorrosionMonitoringSystem.Managers.Factory
@@ -37,65 +37,82 @@ namespace NGK.CorrosionMonitoringSystem.Managers.Factory
 
             switch (window)
             {
+                case NavigationMenuItems.NoSelection:
+                    {
+                        MainWindowView mainWindow = new MainWindowView();
+
+                        MainWindowPresenter concretePresenter =
+                            new MainWindowPresenter(_Application, mainWindow, null, _Managers);
+                        presenter = concretePresenter;
+                        break;
+                    }
                 case NavigationMenuItems.PivoteTable:
                     {
-                        PivotTableView ptView = new PivotTableView();
+                        throw new NotImplementedException();
 
-                        // Настраиваем окно
-                        ptView.ShowInTaskbar = _Managers.ConfigManager.ShowInTaskbar;
-                        ptView.FormBorderStyle =
-                            _Managers.ConfigManager.FormBorderEnable ?
-                            FormBorderStyle.Sizable : FormBorderStyle.None;
+                        //PivotTableView ptView = new PivotTableView();
 
-                        PivoteTablePresenter ptPresenter =
-                            new PivoteTablePresenter(_Application, ptView, null, _Managers);
-                        presenter = ptPresenter;
-                        break;
+                        //// Настраиваем окно
+                        //ptView.ShowInTaskbar = _Managers.ConfigManager.ShowInTaskbar;
+                        //ptView.FormBorderStyle =
+                        //    _Managers.ConfigManager.FormBorderEnable ?
+                        //    FormBorderStyle.Sizable : FormBorderStyle.None;
+
+                        //PivoteTablePresenter ptPresenter =
+                        //    new PivoteTablePresenter(_Application, ptView, null, _Managers);
+                        //presenter = ptPresenter;
+                        //break;
                     }
                 case NavigationMenuItems.DeviceList:
                     {
-                        DeviceListView dlView = new DeviceListView();
+                        throw new NotImplementedException();
 
-                        // Настраиваем окно
-                        dlView.ShowInTaskbar = _Managers.ConfigManager.ShowInTaskbar;
-                        dlView.FormBorderStyle =
-                            _Managers.ConfigManager.FormBorderEnable ?
-                            FormBorderStyle.Sizable : FormBorderStyle.None;
+                        //DeviceListView dlView = new DeviceListView();
 
-                        DeviceListPresenter dlPresenter =
-                            new DeviceListPresenter(_Application, dlView, null, _Managers);
-                        presenter = dlPresenter;
-                        break;
+                        //// Настраиваем окно
+                        //dlView.ShowInTaskbar = _Managers.ConfigManager.ShowInTaskbar;
+                        //dlView.FormBorderStyle =
+                        //    _Managers.ConfigManager.FormBorderEnable ?
+                        //    FormBorderStyle.Sizable : FormBorderStyle.None;
+
+                        //DeviceListPresenter dlPresenter =
+                        //    new DeviceListPresenter(_Application, dlView, null, _Managers);
+                        //presenter = dlPresenter;
+                        //break;
                     }
                 case NavigationMenuItems.DeviceDetail:
                     {
-                        DeviceDetailView ddView = new DeviceDetailView();
+                        throw new NotImplementedException();
 
-                        // Настраиваем окно
-                        ddView.ShowInTaskbar = _Managers.ConfigManager.ShowInTaskbar;
-                        ddView.FormBorderStyle =
-                            _Managers.ConfigManager.FormBorderEnable ?
-                            FormBorderStyle.Sizable : FormBorderStyle.None;
+                        //DeviceDetailView ddView = new DeviceDetailView();
 
-                        DeviceDetailPresenter ddPresenter =
-                            new DeviceDetailPresenter(_Application, ddView, null, _Managers, null);
-                        presenter = ddPresenter;
-                        break; 
+                        //// Настраиваем окно
+                        //ddView.ShowInTaskbar = _Managers.ConfigManager.ShowInTaskbar;
+                        //ddView.FormBorderStyle =
+                        //    _Managers.ConfigManager.FormBorderEnable ?
+                        //    FormBorderStyle.Sizable : FormBorderStyle.None;
+
+                        //DeviceDetailPresenter ddPresenter =
+                        //    new DeviceDetailPresenter(_Application, ddView, null, _Managers, null);
+                        //presenter = ddPresenter;
+                        //break; 
                     }
                 case NavigationMenuItems.LogViewer:
                     {
-                        LogViewerView lvView = new LogViewerView();
+                        throw new NotImplementedException();
 
-                        // Настраиваем окно
-                        lvView.ShowInTaskbar = _Managers.ConfigManager.ShowInTaskbar;
-                        lvView.FormBorderStyle =
-                            _Managers.ConfigManager.FormBorderEnable ?
-                            FormBorderStyle.Sizable : FormBorderStyle.None;
+                        //LogViewerView lvView = new LogViewerView();
 
-                        LogViewerPresenter lvPresenter =
-                            new LogViewerPresenter(_Application, lvView, null, _Managers);
-                        presenter = lvPresenter;
-                        break; 
+                        //// Настраиваем окно
+                        //lvView.ShowInTaskbar = _Managers.ConfigManager.ShowInTaskbar;
+                        //lvView.FormBorderStyle =
+                        //    _Managers.ConfigManager.FormBorderEnable ?
+                        //    FormBorderStyle.Sizable : FormBorderStyle.None;
+
+                        //LogViewerPresenter lvPresenter =
+                        //    new LogViewerPresenter(_Application, lvView, null, _Managers);
+                        //presenter = lvPresenter;
+                        //break; 
                     }
                 default:
                     {

@@ -8,7 +8,7 @@ using System.Windows.Forms;
 using Mvp.WinApplication;
 using Mvp.View;
 
-namespace NGK.CorrosionMonitoringSystem.View
+namespace NGK.CorrosionMonitoringSystem.Views
 {
     public partial class NavigationMenuView : Form, INavigationMenuView
     {
@@ -17,7 +17,7 @@ namespace NGK.CorrosionMonitoringSystem.View
         public NavigationMenuView()
         {
             InitializeComponent();
-
+    
             SelectedMenuItem = NavigationMenuItems.NoSelection;
         }
 

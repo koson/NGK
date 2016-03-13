@@ -4,7 +4,7 @@ using System.Text;
 using Mvp.View;
 using System.Windows.Forms;
 
-namespace NGK.CorrosionMonitoringSystem.View
+namespace NGK.CorrosionMonitoringSystem.Views
 {
     public interface IDeviceDetailView : IView, IButtonsPanel
     {

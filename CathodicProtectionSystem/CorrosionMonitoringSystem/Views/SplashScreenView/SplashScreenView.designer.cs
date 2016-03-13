@@ -1,4 +1,4 @@
-namespace NGK.CorrosionMonitoringSystem.View
+namespace NGK.CorrosionMonitoringSystem.Views
 {
     partial class SplashScreenView
     {

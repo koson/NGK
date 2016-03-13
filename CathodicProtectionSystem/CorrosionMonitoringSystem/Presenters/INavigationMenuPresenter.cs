@@ -1,6 +1,6 @@
 ﻿using System;
 using Mvp.Presenter;
-using NGK.CorrosionMonitoringSystem.View;
+using NGK.CorrosionMonitoringSystem.Views;
 
 namespace NGK.CorrosionMonitoringSystem.Presenter
 {

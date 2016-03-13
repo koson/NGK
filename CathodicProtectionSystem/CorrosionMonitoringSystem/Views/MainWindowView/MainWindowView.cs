@@ -9,7 +9,7 @@ using Mvp.View;
 
 namespace NGK.CorrosionMonitoringSystem.Views
 {
-    public partial class TemplateView : Form, IButtonsPanel, IStatusPanel
+    public partial class MainWindowView : Form, IMainWindowView, IButtonsPanel, IStatusPanel
     {
         #region ButtonsPanel
         
@@ -32,7 +32,7 @@ namespace NGK.CorrosionMonitoringSystem.Views
 
         #region Constructors
 
-        public TemplateView()
+        public MainWindowView()
         {
             InitializeComponent();
         }
@@ -90,8 +90,8 @@ namespace NGK.CorrosionMonitoringSystem.Views
 
         public Boolean ButtonsPanelCollapsed
         {
-            get { return this._SplitContainerMain.Panel2Collapsed; }
-            set { this._SplitContainerMain.Panel2Collapsed = value; }
+            get { return _PanelSystemButtonsRegion.Visible; }
+            set { _PanelSystemButtonsRegion.Visible = value; }
         }
 
         public Boolean ButtonF3IsAccessible
@@ -171,71 +171,34 @@ namespace NGK.CorrosionMonitoringSystem.Views
 
             if (btn.Equals(_ButtonF2))
             {
-                OnButtonClick(new ButtonClickEventArgs(Buttons.F2));
+                //OnButtonClick(new ButtonClickEventArgs(Buttons.F2));
             }
             else if (btn.Equals(_ButtonF3))
             {
-                OnButtonClick(new ButtonClickEventArgs(Buttons.F3));
+                //OnButtonClick(new ButtonClickEventArgs(Buttons.F3));
             }
             else if (btn.Equals(_ButtonF4))
             {
-                OnButtonClick(new ButtonClickEventArgs(Buttons.F4));
+                //OnButtonClick(new ButtonClickEventArgs(Buttons.F4));
             }
             else if (btn.Equals(_ButtonF5))
             {
-                OnButtonClick(new ButtonClickEventArgs(Buttons.F5));
+                //OnButtonClick(new ButtonClickEventArgs(Buttons.F5));
             }
             else if (btn.Equals(_ButtonF6))
             {
                 // Скрывает или отображаем панель конопок
-                if (_SplitContainerMain.Panel2Collapsed)
-                {
-                    _SplitContainerMain.Panel2Collapsed = false;
-                }
-                else
-                {
-                    _SplitContainerMain.Panel2Collapsed = true;
-                }
+                _PanelSystemButtonsRegion.Visible = !_PanelSystemButtonsRegion.Visible;
             }
         }
 
         void EventHandler_TemplateView_Resize(object sender, EventArgs e)
         {
-            Form frm = (Form)sender;
-            //_SplitContainerMain.SplitterDistance = frm.Width / 7;
-            TuneButtonsPanel();
         }
 
         #endregion
 
         #region Methods
-
-        /// <summary>
-        /// Метод рассчитывает размеры кнопок в зависимости от размеров панели
-        /// </summary>
-        /// <returns></returns>
-        private void TuneButtonsPanel()
-        {
-            System.Drawing.Size size;
-
-            size = new Size(_SplitContainerMain.Panel2.Width, 
-                _SplitContainerMain.Panel2.Height / 7);
-
-            _ButtonF2.Size = size;
-            _ButtonF3.Size = size;
-            _ButtonF4.Size = size;
-            _ButtonF5.Size = size;
-            _ButtonF6.Size = size;
-
-            // Координата кнопки "1"
-            _ButtonF2.Location = new Point(0, this._ButtonF3.Height);
-            _ButtonF3.Location = new Point(0, this._ButtonF3.Height * 2);
-            _ButtonF4.Location = new Point(0, this._ButtonF3.Height * 3);
-            _ButtonF5.Location = new Point(0, this._ButtonF3.Height * 4);
-            _ButtonF6.Location = new Point(0, this._ButtonF3.Height * 5);
-
-            return;
-        }
 
         /// <summary>
         /// Перехватчик сообщений посылаемых системой форме
@@ -297,14 +260,7 @@ namespace NGK.CorrosionMonitoringSystem.Views
                             else
                             {
                                 // Скрывает или отображаем панель конопок
-                                if (_SplitContainerMain.Panel2Collapsed)
-                                {
-                                    _SplitContainerMain.Panel2Collapsed = false;
-                                }
-                                else
-                                {
-                                    _SplitContainerMain.Panel2Collapsed = true;
-                                }
+                                _PanelSystemButtonsRegion.Visible = !_PanelSystemButtonsRegion.Visible;
                             }
                             return false;
                         }
@@ -332,21 +288,42 @@ namespace NGK.CorrosionMonitoringSystem.Views
         public event EventHandler<ButtonClickEventArgs> ButtonClick;
         
         #endregion
-    }
 
-    public class ButtonClickEventArgs : EventArgs
-    {
-        public ButtonClickEventArgs(TemplateView.Buttons button)
+        #region IMainWindowView Members
+
+        public string Title
         {
-            _Button = button;
+            get
+            {
+                return Text;
+            }
+            set
+            {
+                Text = value;
+                _LabelTilte.Text = Text;
+            }
         }
 
-        TemplateView.Buttons _Button;
-
-        public TemplateView.Buttons Button
+        public UserControl CurrentControl
         {
-            get { return _Button; }
-        }
-    }
+            get
+            {
+                return _PanelWorkingRegion.Controls.Count > 0 ?
+                    (UserControl)_PanelWorkingRegion.Controls[0] : null;
+            }
+            set
+            {
+                foreach (Control control in _PanelWorkingRegion.Controls)
+                {
+                    control.Dispose();
+                }
+                _PanelWorkingRegion.Controls.Clear();
 
+                value.Dock = DockStyle.Fill;
+                _PanelWorkingRegion.Controls.Add(value);
+            }
+        }
+
+        #endregion
+    }
 }

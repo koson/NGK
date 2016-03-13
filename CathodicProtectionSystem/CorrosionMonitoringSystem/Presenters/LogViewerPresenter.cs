@@ -4,7 +4,7 @@ using System.Text;
 using Mvp.Input;
 using Mvp.Presenter;
 using Mvp.WinApplication;
-using NGK.CorrosionMonitoringSystem.View;
+using NGK.CorrosionMonitoringSystem.Views;
 using NGK.CorrosionMonitoringSystem.Managers;
 
 namespace NGK.CorrosionMonitoringSystem.Presenter
