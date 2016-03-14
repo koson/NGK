@@ -9,29 +9,19 @@ using Mvp.WinApplication;
 using NGK.CorrosionMonitoringSystem.Views;
 using NGK.CorrosionMonitoringSystem.Managers;
 
-namespace NGK.CorrosionMonitoringSystem.Presenter
+namespace NGK.CorrosionMonitoringSystem.Presenters
 {
     public class PivoteTablePresenter: Presenter<IPivotTableView>
     {
         #region Constructors
         
         public PivoteTablePresenter(IApplicationController application,
-            IPivotTableView view, object model, IManagers managers):
-            base(view, application)
+            IPivotTableView view, IViewRegion region, object model, 
+            IManagers managers):
+            base(view, region, application)
         {
             _Name = NavigationMenuItems.PivoteTable.ToString();
-            _Managers = managers;
-            
-            // настраиваем кнопки
-            _View.ButtonF3IsAccessible = false;
-
-            _ShowMenuCommand = new Command(
-                new CommandAction(OnShowMenu), new Condition(CanShowMenu));
-
-            view.ButtonClick += 
-                new EventHandler<ButtonClickEventArgs>(EventHandler_View_ButtonClick);
-
-            _View.TotalDevices = _Managers.CanNetworkService.Devices.Count;
+            _Managers = managers;            
         }
         
         #endregion
@@ -45,6 +35,25 @@ namespace NGK.CorrosionMonitoringSystem.Presenter
             get { return (IPivotTableView)base.View; }
         }
 
+        IButtonsPanel _Buttons;
+
+        public IButtonsPanel ButtonsPanel
+        {
+            get { return _Buttons; }
+            set
+            {
+                _Buttons = value;
+                if (_Buttons != null)
+                {
+                    // настраиваем кнопки
+                    //_Buttons = buttons;
+                    //_Buttons.ButtonF3IsAccessible = false;
+                    //_Buttons.ButtonClick +=
+                    //    new EventHandler<ButtonClickEventArgs>(EventHandler_View_ButtonClick);
+                }
+            }
+        }
+
         #endregion
 
         #region Event Handlers
@@ -53,9 +62,8 @@ namespace NGK.CorrosionMonitoringSystem.Presenter
         {
             switch (e.Button)
             {
-                case TemplateView.Buttons.F2:
+                case SystemButtons.F2:
                     {
-                        _ShowMenuCommand.Execute();
                         break; 
                     }
             }
@@ -64,19 +72,6 @@ namespace NGK.CorrosionMonitoringSystem.Presenter
         #endregion
 
         #region Commands
-
-        Command _ShowMenuCommand;
-        
-        void OnShowMenu()
-        {
-            _Managers.NavigationService.ShowNavigationMenu();
-        }
-
-        bool CanShowMenu()
-        {
-            return true;
-        }
-
         #endregion
     }
 }

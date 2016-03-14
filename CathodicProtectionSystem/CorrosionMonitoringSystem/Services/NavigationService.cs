@@ -4,7 +4,7 @@ using System.Text;
 using System.Windows.Forms;
 using Mvp.Presenter;
 using Mvp.WinApplication;
-using NGK.CorrosionMonitoringSystem.Presenter;
+using NGK.CorrosionMonitoringSystem.Presenters;
 using NGK.CorrosionMonitoringSystem.Views;
 using NGK.CorrosionMonitoringSystem.Managers;
 
@@ -72,26 +72,50 @@ namespace NGK.CorrosionMonitoringSystem.Services
                     { return; }
                 case NavigationMenuItems.PivoteTable:
                     {
-                        presenter = _Managers.PresentersFactory
-                            .Create(NavigationMenuItems.PivoteTable);
+                        if (_Application.CurrentPresenter is MainWindowPresenter)
+                        {
+                            MainWindowPresenter windowPresenter =
+                                _Application.CurrentPresenter as MainWindowPresenter;
+                            presenter = _Managers.PresentersFactory
+                                .Create(NavigationMenuItems.PivoteTable, 
+                                windowPresenter.ViewConcrete.WorkingRegion);
+                        }
                         break;
                     }
                 case NavigationMenuItems.DeviceList:
                     {
-                        presenter = _Managers.PresentersFactory
-                            .Create(NavigationMenuItems.DeviceList);
+                        if (_Application.CurrentPresenter is MainWindowPresenter)
+                        {
+                            MainWindowPresenter windowPresenter =
+                                _Application.CurrentPresenter as MainWindowPresenter;
+                            presenter = _Managers.PresentersFactory
+                                .Create(NavigationMenuItems.DeviceList,
+                                windowPresenter.ViewConcrete.WorkingRegion);
+                        }
                         break;
                     }
                 case NavigationMenuItems.DeviceDetail:
                     {
-                        presenter = _Managers.PresentersFactory
-                            .Create(NavigationMenuItems.DeviceDetail);
+                        if (_Application.CurrentPresenter is MainWindowPresenter)
+                        {
+                            MainWindowPresenter windowPresenter =
+                                _Application.CurrentPresenter as MainWindowPresenter;
+                            presenter = _Managers.PresentersFactory
+                                .Create(NavigationMenuItems.DeviceDetail,
+                                windowPresenter.ViewConcrete.WorkingRegion);
+                        }
                         break; 
                     }
                 case NavigationMenuItems.LogViewer:
                     {
-                        presenter = _Managers.PresentersFactory
-                            .Create(NavigationMenuItems.LogViewer);
+                        if (_Application.CurrentPresenter is MainWindowPresenter)
+                        {
+                            MainWindowPresenter windowPresenter =
+                                _Application.CurrentPresenter as MainWindowPresenter;
+                            presenter = _Managers.PresentersFactory
+                                .Create(NavigationMenuItems.LogViewer,
+                                windowPresenter.ViewConcrete.WorkingRegion);
+                        }
                         break; 
                     }
                 default:
@@ -99,7 +123,7 @@ namespace NGK.CorrosionMonitoringSystem.Services
                         throw new NotSupportedException();
                     }
             }
-            _Application.ShowWindow(presenter);
+            //_Application.ShowWindow(presenter);
         }
 
         #endregion

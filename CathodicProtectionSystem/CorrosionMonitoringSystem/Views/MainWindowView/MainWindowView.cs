@@ -6,35 +6,21 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using Mvp.View;
+using Mvp.View.Collections.ObjectModel;
 
 namespace NGK.CorrosionMonitoringSystem.Views
 {
-    public partial class MainWindowView : Form, IMainWindowView, IButtonsPanel, IStatusPanel
+    public partial class MainWindowView : Form, IMainWindowView
     {
-        #region ButtonsPanel
-        
-        public enum Buttons
-        {
-            /// <summary>
-            /// Меню
-            /// </summary>
-            F2,
-            F3,
-            F4,
-            F5,
-            /// <summary>
-            /// Скрыть/отобразить панель кнопок
-            /// </summary>
-            F6
-        }
-        
-        #endregion
-
         #region Constructors
 
         public MainWindowView()
         {
             InitializeComponent();
+
+            _ViewRegionCollection = new ViewRegionCollection();
+            _ViewRegionCollection.Add(new ViewRegion(_PanelWorkingRegion));
+            _ViewRegionCollection.Add(new ViewRegion(_PanelTitleRegion));
         }
 
         #endregion
@@ -43,6 +29,7 @@ namespace NGK.CorrosionMonitoringSystem.Views
 
         protected static object SyncRoot = new object();
         Timer _Timer;
+        ViewRegionCollection _ViewRegionCollection;
 
         /// <summary>
         /// Всего устройств в системе
@@ -141,11 +128,24 @@ namespace NGK.CorrosionMonitoringSystem.Views
 
         public ViewType ViewType { get { return ViewType.Window; } }
 
+        public IViewRegion[] ViewRegions
+        {
+            get
+            {
+                IViewRegion[] regions;
+                lock (SyncRoot)
+                {
+                    regions = new IViewRegion[_ViewRegionCollection.Count];
+                    _ViewRegionCollection.CopyTo(regions, 0);
+                }
+                return regions;
+            }
+        }
         #endregion
 
         #region Event Handlers
 
-        void TemplateView_Load(object sender, EventArgs e)
+        void EventHandler_MainWindowView_Load(object sender, EventArgs e)
         {
             _Timer = new Timer();
             _Timer.Interval = 1000;
@@ -171,29 +171,25 @@ namespace NGK.CorrosionMonitoringSystem.Views
 
             if (btn.Equals(_ButtonF2))
             {
-                //OnButtonClick(new ButtonClickEventArgs(Buttons.F2));
+                OnButtonClick(new ButtonClickEventArgs(SystemButtons.F2));
             }
             else if (btn.Equals(_ButtonF3))
             {
-                //OnButtonClick(new ButtonClickEventArgs(Buttons.F3));
+                OnButtonClick(new ButtonClickEventArgs(SystemButtons.F3));
             }
             else if (btn.Equals(_ButtonF4))
             {
-                //OnButtonClick(new ButtonClickEventArgs(Buttons.F4));
+                OnButtonClick(new ButtonClickEventArgs(SystemButtons.F4));
             }
             else if (btn.Equals(_ButtonF5))
             {
-                //OnButtonClick(new ButtonClickEventArgs(Buttons.F5));
+                OnButtonClick(new ButtonClickEventArgs(SystemButtons.F5));
             }
             else if (btn.Equals(_ButtonF6))
             {
                 // Скрывает или отображаем панель конопок
                 _PanelSystemButtonsRegion.Visible = !_PanelSystemButtonsRegion.Visible;
             }
-        }
-
-        void EventHandler_TemplateView_Resize(object sender, EventArgs e)
-        {
         }
 
         #endregion
@@ -304,24 +300,14 @@ namespace NGK.CorrosionMonitoringSystem.Views
             }
         }
 
-        public UserControl CurrentControl
+        public IViewRegion WorkingRegion
         {
-            get
-            {
-                return _PanelWorkingRegion.Controls.Count > 0 ?
-                    (UserControl)_PanelWorkingRegion.Controls[0] : null;
-            }
-            set
-            {
-                foreach (Control control in _PanelWorkingRegion.Controls)
-                {
-                    control.Dispose();
-                }
-                _PanelWorkingRegion.Controls.Clear();
+            get { return _ViewRegionCollection[_PanelWorkingRegion.Name]; }
+        }
 
-                value.Dock = DockStyle.Fill;
-                _PanelWorkingRegion.Controls.Add(value);
-            }
+        public IViewRegion TitleRegion
+        {
+            get { return _ViewRegionCollection[_PanelTitleRegion.Name]; }
         }
 
         #endregion

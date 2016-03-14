@@ -171,19 +171,19 @@ namespace NGK.CorrosionMonitoringSystem.Views
 
             if (btn.Equals(_ButtonF2))
             {
-                OnButtonClick(new ButtonClickEventArgs(Buttons.F2));
+                OnButtonClick(new ButtonClickEventArgs(SystemButtons.F2));
             }
             else if (btn.Equals(_ButtonF3))
             {
-                OnButtonClick(new ButtonClickEventArgs(Buttons.F3));
+                OnButtonClick(new ButtonClickEventArgs(SystemButtons.F3));
             }
             else if (btn.Equals(_ButtonF4))
             {
-                OnButtonClick(new ButtonClickEventArgs(Buttons.F4));
+                OnButtonClick(new ButtonClickEventArgs(SystemButtons.F4));
             }
             else if (btn.Equals(_ButtonF5))
             {
-                OnButtonClick(new ButtonClickEventArgs(Buttons.F5));
+                OnButtonClick(new ButtonClickEventArgs(SystemButtons.F5));
             }
             else if (btn.Equals(_ButtonF6))
             {
@@ -336,14 +336,14 @@ namespace NGK.CorrosionMonitoringSystem.Views
 
     public class ButtonClickEventArgs : EventArgs
     {
-        public ButtonClickEventArgs(TemplateView.Buttons button)
+        public ButtonClickEventArgs(SystemButtons button)
         {
             _Button = button;
         }
 
-        TemplateView.Buttons _Button;
+        SystemButtons _Button;
 
-        public TemplateView.Buttons Button
+        public SystemButtons Button
         {
             get { return _Button; }
         }

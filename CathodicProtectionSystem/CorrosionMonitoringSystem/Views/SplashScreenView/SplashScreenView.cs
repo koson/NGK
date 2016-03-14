@@ -65,8 +65,8 @@ namespace NGK.CorrosionMonitoringSystem.Views
 
         #region Fields And Properties
 
-        private Content _Content;
-
+        Content _Content;
+        
         public string Info
         {
             get { return _LabelOutputInfo.Text; }
@@ -85,6 +85,13 @@ namespace NGK.CorrosionMonitoringSystem.Views
         }
 
         public ViewType ViewType { get { return ViewType.Window; } }
+
+        IViewRegion[] _ViewRegions = new IViewRegion[0];
+        
+        public IViewRegion[] ViewRegions
+        {
+            get { return _ViewRegions; }
+        }
 
         #endregion
 
@@ -143,5 +150,6 @@ namespace NGK.CorrosionMonitoringSystem.Views
         }
 
         #endregion
+
     }
 }

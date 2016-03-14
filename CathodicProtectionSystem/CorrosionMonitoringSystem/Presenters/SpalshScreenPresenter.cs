@@ -10,7 +10,7 @@ using Mvp.WinApplication;
 using NGK.CorrosionMonitoringSystem.Views;
 using NGK.CorrosionMonitoringSystem.Managers;
 
-namespace NGK.CorrosionMonitoringSystem.Presenter
+namespace NGK.CorrosionMonitoringSystem.Presenters
 {
     public class SplashScreenPresenter: Presenter<ISplashScreenView>
     {
@@ -59,7 +59,7 @@ namespace NGK.CorrosionMonitoringSystem.Presenter
             object sender, RunWorkerCompletedEventArgs e)
         {
             IPresenter presenter = 
-                _Managers.PresentersFactory.Create(NavigationMenuItems.NoSelection);
+                _Managers.PresentersFactory.Create(NavigationMenuItems.NoSelection, null);
             presenter.Show();
         }
 

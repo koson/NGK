@@ -7,7 +7,7 @@ using NLog;
 using Mvp.WinApplication;
 using Mvp.View;
 using Mvp.Presenter;
-using NGK.CorrosionMonitoringSystem.Presenter;
+using NGK.CorrosionMonitoringSystem.Presenters;
 using NGK.CorrosionMonitoringSystem.Views;
 using NGK.CAN.ApplicationLayer.Network.Master;
 using NGK.CorrosionMonitoringSystem.Managers;

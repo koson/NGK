@@ -59,6 +59,13 @@ namespace NGK.CorrosionMonitoringSystem.Views
 
         public ViewType ViewType { get { return ViewType.Window; } }
 
+        IViewRegion[] _ViewRegions = new IViewRegion[0];
+
+        public IViewRegion[] ViewRegions
+        {
+            get { return _ViewRegions; }
+        }
+
         #endregion
 
         #region Event Handlers

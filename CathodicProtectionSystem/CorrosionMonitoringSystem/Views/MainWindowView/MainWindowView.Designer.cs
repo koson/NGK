@@ -213,8 +213,7 @@ namespace NGK.CorrosionMonitoringSystem.Views
             this.Name = "MainWindowView";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "TemplateView";
-            this.Load += new System.EventHandler(this.TemplateView_Load);
-            this.Resize += new System.EventHandler(this.EventHandler_TemplateView_Resize);
+            this.Load += new System.EventHandler(this.EventHandler_MainWindowView_Load);
             this._StatusStripMain.ResumeLayout(false);
             this._StatusStripMain.PerformLayout();
             this._PanelTitleRegion.ResumeLayout(false);

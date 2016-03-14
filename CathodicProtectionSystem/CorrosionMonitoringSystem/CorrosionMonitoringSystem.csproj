@@ -111,6 +111,10 @@
       <SubType>Designer</SubType>
       <DependentUpon>NavigationMenuView.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Views\PavotTableView\PivotTableView.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>PivotTableView.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\SplashScreenView\SplashScreenView.resx">
       <DependentUpon>SplashScreenView.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -152,12 +156,19 @@
     <Compile Include="Views\MainWindowView\MainWindowView.Designer.cs">
       <DependentUpon>MainWindowView.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\MainWindowView\SystemButtons.cs" />
     <Compile Include="Views\NavigationMenu\INavigationMenuView.cs" />
     <Compile Include="Views\NavigationMenu\NavigationMenuView.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Views\NavigationMenu\NavigationMenuView.Designer.cs">
       <DependentUpon>NavigationMenuView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PavotTableView\PivotTableView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\PavotTableView\PivotTableView.Designer.cs">
+      <DependentUpon>PivotTableView.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\SplashScreenView\SplashScreenView.cs">
       <SubType>Form</SubType>

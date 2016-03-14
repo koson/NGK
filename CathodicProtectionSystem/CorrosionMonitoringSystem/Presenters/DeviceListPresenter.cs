@@ -8,17 +8,19 @@ using NGK.CorrosionMonitoringSystem.Views;
 using NGK.CorrosionMonitoringSystem.Models;
 using NGK.CorrosionMonitoringSystem.Managers;
 using System.Windows.Forms;
+using Mvp.View;
 
-namespace NGK.CorrosionMonitoringSystem.Presenter
+namespace NGK.CorrosionMonitoringSystem.Presenters
 {
     public class DeviceListPresenter : Presenter<IDeviceListView>
     {
         #region Constructors
 
         public DeviceListPresenter(IApplicationController application,
-            IDeviceListView view, object model, IManagers managers)
+            IDeviceListView view, IViewRegion region, object model, 
+            IManagers managers)
             : 
-            base(view, application)
+            base(view, region, application)
         {
             _Name = NavigationMenuItems.DeviceList.ToString();
             _Managers = managers;
@@ -71,12 +73,12 @@ namespace NGK.CorrosionMonitoringSystem.Presenter
         {
             switch (e.Button)
             {
-                case TemplateView.Buttons.F2:
+                case SystemButtons.F2:
                     {
                         _ShowMenuCommand.Execute();
                         break;
                     }
-                case TemplateView.Buttons.F3:
+                case SystemButtons.F3:
                     {
                         _DeviceDetailCommand.Execute();
                         break;
@@ -116,7 +118,8 @@ namespace NGK.CorrosionMonitoringSystem.Presenter
         void OnDeviceDetail()
         {
             DeviceDetailPresenter presenter = 
-                (DeviceDetailPresenter)_Managers.PresentersFactory.Create(NavigationMenuItems.DeviceDetail);
+                (DeviceDetailPresenter)_Managers.PresentersFactory.Create(
+                NavigationMenuItems.DeviceDetail, ViewRegion );
             presenter.Device = SelectedDevice;
             presenter.Show();
         }

@@ -9,6 +9,11 @@ using Mvp.WinApplication;
 
 namespace Mvp.Presenter
 {
+    /// <summary>
+    /// TODO: разделить данный класс на два PresenterWindow и PresenterPartialView
+    /// (и возможно PresenterModalWindow - ViewType.ModalWindow)
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public class Presenter<T> : IPresenter, IDisposable 
         where T: IView
     {
@@ -16,15 +21,38 @@ namespace Mvp.Presenter
 
         public Presenter(T view, IApplicationController application)
         {
+            if (view.ViewType != ViewType.Window)
+            {
+                throw new ArgumentException(
+                    "Ќевозмоно создать презентер с регионом null и view не €вл€ющимс€ окном",
+                    "view");
+            }
+            _Region = null;
             _Commands = new List<ICommand>();
             _View = view;
             _Application = application;
         }
 
+        public Presenter(T view, IViewRegion region, 
+            IApplicationController application)
+        {
+            if ((view.ViewType == ViewType.Window) && (region != null))
+            {
+                throw new Exception(
+                    "ѕопытка создать презентер имеющий тип View - window и имеющий регион не равный null");
+            }
+            _Region = region;
+            _Commands = new List<ICommand>();
+            _View = view;
+            _Application = application;
+        }
         #endregion
 
         #region Fields And Properties
-        
+
+        IViewRegion _Region;
+        public IViewRegion ViewRegion { get { return _Region; } }
+
         protected List<ICommand> _Commands;
         /// <summary>
         /// ћассив зарегистрированных комманд представител€
@@ -48,12 +76,12 @@ namespace Mvp.Presenter
             get { return _Name; }
         }
 
-        protected ViewType _ViewType;
+        //protected ViewType _ViewType;
 
-        public ViewType ViewType 
-        {
-            get { return _ViewType; } 
-        }
+        //public ViewType ViewType 
+        //{
+        //    get { return _ViewType; } 
+        //}
 
         protected IApplicationController _Application;
         
@@ -133,7 +161,23 @@ namespace Mvp.Presenter
 
         public void Show()
         {
-            Application.ShowWindow(this);
+            switch (View.ViewType)
+            {
+                case ViewType.Window:
+                    {
+                        Application.ShowWindow(this);
+                        break;
+                    }
+                case ViewType.Control:
+                    {
+                        ViewRegion.Show(View);
+                        break;
+                    }
+                default:
+                    {
+                        throw new InvalidOperationException();
+                    }
+            }
         }
 
         #endregion

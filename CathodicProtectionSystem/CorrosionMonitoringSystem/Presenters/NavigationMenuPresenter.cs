@@ -7,7 +7,7 @@ using Mvp.WinApplication;
 using NGK.CorrosionMonitoringSystem.Views;
 using NGK.CorrosionMonitoringSystem.Managers;
 
-namespace NGK.CorrosionMonitoringSystem.Presenter
+namespace NGK.CorrosionMonitoringSystem.Presenters
 {
     public class NavigationMenuPresenter : Presenter<INavigationMenuView>, 
         INavigationMenuPresenter

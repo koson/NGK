@@ -5,7 +5,8 @@ using System.Windows.Forms;
 using Mvp.Presenter;
 using Mvp.WinApplication;
 using NGK.CorrosionMonitoringSystem.Views;
-using NGK.CorrosionMonitoringSystem.Presenter;
+using NGK.CorrosionMonitoringSystem.Presenters;
+using Mvp.View;
 
 namespace NGK.CorrosionMonitoringSystem.Managers.Factory
 {
@@ -31,7 +32,7 @@ namespace NGK.CorrosionMonitoringSystem.Managers.Factory
 
         #region Methods
 
-        public IPresenter Create(NavigationMenuItems window)
+        public IPresenter Create(NavigationMenuItems window, IViewRegion region)
         {
             IPresenter presenter;
 
@@ -48,20 +49,12 @@ namespace NGK.CorrosionMonitoringSystem.Managers.Factory
                     }
                 case NavigationMenuItems.PivoteTable:
                     {
-                        throw new NotImplementedException();
+                        PivotTableView ptView = new PivotTableView();
 
-                        //PivotTableView ptView = new PivotTableView();
-
-                        //// Настраиваем окно
-                        //ptView.ShowInTaskbar = _Managers.ConfigManager.ShowInTaskbar;
-                        //ptView.FormBorderStyle =
-                        //    _Managers.ConfigManager.FormBorderEnable ?
-                        //    FormBorderStyle.Sizable : FormBorderStyle.None;
-
-                        //PivoteTablePresenter ptPresenter =
-                        //    new PivoteTablePresenter(_Application, ptView, null, _Managers);
-                        //presenter = ptPresenter;
-                        //break;
+                        PivoteTablePresenter ptPresenter =
+                            new PivoteTablePresenter(_Application, ptView, region, null, _Managers);
+                        presenter = ptPresenter;
+                        break;
                     }
                 case NavigationMenuItems.DeviceList:
                     {

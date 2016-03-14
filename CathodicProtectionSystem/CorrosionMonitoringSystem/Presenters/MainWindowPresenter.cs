@@ -6,7 +6,7 @@ using NGK.CorrosionMonitoringSystem.Views;
 using NGK.CorrosionMonitoringSystem.Managers;
 using Mvp.Presenter;
 
-namespace NGK.CorrosionMonitoringSystem.Presenter
+namespace NGK.CorrosionMonitoringSystem.Presenters
 {
     public class MainWindowPresenter : Presenter<IMainWindowView>
     {
@@ -20,6 +20,11 @@ namespace NGK.CorrosionMonitoringSystem.Presenter
             _Name = String.Empty;
             _Managers = managers;
             ViewConcrete.Title = String.Empty;
+
+            IPresenter presenter =
+                _Managers.PresentersFactory.Create(NavigationMenuItems.PivoteTable, 
+                ViewConcrete.WorkingRegion);
+            presenter.Show();
         }
 
         #endregion

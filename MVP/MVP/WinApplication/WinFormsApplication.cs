@@ -140,5 +140,6 @@ namespace Mvp.WinApplication
         public event EventHandler ApplicationClosing;
 
         #endregion
+
     }
 }

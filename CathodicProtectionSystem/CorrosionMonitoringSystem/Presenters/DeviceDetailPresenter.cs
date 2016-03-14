@@ -10,7 +10,7 @@ using NGK.CorrosionMonitoringSystem.Views;
 using NGK.CorrosionMonitoringSystem.Models;
 using System.Windows.Forms;
 
-namespace NGK.CorrosionMonitoringSystem.Presenter
+namespace NGK.CorrosionMonitoringSystem.Presenters
 {
     public class DeviceDetailPresenter: Presenter<IDeviceDetailView>
     {
@@ -91,7 +91,7 @@ namespace NGK.CorrosionMonitoringSystem.Presenter
         {
             switch (e.Button)
             {
-                case TemplateView.Buttons.F2:
+                case SystemButtons.F2:
                     {
                         _ShowMenuCommand.Execute();
                         break;

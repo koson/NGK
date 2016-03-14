@@ -6,15 +6,14 @@ using Mvp.View;
 
 namespace NGK.CorrosionMonitoringSystem.Views
 {
-    public interface IMainWindowView: IView
+    public interface IMainWindowView : IView,
+        IButtonsPanel, IStatusPanel
     {
         /// <summary>
         /// ¬озвращает заголовок окна
         /// </summary>
         String Title { get; set; }
-        /// <summary>
-        /// ¬озвращает или устанавливает контрол в основной регион окна
-        /// </summary>
-        UserControl CurrentControl { get; set; }
+        IViewRegion WorkingRegion { get; }
+        IViewRegion TitleRegion { get; }
     }
 }

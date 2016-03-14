@@ -7,7 +7,7 @@ using Mvp.WinApplication;
 using NGK.CorrosionMonitoringSystem.Views;
 using NGK.CorrosionMonitoringSystem.Managers;
 
-namespace NGK.CorrosionMonitoringSystem.Presenter
+namespace NGK.CorrosionMonitoringSystem.Presenters
 {
     public class LogViewerPresenter: Presenter<ILogViewerView>
     {
@@ -48,7 +48,7 @@ namespace NGK.CorrosionMonitoringSystem.Presenter
         {
             switch (e.Button)
             {
-                case TemplateView.Buttons.F2:
+                case SystemButtons.F2:
                     {
                         _ShowMenuCommand.Execute();
                         break;

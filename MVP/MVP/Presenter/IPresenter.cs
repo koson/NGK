@@ -12,9 +12,9 @@ namespace Mvp.Presenter
     {
         IView View { get; }
         String Name { get; }
-        ViewType ViewType { get; }
+        IViewRegion ViewRegion { get; }
         /// <summary>
-        /// Показывает окно
+        /// Показывает окно если View - окно, или регион формы если View - контрол
         /// </summary>
         void Show();
     }

@@ -34,6 +34,13 @@ namespace NGK.CorrosionMonitoringSystem.Views
             }
         }
 
+        IViewRegion[] _ViewRegions = new IViewRegion[0];
+
+        public IViewRegion[] ViewRegions
+        {
+            get { return _ViewRegions; }
+        }
+
         #endregion
 
         #region IDeviceListView Members

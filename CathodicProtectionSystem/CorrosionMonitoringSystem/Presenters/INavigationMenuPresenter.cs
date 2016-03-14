@@ -2,7 +2,7 @@
 using Mvp.Presenter;
 using NGK.CorrosionMonitoringSystem.Views;
 
-namespace NGK.CorrosionMonitoringSystem.Presenter
+namespace NGK.CorrosionMonitoringSystem.Presenters
 {
     public interface INavigationMenuPresenter : IPresenter
     {
