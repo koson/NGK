@@ -10,6 +10,6 @@ namespace Mvp.View
     public enum ViewType
     {
         Window,
-        Control
+        Region
     }
 }

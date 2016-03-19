@@ -25,7 +25,7 @@ namespace NGK.CorrosionMonitoringSystem.Views
 
         public ViewType ViewType
         {
-            get { return ViewType.Control; }
+            get { return ViewType.Region; }
         }
 
         IViewRegion[] _ViewRegions = new IViewRegion[0];

@@ -23,7 +23,7 @@ namespace Mvp.View
 
         public void Show(IView partialView)
         {
-            if (partialView.ViewType != ViewType.Control)
+            if (partialView.ViewType != ViewType.Region)
             {
                 throw new ArgumentException(
                     "Попытка отобразить представление в регионе, не являющееся частичным", 

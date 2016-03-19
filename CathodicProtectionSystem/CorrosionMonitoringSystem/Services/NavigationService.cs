@@ -77,8 +77,7 @@ namespace NGK.CorrosionMonitoringSystem.Services
                             MainWindowPresenter windowPresenter =
                                 _Application.CurrentPresenter as MainWindowPresenter;
                             presenter = _Managers.PresentersFactory
-                                .Create(NavigationMenuItems.PivoteTable, 
-                                windowPresenter.ViewConcrete.WorkingRegion);
+                                .Create(NavigationMenuItems.PivoteTable);
                         }
                         break;
                     }
@@ -89,8 +88,7 @@ namespace NGK.CorrosionMonitoringSystem.Services
                             MainWindowPresenter windowPresenter =
                                 _Application.CurrentPresenter as MainWindowPresenter;
                             presenter = _Managers.PresentersFactory
-                                .Create(NavigationMenuItems.DeviceList,
-                                windowPresenter.ViewConcrete.WorkingRegion);
+                                .Create(NavigationMenuItems.DeviceList);
                         }
                         break;
                     }
@@ -101,8 +99,7 @@ namespace NGK.CorrosionMonitoringSystem.Services
                             MainWindowPresenter windowPresenter =
                                 _Application.CurrentPresenter as MainWindowPresenter;
                             presenter = _Managers.PresentersFactory
-                                .Create(NavigationMenuItems.DeviceDetail,
-                                windowPresenter.ViewConcrete.WorkingRegion);
+                                .Create(NavigationMenuItems.DeviceDetail);
                         }
                         break; 
                     }
@@ -113,8 +110,7 @@ namespace NGK.CorrosionMonitoringSystem.Services
                             MainWindowPresenter windowPresenter =
                                 _Application.CurrentPresenter as MainWindowPresenter;
                             presenter = _Managers.PresentersFactory
-                                .Create(NavigationMenuItems.LogViewer,
-                                windowPresenter.ViewConcrete.WorkingRegion);
+                                .Create(NavigationMenuItems.LogViewer);
                         }
                         break; 
                     }

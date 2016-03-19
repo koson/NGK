@@ -54,6 +54,17 @@ namespace NGK.CorrosionMonitoringSystem.Presenters
             }
         }
 
+        MainWindowPresenter HostWindowPresenter
+        {
+            get { return (MainWindowPresenter)HostPresenter; }
+        }
+
+        public override void Show()
+        {
+            base.Show();
+            HostWindowPresenter.Title = @"Таблица параметров";
+        }
+
         #endregion
 
         #region Event Handlers

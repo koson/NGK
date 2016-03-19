@@ -119,7 +119,7 @@ namespace NGK.CorrosionMonitoringSystem.Presenters
         {
             DeviceDetailPresenter presenter = 
                 (DeviceDetailPresenter)_Managers.PresentersFactory.Create(
-                NavigationMenuItems.DeviceDetail, ViewRegion );
+                NavigationMenuItems.DeviceDetail);
             presenter.Device = SelectedDevice;
             presenter.Show();
         }

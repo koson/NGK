@@ -39,7 +39,7 @@ namespace Mvp.Presenter
             if ((view.ViewType == ViewType.Window) && (region != null))
             {
                 throw new Exception(
-                    "Попытка создать презентер имеющий тип View - window и имеющий регион не равный null");
+                    "Попытка создать презентер имеющий тип View = window и имеющий регион не равный null");
             }
             _Region = region;
             _Commands = new List<ICommand>();
@@ -51,7 +51,18 @@ namespace Mvp.Presenter
         #region Fields And Properties
 
         IViewRegion _Region;
-        public IViewRegion ViewRegion { get { return _Region; } }
+        public IViewRegion ViewRegion 
+        { 
+            get { return _Region; }
+            set { _Region = value; }
+        }
+
+        IPresenter _HostPresenter;
+        public IPresenter HostPresenter
+        {
+            get { return _HostPresenter; }
+            set { _HostPresenter = value; }
+        }
 
         protected List<ICommand> _Commands;
         /// <summary>
@@ -75,13 +86,6 @@ namespace Mvp.Presenter
         {
             get { return _Name; }
         }
-
-        //protected ViewType _ViewType;
-
-        //public ViewType ViewType 
-        //{
-        //    get { return _ViewType; } 
-        //}
 
         protected IApplicationController _Application;
         
@@ -137,7 +141,13 @@ namespace Mvp.Presenter
             }
         }
 
-        public virtual void Dispose() {}
+        public virtual void Dispose() 
+        {
+            if (View != null)
+            {
+                View.Dispose();
+            }
+        }
 
         protected void InitializeCommands()
         {
@@ -159,7 +169,7 @@ namespace Mvp.Presenter
             _Commands = commands;
         }
 
-        public void Show()
+        public virtual void Show()
         {
             switch (View.ViewType)
             {
@@ -168,7 +178,7 @@ namespace Mvp.Presenter
                         Application.ShowWindow(this);
                         break;
                     }
-                case ViewType.Control:
+                case ViewType.Region:
                     {
                         ViewRegion.Show(View);
                         break;

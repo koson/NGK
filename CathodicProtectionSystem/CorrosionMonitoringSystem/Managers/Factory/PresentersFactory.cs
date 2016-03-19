@@ -32,7 +32,7 @@ namespace NGK.CorrosionMonitoringSystem.Managers.Factory
 
         #region Methods
 
-        public IPresenter Create(NavigationMenuItems window, IViewRegion region)
+        public IPresenter Create(NavigationMenuItems window)
         {
             IPresenter presenter;
 
@@ -52,7 +52,7 @@ namespace NGK.CorrosionMonitoringSystem.Managers.Factory
                         PivotTableView ptView = new PivotTableView();
 
                         PivoteTablePresenter ptPresenter =
-                            new PivoteTablePresenter(_Application, ptView, region, null, _Managers);
+                            new PivoteTablePresenter(_Application, ptView, null, null, _Managers);
                         presenter = ptPresenter;
                         break;
                     }

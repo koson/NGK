@@ -59,7 +59,7 @@ namespace NGK.CorrosionMonitoringSystem.Presenters
             object sender, RunWorkerCompletedEventArgs e)
         {
             IPresenter presenter = 
-                _Managers.PresentersFactory.Create(NavigationMenuItems.NoSelection, null);
+                _Managers.PresentersFactory.Create(NavigationMenuItems.NoSelection);
             presenter.Show();
         }
 

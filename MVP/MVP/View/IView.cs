@@ -8,7 +8,7 @@ namespace Mvp.View
     /// <summary>
     /// Интерферйс View паттерна MVP
     /// </summary>
-    public interface IView
+    public interface IView: IDisposable
     {
         #region Properties
 

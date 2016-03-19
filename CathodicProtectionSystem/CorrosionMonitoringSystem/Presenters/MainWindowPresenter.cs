@@ -5,6 +5,7 @@ using Mvp.WinApplication;
 using NGK.CorrosionMonitoringSystem.Views;
 using NGK.CorrosionMonitoringSystem.Managers;
 using Mvp.Presenter;
+using Mvp.View;
 
 namespace NGK.CorrosionMonitoringSystem.Presenters
 {
@@ -22,9 +23,8 @@ namespace NGK.CorrosionMonitoringSystem.Presenters
             ViewConcrete.Title = String.Empty;
 
             IPresenter presenter =
-                _Managers.PresentersFactory.Create(NavigationMenuItems.PivoteTable, 
-                ViewConcrete.WorkingRegion);
-            presenter.Show();
+                _Managers.PresentersFactory.Create(NavigationMenuItems.PivoteTable);
+            WorkingRegionPresenter = presenter;
         }
 
         #endregion
@@ -36,6 +36,32 @@ namespace NGK.CorrosionMonitoringSystem.Presenters
         public IMainWindowView ViewConcrete
         {
             get { return (IMainWindowView)base.View; }
+        }
+
+        IPresenter _WorkingRegionPresenter;
+
+        public IPresenter WorkingRegionPresenter 
+        {
+            get { return _WorkingRegionPresenter; }
+            set
+            {
+                if (value.View.ViewType != ViewType.Region)
+                {
+                    throw new ArgumentException(
+                        "ѕопытка установить значение недопустимого типа", 
+                        "WorkingRegionPresenter");
+                }
+                _WorkingRegionPresenter = value;
+                _WorkingRegionPresenter.ViewRegion = ViewConcrete.WorkingRegion;
+                _WorkingRegionPresenter.HostPresenter = this;
+                _WorkingRegionPresenter.Show();
+            }
+        }
+
+        public string Title
+        {
+            get { return ViewConcrete.Title; }
+            set { ViewConcrete.Title = value; }
         }
 
         #endregion
