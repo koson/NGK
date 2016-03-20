@@ -16,14 +16,12 @@ namespace Mvp.Input
         {
             _OnExecute = onExecute;
             _OnCanExecute = canExecute;
-            _CanExecute = false;
         }
 
         public Command(CommandAction onExecute)
         {
             _OnExecute = onExecute;
             _OnCanExecute = null;
-            _CanExecute = true;
         }
 
         #endregion
@@ -32,8 +30,9 @@ namespace Mvp.Input
 
         protected CommandAction _OnExecute;
         protected Condition _OnCanExecute;
-        protected bool _CanExecute;
-        
+        protected bool _CommandStatus = true;
+
+        public bool Status { get { return _CommandStatus; } }
 
         #endregion
 
@@ -48,12 +47,12 @@ namespace Mvp.Input
         {
             if (_OnCanExecute != null)
             {
-                if (_CanExecute != _OnCanExecute())
+                if (_CommandStatus != _OnCanExecute())
                 {
-                    _CanExecute = !_CanExecute;
+                    _CommandStatus = !_CommandStatus;
                     OnCanExecuteChanged();
                 }
-                return _CanExecute;
+                return _CommandStatus;
             }
             else
             {

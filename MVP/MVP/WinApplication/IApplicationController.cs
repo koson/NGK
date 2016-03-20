@@ -24,6 +24,6 @@ namespace Mvp.WinApplication
         /// </summary>
         /// <param name="view"></param>
         /// <returns></returns>
-        void ShowDialog(IPresenter presenter);
+        DialogResult ShowDialog(IPresenter presenter);
     }
 }

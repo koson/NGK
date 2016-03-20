@@ -35,22 +35,22 @@ namespace NGK.CorrosionMonitoringSystem.Presenters
             get { return (INavigationMenuView)base._View; }
         }
 
-        NavigationMenuItems _SelectedWindow;
+        ViewMode _SelectedVIewMode;
 
-        public NavigationMenuItems SelectedWindow
+        public ViewMode CurrentViewMode
         {
-            get { return _SelectedWindow; }
+            get { return _SelectedVIewMode; }
             set 
             { 
-                _SelectedWindow = value;
+                _SelectedVIewMode = value;
                 
                 if (ViewConcrete != null)
                 {
-                    ViewConcrete.SelectedMenuItem = _SelectedWindow;
+                    ViewConcrete.SelectedMenuItem = _SelectedVIewMode;
                     // Блокируем элементы меню
-                    switch (_SelectedWindow)
+                    switch (_SelectedVIewMode)
                     {
-                        case NavigationMenuItems.DeviceList:
+                        case ViewMode.DeviceList:
                             {
                                 ViewConcrete.DeviceListMenuEnabled = false;
                                 ViewConcrete.DeviceDetailMenuEnabled = true;
@@ -58,7 +58,7 @@ namespace NGK.CorrosionMonitoringSystem.Presenters
                                 ViewConcrete.PivoteTableMenuEnabled = true;
                                 break;
                             }
-                        case NavigationMenuItems.DeviceDetail:
+                        case ViewMode.DeviceDetail:
                             {
                                 ViewConcrete.DeviceListMenuEnabled = true;
                                 ViewConcrete.DeviceDetailMenuEnabled = false;
@@ -66,7 +66,7 @@ namespace NGK.CorrosionMonitoringSystem.Presenters
                                 ViewConcrete.PivoteTableMenuEnabled = false;
                                 break;
                             }
-                        case NavigationMenuItems.PivoteTable:
+                        case ViewMode.PivoteTable:
                             {
                                 ViewConcrete.DeviceListMenuEnabled = true;
                                 ViewConcrete.DeviceDetailMenuEnabled = false;
@@ -74,7 +74,7 @@ namespace NGK.CorrosionMonitoringSystem.Presenters
                                 ViewConcrete.PivoteTableMenuEnabled = false;
                                 break;
                             }
-                        case NavigationMenuItems.LogViewer:
+                        case ViewMode.LogViewer:
                             {
                                 ViewConcrete.DeviceListMenuEnabled = true;
                                 ViewConcrete.DeviceDetailMenuEnabled = false;
@@ -94,7 +94,7 @@ namespace NGK.CorrosionMonitoringSystem.Presenters
         void EventHandler_View_MenuClosed(object sender, EventArgs e)
         {
             INavigationMenuView view = (INavigationMenuView)sender;
-            SelectedWindow = view.SelectedMenuItem;
+            CurrentViewMode = view.SelectedMenuItem;
         }
         
         #endregion

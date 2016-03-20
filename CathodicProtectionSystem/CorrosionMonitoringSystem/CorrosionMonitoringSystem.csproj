@@ -88,6 +88,7 @@
     <Compile Include="Presenters\DeviceDetailPresenter.cs" />
     <Compile Include="Presenters\DeviceListPresenter.cs" />
     <Compile Include="Presenters\INavigationMenuPresenter.cs" />
+    <Compile Include="Presenters\IViewMode.cs" />
     <Compile Include="Presenters\LogViewerPresenter.cs" />
     <Compile Include="Presenters\SpalshScreenPresenter.cs" />
     <Compile Include="Presenters\PivoteTablePresenter.cs" />

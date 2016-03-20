@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Windows.Forms;
 using Mvp.View;
+using Mvp.Input;
 
 namespace NGK.CorrosionMonitoringSystem.Views
 {
@@ -15,5 +16,6 @@ namespace NGK.CorrosionMonitoringSystem.Views
         String Title { get; set; }
         IViewRegion WorkingRegion { get; }
         IViewRegion TitleRegion { get; }
+        ICommand ShowMenuCommand { set; }
     }
 }

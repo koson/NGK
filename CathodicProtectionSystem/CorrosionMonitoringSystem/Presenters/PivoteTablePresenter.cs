@@ -11,7 +11,7 @@ using NGK.CorrosionMonitoringSystem.Managers;
 
 namespace NGK.CorrosionMonitoringSystem.Presenters
 {
-    public class PivoteTablePresenter: Presenter<IPivotTableView>
+    public class PivoteTablePresenter : Presenter<IPivotTableView>, IViewMode
     {
         #region Constructors
         
@@ -20,8 +20,8 @@ namespace NGK.CorrosionMonitoringSystem.Presenters
             IManagers managers):
             base(view, region, application)
         {
-            _Name = NavigationMenuItems.PivoteTable.ToString();
-            _Managers = managers;            
+            _Name = ViewMode.PivoteTable.ToString();
+            _Managers = managers;          
         }
         
         #endregion
@@ -59,6 +59,15 @@ namespace NGK.CorrosionMonitoringSystem.Presenters
             get { return (MainWindowPresenter)HostPresenter; }
         }
 
+        public ViewMode ViewMode 
+        { 
+            get { return ViewMode.PivoteTable; } 
+        }
+
+        #endregion
+
+        #region Methods
+
         public override void Show()
         {
             base.Show();
@@ -68,7 +77,7 @@ namespace NGK.CorrosionMonitoringSystem.Presenters
         #endregion
 
         #region Event Handlers
-        
+
         void EventHandler_View_ButtonClick(object sender, ButtonClickEventArgs e)
         {
             switch (e.Button)

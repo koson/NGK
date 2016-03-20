@@ -8,6 +8,10 @@ namespace Mvp.Input
     public interface ICommand
     {
         /// <summary>
+        /// —осто€ние команды: можно выполнить или нет
+        /// </summary>
+        bool Status { get; }
+        /// <summary>
         /// «апускает команду на исполнение
         /// </summary>
         void Execute();

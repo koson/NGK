@@ -6,6 +6,6 @@ namespace NGK.CorrosionMonitoringSystem.Presenters
 {
     public interface INavigationMenuPresenter : IPresenter
     {
-        NavigationMenuItems SelectedWindow { get; set; }
+        ViewMode CurrentViewMode { get; set; }
     }
 }

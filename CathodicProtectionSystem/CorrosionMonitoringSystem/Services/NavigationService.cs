@@ -32,33 +32,30 @@ namespace NGK.CorrosionMonitoringSystem.Services
 
         #region INavigationService Members
 
-        public void ShowNavigationMenu()
+        public ViewMode ShowNavigationMenu(ViewMode currentViewMode)
         {
             INavigationMenuPresenter presenter = 
                 _Managers.PresentersFactory.CreateNavigationMenu();
             
-            // Устанавливаем окно (кнопку привязанную к нему заблокируем)
-            presenter.SelectedWindow = (NavigationMenuItems)Enum.Parse(
-                typeof(NavigationMenuItems), _Application.CurrentPresenter.Name, true);
+            presenter.CurrentViewMode = currentViewMode;
+            presenter.Show();
 
-            _Application.ShowDialog(presenter);
-
-            GoToWindow(presenter.SelectedWindow);
+            return presenter.CurrentViewMode;
         }
 
-        public void GoToWindow(NavigationMenuItems window)
+        public void GoToWindow(ViewMode window)
         {
-            NavigationMenuItems current;
+            ViewMode current;
             IPresenter presenter;
 
             try
             {
-                current = (NavigationMenuItems)Enum.Parse(
-                    typeof(NavigationMenuItems), _Application.CurrentPresenter.Name, true);
+                current = (ViewMode)Enum.Parse(
+                    typeof(ViewMode), _Application.CurrentPresenter.Name, true);
             }
             catch
             {
-                current = NavigationMenuItems.NoSelection;
+                current = ViewMode.NoSelection;
             }
 
             if (current == window)
@@ -68,49 +65,49 @@ namespace NGK.CorrosionMonitoringSystem.Services
 
             switch (window)
             {
-                case NavigationMenuItems.NoSelection:
+                case ViewMode.NoSelection:
                     { return; }
-                case NavigationMenuItems.PivoteTable:
+                case ViewMode.PivoteTable:
                     {
                         if (_Application.CurrentPresenter is MainWindowPresenter)
                         {
                             MainWindowPresenter windowPresenter =
                                 _Application.CurrentPresenter as MainWindowPresenter;
                             presenter = _Managers.PresentersFactory
-                                .Create(NavigationMenuItems.PivoteTable);
+                                .Create(ViewMode.PivoteTable);
                         }
                         break;
                     }
-                case NavigationMenuItems.DeviceList:
+                case ViewMode.DeviceList:
                     {
                         if (_Application.CurrentPresenter is MainWindowPresenter)
                         {
                             MainWindowPresenter windowPresenter =
                                 _Application.CurrentPresenter as MainWindowPresenter;
                             presenter = _Managers.PresentersFactory
-                                .Create(NavigationMenuItems.DeviceList);
+                                .Create(ViewMode.DeviceList);
                         }
                         break;
                     }
-                case NavigationMenuItems.DeviceDetail:
+                case ViewMode.DeviceDetail:
                     {
                         if (_Application.CurrentPresenter is MainWindowPresenter)
                         {
                             MainWindowPresenter windowPresenter =
                                 _Application.CurrentPresenter as MainWindowPresenter;
                             presenter = _Managers.PresentersFactory
-                                .Create(NavigationMenuItems.DeviceDetail);
+                                .Create(ViewMode.DeviceDetail);
                         }
                         break; 
                     }
-                case NavigationMenuItems.LogViewer:
+                case ViewMode.LogViewer:
                     {
                         if (_Application.CurrentPresenter is MainWindowPresenter)
                         {
                             MainWindowPresenter windowPresenter =
                                 _Application.CurrentPresenter as MainWindowPresenter;
                             presenter = _Managers.PresentersFactory
-                                .Create(NavigationMenuItems.LogViewer);
+                                .Create(ViewMode.LogViewer);
                         }
                         break; 
                     }

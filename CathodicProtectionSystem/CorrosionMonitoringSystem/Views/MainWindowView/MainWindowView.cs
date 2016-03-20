@@ -7,6 +7,7 @@ using System.Text;
 using System.Windows.Forms;
 using Mvp.View;
 using Mvp.View.Collections.ObjectModel;
+using Mvp.Input;
 
 namespace NGK.CorrosionMonitoringSystem.Views
 {
@@ -141,6 +142,19 @@ namespace NGK.CorrosionMonitoringSystem.Views
                 return regions;
             }
         }
+
+        ICommand _ShowMenuCommand;
+
+        public ICommand ShowMenuCommand
+        {
+            set 
+            { 
+                _ShowMenuCommand = value;
+                _ShowMenuCommand.CanExecuteChanged += 
+                    new EventHandler(EventHandler_ShowMenuCommand_CanExecuteChanged);
+            }
+        }
+
         #endregion
 
         #region Event Handlers
@@ -190,6 +204,12 @@ namespace NGK.CorrosionMonitoringSystem.Views
                 // Скрывает или отображаем панель конопок
                 _PanelSystemButtonsRegion.Visible = !_PanelSystemButtonsRegion.Visible;
             }
+        }
+
+        void EventHandler_ShowMenuCommand_CanExecuteChanged(object sender, EventArgs e)
+        {
+            ICommand cmd = (ICommand)sender;
+            _ButtonF2.Enabled = cmd.Status;
         }
 
         #endregion

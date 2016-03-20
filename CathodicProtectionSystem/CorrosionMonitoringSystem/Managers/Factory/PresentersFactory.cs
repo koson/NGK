@@ -32,13 +32,13 @@ namespace NGK.CorrosionMonitoringSystem.Managers.Factory
 
         #region Methods
 
-        public IPresenter Create(NavigationMenuItems window)
+        public IPresenter Create(ViewMode window)
         {
             IPresenter presenter;
 
             switch (window)
             {
-                case NavigationMenuItems.NoSelection:
+                case ViewMode.NoSelection:
                     {
                         MainWindowView mainWindow = new MainWindowView();
 
@@ -47,7 +47,7 @@ namespace NGK.CorrosionMonitoringSystem.Managers.Factory
                         presenter = concretePresenter;
                         break;
                     }
-                case NavigationMenuItems.PivoteTable:
+                case ViewMode.PivoteTable:
                     {
                         PivotTableView ptView = new PivotTableView();
 
@@ -56,24 +56,16 @@ namespace NGK.CorrosionMonitoringSystem.Managers.Factory
                         presenter = ptPresenter;
                         break;
                     }
-                case NavigationMenuItems.DeviceList:
+                case ViewMode.DeviceList:
                     {
-                        throw new NotImplementedException();
+                        DevicesView dlView = new DevicesView();
 
-                        //DeviceListView dlView = new DeviceListView();
-
-                        //// Настраиваем окно
-                        //dlView.ShowInTaskbar = _Managers.ConfigManager.ShowInTaskbar;
-                        //dlView.FormBorderStyle =
-                        //    _Managers.ConfigManager.FormBorderEnable ?
-                        //    FormBorderStyle.Sizable : FormBorderStyle.None;
-
-                        //DeviceListPresenter dlPresenter =
-                        //    new DeviceListPresenter(_Application, dlView, null, _Managers);
-                        //presenter = dlPresenter;
-                        //break;
+                        DeviceListPresenter dlPresenter =
+                            new DeviceListPresenter(_Application, dlView, null, null, _Managers);
+                        presenter = dlPresenter;
+                        break;
                     }
-                case NavigationMenuItems.DeviceDetail:
+                case ViewMode.DeviceDetail:
                     {
                         throw new NotImplementedException();
 
@@ -90,7 +82,7 @@ namespace NGK.CorrosionMonitoringSystem.Managers.Factory
                         //presenter = ddPresenter;
                         //break; 
                     }
-                case NavigationMenuItems.LogViewer:
+                case ViewMode.LogViewer:
                     {
                         throw new NotImplementedException();
 

@@ -18,16 +18,16 @@ namespace NGK.CorrosionMonitoringSystem.Views
         {
             InitializeComponent();
     
-            SelectedMenuItem = NavigationMenuItems.NoSelection;
+            SelectedMenuItem = ViewMode.NoSelection;
         }
 
         #endregion
 
         #region Fields And Properties
 
-        NavigationMenuItems _SelectedMenuItem;
+        ViewMode _SelectedMenuItem;
 
-        public NavigationMenuItems SelectedMenuItem
+        public ViewMode SelectedMenuItem
         {
             get { return _SelectedMenuItem; }
             set { _SelectedMenuItem = value; }
@@ -57,7 +57,7 @@ namespace NGK.CorrosionMonitoringSystem.Views
             set { _ButtonLogViewer.Enabled = value; }
         }
 
-        public ViewType ViewType { get { return ViewType.Window; } }
+        public ViewType ViewType { get { return ViewType.Dialog; } }
 
         IViewRegion[] _ViewRegions = new IViewRegion[0];
 
@@ -85,23 +85,23 @@ namespace NGK.CorrosionMonitoringSystem.Views
 
             if (btn.Equals(_ButtonExit))
             {
-                SelectedMenuItem = NavigationMenuItems.NoSelection;
+                SelectedMenuItem = ViewMode.NoSelection;
             }
             else if (btn.Equals(_ButtonPivotTable))
             {
-                SelectedMenuItem = NavigationMenuItems.PivoteTable;
+                SelectedMenuItem = ViewMode.PivoteTable;
             }
             else if (btn.Equals(_ButtonDeviceList))
             {
-                SelectedMenuItem = NavigationMenuItems.DeviceList;
+                SelectedMenuItem = ViewMode.DeviceList;
             }
             else if (btn.Equals(_ButtonDeviceDetail))
             {
-                SelectedMenuItem = NavigationMenuItems.DeviceDetail;
+                SelectedMenuItem = ViewMode.DeviceDetail;
             }
             else if (btn.Equals(_ButtonLogViewer))
             {
-                SelectedMenuItem = NavigationMenuItems.LogViewer;
+                SelectedMenuItem = ViewMode.LogViewer;
             }
             else
             {

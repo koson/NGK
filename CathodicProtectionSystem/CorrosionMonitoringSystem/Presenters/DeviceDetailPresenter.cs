@@ -12,7 +12,7 @@ using System.Windows.Forms;
 
 namespace NGK.CorrosionMonitoringSystem.Presenters
 {
-    public class DeviceDetailPresenter: Presenter<IDeviceDetailView>
+    public class DeviceDetailPresenter: Presenter<IDeviceDetailView>, IViewMode
     {
         #region Constructors
 
@@ -21,11 +21,8 @@ namespace NGK.CorrosionMonitoringSystem.Presenters
             :
             base(view, application)
         {
-            _Name = NavigationMenuItems.DeviceDetail.ToString();
+            _Name = ViewMode.DeviceDetail.ToString();
             _Managers = managers;
-
-            _ShowMenuCommand = new Command(
-                new CommandAction(OnShowMenu), new Condition(CanShowMenu));
 
             _ParametersContext = new BindingSource();
             _Parameters = new BindingList<Parameter>();
@@ -83,6 +80,8 @@ namespace NGK.CorrosionMonitoringSystem.Presenters
 
         BindingList<Parameter> _Parameters;
 
+        public ViewMode ViewMode { get { return ViewMode.DeviceDetail; } } 
+
         #endregion
 
         #region Event Handlers
@@ -93,7 +92,6 @@ namespace NGK.CorrosionMonitoringSystem.Presenters
             {
                 case SystemButtons.F2:
                     {
-                        _ShowMenuCommand.Execute();
                         break;
                     }
             }
@@ -102,19 +100,6 @@ namespace NGK.CorrosionMonitoringSystem.Presenters
         #endregion
 
         #region Commands
-
-        Command _ShowMenuCommand;
-
-        void OnShowMenu()
-        {
-            _Managers.NavigationService.ShowNavigationMenu();
-        }
-
-        bool CanShowMenu()
-        {
-            return true;
-        }
-
         #endregion
     }
 }

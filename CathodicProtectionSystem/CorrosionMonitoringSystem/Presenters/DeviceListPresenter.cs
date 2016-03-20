@@ -12,7 +12,7 @@ using Mvp.View;
 
 namespace NGK.CorrosionMonitoringSystem.Presenters
 {
-    public class DeviceListPresenter : Presenter<IDeviceListView>
+    public class DeviceListPresenter : Presenter<IDeviceListView>, IViewMode
     {
         #region Constructors
 
@@ -22,13 +22,12 @@ namespace NGK.CorrosionMonitoringSystem.Presenters
             : 
             base(view, region, application)
         {
-            _Name = NavigationMenuItems.DeviceList.ToString();
+            _Name = ViewMode.DeviceList.ToString();
             _Managers = managers;
 
-            _ShowMenuCommand = new Command(
-                new CommandAction(OnShowMenu), new Condition(CanShowMenu));
             _DeviceDetailCommand = new Command(new CommandAction(OnDeviceDetail),
                 new Condition(CanDeviceDetail));
+            _Commands.Add(_DeviceDetailCommand);
 
             _BindingSourceDevices = new BindingSource();
             _BindingSourceDevices.CurrentItemChanged += 
@@ -65,6 +64,13 @@ namespace NGK.CorrosionMonitoringSystem.Presenters
             }
         }
 
+        MainWindowPresenter HostWindowPresenter
+        {
+            get { return (MainWindowPresenter)HostPresenter; }
+        }
+
+        public ViewMode ViewMode { get { return ViewMode.DeviceList; } }
+
         #endregion
 
         #region Event Handlers
@@ -75,7 +81,6 @@ namespace NGK.CorrosionMonitoringSystem.Presenters
             {
                 case SystemButtons.F2:
                     {
-                        _ShowMenuCommand.Execute();
                         break;
                     }
                 case SystemButtons.F3:
@@ -101,25 +106,13 @@ namespace NGK.CorrosionMonitoringSystem.Presenters
 
         #region Commands
 
-        Command _ShowMenuCommand;
-
-        void OnShowMenu()
-        {
-            _Managers.NavigationService.ShowNavigationMenu();
-        }
-
-        bool CanShowMenu()
-        {
-            return true;
-        }
-
         Command _DeviceDetailCommand;
 
         void OnDeviceDetail()
         {
             DeviceDetailPresenter presenter = 
                 (DeviceDetailPresenter)_Managers.PresentersFactory.Create(
-                NavigationMenuItems.DeviceDetail);
+                ViewMode.DeviceDetail);
             presenter.Device = SelectedDevice;
             presenter.Show();
         }
@@ -131,5 +124,14 @@ namespace NGK.CorrosionMonitoringSystem.Presenters
 
         #endregion
 
+        #region Methods
+
+        public override void Show()
+        {
+            base.Show();
+            HostWindowPresenter.Title = @"Устройства";
+        }
+
+        #endregion
     }
 }

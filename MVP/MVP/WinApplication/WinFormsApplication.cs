@@ -85,10 +85,10 @@ namespace Mvp.WinApplication
             }
         }
 
-        public void ShowDialog(IPresenter presenter)
+        public DialogResult ShowDialog(IPresenter presenter)
         {
             Form form = (Form)presenter.View;
-            form.ShowDialog();
+            return form.ShowDialog();
         }
 
         /// <summary>

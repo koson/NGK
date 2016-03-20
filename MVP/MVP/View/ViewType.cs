@@ -10,6 +10,7 @@ namespace Mvp.View
     public enum ViewType
     {
         Window,
+        Dialog,
         Region
     }
 }

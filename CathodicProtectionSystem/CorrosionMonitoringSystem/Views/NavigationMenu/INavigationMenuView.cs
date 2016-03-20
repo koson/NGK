@@ -5,7 +5,7 @@ using Mvp.View;
 
 namespace NGK.CorrosionMonitoringSystem.Views
 {
-    public enum NavigationMenuItems
+    public enum ViewMode
     {
         /// <summary>
         /// Отмена (переход не выбран)
@@ -19,7 +19,7 @@ namespace NGK.CorrosionMonitoringSystem.Views
 
     public interface INavigationMenuView: IView
     {
-        NavigationMenuItems SelectedMenuItem { get; set; }
+        ViewMode SelectedMenuItem { get; set; }
         bool PivoteTableMenuEnabled { get; set;}
         bool DeviceListMenuEnabled { get; set;}
         bool DeviceDetailMenuEnabled { get; set;}

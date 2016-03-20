@@ -21,10 +21,10 @@ namespace Mvp.Presenter
 
         public Presenter(T view, IApplicationController application)
         {
-            if (view.ViewType != ViewType.Window)
+            if ((view.ViewType != ViewType.Window) && (view.ViewType != ViewType.Dialog))
             {
                 throw new ArgumentException(
-                    "Ќевозмоно создать презентер с регионом null и view не €вл€ющимс€ окном",
+                    "Ќевозмоно создать презентер с регионом == null и view не €вл€ющимс€ окном",
                     "view");
             }
             _Region = null;
@@ -36,7 +36,8 @@ namespace Mvp.Presenter
         public Presenter(T view, IViewRegion region, 
             IApplicationController application)
         {
-            if ((view.ViewType == ViewType.Window) && (region != null))
+            if (((view.ViewType == ViewType.Window) || 
+                (view.ViewType == ViewType.Dialog)) && (region != null))
             {
                 throw new Exception(
                     "ѕопытка создать презентер имеющий тип View = window и имеющий регион не равный null");
@@ -175,13 +176,15 @@ namespace Mvp.Presenter
             {
                 case ViewType.Window:
                     {
-                        Application.ShowWindow(this);
-                        break;
+                        Application.ShowWindow(this); break;
+                    }
+                case ViewType.Dialog:
+                    {
+                        Application.ShowDialog(this); break;
                     }
                 case ViewType.Region:
                     {
-                        ViewRegion.Show(View);
-                        break;
+                        ViewRegion.Show(View); break;
                     }
                 default:
                     {

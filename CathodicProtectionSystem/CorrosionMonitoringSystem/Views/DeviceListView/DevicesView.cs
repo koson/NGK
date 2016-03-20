@@ -17,6 +17,7 @@ namespace NGK.CorrosionMonitoringSystem.Views
         public DevicesView()
         {
             InitializeComponent();
+            Dock = DockStyle.Fill;
         }
 
         #endregion
@@ -45,9 +46,11 @@ namespace NGK.CorrosionMonitoringSystem.Views
 
         #region IDeviceListView Members
 
+        BindingSource _Devices;
+
         public BindingSource Devices
         {
-            set { throw new Exception("The method or operation is not implemented."); }
+            set { _Devices = value ; }
         }
 
         #endregion

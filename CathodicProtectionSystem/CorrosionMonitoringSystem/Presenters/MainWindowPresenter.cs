@@ -6,6 +6,7 @@ using NGK.CorrosionMonitoringSystem.Views;
 using NGK.CorrosionMonitoringSystem.Managers;
 using Mvp.Presenter;
 using Mvp.View;
+using Mvp.Input;
 
 namespace NGK.CorrosionMonitoringSystem.Presenters
 {
@@ -21,10 +22,27 @@ namespace NGK.CorrosionMonitoringSystem.Presenters
             _Name = String.Empty;
             _Managers = managers;
             ViewConcrete.Title = String.Empty;
+            ViewConcrete.ButtonF3IsAccessible = false;
+            ViewConcrete.ButtonF3Text = String.Empty;
+            ViewConcrete.ButtonF4IsAccessible = false;
+            ViewConcrete.ButtonF4Text = String.Empty;
+            ViewConcrete.ButtonF5IsAccessible = false;
+            ViewConcrete.ButtonF5Text = String.Empty;
+
+            _ShowMenuCommand = new Command(OnShowMenu, CanShowMenu);
+            _Commands.Add(_ShowMenuCommand);
+
+            ViewConcrete.ShowMenuCommand = _ShowMenuCommand;
+
+            ViewConcrete.ButtonClick += 
+                new EventHandler<ButtonClickEventArgs>(
+                EventHandler_ViewConcrete_ButtonClick);
 
             IPresenter presenter =
-                _Managers.PresentersFactory.Create(NavigationMenuItems.PivoteTable);
+                _Managers.PresentersFactory.Create(ViewMode.PivoteTable);
             WorkingRegionPresenter = presenter;
+
+            base.UpdateStatusCommands();
         }
 
         #endregion
@@ -66,5 +84,62 @@ namespace NGK.CorrosionMonitoringSystem.Presenters
 
         #endregion
 
+        #region Event Handlers of View
+
+        void EventHandler_ViewConcrete_ButtonClick(
+            object sender, ButtonClickEventArgs e)
+        {
+            switch (e.Button)
+            {
+                case SystemButtons.F2:
+                    {
+                        _ShowMenuCommand.Execute(); break;
+                    }
+            }
+        }
+
+        #endregion
+
+        #region Commands
+
+        Command _ShowMenuCommand;
+        /// <summary>
+        /// Отображаем меню приложения
+        /// </summary>
+        void OnShowMenu()
+        {
+            ViewMode mode;
+
+            if (_WorkingRegionPresenter == null)
+                mode = ViewMode.NoSelection;
+            else
+            {
+                IViewMode vm = _WorkingRegionPresenter as IViewMode;
+                mode = vm == null ? ViewMode.NoSelection : vm.ViewMode;
+                mode = _Managers.NavigationService.ShowNavigationMenu(mode);
+
+                IPresenter presenter;
+
+                if (mode != vm.ViewMode)
+                {
+                    if (mode == ViewMode.NoSelection)
+                    {
+                        WorkingRegionPresenter = null;
+                    }
+                    else
+                    {
+                        presenter = _Managers.PresentersFactory.Create(mode);
+                        WorkingRegionPresenter = presenter;
+                    }
+                }
+            }
+        }
+
+        bool CanShowMenu()
+        {
+            return WorkingRegionPresenter != null;
+        }
+
+        #endregion
     }
 }

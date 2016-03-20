@@ -10,7 +10,7 @@ namespace NGK.CorrosionMonitoringSystem.Managers.Factory
 {
     public interface IPresentersFactory
     {
-        IPresenter Create(NavigationMenuItems window);
+        IPresenter Create(ViewMode window);
         INavigationMenuPresenter CreateNavigationMenu();
     }
 }
