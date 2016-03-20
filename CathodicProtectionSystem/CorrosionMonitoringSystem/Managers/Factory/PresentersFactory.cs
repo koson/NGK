@@ -7,6 +7,7 @@ using Mvp.WinApplication;
 using NGK.CorrosionMonitoringSystem.Views;
 using NGK.CorrosionMonitoringSystem.Presenters;
 using Mvp.View;
+using NGK.CorrosionMonitoringSystem.Views.LogViewerView;
 
 namespace NGK.CorrosionMonitoringSystem.Managers.Factory
 {
@@ -84,20 +85,12 @@ namespace NGK.CorrosionMonitoringSystem.Managers.Factory
                     }
                 case ViewMode.LogViewer:
                     {
-                        throw new NotImplementedException();
+                        LogViewerView lvView = new LogViewerView();
 
-                        //LogViewerView lvView = new LogViewerView();
-
-                        //// Настраиваем окно
-                        //lvView.ShowInTaskbar = _Managers.ConfigManager.ShowInTaskbar;
-                        //lvView.FormBorderStyle =
-                        //    _Managers.ConfigManager.FormBorderEnable ?
-                        //    FormBorderStyle.Sizable : FormBorderStyle.None;
-
-                        //LogViewerPresenter lvPresenter =
-                        //    new LogViewerPresenter(_Application, lvView, null, _Managers);
-                        //presenter = lvPresenter;
-                        //break; 
+                        LogViewerPresenter lvPresenter =
+                            new LogViewerPresenter(_Application, lvView, null, null, _Managers);
+                        presenter = lvPresenter;
+                        break; 
                     }
                 default:
                     {

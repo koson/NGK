@@ -5,7 +5,7 @@ using Mvp.View;
 
 namespace NGK.CorrosionMonitoringSystem.Views
 {
-    public interface ILogViewerView : IView, IButtonsPanel
+    public interface ILogViewerView : IView
     {
     }
 }

@@ -129,7 +129,20 @@ namespace NGK.CorrosionMonitoringSystem.Presenters
                     else
                     {
                         presenter = _Managers.PresentersFactory.Create(mode);
-                        WorkingRegionPresenter = presenter;
+                        switch (presenter.View.ViewType)
+                        {
+                            case ViewType.Window:
+                            case ViewType.Dialog:
+                                {
+                                    presenter.Show();
+                                    break;
+                                }
+                            case ViewType.Region:
+                                {
+                                    WorkingRegionPresenter = presenter;
+                                    break;
+                                }
+                        }
                     }
                 }
             }

@@ -6,6 +6,7 @@ using Mvp.Presenter;
 using Mvp.WinApplication;
 using NGK.CorrosionMonitoringSystem.Views;
 using NGK.CorrosionMonitoringSystem.Managers;
+using Mvp.View;
 
 namespace NGK.CorrosionMonitoringSystem.Presenters
 {
@@ -14,17 +15,14 @@ namespace NGK.CorrosionMonitoringSystem.Presenters
         #region Constructors
 
         public LogViewerPresenter(IApplicationController application,
-            ILogViewerView view, object model, IManagers managers)
+            ILogViewerView view, IViewRegion region, object model, 
+            IManagers managers)
             :
-            base(view, application)
+            base(view, region, application)
         {
             _Name = ViewMode.LogViewer.ToString();
             _Managers = managers;
-
-            view.ButtonClick += 
-                new EventHandler<ButtonClickEventArgs>(EventHandler_View_ButtonClick);
         }
-
 
         #endregion
 
@@ -38,6 +36,21 @@ namespace NGK.CorrosionMonitoringSystem.Presenters
         }
 
         public ViewMode ViewMode { get { return ViewMode.DeviceDetail; } }
+
+        MainWindowPresenter HostWindowPresenter
+        {
+            get { return (MainWindowPresenter)HostPresenter; }
+        }
+
+        #endregion
+
+        #region Methods
+
+        public override void Show()
+        {
+            base.Show();
+            HostWindowPresenter.Title = @"Журнал событий";
+        }
 
         #endregion
 
