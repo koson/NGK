@@ -9,6 +9,7 @@ using NGK.CorrosionMonitoringSystem.Managers;
 using NGK.CorrosionMonitoringSystem.Views;
 using NGK.CorrosionMonitoringSystem.Models;
 using System.Windows.Forms;
+using Mvp.View;
 
 namespace NGK.CorrosionMonitoringSystem.Presenters
 {
@@ -17,9 +18,10 @@ namespace NGK.CorrosionMonitoringSystem.Presenters
         #region Constructors
 
         public DeviceDetailPresenter(IApplicationController application,
-            IDeviceDetailView view, object model, IManagers managers, NgkCanDevice device)
+            IDeviceDetailView view, IViewRegion region, object model, 
+            IManagers managers, NgkCanDevice device)
             :
-            base(view, application)
+            base(view, region, application)
         {
             _Name = ViewMode.DeviceDetail.ToString();
             _Managers = managers;
@@ -28,16 +30,9 @@ namespace NGK.CorrosionMonitoringSystem.Presenters
             _Parameters = new BindingList<Parameter>();
             _ParametersContext.DataSource = _Parameters;
 
-            view.ButtonClick += 
-                new EventHandler<ButtonClickEventArgs>(EventHandler_View_ButtonClick);
-            view.ButtonF3IsAccessible = false;
-            view.ButtonF4IsAccessible = false;
-            view.ButtonF5IsAccessible = false;
-
             Device = device;
             ViewConcrete.ParametersContext = _ParametersContext;
         }
-
 
         #endregion
 
@@ -80,22 +75,26 @@ namespace NGK.CorrosionMonitoringSystem.Presenters
 
         BindingList<Parameter> _Parameters;
 
-        public ViewMode ViewMode { get { return ViewMode.DeviceDetail; } } 
+        public ViewMode ViewMode { get { return ViewMode.DeviceDetail; } }
+
+        MainWindowPresenter HostWindowPresenter
+        {
+            get { return (MainWindowPresenter)HostPresenter; }
+        }
+
+        #endregion
+
+        #region Methods
+
+        public override void Show()
+        {
+            base.Show();
+            HostWindowPresenter.Title = @"Информация об устройстве";
+        }
 
         #endregion
 
         #region Event Handlers
-
-        void EventHandler_View_ButtonClick(object sender, ButtonClickEventArgs e)
-        {
-            switch (e.Button)
-            {
-                case SystemButtons.F2:
-                    {
-                        break;
-                    }
-            }
-        }
 
         #endregion
 

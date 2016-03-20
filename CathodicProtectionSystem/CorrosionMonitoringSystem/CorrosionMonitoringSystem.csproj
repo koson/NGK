@@ -100,6 +100,10 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Views\DeviceDetailView\DeviceDetailView.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>DeviceDetailView.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\DeviceListView\DevicesView.resx">
       <SubType>Designer</SubType>
       <DependentUpon>DevicesView.cs</DependentUpon>
@@ -143,6 +147,12 @@
     <Compile Include="Services\IWindowsService.cs" />
     <Compile Include="Services\NavigationService.cs" />
     <Compile Include="Services\WindowsService.cs" />
+    <Compile Include="Views\DeviceDetailView\DeviceDetailView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\DeviceDetailView\DeviceDetailView.Designer.cs">
+      <DependentUpon>DeviceDetailView.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\DeviceListView\DevicesView.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -235,6 +245,9 @@
       <ProductName>.NET Framework 2.0</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Views\MonitoringHistoryView\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

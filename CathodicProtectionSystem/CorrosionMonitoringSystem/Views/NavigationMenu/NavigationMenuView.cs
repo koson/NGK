@@ -85,7 +85,7 @@ namespace NGK.CorrosionMonitoringSystem.Views
 
             if (btn.Equals(_ButtonExit))
             {
-                SelectedMenuItem = ViewMode.NoSelection;
+                //SelectedMenuItem = ViewMode.NoSelection;
             }
             else if (btn.Equals(_ButtonPivotTable))
             {

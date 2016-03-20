@@ -21,7 +21,7 @@ namespace NGK.CorrosionMonitoringSystem.Presenters
             base(view, region, application)
         {
             _Name = ViewMode.PivoteTable.ToString();
-            _Managers = managers;          
+            _Managers = managers;      
         }
         
         #endregion

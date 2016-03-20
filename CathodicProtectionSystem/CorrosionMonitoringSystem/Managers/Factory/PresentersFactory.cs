@@ -8,6 +8,7 @@ using NGK.CorrosionMonitoringSystem.Views;
 using NGK.CorrosionMonitoringSystem.Presenters;
 using Mvp.View;
 using NGK.CorrosionMonitoringSystem.Views.LogViewerView;
+using NGK.CorrosionMonitoringSystem.Views.DeviceDetailView;
 
 namespace NGK.CorrosionMonitoringSystem.Managers.Factory
 {
@@ -68,20 +69,13 @@ namespace NGK.CorrosionMonitoringSystem.Managers.Factory
                     }
                 case ViewMode.DeviceDetail:
                     {
-                        throw new NotImplementedException();
+                        DeviceDetailView ddView = new DeviceDetailView();
 
-                        //DeviceDetailView ddView = new DeviceDetailView();
-
-                        //// Настраиваем окно
-                        //ddView.ShowInTaskbar = _Managers.ConfigManager.ShowInTaskbar;
-                        //ddView.FormBorderStyle =
-                        //    _Managers.ConfigManager.FormBorderEnable ?
-                        //    FormBorderStyle.Sizable : FormBorderStyle.None;
-
-                        //DeviceDetailPresenter ddPresenter =
-                        //    new DeviceDetailPresenter(_Application, ddView, null, _Managers, null);
-                        //presenter = ddPresenter;
-                        //break; 
+                        DeviceDetailPresenter ddPresenter =
+                            new DeviceDetailPresenter(_Application, ddView, null, null,
+                            _Managers, null);
+                        presenter = ddPresenter;
+                        break; 
                     }
                 case ViewMode.LogViewer:
                     {

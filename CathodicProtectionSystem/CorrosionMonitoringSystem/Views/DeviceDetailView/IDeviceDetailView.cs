@@ -6,7 +6,7 @@ using System.Windows.Forms;
 
 namespace NGK.CorrosionMonitoringSystem.Views
 {
-    public interface IDeviceDetailView : IView, IButtonsPanel
+    public interface IDeviceDetailView : IView
     {
         BindingSource ParametersContext { set; }
     }
