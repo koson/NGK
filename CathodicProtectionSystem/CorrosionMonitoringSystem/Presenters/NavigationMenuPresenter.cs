@@ -6,6 +6,7 @@ using Mvp.View;
 using Mvp.WinApplication;
 using NGK.CorrosionMonitoringSystem.Views;
 using NGK.CorrosionMonitoringSystem.Managers;
+using Mvp.Input;
 
 namespace NGK.CorrosionMonitoringSystem.Presenters
 {
@@ -15,13 +16,22 @@ namespace NGK.CorrosionMonitoringSystem.Presenters
         #region Constructors
 
         public NavigationMenuPresenter(IApplicationController application,
-            INavigationMenuView view, object model, IManagers managers) :
+            INavigationMenuView view, IManagers managers, ICommand[] menuItems) :
             base (view, application)
         {
             _Managers = managers;
 
+            Command cmd = new Command("Команда", null, null);
+            _Commands.Add(cmd);
+
+            if (menuItems != null)
+                _Commands.AddRange(menuItems);
+
             ViewConcrete.MenuClosed += 
                 new EventHandler(EventHandler_View_MenuClosed);
+            ViewConcrete.MenuItems = _Commands.ToArray();
+            
+            base.UpdateStatusCommands();
         }
         
         #endregion

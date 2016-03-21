@@ -28,88 +28,42 @@ namespace NGK.CorrosionMonitoringSystem.Views
         /// </summary>
         private void InitializeComponent()
         {
-            this._GroupBoxMenu = new System.Windows.Forms.GroupBox();
-            this._ButtonLogViewer = new System.Windows.Forms.Button();
-            this._ButtonDeviceDetail = new System.Windows.Forms.Button();
-            this._ButtonDeviceList = new System.Windows.Forms.Button();
-            this._ButtonPivotTable = new System.Windows.Forms.Button();
+            this._ÒableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this._ButtonExit = new System.Windows.Forms.Button();
-            this._GroupBoxMenu.SuspendLayout();
+            this._ÒableLayoutPanel.SuspendLayout();
             this.SuspendLayout();
             // 
-            // _GroupBoxMenu
+            // _ÒableLayoutPanel
             // 
-            this._GroupBoxMenu.Controls.Add(this._ButtonLogViewer);
-            this._GroupBoxMenu.Controls.Add(this._ButtonDeviceDetail);
-            this._GroupBoxMenu.Controls.Add(this._ButtonDeviceList);
-            this._GroupBoxMenu.Controls.Add(this._ButtonPivotTable);
-            this._GroupBoxMenu.Controls.Add(this._ButtonExit);
-            this._GroupBoxMenu.Dock = System.Windows.Forms.DockStyle.Fill;
-            this._GroupBoxMenu.Location = new System.Drawing.Point(5, 5);
-            this._GroupBoxMenu.Margin = new System.Windows.Forms.Padding(5);
-            this._GroupBoxMenu.Name = "_GroupBoxMenu";
-            this._GroupBoxMenu.Padding = new System.Windows.Forms.Padding(5);
-            this._GroupBoxMenu.Size = new System.Drawing.Size(212, 193);
-            this._GroupBoxMenu.TabIndex = 0;
-            this._GroupBoxMenu.TabStop = false;
-            // 
-            // _ButtonLogViewer
-            // 
-            this._ButtonLogViewer.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this._ButtonLogViewer.Location = new System.Drawing.Point(8, 155);
-            this._ButtonLogViewer.Name = "_ButtonLogViewer";
-            this._ButtonLogViewer.Size = new System.Drawing.Size(195, 29);
-            this._ButtonLogViewer.TabIndex = 4;
-            this._ButtonLogViewer.Text = "Æóðíàë ñîáûòèé";
-            this._ButtonLogViewer.UseVisualStyleBackColor = true;
-            // 
-            // _ButtonDeviceDetail
-            // 
-            this._ButtonDeviceDetail.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this._ButtonDeviceDetail.Location = new System.Drawing.Point(8, 120);
-            this._ButtonDeviceDetail.Name = "_ButtonDeviceDetail";
-            this._ButtonDeviceDetail.Size = new System.Drawing.Size(195, 29);
-            this._ButtonDeviceDetail.TabIndex = 3;
-            this._ButtonDeviceDetail.Text = "Èíôîðìàöèÿ îá óñòðîéòâå";
-            this._ButtonDeviceDetail.UseVisualStyleBackColor = true;
-            // 
-            // _ButtonDeviceList
-            // 
-            this._ButtonDeviceList.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this._ButtonDeviceList.Location = new System.Drawing.Point(8, 85);
-            this._ButtonDeviceList.Name = "_ButtonDeviceList";
-            this._ButtonDeviceList.Size = new System.Drawing.Size(195, 29);
-            this._ButtonDeviceList.TabIndex = 2;
-            this._ButtonDeviceList.Text = "Óñòðîéñòâà";
-            this._ButtonDeviceList.UseVisualStyleBackColor = true;
-            // 
-            // _ButtonPivotTable
-            // 
-            this._ButtonPivotTable.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this._ButtonPivotTable.Location = new System.Drawing.Point(8, 50);
-            this._ButtonPivotTable.Name = "_ButtonPivotTable";
-            this._ButtonPivotTable.Size = new System.Drawing.Size(195, 29);
-            this._ButtonPivotTable.TabIndex = 1;
-            this._ButtonPivotTable.Text = "Ìîíèòîðèíã";
-            this._ButtonPivotTable.UseVisualStyleBackColor = true;
+            this._ÒableLayoutPanel.ColumnCount = 1;
+            this._ÒableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this._ÒableLayoutPanel.Controls.Add(this._ButtonExit, 0, 0);
+            this._ÒableLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this._ÒableLayoutPanel.Location = new System.Drawing.Point(5, 5);
+            this._ÒableLayoutPanel.Name = "_ÒableLayoutPanel";
+            this._ÒableLayoutPanel.RowCount = 1;
+            this._ÒableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this._ÒableLayoutPanel.Size = new System.Drawing.Size(226, 99);
+            this._ÒableLayoutPanel.TabIndex = 1;
             // 
             // _ButtonExit
             // 
             this._ButtonExit.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this._ButtonExit.Location = new System.Drawing.Point(8, 15);
+            this._ButtonExit.Dock = System.Windows.Forms.DockStyle.Fill;
+            this._ButtonExit.Location = new System.Drawing.Point(3, 3);
             this._ButtonExit.Name = "_ButtonExit";
-            this._ButtonExit.Size = new System.Drawing.Size(195, 29);
-            this._ButtonExit.TabIndex = 0;
-            this._ButtonExit.Text = "Çàêðûòü ìåíþ";
+            this._ButtonExit.Size = new System.Drawing.Size(220, 93);
+            this._ButtonExit.TabIndex = 1;
+            this._ButtonExit.Text = "Âûõîä";
             this._ButtonExit.UseVisualStyleBackColor = true;
             // 
             // NavigationMenuView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(222, 203);
-            this.Controls.Add(this._GroupBoxMenu);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.AutoSize = true;
+            this.ClientSize = new System.Drawing.Size(236, 109);
+            this.Controls.Add(this._ÒableLayoutPanel);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "NavigationMenuView";
@@ -120,18 +74,15 @@ namespace NGK.CorrosionMonitoringSystem.Views
             this.Text = "Ìåíþ";
             this.Load += new System.EventHandler(this.EventHandler_NavigationMenuForm_Load);
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.EventHandler_NavigationMenuView_FormClosed);
-            this._GroupBoxMenu.ResumeLayout(false);
+            this._ÒableLayoutPanel.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.GroupBox _GroupBoxMenu;
-        private System.Windows.Forms.Button _ButtonLogViewer;
-        private System.Windows.Forms.Button _ButtonDeviceDetail;
-        private System.Windows.Forms.Button _ButtonDeviceList;
-        private System.Windows.Forms.Button _ButtonPivotTable;
+        private System.Windows.Forms.TableLayoutPanel _ÒableLayoutPanel;
         private System.Windows.Forms.Button _ButtonExit;
+
     }
 }

@@ -8,6 +8,5 @@ namespace NGK.CorrosionMonitoringSystem.Services
     public interface INavigationService
     {
         ViewMode ShowNavigationMenu(ViewMode currentViewMode);
-        void GoToWindow(ViewMode window);
     }
 }

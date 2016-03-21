@@ -16,12 +16,28 @@ namespace Mvp.Input
         {
             _OnExecute = onExecute;
             _OnCanExecute = canExecute;
+            _Name = String.Empty;
+        }
+
+        public Command(string name, CommandAction onExecute, Condition canExecute)
+        {
+            _OnExecute = onExecute;
+            _OnCanExecute = canExecute;
+            _Name = name == null ? String.Empty : name;
         }
 
         public Command(CommandAction onExecute)
         {
             _OnExecute = onExecute;
             _OnCanExecute = null;
+            _Name = String.Empty;
+        }
+
+        public Command(string name, CommandAction onExecute)
+        {
+            _OnExecute = onExecute;
+            _OnCanExecute = null;
+            _Name = name == null ? String.Empty : name;
         }
 
         #endregion
@@ -31,6 +47,12 @@ namespace Mvp.Input
         protected CommandAction _OnExecute;
         protected Condition _OnCanExecute;
         protected bool _CommandStatus = true;
+        string _Name;
+
+        public string Name
+        {
+            get { return _Name; }
+        }
 
         public bool Status { get { return _CommandStatus; } }
 
@@ -60,18 +82,6 @@ namespace Mvp.Input
             }
         }
 
-        //protected virtual void CheckCondition()
-        //{
-        //    if (_OnCanExecute != null)
-        //    {
-        //        if (_CanExecute != _OnCanExecute())
-        //        {
-        //            _CanExecute = !_CanExecute;
-        //            OnCanExecuteChanged();
-        //        }
-        //    }
-        //}
-
         protected virtual void OnCanExecuteChanged()
         {
             EventHandler handler = CanExecuteChanged;
@@ -99,6 +109,10 @@ namespace Mvp.Input
 
         #endregion
 
+        #region Events
+
         public event EventHandler CanExecuteChanged;
+
+        #endregion
     }
 }

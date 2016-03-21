@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Mvp.View;
+using Mvp.Input;
 
 namespace NGK.CorrosionMonitoringSystem.Views
 {
@@ -24,6 +25,9 @@ namespace NGK.CorrosionMonitoringSystem.Views
         bool DeviceListMenuEnabled { get; set;}
         bool DeviceDetailMenuEnabled { get; set;}
         bool LogViewerMenuEnabled { get; set;}
+
+        ICommand[] MenuItems { set; }
+
         event EventHandler MenuClosed;
     }
 }

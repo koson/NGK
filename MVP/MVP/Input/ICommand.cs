@@ -8,6 +8,10 @@ namespace Mvp.Input
     public interface ICommand
     {
         /// <summary>
+        /// Название команды
+        /// </summary>
+        string Name { get; }
+        /// <summary>
         /// Состояние команды: можно выполнить или нет
         /// </summary>
         bool Status { get; }
