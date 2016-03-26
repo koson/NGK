@@ -84,6 +84,18 @@ namespace NGK.CorrosionMonitoringSystem.Presenters
 
         #endregion
 
+        #region Methods
+
+        void OnWorkingRegionChanged()
+        {
+            if (WorkingRegionChanged != null)
+            {
+                WorkingRegionChanged(this, new EventArgs());
+            }
+        }
+
+        #endregion
+
         #region Event Handlers of View
 
         void EventHandler_ViewConcrete_ButtonClick(
@@ -98,6 +110,12 @@ namespace NGK.CorrosionMonitoringSystem.Presenters
             }
         }
 
+        #endregion
+
+        #region Event
+
+        public event EventHandler WorkingRegionChanged;
+        
         #endregion
 
         #region Commands

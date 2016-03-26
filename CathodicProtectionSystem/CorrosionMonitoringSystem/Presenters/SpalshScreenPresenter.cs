@@ -58,8 +58,9 @@ namespace NGK.CorrosionMonitoringSystem.Presenters
         void EventHandler_Worker_RunWorkerCompleted(
             object sender, RunWorkerCompletedEventArgs e)
         {
-            IPresenter presenter = 
-                _Managers.PresentersFactory.Create(ViewMode.NoSelection);
+            IPresenter presenter =
+                _Managers.PresentersFactory.CreateMainWindow();
+            _Managers.NavigationService.MainWindowPresenter = (MainWindowPresenter)presenter;
             presenter.Show();
         }
 

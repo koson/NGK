@@ -20,7 +20,8 @@ namespace NGK.CorrosionMonitoringSystem.Managers
             _ConfigManager = new ConfigManager();
             _Logger = null; //TODO: Не реализовано
             _SystemLogger = null; //TODO: Не реализовано
-            _NavigationService = new NavigationService(application, this);
+            _NavigationService = NGK.CorrosionMonitoringSystem.Services.NavigationService.Instance;
+            _NavigationService.Managers = this;
             _WindowsFactory = new PresentersFactory(application, this);
             _CanNetwrokService = new CanNetworkService(application, 
                 NetworksManager.Instance, 300);

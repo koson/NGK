@@ -62,39 +62,45 @@ namespace NGK.CorrosionMonitoringSystem.Presenters
                     {
                         case ViewMode.DeviceList:
                             {
-                                ViewConcrete.DeviceListMenuEnabled = false;
-                                ViewConcrete.DeviceDetailMenuEnabled = true;
-                                ViewConcrete.LogViewerMenuEnabled = true;
-                                ViewConcrete.PivoteTableMenuEnabled = true;
+                                //ViewConcrete.DeviceListMenuEnabled = false;
+                                //ViewConcrete.DeviceDetailMenuEnabled = true;
+                                //ViewConcrete.LogViewerMenuEnabled = true;
+                                //ViewConcrete.PivoteTableMenuEnabled = true;
                                 break;
                             }
                         case ViewMode.DeviceDetail:
                             {
-                                ViewConcrete.DeviceListMenuEnabled = true;
-                                ViewConcrete.DeviceDetailMenuEnabled = false;
-                                ViewConcrete.LogViewerMenuEnabled = false;
-                                ViewConcrete.PivoteTableMenuEnabled = false;
+                                //ViewConcrete.DeviceListMenuEnabled = true;
+                                //ViewConcrete.DeviceDetailMenuEnabled = false;
+                                //ViewConcrete.LogViewerMenuEnabled = false;
+                                //ViewConcrete.PivoteTableMenuEnabled = false;
                                 break;
                             }
                         case ViewMode.PivoteTable:
                             {
-                                ViewConcrete.DeviceListMenuEnabled = true;
-                                ViewConcrete.DeviceDetailMenuEnabled = false;
-                                ViewConcrete.LogViewerMenuEnabled = true;
-                                ViewConcrete.PivoteTableMenuEnabled = false;
+                                //ViewConcrete.DeviceListMenuEnabled = true;
+                                //ViewConcrete.DeviceDetailMenuEnabled = false;
+                                //ViewConcrete.LogViewerMenuEnabled = true;
+                                //ViewConcrete.PivoteTableMenuEnabled = false;
                                 break;
                             }
                         case ViewMode.LogViewer:
                             {
-                                ViewConcrete.DeviceListMenuEnabled = true;
-                                ViewConcrete.DeviceDetailMenuEnabled = false;
-                                ViewConcrete.LogViewerMenuEnabled = false;
-                                ViewConcrete.PivoteTableMenuEnabled = true;
+                                //ViewConcrete.DeviceListMenuEnabled = true;
+                                //ViewConcrete.DeviceDetailMenuEnabled = false;
+                                //ViewConcrete.LogViewerMenuEnabled = false;
+                                //ViewConcrete.PivoteTableMenuEnabled = true;
                                 break;
                             }
                     }
                 }
             }
+        }
+
+        public ICommand[] MenuItems
+        {
+            //get { return ViewConcrete.MenuItems; }
+            set { ViewConcrete.MenuItems = value; }
         }
 
         #endregion

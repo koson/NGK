@@ -34,19 +34,30 @@ namespace NGK.CorrosionMonitoringSystem.Managers.Factory
 
         #region Methods
 
-        public IPresenter Create(ViewMode window)
+        public IPresenter CreateMainWindow()
+        {
+            // ” приложени€ главна€ форма всегда одна.
+            if (_Managers.NavigationService.MainWindowPresenter == null)
+            {
+                MainWindowView mainWindow = new MainWindowView();
+
+                return new MainWindowPresenter(_Application, mainWindow, null, _Managers);
+            }
+            else
+            {
+                return _Managers.NavigationService.MainWindowPresenter;
+            }
+        }
+
+        public IPresenter Create(ViewMode viewMode)
         {
             IPresenter presenter;
 
-            switch (window)
+            switch (viewMode)
             {
                 case ViewMode.NoSelection:
                     {
-                        MainWindowView mainWindow = new MainWindowView();
-
-                        MainWindowPresenter concretePresenter =
-                            new MainWindowPresenter(_Application, mainWindow, null, _Managers);
-                        presenter = concretePresenter;
+                        presenter = null;
                         break;
                     }
                 case ViewMode.PivoteTable:
@@ -97,13 +108,9 @@ namespace NGK.CorrosionMonitoringSystem.Managers.Factory
         public INavigationMenuPresenter CreateNavigationMenu()
         {
             NavigationMenuView view = new NavigationMenuView();
-            view.ShowInTaskbar = false;
-            view.FormBorderStyle = FormBorderStyle.FixedDialog;
-            view.StartPosition = FormStartPosition.CenterScreen;
 
             INavigationMenuPresenter presenter =
                 new NavigationMenuPresenter(_Application, view, null, null);
-
             return presenter;
         }
 

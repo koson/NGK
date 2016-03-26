@@ -6,7 +6,6 @@ namespace NGK.CorrosionMonitoringSystem.Services
 {
     public interface IApplicationServices
     {
-        INavigationService NavigationService { get; }
         IWindowsService WindowsService { get; }
     }
 }

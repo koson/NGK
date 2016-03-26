@@ -21,11 +21,6 @@ namespace NGK.CorrosionMonitoringSystem.Views
     public interface INavigationMenuView: IView
     {
         ViewMode SelectedMenuItem { get; set; }
-        bool PivoteTableMenuEnabled { get; set;}
-        bool DeviceListMenuEnabled { get; set;}
-        bool DeviceDetailMenuEnabled { get; set;}
-        bool LogViewerMenuEnabled { get; set;}
-
         ICommand[] MenuItems { set; }
 
         event EventHandler MenuClosed;

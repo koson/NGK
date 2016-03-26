@@ -15,7 +15,7 @@ namespace NGK.CorrosionMonitoringSystem.Services
         {
             _Application = application;
             _IWindowService = new WindowsService(application);
-            _INavigationService = new NavigationService(application, managers);
+            _Managers = managers;
         }
         
         #endregion
@@ -24,12 +24,7 @@ namespace NGK.CorrosionMonitoringSystem.Services
 
         IApplicationController _Application;
         IWindowsService _IWindowService;
-        INavigationService _INavigationService;
-
-        public INavigationService NavigationService
-        {
-            get { return _INavigationService; }
-        }
+        IManagers _Managers;
 
         public IWindowsService WindowsService
         {
