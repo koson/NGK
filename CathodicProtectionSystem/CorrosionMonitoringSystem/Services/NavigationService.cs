@@ -139,7 +139,10 @@ namespace NGK.CorrosionMonitoringSystem.Services
         Command _ShowPivoteTable;
         void OnShowPivoteTable() 
         {
-            Debug.WriteLine("Команда _ShowPivoteTable запущена"); 
+            Debug.WriteLine("Команда _ShowPivoteTable запущена");
+            IPresenter presenter = 
+                _Managers.PresentersFactory.Create(ViewMode.PivoteTable);
+            MainWindowPresenter.WorkingRegionPresenter = presenter;
         }
         bool CanShowPivoteTable() 
         {
@@ -157,7 +160,10 @@ namespace NGK.CorrosionMonitoringSystem.Services
         Command _ShowDeviceList;
         void OnShowDeviceList() 
         { 
-            Debug.WriteLine("Команда _ShowDeviceList запущена"); 
+            Debug.WriteLine("Команда _ShowDeviceList запущена");
+            IPresenter presenter =
+                _Managers.PresentersFactory.Create(ViewMode.DeviceList);
+            MainWindowPresenter.WorkingRegionPresenter = presenter;
         }
         bool CanShowDeviceList() 
         {
@@ -175,7 +181,10 @@ namespace NGK.CorrosionMonitoringSystem.Services
         Command _ShowDeviceDetail;
         void OnShowDeviceDetail() 
         { 
-            Debug.WriteLine("Команда _ShowDeviceDetail запущена"); 
+            Debug.WriteLine("Команда _ShowDeviceDetail запущена");
+            IPresenter presenter =
+                _Managers.PresentersFactory.Create(ViewMode.DeviceDetail);
+            MainWindowPresenter.WorkingRegionPresenter = presenter;
         }
         bool CanShowDeviceDetail() 
         {
@@ -184,7 +193,13 @@ namespace NGK.CorrosionMonitoringSystem.Services
 
             if (CurrentViewMode.HasValue)
             {
-                return CurrentViewMode.Value != ViewMode.DeviceDetail;
+                if (CurrentViewMode.Value == ViewMode.DeviceList)
+                {
+                    return ((DeviceListPresenter)MainWindowPresenter
+                        .WorkingRegionPresenter).SelectedDevice != null;
+                }
+                else
+                    return false;
             }
             else
                 return false; 
@@ -193,7 +208,11 @@ namespace NGK.CorrosionMonitoringSystem.Services
         Command _ShowLogViewer;
         void OnShowLogViewer() 
         { 
-            Debug.WriteLine("Команда _ShowLogViewer запущена"); 
+            Debug.WriteLine("Команда _ShowLogViewer запущена");
+            IPresenter presenter =
+                _Managers.PresentersFactory.Create(ViewMode.LogViewer);
+            MainWindowPresenter.WorkingRegionPresenter = presenter;
+
         }
         bool CanShowLogViewer() 
         {

@@ -73,6 +73,7 @@ namespace NGK.CorrosionMonitoringSystem.Presenters
                 _WorkingRegionPresenter.ViewRegion = ViewConcrete.WorkingRegion;
                 _WorkingRegionPresenter.HostPresenter = this;
                 _WorkingRegionPresenter.Show();
+                OnWorkingRegionChanged();
             }
         }
 

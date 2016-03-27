@@ -93,6 +93,7 @@ namespace NGK.CorrosionMonitoringSystem.Views
                 if (btn.Tag is ICommand)
                 {
                     ((ICommand)btn.Tag).Execute();
+                    Close();
                 }
             }
         }
