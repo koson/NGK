@@ -13,7 +13,7 @@ using Mvp.View;
 
 namespace NGK.CorrosionMonitoringSystem.Presenters
 {
-    public class DeviceDetailPresenter: Presenter<IDeviceDetailView>, IViewMode
+    public class DeviceDetailPresenter: Presenter<IDeviceDetailView>, IViewMode, ISystemButtons
     {
         #region Constructors
 
@@ -26,12 +26,9 @@ namespace NGK.CorrosionMonitoringSystem.Presenters
             _Name = ViewMode.DeviceDetail.ToString();
             _Managers = managers;
 
-            _ParametersContext = new BindingSource();
             _Parameters = new BindingList<Parameter>();
-            _ParametersContext.DataSource = _Parameters;
-
             Device = device;
-            ViewConcrete.ParametersContext = _ParametersContext;
+            ViewConcrete.Parameters = _Parameters;
         }
 
         #endregion
@@ -67,19 +64,23 @@ namespace NGK.CorrosionMonitoringSystem.Presenters
             }
         }
 
-        BindingSource _ParametersContext;
-        public BindingSource ParametersContext 
-        { 
-            get { return _ParametersContext; } 
-        }
-
         BindingList<Parameter> _Parameters;
+
+        public BindingList<Parameter> Parameters
+        {
+            get { return _Parameters; }
+        }
 
         public ViewMode ViewMode { get { return ViewMode.DeviceDetail; } }
 
         MainWindowPresenter HostWindowPresenter
         {
             get { return (MainWindowPresenter)HostPresenter; }
+        }
+
+        public Command[] ButtonCommands
+        {
+            get { return null; }
         }
 
         #endregion

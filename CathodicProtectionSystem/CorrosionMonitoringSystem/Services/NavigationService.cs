@@ -20,7 +20,6 @@ namespace NGK.CorrosionMonitoringSystem.Services
         {
             _ShowDeviceList = new Command("Устройства", OnShowDeviceList, CanShowDeviceList);
             _ShowPivoteTable = new Command("Параметры ЭХЗ", OnShowPivoteTable, CanShowPivoteTable);
-            _ShowDeviceDetail = new Command("Подробно об устройстве", OnShowDeviceDetail, CanShowDeviceDetail);
             _ShowLogViewer = new Command("Журнал событий", OnShowLogViewer, CanShowLogViewer);
         }
 
@@ -117,7 +116,6 @@ namespace NGK.CorrosionMonitoringSystem.Services
 
         void UpdateCommandStatus()
         {
-            _ShowDeviceDetail.CanExecute();
             _ShowDeviceList.CanExecute();
             _ShowLogViewer.CanExecute();
             _ShowPivoteTable.CanExecute();
@@ -178,33 +176,6 @@ namespace NGK.CorrosionMonitoringSystem.Services
                 return false;
         }
 
-        Command _ShowDeviceDetail;
-        void OnShowDeviceDetail() 
-        { 
-            Debug.WriteLine("Команда _ShowDeviceDetail запущена");
-            IPresenter presenter =
-                _Managers.PresentersFactory.Create(ViewMode.DeviceDetail);
-            MainWindowPresenter.WorkingRegionPresenter = presenter;
-        }
-        bool CanShowDeviceDetail() 
-        {
-            if (MainWindowPresenter == null)
-                return false;
-
-            if (CurrentViewMode.HasValue)
-            {
-                if (CurrentViewMode.Value == ViewMode.DeviceList)
-                {
-                    return ((DeviceListPresenter)MainWindowPresenter
-                        .WorkingRegionPresenter).SelectedDevice != null;
-                }
-                else
-                    return false;
-            }
-            else
-                return false; 
-        }
-
         Command _ShowLogViewer;
         void OnShowLogViewer() 
         { 
@@ -240,7 +211,7 @@ namespace NGK.CorrosionMonitoringSystem.Services
             
             presenter.CurrentViewMode = currentViewMode; // ???? не нужно
             presenter.MenuItems = new ICommand[] { 
-                _ShowPivoteTable, _ShowDeviceList, _ShowDeviceDetail, _ShowLogViewer };
+                _ShowPivoteTable, _ShowDeviceList, _ShowLogViewer };
             presenter.Show();
 
             return presenter.CurrentViewMode;

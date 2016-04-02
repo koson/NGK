@@ -12,7 +12,7 @@ using Mvp.View;
 
 namespace NGK.CorrosionMonitoringSystem.Presenters
 {
-    public class DeviceListPresenter : Presenter<IDeviceListView>, IViewMode
+    public class DeviceListPresenter : Presenter<IDeviceListView>, IViewMode, ISystemButtons
     {
         #region Constructors
 
@@ -25,22 +25,12 @@ namespace NGK.CorrosionMonitoringSystem.Presenters
             _Name = ViewMode.DeviceList.ToString();
             _Managers = managers;
 
-            _DeviceDetailCommand = new Command(new CommandAction(OnDeviceDetail),
-                new Condition(CanDeviceDetail));
+            _DeviceDetailCommand = new Command("Подробно", 
+                new CommandAction(OnDeviceDetail), new Condition(CanDeviceDetail));
             _Commands.Add(_DeviceDetailCommand);
 
-            _BindingSourceDevices = new BindingSource();
-            _BindingSourceDevices.CurrentItemChanged += 
-                new EventHandler(EventHandler_BindingSourceDevices_CurrentItemChanged);
-            _BindingSourceDevices.ListChanged += new System.ComponentModel.ListChangedEventHandler(_BindingSourceDevices_ListChanged);
-            _BindingSourceDevices.DataSource = _Managers.CanNetworkService.Devices;
-
-            //view.ButtonF3Text = "Подробно";
-            //view.ButtonF4Text = "Сбросить ошибку";
-            //view.ButtonF5Text = "Запуск системы";
-            //view.ButtonClick +=
-            //    new EventHandler<ButtonClickEventArgs>(EventHandler_View_ButtonClick);
-            view.Devices = _BindingSourceDevices;
+            view.Devices = _Managers.CanNetworkService.Devices;
+            view.SelectedDeviceChanged += new EventHandler(EventHandler_view_SelectedDeviceChanged);
         }
 
         #endregion
@@ -48,7 +38,6 @@ namespace NGK.CorrosionMonitoringSystem.Presenters
         #region Fields And Properties
 
         IManagers _Managers;
-        BindingSource _BindingSourceDevices;
 
         IDeviceListView ViewConcrete
         {
@@ -57,11 +46,7 @@ namespace NGK.CorrosionMonitoringSystem.Presenters
 
         public NgkCanDevice SelectedDevice
         {
-            get 
-            {
-                return _BindingSourceDevices.Current == null ? null : 
-                    (NgkCanDevice)_BindingSourceDevices.Current; 
-            }
+            get { return ViewConcrete.SelectedDevice; }
         }
 
         MainWindowPresenter HostWindowPresenter
@@ -71,35 +56,18 @@ namespace NGK.CorrosionMonitoringSystem.Presenters
 
         public ViewMode ViewMode { get { return ViewMode.DeviceList; } }
 
+        public Command[] ButtonCommands
+        {
+            get { return new Command[] { _DeviceDetailCommand }; }
+        }
+
         #endregion
 
         #region Event Handlers
 
-        void EventHandler_View_ButtonClick(object sender, ButtonClickEventArgs e)
+        void EventHandler_view_SelectedDeviceChanged(object sender, EventArgs e)
         {
-            switch (e.Button)
-            {
-                case SystemButtons.F2:
-                    {
-                        break;
-                    }
-                case SystemButtons.F3:
-                    {
-                        _DeviceDetailCommand.Execute();
-                        break;
-                    }
-            }
-        }
-
-        void EventHandler_BindingSourceDevices_CurrentItemChanged(object sender, EventArgs e)
-        {
-            //_View.ButtonF3IsAccessible = _DeviceDetailCommand.CanExecute();
-        }
-
-        void _BindingSourceDevices_ListChanged(object sender, System.ComponentModel.ListChangedEventArgs e)
-        {
-            //_View.ButtonF3IsAccessible = _DeviceDetailCommand.CanExecute();
-            return;
+            _DeviceDetailCommand.CanExecute();
         }
 
         #endregion
@@ -114,6 +82,7 @@ namespace NGK.CorrosionMonitoringSystem.Presenters
                 (DeviceDetailPresenter)_Managers.PresentersFactory.Create(
                 ViewMode.DeviceDetail);
             presenter.Device = SelectedDevice;
+            _Managers.NavigationService.MainWindowPresenter.WorkingRegionPresenter = presenter;
             presenter.Show();
         }
 

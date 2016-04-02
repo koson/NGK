@@ -35,9 +35,9 @@ namespace NGK.CorrosionMonitoringSystem.Presenters
             get { return (IPivotTableView)base.View; }
         }
 
-        IButtonsPanel _Buttons;
+        ISystemButtons _Buttons;
 
-        public IButtonsPanel ButtonsPanel
+        public ISystemButtons ButtonsPanel
         {
             get { return _Buttons; }
             set
@@ -76,19 +76,7 @@ namespace NGK.CorrosionMonitoringSystem.Presenters
 
         #endregion
 
-        #region Event Handlers
-
-        void EventHandler_View_ButtonClick(object sender, ButtonClickEventArgs e)
-        {
-            switch (e.Button)
-            {
-                case SystemButtons.F2:
-                    {
-                        break; 
-                    }
-            }
-        }
-        
+        #region Event Handlers        
         #endregion
 
         #region Commands

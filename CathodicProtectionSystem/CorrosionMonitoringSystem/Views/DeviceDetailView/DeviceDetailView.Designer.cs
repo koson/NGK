@@ -28,37 +28,37 @@ namespace NGK.CorrosionMonitoringSystem.Views.DeviceDetailView
         /// </summary>
         private void InitializeComponent()
         {
-            this._DataGridViewDetail = new System.Windows.Forms.DataGridView();
-            ((System.ComponentModel.ISupportInitialize)(this._DataGridViewDetail)).BeginInit();
+            this._DataGridView = new System.Windows.Forms.DataGridView();
+            ((System.ComponentModel.ISupportInitialize)(this._DataGridView)).BeginInit();
             this.SuspendLayout();
             // 
-            // _DataGridViewDetail
+            // _DataGridView
             // 
-            this._DataGridViewDetail.AllowUserToAddRows = false;
-            this._DataGridViewDetail.AllowUserToDeleteRows = false;
-            this._DataGridViewDetail.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this._DataGridViewDetail.Dock = System.Windows.Forms.DockStyle.Fill;
-            this._DataGridViewDetail.Location = new System.Drawing.Point(0, 0);
-            this._DataGridViewDetail.Name = "_DataGridViewDetail";
-            this._DataGridViewDetail.ReadOnly = true;
-            this._DataGridViewDetail.RowTemplate.Height = 24;
-            this._DataGridViewDetail.Size = new System.Drawing.Size(227, 205);
-            this._DataGridViewDetail.TabIndex = 0;
+            this._DataGridView.AllowUserToAddRows = false;
+            this._DataGridView.AllowUserToDeleteRows = false;
+            this._DataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this._DataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this._DataGridView.Location = new System.Drawing.Point(0, 0);
+            this._DataGridView.Name = "_DataGridView";
+            this._DataGridView.ReadOnly = true;
+            this._DataGridView.RowTemplate.Height = 24;
+            this._DataGridView.Size = new System.Drawing.Size(227, 205);
+            this._DataGridView.TabIndex = 0;
             // 
             // DeviceDetailView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this._DataGridViewDetail);
+            this.Controls.Add(this._DataGridView);
             this.Name = "DeviceDetailView";
             this.Size = new System.Drawing.Size(227, 205);
-            ((System.ComponentModel.ISupportInitialize)(this._DataGridViewDetail)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this._DataGridView)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.DataGridView _DataGridViewDetail;
+        private System.Windows.Forms.DataGridView _DataGridView;
     }
 }

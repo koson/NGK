@@ -22,21 +22,13 @@ namespace NGK.CorrosionMonitoringSystem.Presenters
             _Name = String.Empty;
             _Managers = managers;
             ViewConcrete.Title = String.Empty;
-            ViewConcrete.ButtonF3IsAccessible = false;
-            ViewConcrete.ButtonF3Text = String.Empty;
-            ViewConcrete.ButtonF4IsAccessible = false;
-            ViewConcrete.ButtonF4Text = String.Empty;
-            ViewConcrete.ButtonF5IsAccessible = false;
-            ViewConcrete.ButtonF5Text = String.Empty;
 
             _ShowMenuCommand = new Command(OnShowMenu, CanShowMenu);
             _Commands.Add(_ShowMenuCommand);
 
             ViewConcrete.ShowMenuCommand = _ShowMenuCommand;
 
-            ViewConcrete.ButtonClick += 
-                new EventHandler<ButtonClickEventArgs>(
-                EventHandler_ViewConcrete_ButtonClick);
+            ViewConcrete.ButtonCommands = null;
 
             IPresenter presenter =
                 _Managers.PresentersFactory.Create(ViewMode.PivoteTable);
@@ -72,6 +64,29 @@ namespace NGK.CorrosionMonitoringSystem.Presenters
                 _WorkingRegionPresenter = value;
                 _WorkingRegionPresenter.ViewRegion = ViewConcrete.WorkingRegion;
                 _WorkingRegionPresenter.HostPresenter = this;
+
+                if (_WorkingRegionPresenter is ISystemButtons)
+                {
+                    ISystemButtons buttons = _WorkingRegionPresenter as ISystemButtons;
+
+                    if (buttons.ButtonCommands != null)
+                    {
+                        if (buttons.ButtonCommands.Length > 3)
+                        {
+                            throw new Exception("Попытка установить недопустимое значение количества " +
+                                "команд присоединяемых к системным кнопкам");
+                        }
+                        else
+                        {
+                            ViewConcrete.ButtonCommands = buttons.ButtonCommands;
+                        }
+                    }
+                    else
+                    {
+                        ViewConcrete.ButtonCommands = null; 
+                    }
+                }
+
                 _WorkingRegionPresenter.Show();
                 OnWorkingRegionChanged();
             }
@@ -83,6 +98,8 @@ namespace NGK.CorrosionMonitoringSystem.Presenters
             set { ViewConcrete.Title = value; }
         }
 
+        public 
+
         #endregion
 
         #region Methods
@@ -92,22 +109,6 @@ namespace NGK.CorrosionMonitoringSystem.Presenters
             if (WorkingRegionChanged != null)
             {
                 WorkingRegionChanged(this, new EventArgs());
-            }
-        }
-
-        #endregion
-
-        #region Event Handlers of View
-
-        void EventHandler_ViewConcrete_ButtonClick(
-            object sender, ButtonClickEventArgs e)
-        {
-            switch (e.Button)
-            {
-                case SystemButtons.F2:
-                    {
-                        _ShowMenuCommand.Execute(); break;
-                    }
             }
         }
 

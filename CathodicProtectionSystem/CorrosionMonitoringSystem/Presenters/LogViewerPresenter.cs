@@ -55,18 +55,6 @@ namespace NGK.CorrosionMonitoringSystem.Presenters
         #endregion
 
         #region Event Handlers
-
-        void EventHandler_View_ButtonClick(object sender, ButtonClickEventArgs e)
-        {
-            switch (e.Button)
-            {
-                case SystemButtons.F2:
-                    {
-                        break;
-                    }
-            }
-        }
-
         #endregion
 
         #region Commands

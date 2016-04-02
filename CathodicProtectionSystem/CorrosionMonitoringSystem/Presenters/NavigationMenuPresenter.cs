@@ -21,9 +21,6 @@ namespace NGK.CorrosionMonitoringSystem.Presenters
         {
             _Managers = managers;
 
-            Command cmd = new Command("Команда", null, null);
-            _Commands.Add(cmd);
-
             if (menuItems != null)
                 _Commands.AddRange(menuItems);
 

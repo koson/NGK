@@ -128,10 +128,6 @@
       <DependentUpon>SplashScreenView.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\TemplateView.resx">
-      <SubType>Designer</SubType>
-      <DependentUpon>TemplateView.cs</DependentUpon>
-    </EmbeddedResource>
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
@@ -159,10 +155,10 @@
     <Compile Include="Views\DeviceListView\DevicesView.Designer.cs">
       <DependentUpon>DevicesView.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\IButtonsPanel.cs" />
+    <Compile Include="Views\MainWindowView\SystemButtonsPanel\ISystemButtons.cs" />
     <Compile Include="Views\DeviceDetailView\IDeviceDetailView.cs" />
     <Compile Include="Views\DeviceListView\IDeviceListView.cs" />
-    <Compile Include="Views\IStatusPanel.cs" />
+    <Compile Include="Views\MainWindowView\IStatusPanel.cs" />
     <Compile Include="Views\LogViewerView\ILogViewerView.cs" />
     <Compile Include="Views\LogViewerView\LogViewerView.cs">
       <SubType>UserControl</SubType>
@@ -177,7 +173,7 @@
     <Compile Include="Views\MainWindowView\MainWindowView.Designer.cs">
       <DependentUpon>MainWindowView.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\MainWindowView\SystemButtons.cs" />
+    <Compile Include="Views\MainWindowView\SystemButtonsPanel\SystemButtons.cs" />
     <Compile Include="Views\NavigationMenu\INavigationMenuView.cs" />
     <Compile Include="Views\NavigationMenu\NavigationMenuView.cs">
       <SubType>Form</SubType>
@@ -199,12 +195,6 @@
     </Compile>
     <Compile Include="Views\SplashScreenView\ISplashScreenView.cs" />
     <Compile Include="Views\PavotTableView\IPivotTableView.cs" />
-    <Compile Include="Views\TemplateView.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Views\TemplateView.Designer.cs">
-      <DependentUpon>TemplateView.cs</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\MVP\MVP\MVP.csproj">

@@ -82,51 +82,6 @@ namespace NGK.CorrosionMonitoringSystem.Views
             set { _PanelSystemButtonsRegion.Visible = value; }
         }
 
-        public Boolean ButtonF3IsAccessible
-        {
-            get { return _ButtonF3.Visible && _ButtonF3.Enabled; }
-            set 
-            { 
-                _ButtonF3.Visible = value; 
-                _ButtonF3.Enabled = value; 
-            }
-        }
-
-        public Boolean ButtonF4IsAccessible
-        {
-            get { return _ButtonF4.Visible && _ButtonF4.Enabled; }
-            set
-            {
-                _ButtonF4.Visible = value;
-                _ButtonF4.Enabled = value;
-            }
-        }
-
-        public Boolean ButtonF5IsAccessible
-        {
-            get { return _ButtonF5.Visible && _ButtonF5.Enabled; }
-            set
-            {
-                _ButtonF5.Visible = value;
-                _ButtonF5.Enabled = value;
-            }
-        }
-
-        public String ButtonF3Text
-        {
-            set { _ButtonF3.Text = value; } 
-        }
-
-        public String ButtonF4Text
-        {
-            set { _ButtonF4.Text = value; }
-        }
-
-        public String ButtonF5Text
-        {
-            set { _ButtonF5.Text = value; }
-        }
-
         public ViewType ViewType { get { return ViewType.Window; } }
 
         public IViewRegion[] ViewRegions
@@ -143,15 +98,42 @@ namespace NGK.CorrosionMonitoringSystem.Views
             }
         }
 
-        ICommand _ShowMenuCommand;
-
         public ICommand ShowMenuCommand
         {
             set 
             { 
-                _ShowMenuCommand = value;
-                _ShowMenuCommand.CanExecuteChanged += 
-                    new EventHandler(EventHandler_ShowMenuCommand_CanExecuteChanged);
+                _ButtonF2.DataBindings.Clear();
+                _ButtonF2.Tag = value;
+                _ButtonF2.DataBindings.Add(
+                    new Binding("Enabled", _ButtonF2.Tag, "Status")); 
+            }
+        }
+
+        public ICommand[] ButtonCommands
+        {
+            set
+            {
+                Button[] btns = new Button[] { _ButtonF3, _ButtonF4, _ButtonF5 };
+
+                foreach (Button btn in btns)
+                {
+                    btn.Text = String.Empty;
+                    btn.Enabled = false;
+                    btn.Visible = false;
+                    btn.Tag = null;
+                    btn.DataBindings.Clear();
+                }
+
+                if (value == null)
+                    return;
+
+                for (int i = 0; i < value.Length; i++)
+                {
+                    btns[i].Text = value[i].Name;
+                    btns[i].Visible = true;
+                    btns[i].Tag = value[i];
+                    btns[i].DataBindings.Add(new Binding("Enabled", btns[i].Tag, "Status")); 
+                }
             }
         }
 
@@ -182,28 +164,14 @@ namespace NGK.CorrosionMonitoringSystem.Views
         void EventHandler_Button_Click(object sender, EventArgs e)
         {
             Button btn = (Button)sender;
-
-            if (btn.Equals(_ButtonF2))
-            {
-                OnButtonClick(new ButtonClickEventArgs(SystemButtons.F2));
-            }
-            else if (btn.Equals(_ButtonF3))
-            {
-                OnButtonClick(new ButtonClickEventArgs(SystemButtons.F3));
-            }
-            else if (btn.Equals(_ButtonF4))
-            {
-                OnButtonClick(new ButtonClickEventArgs(SystemButtons.F4));
-            }
-            else if (btn.Equals(_ButtonF5))
-            {
-                OnButtonClick(new ButtonClickEventArgs(SystemButtons.F5));
-            }
-            else if (btn.Equals(_ButtonF6))
+            
+            if (btn.Equals(_ButtonF6))
             {
                 // Скрывает или отображаем панель конопок
                 _PanelSystemButtonsRegion.Visible = !_PanelSystemButtonsRegion.Visible;
             }
+            else
+                ((ICommand)btn.Tag).Execute();
         }
 
         void EventHandler_ShowMenuCommand_CanExecuteChanged(object sender, EventArgs e)
@@ -287,22 +255,7 @@ namespace NGK.CorrosionMonitoringSystem.Views
 
         #endregion
 
-        #region Event Generators
-
-        void OnButtonClick(ButtonClickEventArgs args)
-        {
-            if (ButtonClick != null)
-            {
-                ButtonClick(this, args);
-            }
-        }
-
-        #endregion
-
-        #region Events
-
-        public event EventHandler<ButtonClickEventArgs> ButtonClick;
-        
+        #region Events        
         #endregion
 
         #region IMainWindowView Members
