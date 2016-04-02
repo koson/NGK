@@ -26,8 +26,11 @@ namespace NGK.CorrosionMonitoringSystem.Presenters
             _ShowMenuCommand = new Command(OnShowMenu, CanShowMenu);
             _Commands.Add(_ShowMenuCommand);
             _ShowDeviceList = new Command("Устройства", OnShowDeviceList, CanShowDeviceList);
+            _Commands.Add(_ShowDeviceList);
             _ShowPivoteTable = new Command("Параметры ЭХЗ", OnShowPivoteTable, CanShowPivoteTable);
+            _Commands.Add(_ShowPivoteTable);
             _ShowLogViewer = new Command("Журнал событий", OnShowLogViewer, CanShowLogViewer);
+            _Commands.Add(_ShowLogViewer);
 
             ViewConcrete.ShowMenuCommand = _ShowMenuCommand;
 
@@ -101,22 +104,16 @@ namespace NGK.CorrosionMonitoringSystem.Presenters
             set { ViewConcrete.Title = value; }
         }
 
-        ViewMode? CurrentViewMode
+        ViewMode CurrentViewMode
         {
             get
             {
                 if (WorkingRegionPresenter != null)
                 {
-                    if (Enum.IsDefined(typeof(ViewMode), WorkingRegionPresenter.Name))
-                    {
-                        return (ViewMode)Enum.Parse(typeof(ViewMode), WorkingRegionPresenter.Name);
-                    }
-                    else
-                    {
-                        return ViewMode.NoSelection;
-                    }
+                    if (WorkingRegionPresenter is IViewMode)
+                        return (_WorkingRegionPresenter as IViewMode).ViewMode;
                 }
-                return null;
+                return ViewMode.NoSelection;
             }
         }
 
@@ -148,66 +145,26 @@ namespace NGK.CorrosionMonitoringSystem.Presenters
         /// </summary>
         void OnShowMenu()
         {
-            ViewMode mode;
-            IPresenter presenter;
             INavigationMenuPresenter navigationMenuPresenter;
 
-            if (_WorkingRegionPresenter == null)
-                mode = ViewMode.NoSelection;
-            else
+            navigationMenuPresenter =
+                _Managers.PresentersFactory.CreateNavigationMenu();
+            
+            List<ICommand> menuItems = new List<ICommand>();
+            menuItems.Add(_ShowPivoteTable);
+            menuItems.Add(_ShowDeviceList);
+            menuItems.Add(_ShowLogViewer);
+
+            if (_WorkingRegionPresenter is ISystemMenu)
             {
-                IViewMode vm = _WorkingRegionPresenter as IViewMode;
-                mode = vm == null ? ViewMode.NoSelection : vm.ViewMode;
-                //mode = _Managers.NavigationService.ShowNavigationMenu(mode);
-
-                navigationMenuPresenter =
-                    _Managers.PresentersFactory.CreateNavigationMenu();
-
-                //presenter.CurrentViewMode = currentViewMode; // ???? не нужно
-
-                List<ICommand> menuItems = new List<ICommand>();
-                menuItems.Add(_ShowPivoteTable);
-                menuItems.Add(_ShowDeviceList);
-                menuItems.Add(_ShowLogViewer);
-
-                if (_WorkingRegionPresenter is ISysemMenu)
-                {
-                    ISysemMenu mnu = _WorkingRegionPresenter as ISysemMenu;
+                ISystemMenu mnu = _WorkingRegionPresenter as ISystemMenu;
+                if (mnu.MenuItems != null)
                     menuItems.AddRange(mnu.MenuItems);
-                }
-
-                navigationMenuPresenter.MenuItems = menuItems.ToArray();
-
-                navigationMenuPresenter.Show();
-
-                mode = navigationMenuPresenter.CurrentViewMode;
-
-                if (mode != vm.ViewMode)
-                {
-                    if (mode == ViewMode.NoSelection)
-                    {
-                        WorkingRegionPresenter = null;
-                    }
-                    else
-                    {
-                        presenter = _Managers.PresentersFactory.Create(mode);
-                        switch (presenter.View.ViewType)
-                        {
-                            case ViewType.Window:
-                            case ViewType.Dialog:
-                                {
-                                    presenter.Show();
-                                    break;
-                                }
-                            case ViewType.Region:
-                                {
-                                    WorkingRegionPresenter = presenter;
-                                    break;
-                                }
-                        }
-                    }
-                }
             }
+            
+            navigationMenuPresenter.MenuItems = menuItems.ToArray();
+            base.UpdateStatusCommands();
+            navigationMenuPresenter.Show();
         }
         bool CanShowMenu()
         {
@@ -223,12 +180,7 @@ namespace NGK.CorrosionMonitoringSystem.Presenters
         }
         bool CanShowPivoteTable()
         {
-            if (CurrentViewMode.HasValue)
-            {
-                return CurrentViewMode.Value != ViewMode.PivoteTable;
-            }
-            else
-                return false;
+            return CurrentViewMode != ViewMode.PivoteTable;
         }
 
         Command _ShowDeviceList;
@@ -240,12 +192,7 @@ namespace NGK.CorrosionMonitoringSystem.Presenters
         }
         bool CanShowDeviceList()
         {
-            if (CurrentViewMode.HasValue)
-            {
-                return CurrentViewMode.Value != ViewMode.DeviceList;
-            }
-            else
-                return false;
+            return CurrentViewMode != ViewMode.DeviceList;
         }
 
         Command _ShowLogViewer;
@@ -258,12 +205,7 @@ namespace NGK.CorrosionMonitoringSystem.Presenters
         }
         bool CanShowLogViewer()
         {
-            if (CurrentViewMode.HasValue)
-            {
-                return CurrentViewMode.Value != ViewMode.LogViewer;
-            }
-            else
-                return false;
+            return CurrentViewMode != ViewMode.LogViewer;
         }
 
         #endregion

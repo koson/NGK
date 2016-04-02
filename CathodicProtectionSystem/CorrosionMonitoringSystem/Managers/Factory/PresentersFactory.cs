@@ -36,17 +36,9 @@ namespace NGK.CorrosionMonitoringSystem.Managers.Factory
 
         public IPresenter CreateMainWindow()
         {
-            // ” приложени€ главна€ форма всегда одна.
-            if (_Managers.NavigationService.MainWindowPresenter == null)
-            {
-                MainWindowView mainWindow = new MainWindowView();
-
-                return new MainWindowPresenter(_Application, mainWindow, null, _Managers);
-            }
-            else
-            {
-                return _Managers.NavigationService.MainWindowPresenter;
-            }
+            MainWindowView mainWindow = new MainWindowView();
+            return new MainWindowPresenter(_Application, mainWindow, 
+                null, _Managers);
         }
 
         public IPresenter Create(ViewMode viewMode)

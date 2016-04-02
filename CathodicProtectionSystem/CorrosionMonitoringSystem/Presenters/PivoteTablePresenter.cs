@@ -11,7 +11,8 @@ using NGK.CorrosionMonitoringSystem.Managers;
 
 namespace NGK.CorrosionMonitoringSystem.Presenters
 {
-    public class PivoteTablePresenter : Presenter<IPivotTableView>, IViewMode
+    public class PivoteTablePresenter : Presenter<IPivotTableView>,
+        IViewMode, ISystemButtons, ISystemMenu
     {
         #region Constructors
         
@@ -35,25 +36,6 @@ namespace NGK.CorrosionMonitoringSystem.Presenters
             get { return (IPivotTableView)base.View; }
         }
 
-        ISystemButtons _Buttons;
-
-        public ISystemButtons ButtonsPanel
-        {
-            get { return _Buttons; }
-            set
-            {
-                _Buttons = value;
-                if (_Buttons != null)
-                {
-                    // настраиваем кнопки
-                    //_Buttons = buttons;
-                    //_Buttons.ButtonF3IsAccessible = false;
-                    //_Buttons.ButtonClick +=
-                    //    new EventHandler<ButtonClickEventArgs>(EventHandler_View_ButtonClick);
-                }
-            }
-        }
-
         MainWindowPresenter HostWindowPresenter
         {
             get { return (MainWindowPresenter)HostPresenter; }
@@ -62,6 +44,16 @@ namespace NGK.CorrosionMonitoringSystem.Presenters
         public ViewMode ViewMode 
         { 
             get { return ViewMode.PivoteTable; } 
+        }
+
+        public ICommand[] MenuItems
+        {
+            get { return null; }
+        }
+
+        public Command[] ButtonCommands
+        {
+            get { return null; }
         }
 
         #endregion

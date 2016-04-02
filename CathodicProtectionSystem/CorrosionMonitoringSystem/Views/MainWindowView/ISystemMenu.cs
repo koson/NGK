@@ -9,7 +9,7 @@ namespace NGK.CorrosionMonitoringSystem.Views
     /// Интерфейс реализуется презентром типа Region и служит
     /// для выдачи комманд сисменого меню презентеру главного окна приложения
     /// </summary>
-    public interface ISysemMenu
+    public interface ISystemMenu
     {
         ICommand[] MenuItems { get; }
     }

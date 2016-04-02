@@ -26,10 +26,6 @@ namespace NGK.CorrosionMonitoringSystem.Managers
         /// </summary>
         IConfigManager ConfigManager { get; }
         /// <summary>
-        /// Навигация по приложению
-        /// </summary>
-        INavigationService NavigationService { get; }
-        /// <summary>
         /// Фабрика по созданию окон приложения
         /// </summary>
         IPresentersFactory PresentersFactory { get; }

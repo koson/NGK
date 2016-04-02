@@ -20,8 +20,6 @@ namespace NGK.CorrosionMonitoringSystem.Managers
             _ConfigManager = new ConfigManager();
             _Logger = null; //TODO: Не реализовано
             _SystemLogger = null; //TODO: Не реализовано
-            _NavigationService = NGK.CorrosionMonitoringSystem.Services.NavigationService.Instance;
-            _NavigationService.Managers = this;
             _WindowsFactory = new PresentersFactory(application, this);
             _CanNetwrokService = new CanNetworkService(application, 
                 NetworksManager.Instance, 300);
@@ -34,7 +32,6 @@ namespace NGK.CorrosionMonitoringSystem.Managers
         ConfigManager _ConfigManager;
         ISysLogManager _SystemLogger;
         ILogManager _Logger;
-        NavigationService _NavigationService;
         PresentersFactory _WindowsFactory;
         CanNetworkService _CanNetwrokService;
 
@@ -53,11 +50,6 @@ namespace NGK.CorrosionMonitoringSystem.Managers
             get { return _ConfigManager; }
         }
         
-        public INavigationService NavigationService 
-        {
-            get { return _NavigationService; } 
-        }
-
         public IPresentersFactory PresentersFactory
         {
             get { return _WindowsFactory; }

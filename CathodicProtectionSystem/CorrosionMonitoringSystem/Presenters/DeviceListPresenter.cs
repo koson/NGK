@@ -13,7 +13,7 @@ using Mvp.View;
 namespace NGK.CorrosionMonitoringSystem.Presenters
 {
     public class DeviceListPresenter : Presenter<IDeviceListView>, IViewMode, 
-        ISystemButtons, ISysemMenu
+        ISystemButtons, ISystemMenu
     {
         #region Constructors
 
@@ -88,7 +88,8 @@ namespace NGK.CorrosionMonitoringSystem.Presenters
                 (DeviceDetailPresenter)_Managers.PresentersFactory.Create(
                 ViewMode.DeviceDetail);
             presenter.Device = SelectedDevice;
-            _Managers.NavigationService.MainWindowPresenter.WorkingRegionPresenter = presenter;
+            ((MainWindowPresenter)_Application.CurrentPresenter)
+                .WorkingRegionPresenter = presenter;
             presenter.Show();
         }
 

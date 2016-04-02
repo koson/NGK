@@ -60,7 +60,6 @@ namespace NGK.CorrosionMonitoringSystem.Presenters
         {
             IPresenter presenter =
                 _Managers.PresentersFactory.CreateMainWindow();
-            _Managers.NavigationService.MainWindowPresenter = (MainWindowPresenter)presenter;
             presenter.Show();
         }
 

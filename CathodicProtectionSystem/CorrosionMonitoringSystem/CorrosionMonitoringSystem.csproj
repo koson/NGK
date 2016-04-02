@@ -141,7 +141,6 @@
     <Compile Include="Services\INavigationService.cs" />
     <Compile Include="Services\IShowAppMenuService.cs" />
     <Compile Include="Services\IWindowsService.cs" />
-    <Compile Include="Services\NavigationService.cs" />
     <Compile Include="Services\WindowsService.cs" />
     <Compile Include="Views\DeviceDetailView\DeviceDetailView.cs">
       <SubType>UserControl</SubType>
@@ -155,7 +154,7 @@
     <Compile Include="Views\DeviceListView\DevicesView.Designer.cs">
       <DependentUpon>DevicesView.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\MainWindowView\ISysemMenu.cs" />
+    <Compile Include="Views\MainWindowView\ISystemMenu.cs" />
     <Compile Include="Views\MainWindowView\SystemButtonsPanel\ISystemButtons.cs" />
     <Compile Include="Views\DeviceDetailView\IDeviceDetailView.cs" />
     <Compile Include="Views\DeviceListView\IDeviceListView.cs" />
