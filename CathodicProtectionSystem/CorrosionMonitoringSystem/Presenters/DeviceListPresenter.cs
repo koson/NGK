@@ -12,7 +12,8 @@ using Mvp.View;
 
 namespace NGK.CorrosionMonitoringSystem.Presenters
 {
-    public class DeviceListPresenter : Presenter<IDeviceListView>, IViewMode, ISystemButtons
+    public class DeviceListPresenter : Presenter<IDeviceListView>, IViewMode, 
+        ISystemButtons, ISysemMenu
     {
         #region Constructors
 
@@ -57,6 +58,11 @@ namespace NGK.CorrosionMonitoringSystem.Presenters
         public ViewMode ViewMode { get { return ViewMode.DeviceList; } }
 
         public Command[] ButtonCommands
+        {
+            get { return new Command[] { _DeviceDetailCommand }; }
+        }
+
+        public ICommand[] MenuItems
         {
             get { return new Command[] { _DeviceDetailCommand }; }
         }
