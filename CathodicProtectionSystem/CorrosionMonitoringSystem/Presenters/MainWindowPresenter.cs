@@ -7,6 +7,7 @@ using NGK.CorrosionMonitoringSystem.Managers;
 using Mvp.Presenter;
 using Mvp.View;
 using Mvp.Input;
+using System.Diagnostics;
 
 namespace NGK.CorrosionMonitoringSystem.Presenters
 {
@@ -25,12 +26,19 @@ namespace NGK.CorrosionMonitoringSystem.Presenters
 
             _ShowMenuCommand = new Command(OnShowMenu, CanShowMenu);
             _Commands.Add(_ShowMenuCommand);
-            _ShowDeviceList = new Command("Устройства", OnShowDeviceList, CanShowDeviceList);
-            _Commands.Add(_ShowDeviceList);
-            _ShowPivoteTable = new Command("Параметры ЭХЗ", OnShowPivoteTable, CanShowPivoteTable);
-            _Commands.Add(_ShowPivoteTable);
-            _ShowLogViewer = new Command("Журнал событий", OnShowLogViewer, CanShowLogViewer);
-            _Commands.Add(_ShowLogViewer);
+            _ShowDeviceListCommand = new Command("Устройства", OnShowDeviceList, CanShowDeviceList);
+            _Commands.Add(_ShowDeviceListCommand);
+            _ShowPivoteTableCommand = new Command("Параметры ЭХЗ", OnShowPivoteTable, CanShowPivoteTable);
+            _Commands.Add(_ShowPivoteTableCommand);
+            _ShowLogViewerCommand = new Command("Журнал событий", OnShowLogViewer, CanShowLogViewer);
+            _Commands.Add(_ShowLogViewerCommand);
+            _RunCorrosionMonitoringSystemCommand = new Command("Пуск",
+                OnRunCorrosionMonitoringSystem, CanRunCorrosionMonitoringSystem);
+            _Commands.Add(_RunCorrosionMonitoringSystemCommand);
+            _StopCorrosionMonitoringSystemCommand = new Command("Стоп",
+                OnStopCorrosionMonitoringSystem, CanStopCorrosionMonitoringSystem);
+            _Commands.Add(_StopCorrosionMonitoringSystemCommand);
+            
 
             ViewConcrete.ShowMenuCommand = _ShowMenuCommand;
 
@@ -38,6 +46,8 @@ namespace NGK.CorrosionMonitoringSystem.Presenters
 
             ViewConcrete.TotalDevices = _Managers.CanNetworkService.Devices.Count;
             ViewConcrete.FaultyDevices = _Managers.CanNetworkService.FaultyDevices;
+            _Managers.CanNetworkService.StatusWasChanged += 
+                new EventHandler(EventHandler_CanNetworkService_StatusWasChanged);
             _Managers.CanNetworkService.FaultyDevicesChanged += 
                 new EventHandler(EventHandler_CanNetworkService_FaultyDevicesChanged);
 
@@ -138,6 +148,11 @@ namespace NGK.CorrosionMonitoringSystem.Presenters
 
         #region Event Handlers
 
+        void EventHandler_CanNetworkService_StatusWasChanged(object sender, EventArgs e)
+        {
+            UpdateStatusCommands();
+        }
+
         void EventHandler_CanNetworkService_FaultyDevicesChanged(
             object sender, EventArgs e)
         {
@@ -167,9 +182,11 @@ namespace NGK.CorrosionMonitoringSystem.Presenters
                 _Managers.PresentersFactory.CreateNavigationMenu();
             
             List<ICommand> menuItems = new List<ICommand>();
-            menuItems.Add(_ShowPivoteTable);
-            menuItems.Add(_ShowDeviceList);
-            menuItems.Add(_ShowLogViewer);
+            menuItems.Add(_ShowPivoteTableCommand);
+            menuItems.Add(_ShowDeviceListCommand);
+            menuItems.Add(_ShowLogViewerCommand);
+            menuItems.Add(_RunCorrosionMonitoringSystemCommand);
+            menuItems.Add(_StopCorrosionMonitoringSystemCommand);
 
             if (_WorkingRegionPresenter is ISystemMenu)
             {
@@ -187,7 +204,7 @@ namespace NGK.CorrosionMonitoringSystem.Presenters
             return WorkingRegionPresenter != null;
         }
 
-        Command _ShowPivoteTable;
+        Command _ShowPivoteTableCommand;
         void OnShowPivoteTable()
         {
             IPresenter presenter =
@@ -199,7 +216,7 @@ namespace NGK.CorrosionMonitoringSystem.Presenters
             return CurrentViewMode != ViewMode.PivoteTable;
         }
 
-        Command _ShowDeviceList;
+        Command _ShowDeviceListCommand;
         void OnShowDeviceList()
         {
             IPresenter presenter =
@@ -211,7 +228,7 @@ namespace NGK.CorrosionMonitoringSystem.Presenters
             return CurrentViewMode != ViewMode.DeviceList;
         }
 
-        Command _ShowLogViewer;
+        Command _ShowLogViewerCommand;
         void OnShowLogViewer()
         {
             IPresenter presenter =
@@ -222,6 +239,30 @@ namespace NGK.CorrosionMonitoringSystem.Presenters
         bool CanShowLogViewer()
         {
             return CurrentViewMode != ViewMode.LogViewer;
+        }
+
+        Command _RunCorrosionMonitoringSystemCommand;
+        void OnRunCorrosionMonitoringSystem()
+        {
+            Debug.WriteLine("Команда: запуск системы");
+            _Managers.CanNetworkService.Start();
+        }
+        bool CanRunCorrosionMonitoringSystem()
+        {
+            return _Managers.CanNetworkService.Status == 
+                Common.Controlling.Status.Stopped;
+        }
+
+        Command _StopCorrosionMonitoringSystemCommand;
+        void OnStopCorrosionMonitoringSystem()
+        {
+            Debug.WriteLine("Команда: остановить систему");
+            _Managers.CanNetworkService.Stop();
+        }
+        bool CanStopCorrosionMonitoringSystem()
+        {
+            return _Managers.CanNetworkService.Status ==
+                Common.Controlling.Status.Running;
         }
 
         #endregion

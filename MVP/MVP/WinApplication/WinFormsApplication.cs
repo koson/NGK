@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.Globalization;
 using Mvp.Presenter;
 using Mvp.View;
+using System.Threading;
 
 namespace Mvp.WinApplication
 {
@@ -19,6 +20,9 @@ namespace Mvp.WinApplication
             Application.SetCompatibleTextRenderingDefault(false);
 
             _AppContext = new ApplicationContext();
+            SynchronizationContext.SetSynchronizationContext(
+                new SynchronizationContext());
+            _SyncContext = SynchronizationContext.Current;
         }
         
         #endregion
@@ -27,6 +31,7 @@ namespace Mvp.WinApplication
 
         private ApplicationContext _AppContext;
         private IPresenter _CurrentPresenter;
+        private SynchronizationContext _SyncContext;
 
         public ApplicationContext AppContext 
         { 
@@ -35,6 +40,11 @@ namespace Mvp.WinApplication
                 return _AppContext; 
             } 
         } 
+
+        public SynchronizationContext SyncContext
+        {
+            get { return _SyncContext; }
+        }
 
         /// <summary>
         /// Возвращает или устанавливаем текущий экран

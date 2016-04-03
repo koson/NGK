@@ -131,10 +131,14 @@ namespace NGK.CorrosionMonitoringSystem.Views
 
         void BuildMenu()
         {
+            int buttonHeight = 40;
+
             _TableLayoutPanel.SuspendLayout();
 
             _TableLayoutPanel.Controls.Clear();
             _TableLayoutPanel.RowStyles.Clear();
+
+            this.Height = ((_MenuCommands == null ? 0 : _MenuCommands.Length) + 1) * buttonHeight;
 
             if ((_MenuCommands != null))
             {
@@ -143,8 +147,6 @@ namespace NGK.CorrosionMonitoringSystem.Views
 
                 _TableLayoutPanel.RowStyles.Add(new RowStyle(SizeType.Percent, rowHeight));
                 _TableLayoutPanel.Controls.Add(_ButtonExit);
-
-                this.Height += _TableLayoutPanel.Height;
 
                 foreach (ICommand cmd in _MenuCommands)
                 {

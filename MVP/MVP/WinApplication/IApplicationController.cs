@@ -4,11 +4,14 @@ using System.Text;
 using System.Windows.Forms;
 using Mvp.View;
 using Mvp.Presenter;
+using System.Threading;
 
 namespace Mvp.WinApplication
 {
     public interface IApplicationController
     {
+        SynchronizationContext SyncContext { get; }
+        ApplicationContext AppContext { get; }
         /// <summary>
         /// Возвращает текущее окно системы
         /// </summary>

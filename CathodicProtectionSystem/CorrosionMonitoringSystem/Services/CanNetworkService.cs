@@ -60,29 +60,29 @@ namespace NGK.CorrosionMonitoringSystem.Services
 
             } 
         }
-            Status _Status;
-            public Status Status
+        Status _Status;
+        public Status Status
+        {
+            get { return _Status; }
+            set
             {
-                get { return _Status; }
-                set
+                switch (value)
                 {
-                    switch (value)
-                    {
-                        case Common.Controlling.Status.Running:
-                            {
-                                Start();
-                                break;
-                            }
-                        case Common.Controlling.Status.Stopped:
-                            {
-                                Start();
-                                break;
-                            }
-                        default:
-                            { throw new NotSupportedException(); }
-                    }
+                    case Common.Controlling.Status.Running:
+                        {
+                            Start();
+                            break;
+                        }
+                    case Common.Controlling.Status.Stopped:
+                        {
+                            Start();
+                            break;
+                        }
+                    default:
+                        { throw new NotSupportedException(); }
                 }
             }
+        }
 
         #endregion
 
@@ -90,6 +90,11 @@ namespace NGK.CorrosionMonitoringSystem.Services
 
         public void Start()
         {
+            if (_Status == Status.Running)
+                return;
+
+            _Status = Status.Running;
+            
             StartCanNetwork();
 
             _Devices.Clear();
@@ -102,23 +107,19 @@ namespace NGK.CorrosionMonitoringSystem.Services
                 }
             }
 
-            if (_Status == Common.Controlling.Status.Running)
-                return;
-
-            _Status = Common.Controlling.Status.Running;
             _Timer.Start();
-            
+            OnStatusWasChanged();
         }
 
         public void Stop()
         {
-            StopCanNetwork();
-
-            if (_Status == Common.Controlling.Status.Stopped)
+            if (_Status == Status.Stopped)
                 return;
 
-            _Status = Common.Controlling.Status.Stopped;
+            StopCanNetwork();
             _Timer.Stop();
+            _Status = Status.Stopped;
+            OnStatusWasChanged();
         }
 
         public void Suspend()
@@ -156,6 +157,12 @@ namespace NGK.CorrosionMonitoringSystem.Services
                 _Timer.Dispose();
         }
 
+        void OnStatusWasChanged()
+        {
+            if (StatusWasChanged != null)
+                StatusWasChanged(this, new EventArgs());
+        }
+
         void OnFaultyDevicesChanged()
         {
             if (FaultyDevicesChanged != null)
@@ -168,28 +175,46 @@ namespace NGK.CorrosionMonitoringSystem.Services
 
         void EventHandler_Timer_Elapsed(object sender, ElapsedEventArgs e)
         {
-            IDevice canDevice;
-
-            if (_Application.CurrentForm.InvokeRequired)
+            _Application.SyncContext.Post(delegate(object state) 
             {
-                _Application.CurrentForm.Invoke((System.Windows.Forms.MethodInvoker)
-                    delegate()
-                    {
-                        int faultyDevices = 0;
+                IDevice canDevice;
+                int faultyDevices = 0;
 
-                        foreach (NgkCanDevice device in _Devices)
-                        {
-                            canDevice = NetworksManager.Instance.Networks[device.NetworkId]
-                                .Devices[device.NodeId];
-                            NgkCanDevice.Update(device, canDevice);
+                foreach (NgkCanDevice device in _Devices)
+                {
+                    canDevice = NetworksManager.Instance.Networks[device.NetworkId]
+                        .Devices[device.NodeId];
+                    NgkCanDevice.Update(device, canDevice);
 
-                            if (canDevice.Status == DeviceStatus.CommunicationError)
-                                faultyDevices++;
-                        }
+                    if (canDevice.Status == DeviceStatus.CommunicationError)
+                        faultyDevices++;
+                }
 
-                        FaultyDevices = faultyDevices;
-                    });
-            }
+                FaultyDevices = faultyDevices;
+            }, null);
+
+
+            //if (_Application.CurrentForm.InvokeRequired)
+            //{
+            //    _Application.CurrentForm.Invoke((System.Windows.Forms.MethodInvoker)
+            //        delegate()
+            //        {
+            //            IDevice canDevice;
+            //            int faultyDevices = 0;
+
+            //            foreach (NgkCanDevice device in _Devices)
+            //            {
+            //                canDevice = NetworksManager.Instance.Networks[device.NetworkId]
+            //                    .Devices[device.NodeId];
+            //                NgkCanDevice.Update(device, canDevice);
+
+            //                if (canDevice.Status == DeviceStatus.CommunicationError)
+            //                    faultyDevices++;
+            //            }
+
+            //            FaultyDevices = faultyDevices;
+            //        });
+            //}
         }
 
         void EventHandler_NetworkManager_NetworkChangedStatus(
