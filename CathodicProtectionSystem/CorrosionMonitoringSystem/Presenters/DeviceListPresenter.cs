@@ -31,7 +31,8 @@ namespace NGK.CorrosionMonitoringSystem.Presenters
             _Commands.Add(_DeviceDetailCommand);
 
             view.Devices = _Managers.CanNetworkService.Devices;
-            view.SelectedDeviceChanged += new EventHandler(EventHandler_view_SelectedDeviceChanged);
+            view.SelectedDeviceChanged += 
+                new EventHandler(EventHandler_view_SelectedDeviceChanged);
         }
 
         #endregion

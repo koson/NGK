@@ -11,6 +11,7 @@ using NGK.CorrosionMonitoringSystem.Presenters;
 using NGK.CorrosionMonitoringSystem.Views;
 using NGK.CAN.ApplicationLayer.Network.Master;
 using NGK.CorrosionMonitoringSystem.Managers;
+using NGK.CAN.ApplicationLayer.Network.Devices;
 
 namespace NGK.CorrosionMonitoringSystem
 {
@@ -91,6 +92,7 @@ namespace NGK.CorrosionMonitoringSystem
             //Загружаем конфигурацию сети
             presenter.WtriteText("Загрузка конфигурации сети...");
             LoadNetworkConfig();
+            Managers.CanNetworkService.Initialize();
 
             System.Threading.Thread.Sleep(300);
             presenter.WtriteText("Загрузка БД...");

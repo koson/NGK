@@ -42,7 +42,6 @@ namespace NGK.CorrosionMonitoringSystem.Services
         BindingList<NgkCanDevice> _Devices;
         Timer _Timer;
 
-
         public BindingList<NgkCanDevice> Devices { get { return _Devices; } }
 
         int _FaultyDevices;
@@ -87,6 +86,19 @@ namespace NGK.CorrosionMonitoringSystem.Services
         #endregion
 
         #region Methods
+
+        public void Initialize()
+        {
+            _Devices.Clear();
+
+            foreach (NetworkController network in _NetworkManager.Networks)
+            {
+                foreach (IDevice device in network.Devices)
+                {
+                    _Devices.Add(new NgkCanDevice(device));
+                }
+            }
+        }
 
         public void Start()
         {

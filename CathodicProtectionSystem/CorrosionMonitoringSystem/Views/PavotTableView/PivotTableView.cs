@@ -35,7 +35,7 @@ namespace NGK.CorrosionMonitoringSystem.Views
             DataGridViewCellStyle headerCellStyle = new DataGridViewCellStyle();
             headerCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             headerCellStyle.Font = new Font(DataGridView.DefaultFont, FontStyle.Bold);
-            headerCellStyle.ForeColor = Color.Red;
+            headerCellStyle.ForeColor = Color.Blue;
             headerCellStyle.WrapMode = DataGridViewTriState.True;
             _DataGridView.ColumnHeadersDefaultCellStyle = headerCellStyle;
 

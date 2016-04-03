@@ -10,6 +10,7 @@ namespace NGK.CorrosionMonitoringSystem.Services
 {
     public interface ICanNetworkService: IManageable
     {
+        void Initialize();
         BindingList<NgkCanDevice> Devices { get; }
         /// <summary>
         /// Количество неисправных устройтсв в системе.
