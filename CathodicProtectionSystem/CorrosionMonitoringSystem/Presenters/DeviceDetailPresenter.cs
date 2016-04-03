@@ -13,7 +13,8 @@ using Mvp.View;
 
 namespace NGK.CorrosionMonitoringSystem.Presenters
 {
-    public class DeviceDetailPresenter: Presenter<IDeviceDetailView>, IViewMode, ISystemButtons
+    public class DeviceDetailPresenter: Presenter<IDeviceDetailView>, 
+        IViewMode, ISystemButtons
     {
         #region Constructors
 

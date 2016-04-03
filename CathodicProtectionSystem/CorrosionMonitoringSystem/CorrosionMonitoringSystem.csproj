@@ -85,6 +85,7 @@
     <Compile Include="Models\ParametersCollection.cs" />
     <Compile Include="Models\Parameter.cs" />
     <Compile Include="Models\ParametersPivotTable.cs" />
+    <Compile Include="Models\SystemParametersPivotTable.cs" />
     <Compile Include="Presenters\DeviceDetailPresenter.cs" />
     <Compile Include="Presenters\DeviceListPresenter.cs" />
     <Compile Include="Presenters\INavigationMenuPresenter.cs" />

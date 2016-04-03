@@ -8,6 +8,7 @@ using Mvp.View;
 using Mvp.WinApplication;
 using NGK.CorrosionMonitoringSystem.Views;
 using NGK.CorrosionMonitoringSystem.Managers;
+using NGK.CorrosionMonitoringSystem.Models;
 
 namespace NGK.CorrosionMonitoringSystem.Presenters
 {
@@ -22,7 +23,14 @@ namespace NGK.CorrosionMonitoringSystem.Presenters
             base(view, region, application)
         {
             _Name = ViewMode.PivoteTable.ToString();
-            _Managers = managers;      
+            _Managers = managers;
+     
+            NGK.CAN.ApplicationLayer.Network.Master.NetworksManager networks =
+                NGK.CAN.ApplicationLayer.Network.Master.NetworksManager.Instance;
+            int index = 0;
+            _ParametersTable = new ParametersPivotTable(
+                networks.Networks[index].Devices.ToArray());
+            view.Parameters = _ParametersTable.PivotTable; 
         }
         
         #endregion
@@ -30,6 +38,7 @@ namespace NGK.CorrosionMonitoringSystem.Presenters
         #region Fields And Properties
 
         IManagers _Managers;
+        ParametersPivotTable _ParametersTable;
 
         public IPivotTableView ViewConcrete
         {

@@ -36,6 +36,11 @@ namespace NGK.CorrosionMonitoringSystem.Presenters
 
             ViewConcrete.ButtonCommands = null;
 
+            ViewConcrete.TotalDevices = _Managers.CanNetworkService.Devices.Count;
+            ViewConcrete.FaultyDevices = _Managers.CanNetworkService.FaultyDevices;
+            _Managers.CanNetworkService.FaultyDevicesChanged += 
+                new EventHandler(EventHandler_CanNetworkService_FaultyDevicesChanged);
+
             IPresenter presenter =
                 _Managers.PresentersFactory.Create(ViewMode.PivoteTable);
             WorkingRegionPresenter = presenter;
@@ -127,6 +132,17 @@ namespace NGK.CorrosionMonitoringSystem.Presenters
             {
                 WorkingRegionChanged(this, new EventArgs());
             }
+        }
+
+        #endregion
+
+        #region Event Handlers
+
+        void EventHandler_CanNetworkService_FaultyDevicesChanged(
+            object sender, EventArgs e)
+        {
+            ViewConcrete.FaultyDevices = 
+                _Managers.CanNetworkService.FaultyDevices;
         }
 
         #endregion

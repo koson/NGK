@@ -17,11 +17,45 @@ namespace NGK.CorrosionMonitoringSystem.Views
         {
             InitializeComponent();
             Dock = DockStyle.Fill;
+
+            _DataGridView.AllowUserToAddRows = false;
+            _DataGridView.AllowUserToDeleteRows = false;
+            _DataGridView.AllowUserToOrderColumns = false;
+            _DataGridView.AutoGenerateColumns = true;
+            _DataGridView.AutoSize = true;
+            _DataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            _DataGridView.ColumnHeadersVisible = true;
+            _DataGridView.Dock = DockStyle.Fill;
+            _DataGridView.MultiSelect = false;
+            _DataGridView.RowHeadersVisible = false;
+            _DataGridView.RowHeadersWidthSizeMode =
+                DataGridViewRowHeadersWidthSizeMode.AutoSizeToDisplayedHeaders;
+            _DataGridView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+
+            DataGridViewCellStyle headerCellStyle = new DataGridViewCellStyle();
+            headerCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            headerCellStyle.Font = new Font(DataGridView.DefaultFont, FontStyle.Bold);
+            headerCellStyle.ForeColor = Color.Red;
+            headerCellStyle.WrapMode = DataGridViewTriState.True;
+            _DataGridView.ColumnHeadersDefaultCellStyle = headerCellStyle;
+
+            _BindingSourceParameters = new BindingSource();
+            _BindingSourceParameters.AllowNew = false;
+            //_BindingSourceParameters.CurrentItemChanged +=
+            //    new EventHandler(EventHandler_BindingSourceParameters_CurrentItemChanged);
+            //_BindingSourceParameters.ListChanged +=
+            //    new System.ComponentModel.ListChangedEventHandler(
+            //    EventHandler_BindingSourceParameters_ListChanged);
+
+            _DataGridView.DataSource = _BindingSourceParameters;
+
         }
 
         #endregion
 
-        #region IView Members
+        #region Fields And Properties
+
+        BindingSource _BindingSourceParameters;
 
         public ViewType ViewType
         {
@@ -35,9 +69,22 @@ namespace NGK.CorrosionMonitoringSystem.Views
             get { return _ViewRegions; }
         }
 
+        public DataTable Parameters
+        {
+            set 
+            {
+                _BindingSourceParameters.DataSource = null;
+                _BindingSourceParameters.DataSource = value;
+            }
+        }
+
+        #endregion
+
+        #region Methods
+
         public void Close()
         {
-            throw new Exception("The method or operation is not implemented.");
+            Dispose();
         }
 
         #endregion

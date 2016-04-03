@@ -16,7 +16,21 @@ namespace NGK.CorrosionMonitoringSystem.Models
     /// </summary>
     public class ParametersPivotTable
     {
+        #region Constructors
+        
+        public ParametersPivotTable(DeviceBase[] devices)
+        {
+            // Создаём таблицу
+            this.InitTable();
+            // Формируем списко КИП-ов
+            this.InitKipList(devices);
+            return;
+        }
+
+        #endregion
+
         #region Fields And Properties
+        
         /// <summary>
         /// Сводная таблица
         /// </summary>
@@ -29,26 +43,12 @@ namespace NGK.CorrosionMonitoringSystem.Models
             get { return _PivotTable; }
             set { _PivotTable = value; }
         }
+
         /// <summary>
         /// Список устройств в сети относящихся к КИП 
         /// </summary>
         private DeviceBase[] _KipList;
-        #endregion
 
-        #region Constructors
-        /// <summary>
-        /// Конструктор
-        /// </summary>
-        /// <param name="networkController"></param>
-        public ParametersPivotTable(DeviceBase[] devices)
-        {
-            // Создаём таблицу
-            this.InitTable();
-            // Формируем списко КИП-ов
-            this.InitKipList(devices);
-            return;
-        }
-        //--------------------------------------------------------------------------------
         #endregion
 
         #region Methods

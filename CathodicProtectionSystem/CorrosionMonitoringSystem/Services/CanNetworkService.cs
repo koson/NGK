@@ -8,6 +8,7 @@ using NGK.CAN.ApplicationLayer.Network.Devices;
 using NGK.CorrosionMonitoringSystem.Models;
 using Mvp.WinApplication;
 using Common.Controlling;
+using System.Data;
 
 namespace NGK.CorrosionMonitoringSystem.Services
 {
@@ -41,11 +42,51 @@ namespace NGK.CorrosionMonitoringSystem.Services
         BindingList<NgkCanDevice> _Devices;
         Timer _Timer;
 
+
         public BindingList<NgkCanDevice> Devices { get { return _Devices; } }
+
+        int _FaultyDevices;
+        
+        public int FaultyDevices 
+        { 
+            get { return _FaultyDevices; }
+            private set
+            {
+                if (_FaultyDevices != value)
+                {
+                    _FaultyDevices = value;
+                    OnFaultyDevicesChanged();
+                }
+
+            } 
+        }
+            Status _Status;
+            public Status Status
+            {
+                get { return _Status; }
+                set
+                {
+                    switch (value)
+                    {
+                        case Common.Controlling.Status.Running:
+                            {
+                                Start();
+                                break;
+                            }
+                        case Common.Controlling.Status.Stopped:
+                            {
+                                Start();
+                                break;
+                            }
+                        default:
+                            { throw new NotSupportedException(); }
+                    }
+                }
+            }
 
         #endregion
 
-        #region IManageable Members
+        #region Methods
 
         public void Start()
         {
@@ -86,34 +127,6 @@ namespace NGK.CorrosionMonitoringSystem.Services
                 "The method or operation is not implemented.");
         }
 
-        Status _Status;
-        public Status Status
-        {
-            get { return _Status; }
-            set
-            {
-                switch (value)
-                {
-                    case Common.Controlling.Status.Running: 
-                        { 
-                            Start();
-                            break; 
-                        }
-                    case Common.Controlling.Status.Stopped: 
-                        { 
-                            Start(); 
-                            break; 
-                        }
-                    default: 
-                        { throw new NotSupportedException(); }
-                }
-            }
-        }
-
-        public event EventHandler StatusWasChanged;
-
-        #endregion
-
         void StartCanNetwork()
         {
             foreach (INetworkController network in NetworksManager.Instance.Networks)
@@ -137,11 +150,21 @@ namespace NGK.CorrosionMonitoringSystem.Services
             }
         }
 
-        void EventHandler_NetworkManager_NetworkChangedStatus(
-            object sender, NetworkChangedStatusEventAgrs e)
+        public void Dispose()
         {
-            //TODO: Сделать пометку в журнал и оповещение об отключение сети.
+            if (_Timer != null)
+                _Timer.Dispose();
         }
+
+        void OnFaultyDevicesChanged()
+        {
+            if (FaultyDevicesChanged != null)
+                FaultyDevicesChanged(this, new EventArgs());
+        }
+
+        #endregion
+
+        #region Events Handler
 
         void EventHandler_Timer_Elapsed(object sender, ElapsedEventArgs e)
         {
@@ -150,25 +173,38 @@ namespace NGK.CorrosionMonitoringSystem.Services
             if (_Application.CurrentForm.InvokeRequired)
             {
                 _Application.CurrentForm.Invoke((System.Windows.Forms.MethodInvoker)
-                    delegate() {
+                    delegate()
+                    {
+                        int faultyDevices = 0;
+
                         foreach (NgkCanDevice device in _Devices)
                         {
                             canDevice = NetworksManager.Instance.Networks[device.NetworkId]
                                 .Devices[device.NodeId];
                             NgkCanDevice.Update(device, canDevice);
+
+                            if (canDevice.Status == DeviceStatus.CommunicationError)
+                                faultyDevices++;
                         }
+
+                        FaultyDevices = faultyDevices;
                     });
             }
         }
 
-        #region IDisposable Members
-
-        public void Dispose()
+        void EventHandler_NetworkManager_NetworkChangedStatus(
+            object sender, NetworkChangedStatusEventAgrs e)
         {
-            if (_Timer != null)
-                _Timer.Dispose();
+            //TODO: Сделать пометку в журнал и оповещение об отключение сети.
         }
 
+        #endregion
+
+        #region Events
+
+        public event EventHandler FaultyDevicesChanged;
+        public event EventHandler StatusWasChanged;
+        
         #endregion
     }
 }

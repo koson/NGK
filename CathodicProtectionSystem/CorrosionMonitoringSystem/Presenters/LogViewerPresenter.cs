@@ -10,7 +10,8 @@ using Mvp.View;
 
 namespace NGK.CorrosionMonitoringSystem.Presenters
 {
-    public class LogViewerPresenter : Presenter<ILogViewerView>, IViewMode
+    public class LogViewerPresenter : Presenter<ILogViewerView>, 
+        IViewMode
     {
         #region Constructors
 
