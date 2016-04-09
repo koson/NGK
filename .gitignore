@@ -10,3 +10,5 @@ obj
 /CathodicProtectionSystem/CorrosionMonitoringSystem/CorrosionMonitoringSystem.csproj.user
 *.pfx
 *.suo
+CathodicProtectionSystem/DAL/Data/ngkdb.mdf
+CathodicProtectionSystem/DAL/Data/ngkdb_log.ldf
