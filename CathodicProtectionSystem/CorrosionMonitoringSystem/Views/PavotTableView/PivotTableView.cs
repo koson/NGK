@@ -29,6 +29,8 @@ namespace NGK.CorrosionMonitoringSystem.Views
             _DataGridView.Dock = DockStyle.Fill;
             _DataGridView.MultiSelect = false;
             _DataGridView.RowHeadersVisible = false;
+            _DataGridView.ReadOnly = true;
+            _DataGridView.AllowUserToResizeRows = false;
             _DataGridView.RowHeadersWidthSizeMode =
                 DataGridViewRowHeadersWidthSizeMode.AutoSizeToDisplayedHeaders;
             _DataGridView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;

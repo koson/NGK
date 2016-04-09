@@ -239,6 +239,9 @@ namespace NGK.CorrosionMonitoringSystem.Services
             //            FaultyDevices = faultyDevices;
             //        });
             //}
+
+            // Обновляем сводную таблицу
+            _ParatemersPivotTable.Update();
         }
 
         void EventHandler_NetworkManager_NetworkChangedStatus(

@@ -263,7 +263,7 @@ namespace NGK.CorrosionMonitoringSystem.Models
 
         private object _Value;
         /// <summary>
-        /// Значение объкта
+        /// Значение объекта
         /// </summary>
         [Browsable(true)]
         [ReadOnly(true)]
