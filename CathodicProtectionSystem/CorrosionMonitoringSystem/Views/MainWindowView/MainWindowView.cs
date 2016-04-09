@@ -52,7 +52,7 @@ namespace NGK.CorrosionMonitoringSystem.Views
             set
             {
                 _ToolStripButtonFaultyDevices.Text =
-                    String.Format("Нейсправных устройств: {0}", value);
+                    String.Format("Неисправных устройств: {0}", value);
                 if (value > 0)
                 {
                     _ToolStripButtonFaultyDevices.BackColor = Color.Red;
