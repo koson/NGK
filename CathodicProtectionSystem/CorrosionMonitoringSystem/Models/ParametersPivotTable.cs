@@ -110,7 +110,6 @@ namespace NGK.CorrosionMonitoringSystem.Models
         /// <param name="device">Сетевое устройство</param>
         private void UpdateDivice(DeviceBase device)
         {
-            Boolean result;
             UInt16 index;
             DataRow row;
 
@@ -175,7 +174,7 @@ namespace NGK.CorrosionMonitoringSystem.Models
             column.AllowDBNull = false;
             column.Caption = "Сетевой адрес";
             column.DataType = typeof(Byte);
-            column.ReadOnly = false;
+            column.ReadOnly = true;
             column.Unique = true;
             this._PivotTable.Columns.Add(column);
 
@@ -184,7 +183,7 @@ namespace NGK.CorrosionMonitoringSystem.Models
             column.AllowDBNull = false;
             column.Caption = "Расположение";
             column.DataType = typeof(String);
-            column.ReadOnly = false;
+            column.ReadOnly = true;
             column.Unique = false;
             column.DefaultValue = String.Empty;
             this._PivotTable.Columns.Add(column);
@@ -194,7 +193,7 @@ namespace NGK.CorrosionMonitoringSystem.Models
             column.AllowDBNull = false;
             column.Caption = "Поляризационный потенциал, B";
             column.DataType = typeof(float);
-            column.ReadOnly = false;
+            column.ReadOnly = true;
             column.Unique = false;
             column.DefaultValue = 0;
             this._PivotTable.Columns.Add(column);
@@ -204,7 +203,7 @@ namespace NGK.CorrosionMonitoringSystem.Models
             column.AllowDBNull = false;
             column.Caption = "Защитный потенциал, B";
             column.DataType = typeof(float);
-            column.ReadOnly = false;
+            column.ReadOnly = true;
             column.Unique = false;
             column.DefaultValue = 0;
             this._PivotTable.Columns.Add(column);
@@ -224,7 +223,7 @@ namespace NGK.CorrosionMonitoringSystem.Models
             column.AllowDBNull = false;
             column.Caption = "Ток поляризации, mA";
             column.DataType = typeof(float);
-            column.ReadOnly = false;
+            column.ReadOnly = true;
             column.Unique = false;
             column.DefaultValue = 0;
             this._PivotTable.Columns.Add(column);
@@ -234,7 +233,7 @@ namespace NGK.CorrosionMonitoringSystem.Models
             column.AllowDBNull = false;
             column.Caption = "Глубина коррозии, мкм";
             column.DataType = typeof(UInt16);
-            column.ReadOnly = false;
+            column.ReadOnly = true;
             column.Unique = false;
             column.DefaultValue = 0;
             this._PivotTable.Columns.Add(column);
@@ -244,7 +243,7 @@ namespace NGK.CorrosionMonitoringSystem.Models
             column.AllowDBNull = false;
             column.Caption = "Скорость коррозии, мкм/год";
             column.DataType = typeof(UInt16);
-            column.ReadOnly = false;
+            column.ReadOnly = true;
             column.Unique = false;
             column.DefaultValue = 0;
             this._PivotTable.Columns.Add(column);
@@ -254,7 +253,7 @@ namespace NGK.CorrosionMonitoringSystem.Models
             column.AllowDBNull = false;
             column.Caption = "Вскрытие";
             column.DataType = typeof(Boolean);
-            column.ReadOnly = false;
+            column.ReadOnly = true;
             column.Unique = false;
             column.DefaultValue = false;
             this._PivotTable.Columns.Add(column);

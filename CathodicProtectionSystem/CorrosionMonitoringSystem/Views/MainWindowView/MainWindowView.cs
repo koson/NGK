@@ -64,6 +64,15 @@ namespace NGK.CorrosionMonitoringSystem.Views
             }
         }
 
+        public Int32 UnreadMessages 
+        {
+            set 
+            {
+                _ToolStripButtonSystemLog.Text =
+                    String.Format("Непрочитанных сообщений: {0}", value);
+            } 
+        }
+
         /// <summary>
         /// Устанавливает время в строке состояния
         /// </summary>

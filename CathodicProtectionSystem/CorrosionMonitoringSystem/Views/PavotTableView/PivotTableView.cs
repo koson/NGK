@@ -18,6 +18,7 @@ namespace NGK.CorrosionMonitoringSystem.Views
             InitializeComponent();
             Dock = DockStyle.Fill;
 
+            _DataGridView.AutoGenerateColumns = true;
             _DataGridView.AllowUserToAddRows = false;
             _DataGridView.AllowUserToDeleteRows = false;
             _DataGridView.AllowUserToOrderColumns = false;
@@ -38,6 +39,8 @@ namespace NGK.CorrosionMonitoringSystem.Views
             headerCellStyle.ForeColor = Color.Blue;
             headerCellStyle.WrapMode = DataGridViewTriState.True;
             _DataGridView.ColumnHeadersDefaultCellStyle = headerCellStyle;
+            _DataGridView.DataBindingComplete += 
+                new DataGridViewBindingCompleteEventHandler(EventHandler_DataGridView_DataBindingComplete);
 
             _BindingSourceParameters = new BindingSource();
             _BindingSourceParameters.AllowNew = false;
@@ -85,6 +88,24 @@ namespace NGK.CorrosionMonitoringSystem.Views
         public void Close()
         {
             Dispose();
+        }
+
+        #endregion
+
+        #region EventHandlers
+        
+        void EventHandler_DataGridView_DataBindingComplete(
+            object sender, DataGridViewBindingCompleteEventArgs e)
+        {
+            DataGridView dgv = (DataGridView)sender;
+
+            // Меняем заголовки столбцов
+            DataTable table = (DataTable)((BindingSource)dgv.DataSource).DataSource;
+
+            foreach (DataGridViewColumn column in dgv.Columns)
+            {
+                column.HeaderText = table.Columns[column.Name].Caption;
+            }
         }
 
         #endregion

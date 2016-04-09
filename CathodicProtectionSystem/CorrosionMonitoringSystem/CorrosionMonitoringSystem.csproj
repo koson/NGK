@@ -67,7 +67,6 @@
     <Compile Include="DL\ModbusAddresses\KIP9811Address.cs" />
     <Compile Include="DL\ModbusAddresses\KIP00.cs" />
     <Compile Include="DL\CanNetworkServiceAdapter.cs" />
-    <Compile Include="Core\Settings.cs" />
     <Compile Include="DL\ModbusAddresses\KCCM.cs" />
     <Compile Include="DL\ModbusAdapterParameterContext.cs" />
     <Compile Include="DL\ModbusServiceAdapter.cs" />
@@ -85,7 +84,6 @@
     <Compile Include="Models\ParametersCollection.cs" />
     <Compile Include="Models\Parameter.cs" />
     <Compile Include="Models\ParametersPivotTable.cs" />
-    <Compile Include="Models\SystemParametersPivotTable.cs" />
     <Compile Include="Presenters\DeviceDetailPresenter.cs" />
     <Compile Include="Presenters\DeviceListPresenter.cs" />
     <Compile Include="Presenters\INavigationMenuPresenter.cs" />
@@ -209,6 +207,10 @@
     <ProjectReference Include="..\Common\Common.csproj">
       <Project>{78E073B6-AD50-429C-9261-4DE3438D8EAE}</Project>
       <Name>Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DAL\DAL.csproj">
+      <Project>{3B3C9818-D909-45E4-8587-873E4989DA8A}</Project>
+      <Name>DAL</Name>
     </ProjectReference>
     <ProjectReference Include="..\Modbus\Modbus.csproj">
       <Project>{B5A4D2E6-8BCF-40E2-BD06-0DB320E688B0}</Project>
