@@ -18,13 +18,12 @@ namespace NGK.CorrosionMonitoringSystem.Models
     {
         #region Constructors
         
-        public ParametersPivotTable(DeviceBase[] devices)
+        public ParametersPivotTable(NgkCanDevice[] devices)
         {
             // Создаём таблицу
-            this.InitTable();
-            // Формируем списко КИП-ов
-            this.InitKipList(devices);
-            return;
+            InitTable();
+            // Формируем список КИП-ов
+            InitKipList(devices);
         }
 
         #endregion
@@ -47,7 +46,7 @@ namespace NGK.CorrosionMonitoringSystem.Models
         /// <summary>
         /// Список устройств в сети относящихся к КИП 
         /// </summary>
-        private DeviceBase[] _KipList;
+        private NgkCanDevice[] _KipList;
 
         #endregion
 
@@ -69,46 +68,38 @@ namespace NGK.CorrosionMonitoringSystem.Models
         /// <summary>
         /// Инициализирует список устройств типа КИП из устройств доступных в сети
         /// </summary>
-        private void InitKipList(DeviceBase[] devices)
+        private void InitKipList(NgkCanDevice[] devices)
         {
             DeviceType deviceType;
             DataRow row;
 
-            List<DeviceBase> result = new List<DeviceBase>();
+            List<NgkCanDevice> result = new List<NgkCanDevice>();
 
-            if (devices != null)
-            {                
-                for (int i = 0; i < devices.Length; i++)
-                {
-                    deviceType = devices[i].DeviceType;
-                    
-                    if ((deviceType == DeviceType.KIP_BATTERY_POWER_v1) ||
-                        (deviceType == DeviceType.KIP_MAIN_POWERED_v1))
-                    {
-                        result.Add(devices[i]);
-                        //devices[i].DataWasChanged += 
-                        //    new EventHandler(EventHandler_Device_DataWasChanged);
-                        row = this._PivotTable.NewRow();
-                        row["NodeId"] = devices[i].NodeId;
-                        row["Location"] = devices[i].LocationName;
-                        this._PivotTable.Rows.Add(row);
-                        // Обновляем данные
-                        //this.UpdateDivice(devices[i]);
-                    }
-                }
-                this._KipList = result.ToArray();
-            }
-            else
+            for (int i = 0; i < devices.Length; i++)
             {
-                throw new NullReferenceException();
+                deviceType = devices[i].DeviceType;
+
+                if ((deviceType == DeviceType.KIP_BATTERY_POWER_v1) ||
+                    (deviceType == DeviceType.KIP_MAIN_POWERED_v1))
+                {
+                    result.Add(devices[i]);
+                    //devices[i].DataWasChanged += 
+                    //    new EventHandler(EventHandler_Device_DataWasChanged);
+                    row = _PivotTable.NewRow();
+                    row["NodeId"] = devices[i].NodeId;
+                    row["Location"] = devices[i].Location;
+                    _PivotTable.Rows.Add(row);
+                    // Обновляем данные
+                    //this.UpdateDivice(devices[i]);
+                }
             }
-            return;
+            _KipList = result.ToArray();
         }
         /// <summary>
         /// Обновляет данные из указанного устройства
         /// </summary>
         /// <param name="device">Сетевое устройство</param>
-        private void UpdateDivice(DeviceBase device)
+        private void UpdateDivice(NgkCanDevice device)
         {
             UInt16 index;
             DataRow row;
@@ -121,7 +112,7 @@ namespace NGK.CorrosionMonitoringSystem.Models
             }
 
             // Ищем строку с указанным устройством
-            foreach (DataRow item in this._PivotTable.Rows)
+            foreach (DataRow item in _PivotTable.Rows)
             {
                 if (device.NodeId == System.Convert.ToByte(item["NodeId"]))
                 {
@@ -131,20 +122,20 @@ namespace NGK.CorrosionMonitoringSystem.Models
                 }
             }
 
-            index = 0x2008;
-            row["PolarisationPotential_2008"] = device.GetObject(index);
-            index = 0x2009;
-            row["ProtectionPotential_2009"] = device.GetObject(index);
-            index = 0x200B;
-            row["ProtectionCurrent_200B"] = device.GetObject(index);
-            index = 0x200C;
-            row["PolarisationCurrent_200С"] = device.GetObject(index);
-            index = 0x200F;
-            row["Corrosion_depth_200F"] = device.GetObject(index);
-            index = 0x2010;
-            row["Corrosion_speed_2010"] = device.GetObject(index);
-            index = 0x2015;
-            row["Tamper_2015"] = device.GetObject(index);
+            //index = 0x2008;
+            row["PolarisationPotential_2008"] = device.Parameters["polarisation_pot"];
+            //index = 0x2009;
+            row["ProtectionPotential_2009"] = device.Parameters["protection_pot"];  //.GetObject(index);
+            //index = 0x200B;
+            row["ProtectionCurrent_200B"] = device.Parameters["protection_cur"]; //.GetObject(index);
+            //index = 0x200C;
+            row["PolarisationCurrent_200С"] = device.Parameters["polarisation_cur"]; //.GetObject(index);
+            //index = 0x200F;
+            row["Corrosion_depth_200F"] = device.Parameters["corrosion_depth"]; //.GetObject(index);
+            //index = 0x2010;
+            row["Corrosion_speed_2010"] = device.Parameters["corrosion_speed"]; //.GetObject(index);
+            //index = 0x2015;
+            row["Tamper_2015"] = device.Parameters["Tamper"]; //.GetObject(index);
         }
         /// <summary>
         /// Обработчик события изменения данных устройства из списка.

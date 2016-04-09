@@ -108,11 +108,8 @@ namespace NGK.CorrosionMonitoringSystem.Services
                 }
             }
 
-            NGK.CAN.ApplicationLayer.Network.Master.NetworksManager networks =
-                NGK.CAN.ApplicationLayer.Network.Master.NetworksManager.Instance;
-            int index = 0;
             _ParatemersPivotTable = new ParametersPivotTable(
-                networks.Networks[index].Devices.ToArray());
+                (new List<NgkCanDevice>(_Devices)).ToArray());
         }
 
         public void Start()
