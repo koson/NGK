@@ -10,13 +10,39 @@ namespace NGK.CorrosionMonitoringSystem.Services
 {
     public interface ICanNetworkService: IManageable
     {
-        void Initialize();
+        #region Properties
+        /// <summary>
+        /// Список устройств в системе
+        /// </summary>
         BindingList<NgkCanDevice> Devices { get; }
         /// <summary>
         /// Количество неисправных устройтсв в системе.
         /// </summary>
         int FaultyDevices { get; }
+        /// <summary>
+        /// Сводная таблица параметров системы
+        /// </summary>
+        DataTable ParametersPivotTable { get; }
+
+        #endregion
+
+        #region Methods
+
+        /// <summary>
+        /// Инициализирует сервис
+        /// </summary>
+        void Initialize();
+
+        #endregion
+
+        #region Events
+
+        /// <summary>
+        /// Событие происходит при изменении количества
+        /// неисправных устройств в системе.
+        /// </summary>
         event EventHandler FaultyDevicesChanged;
 
+        #endregion
     }
 }

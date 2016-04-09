@@ -39,13 +39,16 @@ namespace NGK.CorrosionMonitoringSystem.Services
 
         INetworksManager _NetworkManager;
         IApplicationController _Application;
-        BindingList<NgkCanDevice> _Devices;
         Timer _Timer;
+        ParametersPivotTable _ParatemersPivotTable;
 
-        public BindingList<NgkCanDevice> Devices { get { return _Devices; } }
+        BindingList<NgkCanDevice> _Devices;
+        public BindingList<NgkCanDevice> Devices 
+        { 
+            get { return _Devices; } 
+        }
 
-        int _FaultyDevices;
-        
+        int _FaultyDevices;    
         public int FaultyDevices 
         { 
             get { return _FaultyDevices; }
@@ -59,6 +62,7 @@ namespace NGK.CorrosionMonitoringSystem.Services
 
             } 
         }
+
         Status _Status;
         public Status Status
         {
@@ -83,6 +87,11 @@ namespace NGK.CorrosionMonitoringSystem.Services
             }
         }
 
+        public DataTable ParametersPivotTable 
+        {
+            get { return _ParatemersPivotTable.PivotTable; } 
+        }
+
         #endregion
 
         #region Methods
@@ -98,6 +107,12 @@ namespace NGK.CorrosionMonitoringSystem.Services
                     _Devices.Add(new NgkCanDevice(device));
                 }
             }
+
+            NGK.CAN.ApplicationLayer.Network.Master.NetworksManager networks =
+                NGK.CAN.ApplicationLayer.Network.Master.NetworksManager.Instance;
+            int index = 0;
+            _ParatemersPivotTable = new ParametersPivotTable(
+                networks.Networks[index].Devices.ToArray());
         }
 
         public void Start()

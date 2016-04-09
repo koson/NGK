@@ -25,12 +25,7 @@ namespace NGK.CorrosionMonitoringSystem.Presenters
             _Name = ViewMode.PivoteTable.ToString();
             _Managers = managers;
      
-            NGK.CAN.ApplicationLayer.Network.Master.NetworksManager networks =
-                NGK.CAN.ApplicationLayer.Network.Master.NetworksManager.Instance;
-            int index = 0;
-            _ParametersTable = new ParametersPivotTable(
-                networks.Networks[index].Devices.ToArray());
-            view.Parameters = _ParametersTable.PivotTable; 
+            view.Parameters = _Managers.CanNetworkService.ParametersPivotTable;
         }
         
         #endregion
