@@ -1,24 +1,24 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
 
-namespace Modbus.OSIModel.ApplicationLayer.Slave
+namespace Modbus.OSIModel.ApplicationLayer
 {
     /// <summary>
     /// Класс для хранения коллекции сетей Modbus
     /// </summary>
-    public class NetworksCollection: 
-        System.Collections.ObjectModel.KeyedCollection<string, NetworkController>
+    public class ModbusNetworksCollection: KeyedCollection<string, ModbusNetworkControllerBase>
     {
-        #region Fields and Properties
+        #region Constructors and Destructor
         #endregion
 
-        #region Constructors and Destructor
+        #region Fields and Properties
         #endregion
 
         #region Methods
 
-        protected override string GetKeyForItem(NetworkController item)
+        protected override string GetKeyForItem(ModbusNetworkControllerBase item)
         {
             return item.NetworkName;
         }
@@ -26,9 +26,9 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
         /// Возвращает коллекцию в виде массива
         /// </summary>
         /// <returns>Массив элементов коллекции</returns>
-        public NetworkController[] ToArray()
+        public ModbusNetworkControllerBase[] ToArray()
         {
-            NetworkController[] array = new NetworkController[Count];
+            ModbusNetworkControllerBase[] array = new ModbusNetworkControllerBase[Count];
             for (int i = 0; i < array.Length; i++)
             {
                 array[i] = this[i];

@@ -15,7 +15,12 @@ namespace NGK.CorrosionMonitoringSystem.Services
     public class CanNetworkService: ICanNetworkService, IDisposable
     {
         #region Constructors
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="application"></param>
+        /// <param name="networkManager"></param>
+        /// <param name="pollingInterval">Интервал обновления CAN-устройства, мсек</param>
         public CanNetworkService(IApplicationController application, 
             INetworksManager networkManager, double pollingInterval)
         {
@@ -63,26 +68,16 @@ namespace NGK.CorrosionMonitoringSystem.Services
             } 
         }
 
-        Status _Status;
         public Status Status
         {
-            get { return _Status; }
+            get { return _Timer.Enabled ? Status.Running : Status.Stopped; }
             set
             {
                 switch (value)
                 {
-                    case Common.Controlling.Status.Running:
-                        {
-                            Start();
-                            break;
-                        }
-                    case Common.Controlling.Status.Stopped:
-                        {
-                            Start();
-                            break;
-                        }
-                    default:
-                        { throw new NotSupportedException(); }
+                    case Status.Running: { Start(); break; }
+                    case Status.Stopped: { Start(); break; }
+                    default: { throw new NotSupportedException(); }
                 }
             }
         }
@@ -114,10 +109,8 @@ namespace NGK.CorrosionMonitoringSystem.Services
 
         public void Start()
         {
-            if (_Status == Status.Running)
+            if (Status == Status.Running)
                 return;
-
-            _Status = Status.Running;
             
             StartCanNetwork();
 
@@ -137,12 +130,11 @@ namespace NGK.CorrosionMonitoringSystem.Services
 
         public void Stop()
         {
-            if (_Status == Status.Stopped)
+            if (Status == Status.Stopped)
                 return;
 
-            StopCanNetwork();
             _Timer.Stop();
-            _Status = Status.Stopped;
+            StopCanNetwork();
             OnStatusWasChanged();
         }
 
@@ -154,7 +146,7 @@ namespace NGK.CorrosionMonitoringSystem.Services
 
         void StartCanNetwork()
         {
-            foreach (INetworkController network in NetworksManager.Instance.Networks)
+            foreach (INetworkController network in NgkCanNetworksManager.Instance.Networks)
             {
                 if (network.CanPort != null)
                 {
@@ -169,7 +161,7 @@ namespace NGK.CorrosionMonitoringSystem.Services
 
         void StopCanNetwork()
         {
-            foreach (INetworkController network in NetworksManager.Instance.Networks)
+            foreach (INetworkController network in NgkCanNetworksManager.Instance.Networks)
             {
                 network.Stop();
             }
@@ -195,7 +187,7 @@ namespace NGK.CorrosionMonitoringSystem.Services
 
         #endregion
 
-        #region Events Handler
+        #region Event Handlers
 
         void EventHandler_Timer_Elapsed(object sender, ElapsedEventArgs e)
         {
@@ -206,7 +198,7 @@ namespace NGK.CorrosionMonitoringSystem.Services
 
                 foreach (NgkCanDevice device in _Devices)
                 {
-                    canDevice = NetworksManager.Instance.Networks[device.NetworkId]
+                    canDevice = NgkCanNetworksManager.Instance.Networks[device.NetworkId]
                         .Devices[device.NodeId];
                     NgkCanDevice.Update(device, canDevice);
 

@@ -40,8 +40,9 @@
   <ItemGroup>
     <Compile Include="Convert.cs" />
     <Compile Include="EnumStatus.cs" />
-    <Compile Include="OSIModel\ApplicationLayer\NetworksManager.cs" />
-    <Compile Include="OSIModel\ApplicationLayer\Workmode.cs" />
+    <Compile Include="OSIModel\ApplicationLayer\ModbusNetworkControllerBase.cs" />
+    <Compile Include="OSIModel\ApplicationLayer\ModbusNetworksManager.cs" />
+    <Compile Include="OSIModel\ApplicationLayer\WorkMode.cs" />
     <Compile Include="OSIModel\ApplicationLayer\Slave\DataModel\DataTypes\EnumParameterType.cs" />
     <Compile Include="OSIModel\ApplicationLayer\Slave\DataModel\DataTypes\File.cs" />
     <Compile Include="OSIModel\ApplicationLayer\Slave\DataModel\DataTypes\Record.cs" />
@@ -70,9 +71,9 @@
     <Compile Include="OSIModel\ApplicationLayer\Slave\DataModel\InputRegistersCollection.cs" />
     <Compile Include="OSIModel\ApplicationLayer\Slave\NetworkAPI\INetworkFunctions.cs" />
     <Compile Include="OSIModel\ApplicationLayer\Slave\Device.cs" />
-    <Compile Include="OSIModel\ApplicationLayer\Slave\NetworkController.cs" />
+    <Compile Include="OSIModel\ApplicationLayer\Slave\ModbusNetworkControllerSlave.cs" />
     <Compile Include="OSIModel\ApplicationLayer\Slave\NetworkErrorOccurredEventHandler.cs" />
-    <Compile Include="OSIModel\ApplicationLayer\Slave\NetworksCollection.cs" />
+    <Compile Include="OSIModel\ApplicationLayer\ModbusNetworksCollection.cs" />
     <Compile Include="OSIModel\DataLinkLayer\CRC16.cs" />
     <Compile Include="OSIModel\DataLinkLayer\Diagnostics\EnumTypeOfMessageLog.cs" />
     <Compile Include="OSIModel\DataLinkLayer\Dialogs\DialogSerialPortSettings.cs" />

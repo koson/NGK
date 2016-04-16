@@ -15,11 +15,11 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
         /// <summary>
         ///  онтроллер сети, которой принадлежит данна€ коллекци€ устройств
         /// </summary>
-        private NetworkController _NetworkController;
+        private ModbusNetworkControllerSlave _NetworkController;
         /// <summary>
         /// ¬озвращает контроллер сети, которой принадлежит данна€ коллекци€ устройств
         /// </summary>
-        public NetworkController NetworkController
+        public ModbusNetworkControllerSlave NetworkController
         {
             get { return _NetworkController; }
         }
@@ -37,7 +37,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
         /// 
         /// </summary>
         /// <param name="network"></param>
-        public DevicesCollection(NetworkController network)
+        public DevicesCollection(ModbusNetworkControllerSlave network)
         {
             if (network == null)
             {

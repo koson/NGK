@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.IO.Ports;
 
 namespace NGK.CorrosionMonitoringSystem.Managers.AppConfigManager
 {
@@ -29,5 +30,11 @@ namespace NGK.CorrosionMonitoringSystem.Managers.AppConfigManager
         bool ShowInTaskbar { get; }
         int StatusColumnWidth { get; set; }
         Color StoppedModeRowColor { get; }
+        string ModbusSystemInfoNetworkName { get; } 
+        string SerialPortName { get; set; }
+        int SerialPortBaudRate { get; set; }
+        Parity SerialPortParity { get; set; }
+        int SerialPortDataBits { get; set; }
+        StopBits SerialPortStopBits { get; set; }
     }
 }

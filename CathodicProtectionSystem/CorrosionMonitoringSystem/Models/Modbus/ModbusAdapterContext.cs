@@ -4,7 +4,7 @@ using System.Text;
 using Modbus.OSIModel.ApplicationLayer.Slave.DataModel.DataTypes;
 using NGK.CAN.ApplicationLayer.Network.Devices;
 
-namespace NGK.CorrosionMonitoringSystem.DL
+namespace NGK.CorrosionMonitoringSystem.Models.Modbus
 {
     public class ModbusAdapterContext
     {

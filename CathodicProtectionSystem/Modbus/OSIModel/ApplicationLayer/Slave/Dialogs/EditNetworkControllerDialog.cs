@@ -12,12 +12,12 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.Dialogs
     {
         #region Fields And Properties
         //---------------------------------------------------------------------------
-        private NetworkController _Network;
+        private ModbusNetworkControllerSlave _Network;
         //---------------------------------------------------------------------------
         /// <summary>
         /// ”станавливает/возвращает редактируемую сеть Modbus
         /// </summary>
-        public NetworkController Network
+        public ModbusNetworkControllerSlave Network
         {
             get { return _Network; }
             set 

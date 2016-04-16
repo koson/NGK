@@ -56,11 +56,11 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
         /// <summary>
         /// Контроллер сети, которой содержит данное устройство
         /// </summary>
-        private NetworkController _NetworkController;
+        private ModbusNetworkControllerSlave _NetworkController;
         /// <summary>
         /// Возвращает контроллер сети, которой содержит данное устройство
         /// </summary>
-        public NetworkController NetworkController
+        public ModbusNetworkControllerSlave NetworkController
         {
             get { return _NetworkController; }
             set { _NetworkController = value; }
@@ -427,7 +427,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
         /// удалении данного устройства из своего списка. При этом поле обнуляется (null)
         /// </summary>
         /// <param name="owner">Будующий владелец данного устройства</param>
-        internal void SetOwner(NetworkController owner)
+        internal void SetOwner(ModbusNetworkControllerSlave owner)
         {
             if (_NetworkController == null)
             {

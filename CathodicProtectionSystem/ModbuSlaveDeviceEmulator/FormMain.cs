@@ -20,15 +20,15 @@ namespace ModbuSlaveDevicesNetwork
         /// <summary>
         /// Объект для физического подключения к сети
         /// </summary>
-        private ComPort _SerialPort;
+        private ComPortSlaveMode _SerialPort;
         /// <summary>
         /// Контроллер сети modbus
         /// </summary>
-        private NetworkController _Network;
+        private ModbusNetworkControllerSlave _Network;
         /// <summary>
         /// Для теста
         /// </summary>
-        public NetworkController Network
+        public ModbusNetworkControllerSlave Network
         {
             get { return _Network; }
             set { _Network = value; }
@@ -148,7 +148,7 @@ namespace ModbuSlaveDevicesNetwork
             // Создаём новую сеть
             // Если текущая сеть != null, то спрашиваем пользователя хочет ли он
             // сохранить текущую конфигурацию.
-            NetworkController network = new NetworkController();
+            ModbusNetworkControllerSlave network = new ModbusNetworkControllerSlave();
             SetCurrentNetwork(network);
             return;
         }
@@ -591,7 +591,7 @@ namespace ModbuSlaveDevicesNetwork
         /// </summary>
         /// <param name="control">Элемент для отображения списка устройств в сети</param>
         /// <param name="network">Сеть Modbus</param>
-        private void ShowNetwork(ref TreeView control, ref NetworkController network)
+        private void ShowNetwork(ref TreeView control, ref ModbusNetworkControllerSlave network)
         {
             TreeNode node;
 
@@ -657,7 +657,7 @@ namespace ModbuSlaveDevicesNetwork
         /// Метод запускает форму для редактирования сети Modbus
         /// </summary>
         /// <param name="network">Сеть Modbus</param>
-        private void EditNetwork(NetworkController network)
+        private void EditNetwork(ModbusNetworkControllerSlave network)
         {
             DialogResult result;
 
@@ -698,14 +698,14 @@ namespace ModbuSlaveDevicesNetwork
         /// сеть или завершить программу
         /// </summary>
         /// <param name="pathToXmlConfigFile">Путь к файлу конфигурации сети</param>
-        private NetworkController LoadNetworkConfiguration(String pathToXmlConfigFile)
+        private ModbusNetworkControllerSlave LoadNetworkConfiguration(String pathToXmlConfigFile)
         {
-            NetworkController network = null;
+            ModbusNetworkControllerSlave network = null;
             string path = pathToXmlConfigFile;
 
             try
             {
-                network = NetworkController.Create(path, Application.StartupPath + @"\config.xsd");
+                network = ModbusNetworkControllerSlave.Create(path, Application.StartupPath + @"\config.xsd");
             }
             catch (Exception ex)
             {
@@ -717,7 +717,7 @@ namespace ModbuSlaveDevicesNetwork
                 if (result == DialogResult.Yes)
                 {
                     // Создаём новую пустую сеть
-                    network = new NetworkController();
+                    network = new ModbusNetworkControllerSlave();
                 }
                 else
                 {
@@ -777,7 +777,7 @@ namespace ModbuSlaveDevicesNetwork
                         System.IO.Ports.StopBits stopBits = (System.IO.Ports.StopBits)Enum.Parse(
                             typeof(System.IO.Ports.StopBits),
                             config.AppSettings.Settings["StopBits"].Value, true);
-                        _SerialPort = new ComPort(portName, baudRate, parity, dataBits, stopBits);
+                        _SerialPort = new ComPortSlaveMode(portName, baudRate, parity, dataBits, stopBits);
 
                         _ToolStripButtonStart.Enabled = true;
                         _ToolStripButtonStop.Enabled = false;
@@ -802,7 +802,7 @@ namespace ModbuSlaveDevicesNetwork
                 _PathToFileNetworkConfig = Application.StartupPath + @"\config.xml";
             }
             // Cоздаём сеть
-            NetworkController network = 
+            ModbusNetworkControllerSlave network = 
                 LoadNetworkConfiguration(_PathToFileNetworkConfig);
             SetCurrentNetwork(network);
             return;
@@ -838,7 +838,7 @@ namespace ModbuSlaveDevicesNetwork
         /// Устанавливает сеть как текущую для работы программы
         /// </summary>
         /// <param name="network"></param>
-        private void SetCurrentNetwork(NetworkController network)
+        private void SetCurrentNetwork(ModbusNetworkControllerSlave network)
         {
             if (_Network != null)
             {
@@ -969,7 +969,7 @@ namespace ModbuSlaveDevicesNetwork
         /// Отображает значение в строке состояния приложения
         /// </summary>
         /// <param name="serialPort">Порт для отображения данных</param>
-        private void SetSerialPortSettingToStatusStrip(ComPort serialPort)
+        private void SetSerialPortSettingToStatusStrip(ComPortSlaveMode serialPort)
         {
             // Создаём строку 
             

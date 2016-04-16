@@ -21,16 +21,16 @@ namespace NGK.CAN.ApplicationLayer.Network.Master
     /// </summary>
     /// <remarks>Реализует паттерн Singlton</remarks>
     [Serializable]
-    public sealed class NetworksManager : INetworksManager
+    public sealed class NgkCanNetworksManager : INetworksManager
     {
         #region Fields And Properties
 
-        private static NetworksManager _Instance;
+        private static NgkCanNetworksManager _Instance;
         
         /// <summary>
         /// Возвращает менеджер сетей.
         /// </summary>
-        public static NetworksManager Instance
+        public static NgkCanNetworksManager Instance
         {
             get 
             {
@@ -40,11 +40,11 @@ namespace NGK.CAN.ApplicationLayer.Network.Master
                     {
                         if (_Instance == null)
                         {
-                            _Instance = new NetworksManager();
+                            _Instance = new NgkCanNetworksManager();
                         }
                     }
                 }
-                return NetworksManager._Instance; 
+                return NgkCanNetworksManager._Instance; 
             }
         }
         
@@ -120,7 +120,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Master
 
         #region Constructors
 
-        private NetworksManager()
+        private NgkCanNetworksManager()
         {
             _NetworksList = new NetworkControllersCollection();
         }

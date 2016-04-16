@@ -14,13 +14,13 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
     /// Класс реализует контроллер сети Modubs со стороны slave-устройств 
     /// подключенных в внешней цепи через IDataLinkLayer
     /// </summary>
-    public class NetworkController: IManageable
+    public class ModbusNetworkControllerSlave: ModbusNetworkControllerBase
     {
         #region Fields and Properties
         /// <summary>
         /// Возвращает тип контроллера сети (slave или master)
         /// </summary>
-        public WorkMode ControllerType
+        public override WorkMode Mode
         {
             get { return WorkMode.Slave; }
         }
@@ -31,12 +31,12 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
         /// <summary>
         /// Наименование сети Modbus
         /// </summary>
-        public String NetworkName
+        public override String NetworkName
         {
             get { return _NetworkName; }
             set 
             {
-                if (NetworksManager.Instance.Networks.Contains(value))
+                if (ModbusNetworksManager.Instance.Networks.Contains(value))
                 {
                     throw new ArgumentException("Невозможно установить новое наименование сети, " +
                         "так как сеть с таким наименованием уже существует", "NetworkName");
@@ -107,7 +107,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
         /// <summary>
         /// Возвращает/устанавливает 
         /// </summary>
-        public Status Status
+        public override Status Status
         {
             get 
             {
@@ -154,9 +154,9 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
         /// <summary>
         /// Конструктор
         /// </summary>
-        public NetworkController()
+        public ModbusNetworkControllerSlave()
         {
-            NetworksManager manager = NetworksManager.Instance;
+            ModbusNetworksManager manager = ModbusNetworksManager.Instance;
             _NetworkName = GetNewName(); 
 
             //Stop();
@@ -169,9 +169,9 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
         /// </summary>
         /// <param name="networkName">Наименование данной сети</param>
         /// <param name="connection">Объект для физического подключения к сети</param>
-        public NetworkController(String networkName, IDataLinkLayer connection)
+        public ModbusNetworkControllerSlave(String networkName, IDataLinkLayer connection)
         {
-            NetworksManager manager = NetworksManager.Instance;
+            ModbusNetworksManager manager = ModbusNetworksManager.Instance;
             
             // Проверяем уникальность наименование сети
             if (manager.Networks.Contains(networkName))
@@ -262,7 +262,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
         private String GetNewName()
         {
             string networkName;
-            NetworksManager manager = NetworksManager.Instance;
+            ModbusNetworksManager manager = ModbusNetworksManager.Instance;
 
             // Устанавливаем наименование сети по умолчанию
             // Формат имени [Network][index]
@@ -306,7 +306,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
         /// <summary>
         /// Запускает работу сети
         /// </summary>
-        public void Start()
+        public override void Start()
         {
             if (_Connection != null)
             {
@@ -329,7 +329,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
         /// <summary>
         /// Останавливает работу сети
         /// </summary>
-        public void Stop()
+        public override void Stop()
         {
             if (_Connection != null)
             {
@@ -356,7 +356,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
         /// <summary>
         /// Приостанавливает работу сети
         /// </summary>
-        public void Suspend()
+        public override void Suspend()
         {
             throw new NotImplementedException(
                 "Состояние: Paused, контроллера сети modbus не поддерживается");
@@ -499,12 +499,12 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
         /// <param name="pathToXsdFile">Путь + название файла файла схемы для файла конфигурации *.xsd</param>
         /// <returns>Если возникла ошибка возвращается null, если процесс создания 
         /// успешно завершён возвращается контроллер сети</returns>
-        public static NetworkController Create(String pathToXmlFile, 
+        public static ModbusNetworkControllerSlave Create(String pathToXmlFile, 
             String pathToXsdFile)
         {
             XmlReaderSettings xmlrdsettings;
             XmlReader reader;
-            NetworkController network;
+            ModbusNetworkControllerSlave network;
             Device device;
             Coil coil;
             DiscreteInput dinput;
@@ -893,7 +893,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
                 }
             }
             // Создаём сеть из полученных данных
-            network = new NetworkController(networkName, null);
+            network = new ModbusNetworkControllerSlave(networkName, null);
 
             foreach (Device item in devices)
             {
@@ -950,40 +950,6 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
             return;
         }
         /// <summary>
-        /// Генерирует событие изменения состояния сетевого контроллера
-        /// </summary>
-        private void OnStatusWasChanged()
-        {
-            EventArgs args = new EventArgs();
-            EventHandler handler = NetworkChangedStatus;
-
-            if (handler != null)
-            {
-                foreach (EventHandler singleCast in handler.GetInvocationList())
-                {
-                    System.ComponentModel.ISynchronizeInvoke syncInvoke =
-                        singleCast.Target as System.ComponentModel.ISynchronizeInvoke;
-
-                    if (syncInvoke != null)
-                    {
-                        if (syncInvoke.InvokeRequired)
-                        {
-                            syncInvoke.Invoke(singleCast, new Object[] { this, args });
-                        }
-                        else
-                        {
-                            singleCast(this, args);
-                        }
-                    }
-                    else
-                    {
-                        singleCast(this, args);
-                    }
-                }
-            }
-            return; 
-        }
-        /// <summary>
         /// Генерирует событие возникновения ошибок при работе сети.
         /// </summary>
         private void OnNetworkErrorOccurred(NetworkErrorEventArgs args)
@@ -1029,17 +995,13 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
         {
             // Возвращаем наименование сети
             return String.Format("Type={0}; NetworkName={1}; PortName={2}",
-                ControllerType, _NetworkName,
+                Mode, _NetworkName,
                 _Connection == null ? "None" : _Connection.PortName);
             //return base.ToString();
         }
         #endregion
 
         #region Events
-        /// <summary>
-        /// Событие происходит после изменения состояния контроллера сети
-        /// </summary>
-        public event EventHandler NetworkChangedStatus;
         /// <summary>
         /// Событие происходит при изменении списка устройств сети
         /// </summary>
@@ -1048,27 +1010,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
         /// Событие происходит при возникновении ошибок работы сети
         /// </summary>
         public event NetworkErrorOccurredEventHandler NetworkErrorOccurred;
-        #endregion
-
-        #region IManageable Members
-
-        event EventHandler IManageable.StatusWasChanged
-        {
-            add 
-            {
-                lock (SyncRoot)
-                {
-                    NetworkChangedStatus += value;
-                }
-            }
-            remove 
-            {
-                lock (SyncRoot)
-                {
-                    NetworkChangedStatus -= value;
-                }
-            }
-        }
+        
         #endregion
     }
 }

@@ -12,6 +12,9 @@ using NGK.CorrosionMonitoringSystem.Views;
 using NGK.CAN.ApplicationLayer.Network.Master;
 using NGK.CorrosionMonitoringSystem.Managers;
 using NGK.CAN.ApplicationLayer.Network.Devices;
+using Modbus.OSIModel.DataLinkLayer.Slave.RTU.ComPort;
+using Modbus.OSIModel.ApplicationLayer.Slave;
+using Modbus.OSIModel.ApplicationLayer;
 
 namespace NGK.CorrosionMonitoringSystem
 {
@@ -89,10 +92,15 @@ namespace NGK.CorrosionMonitoringSystem
 
             _Logger = LogManager.GetLogger("CorrosionMonitoringSystemLogger");
 
-            //Загружаем конфигурацию сети
-            presenter.WtriteText("Загрузка конфигурации сети...");
-            LoadNetworkConfig();
+            //Загружаем конфигурацию сети CAN НГК ЭХЗ
+            presenter.WtriteText("Загрузка конфигурации сети CAN НГК ЭХЗ...");
+            LoadCanNetworkConfig();
             Managers.CanNetworkService.Initialize();
+
+            //Загружаем конфигурацию для сети Modbus 
+            presenter.WtriteText("Загрузка конфигурации сети Modbus...");
+            LoadModbusNetworkConfig();
+            Managers.ModbusSystemInfoNetworkService.Initialize();
 
             System.Threading.Thread.Sleep(300);
             presenter.WtriteText("Загрузка БД...");
@@ -102,16 +110,42 @@ namespace NGK.CorrosionMonitoringSystem
             
             presenter.WtriteText("Запуск системы мониторинга...");
             Managers.CanNetworkService.Start();
+            presenter.WtriteText("Запуск Modbus-сервиса поддержики систем верхнего уровня...");
+            Managers.ModbusSystemInfoNetworkService.Start();
 
             _Logger.Info("Приложение запущено");
         }
 
-        static void LoadNetworkConfig()
+        static void LoadCanNetworkConfig()
         {
             try
             {
-                NetworksManager.Instance.LoadConfig(Application.StartupPath +
+                NgkCanNetworksManager.Instance.LoadConfig(Application.StartupPath +
                     @"\newtorkconfig.bin.nwc");
+            }
+            catch
+            {
+                MessageBox.Show("Ошибка при конфигурировании системы. " +
+                    "Приложение будет закрыто",
+                    "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _Application.Exit();
+            }
+        }
+
+        static void LoadModbusNetworkConfig()
+        {
+            try
+            {
+                ComPortSlaveMode serialPort = new ComPortSlaveMode(
+                    Managers.ConfigManager.SerialPortName,
+                    Managers.ConfigManager.SerialPortBaudRate,
+                    Managers.ConfigManager.SerialPortParity,
+                    Managers.ConfigManager.SerialPortDataBits,
+                    Managers.ConfigManager.SerialPortStopBits);
+
+                ModbusNetworkControllerSlave modbusNetwork = new ModbusNetworkControllerSlave(
+                    Managers.ConfigManager.ModbusSystemInfoNetworkName, serialPort);
+                ModbusNetworksManager.Instance.Networks.Add(modbusNetwork);
             }
             catch
             {

@@ -2,8 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Modbus.OSIModel.ApplicationLayer.Slave.DataModel.DataTypes;
-using NGK.CorrosionMonitoringSystem.DL.ModbusAddresses;
 using NGK.CAN.ApplicationLayer.Network.Devices;
+using NGK.CorrosionMonitoringSystem.Models.Modbus;
 
 namespace NGK.CorrosionMonitoringSystem.DL.Modbus
 {    

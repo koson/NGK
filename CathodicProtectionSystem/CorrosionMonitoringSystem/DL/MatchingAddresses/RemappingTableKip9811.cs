@@ -5,7 +5,7 @@ using NGK.CorrosionMonitoringSystem.DL.Modbus;
 using NGK.CAN.ApplicationLayer.Network.Devices;
 using NGK.CAN.DataTypes.DateTimeConvertor;
 using Modbus.OSIModel.ApplicationLayer.Slave.DataModel.DataTypes;
-using NGK.CorrosionMonitoringSystem.DL.ModbusAddresses;
+using NGK.CorrosionMonitoringSystem.Models.Modbus;
 
 namespace NGK.CorrosionMonitoringSystem.DL.MatchingAddresses
 {

@@ -10,13 +10,26 @@ namespace Mvp.WinApplication
 {
     public interface IApplicationController
     {
+        #region Fields And Properties
+
         SynchronizationContext SyncContext { get; }
+        
         ApplicationContext AppContext { get; }
         /// <summary>
         /// Возвращает текущее окно системы
         /// </summary>
         IPresenter CurrentPresenter { get; }
+        
         Form CurrentForm { get; }
+        /// <summary>
+        /// Версия ПО
+        /// </summary>
+        Version Version { get; }
+        
+        #endregion
+
+        #region Methods
+        
         /// <summary>
         /// Отображает новое окно системы 
         /// </summary>
@@ -28,5 +41,7 @@ namespace Mvp.WinApplication
         /// <param name="view"></param>
         /// <returns></returns>
         DialogResult ShowDialog(IPresenter presenter);
+
+        #endregion
     }
 }

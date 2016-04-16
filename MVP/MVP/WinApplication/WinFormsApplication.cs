@@ -7,6 +7,7 @@ using System.Globalization;
 using Mvp.Presenter;
 using Mvp.View;
 using System.Threading;
+using System.Reflection;
 
 namespace Mvp.WinApplication
 {
@@ -23,6 +24,8 @@ namespace Mvp.WinApplication
             SynchronizationContext.SetSynchronizationContext(
                 new SynchronizationContext());
             _SyncContext = SynchronizationContext.Current;
+
+            _Version = Assembly.GetCallingAssembly().GetName().Version;
         }
         
         #endregion
@@ -64,6 +67,9 @@ namespace Mvp.WinApplication
             get { return Application.CurrentCulture; }
             set { Application.CurrentCulture = value; }
         }
+
+        Version _Version;
+        public Version Version { get { return _Version; } }
 
         #endregion
 

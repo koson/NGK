@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace NGK.CorrosionMonitoringSystem.DL.ModbusAddresses
+namespace NGK.CorrosionMonitoringSystem.Models.Modbus
 {
     /// <summary>
     /// Адреса регистров блока КССМУ

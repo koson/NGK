@@ -13,9 +13,9 @@ using Modbus.OSIModel.ApplicationLayer;
 using Modbus.OSIModel.ApplicationLayer.Slave;
 using Modbus.OSIModel.DataLinkLayer.Slave.RTU.ComPort;
 using Modbus.OSIModel.ApplicationLayer.Slave.DataModel.DataTypes;
-using NGK.CorrosionMonitoringSystem.DL.ModbusAddresses;
 using NGK.CorrosionMonitoringSystem.DL.Modbus;
 using NGK.CorrosionMonitoringSystem.DL.MatchingAddresses;
+using NGK.CorrosionMonitoringSystem.Models.Modbus;
 
 namespace NGK.CorrosionMonitoringSystem.DL
 {
@@ -28,11 +28,11 @@ namespace NGK.CorrosionMonitoringSystem.DL
         /// <summary>
         /// Контроллер modbus сеть в режиме slave
         /// </summary>
-        private NetworkController _Network;
+        private ModbusNetworkControllerSlave _Network;
         /// <summary>
         /// ComPort
         /// </summary>
-        private ComPort _Connection;
+        private ComPortSlaveMode _Connection;
         /// <summary>
         /// Устройство modbus блока КССМУ
         /// </summary>
@@ -85,11 +85,11 @@ namespace NGK.CorrosionMonitoringSystem.DL
             StopBits stopBits = (StopBits)Enum.Parse(typeof(StopBits), 
                 settings["StopBits"]);
 
-            _Connection = new ComPort(portName, baudRate, 
+            _Connection = new ComPortSlaveMode(portName, baudRate, 
                 parity, dataBits, stopBits);
 
-            _Network = new NetworkController("ModbusNetwork", _Connection);
-            NetworksManager.Instance.Networks.Add(_Network);
+            _Network = new ModbusNetworkControllerSlave("ModbusNetwork", _Connection);
+            ModbusNetworksManager.Instance.Networks.Add(_Network);
             // Конфигурацию на основе 
             Init(_Network);
             // Запускаем таймер
@@ -105,14 +105,14 @@ namespace NGK.CorrosionMonitoringSystem.DL
         /// <summary>
         /// Создаёт конфигурацию сети на основе CAN-сети
         /// </summary>
-        private void Init(NetworkController network)
+        private void Init(ModbusNetworkControllerSlave network)
         {
             network.Devices.Clear();
 
             List<CAN.ApplicationLayer.Network.Devices.DeviceBase> canDevices =
                 new List<NGK.CAN.ApplicationLayer.Network.Devices.DeviceBase>();
-            CAN.ApplicationLayer.Network.Master.NetworksManager canNetworkManager =
-                CAN.ApplicationLayer.Network.Master.NetworksManager.Instance;
+            CAN.ApplicationLayer.Network.Master.NgkCanNetworksManager canNetworkManager =
+                CAN.ApplicationLayer.Network.Master.NgkCanNetworksManager.Instance;
 
             // Создаём таблицу CAN-сетей
             _CanNetworksTable = new Dictionary<string, int>(canNetworkManager.Networks.Count);
@@ -387,8 +387,8 @@ namespace NGK.CorrosionMonitoringSystem.DL
             File modbusDevice, NGK.CAN.ApplicationLayer.Network.Devices.DeviceBase canDevice)
         {
             NGK.CAN.ApplicationLayer.Network.Devices.DeviceType type =
-                (NGK.CAN.ApplicationLayer.Network.Devices.DeviceType)modbusDevice.Records[ModbusAddresses
-                .ModbusVisitingCard.VisitingCard.DeviceType].Value;
+                (NGK.CAN.ApplicationLayer.Network.Devices.DeviceType)modbusDevice.Records[
+                ModbusVisitingCard.VisitingCard.DeviceType].Value;
             switch (type)
             {
                 case NGK.CAN.ApplicationLayer.Network.Devices.DeviceType.KIP_BATTERY_POWER_v1:
@@ -415,8 +415,8 @@ namespace NGK.CorrosionMonitoringSystem.DL
         {
             NGK.CAN.ApplicationLayer.Network.Devices.DeviceBase device;
             File modbusDevice;
-            NGK.CAN.ApplicationLayer.Network.Master.NetworksManager manager =
-                NGK.CAN.ApplicationLayer.Network.Master.NetworksManager.Instance;
+            NGK.CAN.ApplicationLayer.Network.Master.NgkCanNetworksManager manager =
+                NGK.CAN.ApplicationLayer.Network.Master.NgkCanNetworksManager.Instance;
 
             // Обновляем все устройства
             foreach (ModbusAdapterContext context in _Context)

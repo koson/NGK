@@ -13,17 +13,24 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.Dialogs
 {
     public partial class FormEditNetworkController : Form
     {
+        #region Constructors
+
+        public FormEditNetworkController()
+        {
+            InitializeComponent();
+        }
+
+        #endregion
+
         #region Fields And Properties
-        //---------------------------------------------------------------------------
         /// <summary>
         /// Сеть Modbus
         /// </summary>
-        private NetworkController _Network;
-        //---------------------------------------------------------------------------
+        private ModbusNetworkControllerSlave _Network;
         /// <summary>
         /// Устанавливает/возвращает редактируемую сеть Modbus
         /// </summary>
-        public NetworkController Network
+        public ModbusNetworkControllerSlave Network
         {
             get { return _Network; }
             set 
@@ -36,7 +43,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.Dialogs
                         _Network = value;
                         _Network.DevicesListWasChanged +=
                             new EventHandler(EventHandler_Network_DevicesListWasChanged);
-                        _Network.NetworkChangedStatus +=
+                        _Network.StatusWasChanged +=
                             new EventHandler(EventHandler_Network_NetworkChangedStatus);
                     }
                     else
@@ -46,29 +53,17 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.Dialogs
                 }
             }
         }
-        //---------------------------------------------------------------------------
         private BindingSource _BindingSourceDevicesList;
-        //---------------------------------------------------------------------------
         private BindingSource _BindingSourceFile;
-        //---------------------------------------------------------------------------
+
         #endregion
-        #region Constructors
-        //---------------------------------------------------------------------------
-        /// <summary>
-        /// Конструктор
-        /// </summary>
-        public FormEditNetworkController()
-        {
-            InitializeComponent();
-        }
-        //---------------------------------------------------------------------------
-        #endregion
+        
         #region Methods
-        //---------------------------------------------------------------------------
+
         private void EventHandler_Network_NetworkChangedStatus(
             object sender, EventArgs e)
         {
-            NetworkController network = (NetworkController)sender;
+            ModbusNetworkControllerSlave network = (ModbusNetworkControllerSlave)sender;
             if ((network.Status == Common.Controlling.Status.Running) ||
                 (network.Status == Common.Controlling.Status.Paused))
             {
@@ -78,7 +73,6 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.Dialogs
             }
             return;
         }
-        //---------------------------------------------------------------------------
         /// <summary>
         /// Обработчик события изменения списка устройств в редактируемой сети
         /// </summary>
@@ -89,7 +83,6 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.Dialogs
         {
             return;
         }
-        //---------------------------------------------------------------------------
         /// <summary>
         /// Обработчик события загрузки формы
         /// </summary>
@@ -133,7 +126,6 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.Dialogs
 
             return;
         }
-        //---------------------------------------------------------------------------
         /// <summary>
         /// Запускается при старте приложения. Настраивает DataGridView
         /// </summary>
@@ -172,7 +164,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.Dialogs
             column.HeaderText = "Владелец";
             column.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
             column.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            column.ValueType = typeof(NetworkController);
+            column.ValueType = typeof(ModbusNetworkControllerSlave);
             column.ReadOnly = true;
             _DataGridViewDevicesList.Columns.Add(column);
 
@@ -202,7 +194,6 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.Dialogs
 
             return;
         }
-        //---------------------------------------------------------------------------
         /// <summary>
         /// Запускается при старте приложения. Настраивает DataGridView
         /// </summary>
@@ -286,7 +277,6 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.Dialogs
 
             return;
         }
-        //---------------------------------------------------------------------------
         /// <summary>
         /// Запускается при старте приложения. Настраивает DataGridView
         /// </summary>
@@ -369,7 +359,6 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.Dialogs
             
             return;
         }
-        //---------------------------------------------------------------------------
         /// <summary>
         /// Запускается при старте приложения. Настраивает DataGridView
         /// </summary>
@@ -452,7 +441,6 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.Dialogs
             
             return;
         }
-        //---------------------------------------------------------------------------
         /// <summary>
         /// Запускается при старте приложения. Настраивает DataGridView
         /// </summary>
@@ -535,7 +523,6 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.Dialogs
 
             return;
         }
-        //---------------------------------------------------------------------------
         /// <summary>
         /// 
         /// </summary>
@@ -602,8 +589,6 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.Dialogs
             
             return;
         }
-
-        //---------------------------------------------------------------------------
         /// <summary>
         /// Запускается при старте приложения. Настраивает DataGridView
         /// </summary>
@@ -684,7 +669,6 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.Dialogs
 
             return;
         }
-        //---------------------------------------------------------------------------
         /// <summary>
         /// 
         /// </summary>
@@ -727,7 +711,6 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.Dialogs
             }
             return;
         }
-        //---------------------------------------------------------------------------
         /// <summary>
         /// 
         /// </summary>
@@ -775,7 +758,6 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.Dialogs
             }
             return;
         }
-        //---------------------------------------------------------------------------
         /// <summary>
         /// 
         /// </summary>
@@ -789,7 +771,6 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.Dialogs
 
             return;
         }
-        //---------------------------------------------------------------------------
         /// <summary>
         /// Обработчик события грида окончания ввода пользователем нового значения
         /// в ячейку.
@@ -845,7 +826,6 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.Dialogs
             }
             return;
         }
-        //---------------------------------------------------------------------------
         private void EventHandler_DataGridViewDevicesList_DataError(
             object sender, DataGridViewDataErrorEventArgs e)
         {
@@ -871,7 +851,6 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.Dialogs
             }
             return;
         }
-        //---------------------------------------------------------------------------
         private void EventHandler_DataGridViewDevicesList_CellEndEdit(
             object sender, DataGridViewCellEventArgs e)
         {
@@ -879,7 +858,6 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.Dialogs
             control.Rows[e.RowIndex].ErrorText = String.Empty;
             return;
         }
-        //---------------------------------------------------------------------------
         private void EventHandler_DataGridViewCoils_CellParsing(
             object sender, DataGridViewCellParsingEventArgs e)
         {
@@ -926,7 +904,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.Dialogs
             }
             return;
         }
-        //---------------------------------------------------------------------------
+
         private void EventHandler_DataGridViewCoils_DataError(
             object sender, DataGridViewDataErrorEventArgs e)
         {
@@ -947,7 +925,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.Dialogs
             }
             return;
         }
-        //---------------------------------------------------------------------------
+
         private void EventHadler_DataGridViewCoils_CellEndEdit(
             object sender, DataGridViewCellEventArgs e)
         {
@@ -955,7 +933,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.Dialogs
             control.Rows[e.RowIndex].ErrorText = String.Empty;
             return;
         }
-        //---------------------------------------------------------------------------
+
         private void EventHandler_DataGridViewDiscretesInputs_CellParsing(
             object sender, DataGridViewCellParsingEventArgs e)
         {
@@ -1001,7 +979,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.Dialogs
             }
             return;
         }
-        //---------------------------------------------------------------------------
+
         private void EventHandler_DataGridViewDiscretesInputs_DataError(
             object sender, DataGridViewDataErrorEventArgs e)
         {
@@ -1022,7 +1000,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.Dialogs
             }
             return;
         }
-        //---------------------------------------------------------------------------
+
         private void _DataGridViewDiscretesInputs_CellEndEdit(
             object sender, DataGridViewCellEventArgs e)
         {
@@ -1030,7 +1008,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.Dialogs
             control.Rows[e.RowIndex].ErrorText = String.Empty;
             return;
         }
-        //---------------------------------------------------------------------------
+
         private void EventHandler_DataGridViewInputRegisters_CellParsing(
             object sender, DataGridViewCellParsingEventArgs e)
         {
@@ -1087,7 +1065,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.Dialogs
             }
             return;
         }
-        //---------------------------------------------------------------------------
+
         private void EventHandler_DataGridViewInputRegisters_DataError(
             object sender, DataGridViewDataErrorEventArgs e)
         {
@@ -1108,7 +1086,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.Dialogs
             }
             return;
         }
-        //---------------------------------------------------------------------------
+
         private void _DataGridViewInputRegisters_CellEndEdit(
             object sender, DataGridViewCellEventArgs e)
         {
@@ -1116,7 +1094,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.Dialogs
             control.Rows[e.RowIndex].ErrorText = String.Empty;
             return;
         }
-        //---------------------------------------------------------------------------
+
         private void EventHandler_DataGridViewHoldingRegisters_CellParsing(
             object sender, DataGridViewCellParsingEventArgs e)
         {
@@ -1173,7 +1151,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.Dialogs
             }
             return;
         }
-        //---------------------------------------------------------------------------
+
         private void EventHandler_DataGridViewHoldingRegisters_DataError(
             object sender, DataGridViewDataErrorEventArgs e)
         {
@@ -1194,7 +1172,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.Dialogs
             }
             return;
         }
-        //---------------------------------------------------------------------------
+
         private void _DataGridViewHoldingRegisters_CellEndEdit(
             object sender, DataGridViewCellEventArgs e)
         {
@@ -1202,7 +1180,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.Dialogs
             control.Rows[e.RowIndex].ErrorText = String.Empty;
             return;
         }
-        //---------------------------------------------------------------------------
+
         private void EventHandler_DataGridViewRecords_DataError(
             object sender, DataGridViewDataErrorEventArgs e)
         {
@@ -1223,7 +1201,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.Dialogs
             }
             return;
         }
-        //---------------------------------------------------------------------------
+
         private void EventHandler_DataGridViewRecords_CellEndEdit(
             object sender, DataGridViewCellEventArgs e)
         {
@@ -1231,7 +1209,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.Dialogs
             control.Rows[e.RowIndex].ErrorText = String.Empty;
             return;
         }
-        //---------------------------------------------------------------------------
+
         private void EventHandler_DataGridViewRecords_CellParsing(
             object sender, DataGridViewCellParsingEventArgs e)
         {
@@ -1288,7 +1266,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.Dialogs
             }
             return;
         }
-        //---------------------------------------------------------------------------
+
         private void EventHandler_DataGridViewFiles_DataError(
             object sender, DataGridViewDataErrorEventArgs e)
         {
@@ -1309,7 +1287,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.Dialogs
             }
             return;
         }
-        //---------------------------------------------------------------------------
+
         private void EventHandler_DataGridViewFiles_CellEndEdit(
             object sender, DataGridViewCellEventArgs e)
         {
@@ -1317,7 +1295,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.Dialogs
             control.Rows[e.RowIndex].ErrorText = String.Empty;
             return;
         }
-        //---------------------------------------------------------------------------
+
         private void EventHandler_DataGridViewFiles_CellParsing(
             object sender, DataGridViewCellParsingEventArgs e)
         {
@@ -1358,7 +1336,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.Dialogs
             }
             return;
         }
-        //---------------------------------------------------------------------------
+
         /// <summary>
         /// Добавляет устройство в сеть
         /// </summary>
@@ -1399,7 +1377,6 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.Dialogs
             throw new InvalidOperationException(
                 "Не удалось добавить новое устройство, все адреса заняты");
         }
-        //---------------------------------------------------------------------------
         /// <summary>
         /// Удаляет устройство из сети
         /// </summary>
@@ -1408,7 +1385,6 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.Dialogs
             _BindingSourceDevicesList.RemoveCurrent();
             return;
         }
-        //---------------------------------------------------------------------------
         /// <summary>
         /// Добавляет регистр входа/вывода в текущее устройство
         /// </summary>
@@ -1444,7 +1420,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.Dialogs
             throw new InvalidOperationException(
                 "Не удалось добавить новый holding register в устройство, все адреса заняты");
         }
-        //---------------------------------------------------------------------------
+
         private void RemoveHoldingRegister()
         {
             CurrencyManager manager;
@@ -1466,7 +1442,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.Dialogs
             _ToolStripMenuItemAddHoldingRegister.Enabled = true;
             return;
         }
-        //---------------------------------------------------------------------------
+
         private void AddInputRegister()
         {
             UInt16 address;
@@ -1497,7 +1473,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.Dialogs
             throw new InvalidOperationException(
                 "Не удалось добавить новый input register в устройство, все адреса заняты");
         }
-        //---------------------------------------------------------------------------
+
         private void RemoveInputRegister()
         {
             CurrencyManager manager;
@@ -1520,7 +1496,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.Dialogs
 
             return;
         }
-        //---------------------------------------------------------------------------
+
         private void AddCoil()
         {
             UInt16 address;
@@ -1551,7 +1527,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.Dialogs
             throw new InvalidOperationException(
                 "Не удалось добавить новый coil в устройство, все адреса заняты");
         }
-        //---------------------------------------------------------------------------
+
         private void RemoveCoil()
         {
             CurrencyManager manager;
@@ -1575,7 +1551,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.Dialogs
 
             return;
         }
-        //---------------------------------------------------------------------------
+
         private void AddDiscreteInput()
         {
             UInt16 address;
@@ -1606,7 +1582,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.Dialogs
             throw new InvalidOperationException(
                 "Не удалось добавить новый discrete input в устройство, все адреса заняты");
         }
-        //---------------------------------------------------------------------------
+
         private void RemoveDiscreteInput()
         {
             CurrencyManager manager;
@@ -1628,7 +1604,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.Dialogs
             _ToolStripMenuItemAddDiscreteInput.Enabled = true;
             return;
         }
-        //---------------------------------------------------------------------------
+
         private void AddFile()
         {
             UInt16 number;
@@ -1664,7 +1640,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.Dialogs
             throw new InvalidOperationException(
                 "Неудалось добавить новый файл в устройство, все номера заняты");
         }
-        //---------------------------------------------------------------------------
+
         /// <summary>
         /// 
         /// </summary>
@@ -1694,7 +1670,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.Dialogs
             }
             return;
         }
-        //---------------------------------------------------------------------------
+
         /// <summary>
         /// Добавляет запись файл
         /// </summary>
@@ -1732,7 +1708,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.Dialogs
             throw new InvalidOperationException(
                 "Неудалось добавить новую запись в файл устройства, все номера заняты");
         }
-        //---------------------------------------------------------------------------
+
         private void RemoveRecord()
         {
             Record record;
@@ -1758,7 +1734,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.Dialogs
 
             return;
         }
-        //---------------------------------------------------------------------------
+
         private void EventHandler_ToolStripMenuItemAddDevice_Click(
             object sender, EventArgs e)
         {
@@ -1766,105 +1742,105 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.Dialogs
             AddDevice();
             return;
         }
-        //---------------------------------------------------------------------------
+
         private void EventHandler_ToolStripMenuItemRemoveDevice_Click(
             object sender, EventArgs e)
         {
             RemoveDevice();
             return;
         }
-        //---------------------------------------------------------------------------
+
         private void EventHandler_ToolStripMenuItemAddHoldingRegister_Click(
             object sender, EventArgs e)
         {
             AddHoldingRegister();
             return;
         }
-        //---------------------------------------------------------------------------
+
         private void EventHandler_ToolStripMenuItemRemoveHoldingRegister_Click(
             object sender, EventArgs e)
         {
             RemoveHoldingRegister();
             return;
         }
-        //---------------------------------------------------------------------------
+
         private void EventHandler_ToolStripMenuItemAddInputRegister_Click(
             object sender, EventArgs e)
         {
             AddInputRegister();
             return;
         }
-        //---------------------------------------------------------------------------
+
         private void EventHandler_ToolStripMenuItemRemoveInputRegister_Click(
             object sender, EventArgs e)
         {
             RemoveInputRegister();
             return;
         }
-        //---------------------------------------------------------------------------
+
         private void EventHandler_ToolStripMenuItemAddDiscreteInput_Click(
             object sender, EventArgs e)
         {
             AddDiscreteInput();
             return;
         }
-        //---------------------------------------------------------------------------
+
         private void EventHandler_ToolStripMenuItemRemoveDiscreteInput_Click(
             object sender, EventArgs e)
         {
             RemoveDiscreteInput();
             return;
         }
-        //---------------------------------------------------------------------------
+
         private void EventHandler_ToolStripMenuItemAddFile_Click(object sender, EventArgs e)
         {
             AddFile();
             return;
         }
-        //---------------------------------------------------------------------------
+
         private void EventHandler_ToolStripMenuItemRemoveFile_Click(object sender, EventArgs e)
         {
             RemoveFile();
             return;
         }
-        //---------------------------------------------------------------------------
+
         private void EventHandler_ToolStripMenuItemAddRecord_Click(object sender, EventArgs e)
         {
             AddRecord();
             return;
         }
-        //---------------------------------------------------------------------------
+
         private void EventHandler_ToolStripMenuItemRemoveRecord_Click(object sender, EventArgs e)
         {
             RemoveRecord();
             return;
         }
-        //---------------------------------------------------------------------------
+
         private void EventHandler_ToolStripMenuItemAddCoil_Click(object sender, EventArgs e)
         {
             AddCoil();
             return;
         }
-        //---------------------------------------------------------------------------
+
         private void EventHandler_ToolStripMenuItemRemoveCoil_Click(object sender, EventArgs e)
         {
             RemoveCoil();
             return;
         }
-        //---------------------------------------------------------------------------
+
         private void EventHandler_FormEditNetworkController_FormClosing(
             object sender, FormClosingEventArgs e)
         {
             return;
         }
-        //---------------------------------------------------------------------------
+
         private void EventHandler_FormEditNetworkController_FormClosed(
             object sender, FormClosedEventArgs e)
         {
             DialogResult = DialogResult.OK;
             return;
         }
-        //---------------------------------------------------------------------------
+
         #endregion
     }
 }

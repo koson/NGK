@@ -28,7 +28,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documents", "Documents", "{6AC5B152-5CC2-45EE-AF4C-6C8F1655C4CF}"
 	ProjectSection(SolutionItems) = preProject
 		..\Documents\ToDo.txt = ..\Documents\ToDo.txt
-		..\Documents\Useful references.txt = ..\Documents\Useful references.txt
 		..\Documents\Протоколы обмена\Интерфейс и протокол обмена данными НГК-ЭХЗ\Интерфейс и протокол обмена данными НГК-ЭХЗ_v.1.4.pdf = ..\Documents\Протоколы обмена\Интерфейс и протокол обмена данными НГК-ЭХЗ\Интерфейс и протокол обмена данными НГК-ЭХЗ_v.1.4.pdf
 		..\Documents\Порядок формирования версий NGK.docx = ..\Documents\Порядок формирования версий NGK.docx
 		..\Documents\установка ПО.txt = ..\Documents\установка ПО.txt
@@ -39,6 +38,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Common\Common.csproj", "{78E073B6-AD50-429C-9261-4DE3438D8EAE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DAL", "DAL\DAL.csproj", "{3B3C9818-D909-45E4-8587-873E4989DA8A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Other", "Other", "{DFE4AD4D-BE1F-4E4A-8957-D1783E5434BF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -105,6 +106,9 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
+		{645A5C8E-A0D4-4A5F-8AE4-9E69B4B5E867} = {DFE4AD4D-BE1F-4E4A-8957-D1783E5434BF}
+		{5805974B-8B2F-4B62-B6C7-4B9D2111083B} = {DFE4AD4D-BE1F-4E4A-8957-D1783E5434BF}
+		{85119510-C6F4-45C9-B0D9-696245277286} = {DFE4AD4D-BE1F-4E4A-8957-D1783E5434BF}
 		{353EAE55-C3C6-47B9-9AC8-5059F9302421} = {5EB75C60-3E8E-493D-A95E-8C2680A877EC}
 		{4C4CE19F-961D-4D9A-B90C-BA154A34471D} = {5EB75C60-3E8E-493D-A95E-8C2680A877EC}
 	EndGlobalSection

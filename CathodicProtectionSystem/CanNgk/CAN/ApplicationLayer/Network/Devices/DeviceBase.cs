@@ -426,9 +426,9 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices
 
             // Ищем сеть с данным именем если она сущестует, у устанавливаем
             // свойство устройста
-            if (NetworksManager.Instance.Networks.Contains(networkId))
+            if (NgkCanNetworksManager.Instance.Networks.Contains(networkId))
             {
-                device._Network = NetworksManager.Instance.Networks[networkId];            
+                device._Network = NgkCanNetworksManager.Instance.Networks[networkId];            
             }
 
             return device;

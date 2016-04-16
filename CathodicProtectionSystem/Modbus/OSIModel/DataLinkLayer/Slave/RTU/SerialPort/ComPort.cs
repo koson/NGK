@@ -13,7 +13,7 @@ namespace Modbus.OSIModel.DataLinkLayer.Slave.RTU.ComPort
     /// Класс реализует слой DataLink Layer протокола Modbus
     /// соединение через COM-порт для slave-устройства
     /// </summary>
-    public class ComPort: IDataLinkLayer
+    public class ComPortSlaveMode: IDataLinkLayer
     {
         #region Fields and Properties
         /// <summary>
@@ -67,7 +67,7 @@ namespace Modbus.OSIModel.DataLinkLayer.Slave.RTU.ComPort
         /// <summary>
         /// Конструктор
         /// </summary>
-        public ComPort()
+        public ComPortSlaveMode()
         {
             _SyncRoot = new Object();
             _СurrentTransaction = 
@@ -105,7 +105,7 @@ namespace Modbus.OSIModel.DataLinkLayer.Slave.RTU.ComPort
         /// <param name="parity">Наличие паритета данных</param>
         /// <param name="dataBits">Количество бит в символе</param>
         /// <param name="stopBits">Количество стоп-бит</param>
-        public ComPort(String portName, 
+        public ComPortSlaveMode(String portName, 
             int baudRate, Parity parity,
             int dataBits, StopBits stopBits)
         {

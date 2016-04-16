@@ -5,6 +5,8 @@ using System.Drawing;
 using System.Configuration;
 using System.ComponentModel;
 using System.Globalization;
+using System.IO.Ports;
+using Mvp.WinApplication;
 
 namespace NGK.CorrosionMonitoringSystem.Managers.AppConfigManager
 {
@@ -31,7 +33,7 @@ namespace NGK.CorrosionMonitoringSystem.Managers.AppConfigManager
 
         #region Constructors
 
-        public ConfigManager()
+        private ConfigManager()
         {
             Configuration localConfig = 
                 ConfigurationManager.OpenExeConfiguration(
@@ -62,8 +64,28 @@ namespace NGK.CorrosionMonitoringSystem.Managers.AppConfigManager
         #endregion
 
         #region Fields And Properties
-        
+
+        static object syncRoot = new object();
+        static volatile ConfigManager _Instance;
         Configuration _Config;
+
+        public static ConfigManager Instance
+        {
+            get
+            {
+                if (_Instance == null)
+                {
+                    lock (syncRoot)
+                    {
+                        if (_Instance == null)
+                        {
+                            _Instance = new ConfigManager();
+                        }
+                    }
+                }
+                return _Instance;
+            }
+        }
 
         #region Настройки основного окна программы
 
@@ -243,6 +265,48 @@ namespace NGK.CorrosionMonitoringSystem.Managers.AppConfigManager
 
         #endregion
 
+        #region Настройки COM-порта для работы Modbus (Slave)
+        /// <summary>
+        /// Название сети Modbus (Slave) для организации обмена данными
+        /// КССМУ с системами верхнего уровня.
+        /// </summary>
+        public string ModbusSystemInfoNetworkName
+        {
+            get { return "ModbusSystemInfoNetwork"; }
+        }
+
+        public string SerialPortName
+        {
+            get { return GetParameter("PortName"); }
+            set { SetParameter("PortName", value); }
+        }
+
+        public int SerialPortBaudRate
+        {
+            get { return Int32.Parse(GetParameter("BaudRate")); }
+            set { SetParameter("BaudRate", value); }
+        }
+
+        public Parity SerialPortParity
+        {
+            get { return (Parity)Enum.Parse(typeof(Parity), GetParameter("Parity")); }
+            set { SetParameter("Parity", value); }
+        }
+
+        public int SerialPortDataBits
+        {
+            get { return Int32.Parse(GetParameter("DataBits")); }
+            set { SetParameter("DataBits", value); }
+        }
+
+        public StopBits SerialPortStopBits
+        {
+            get { return (StopBits)Enum.Parse(typeof(StopBits), GetParameter("StopBits")); }
+            set { SetParameter("StopBits", value); }
+        }
+
+        #endregion
+
         /// <summary>
         /// Возвращает массив номеров индексов объектного словаря устройства КИП9810,
         /// которые должны быть скрыты от пользователя
@@ -310,6 +374,13 @@ namespace NGK.CorrosionMonitoringSystem.Managers.AppConfigManager
         void SetParameter(String paramName, ValueType value)
         {
             _Config.AppSettings.Settings[paramName].Value = value.ToString();
+            _Config.Save();
+            ConfigurationManager.RefreshSection("appSettings");
+        }
+
+        void SetParameter(String paramName, string value)
+        {
+            _Config.AppSettings.Settings[paramName].Value = value;
             _Config.Save();
             ConfigurationManager.RefreshSection("appSettings");
         }

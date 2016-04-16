@@ -12,8 +12,8 @@ namespace NGK.NetworkConfigurator
     public partial class NetworksManagerEditor : Form
     {
         #region Fields And Properties
-        private NetworksManager _NetworksManager;
-        public NetworksManager NetworksManager
+        NgkCanNetworksManager _NetworksManager;
+        public NgkCanNetworksManager NetworksManager
         {
             get { return _NetworksManager; }
             set { _NetworksManager = value; }
@@ -44,7 +44,7 @@ namespace NGK.NetworkConfigurator
             
             //this.UseWaitCursor = true;
 
-            this.NetworksManager = NetworksManager.Instance;
+            this.NetworksManager = NgkCanNetworksManager.Instance;
 
             // Инициализация меню
             ToolStripMenuItem menuItem;

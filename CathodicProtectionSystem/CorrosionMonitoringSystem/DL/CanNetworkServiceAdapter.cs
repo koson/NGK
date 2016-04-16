@@ -47,7 +47,7 @@ namespace NGK.CorrosionMonitoringSystem.BL
         /// </summary>
         public CanNetworkServiceAdapter()
         {
-            NetworksManager manager = NetworksManager.Instance;
+            NgkCanNetworksManager manager = NgkCanNetworksManager.Instance;
 
             _ControllerChangedStatus = 
                 new EventHandler(EventHandlerControllerChangedStatus);
@@ -126,7 +126,7 @@ namespace NGK.CorrosionMonitoringSystem.BL
         {
             DeviceBase dvc;
 
-            dvc = NetworksManager.Instance.Networks[device.NetworkId]
+            dvc = NgkCanNetworksManager.Instance.Networks[device.NetworkId]
                 .Devices[device.NodeId];
             NgkCanDevice.Update(device, dvc);
         }
@@ -138,7 +138,7 @@ namespace NGK.CorrosionMonitoringSystem.BL
         {
             DeviceBase dvc;
 
-            dvc = NetworksManager.Instance.Networks[device.NetworkId]
+            dvc = NgkCanNetworksManager.Instance.Networks[device.NetworkId]
                 .Devices[device.NodeId];
             // Обновляем словарь объектов модели
             NgkCanDevice.Update(device, dvc);

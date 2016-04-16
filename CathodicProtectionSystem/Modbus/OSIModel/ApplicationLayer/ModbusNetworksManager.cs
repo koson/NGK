@@ -8,17 +8,26 @@ namespace Modbus.OSIModel.ApplicationLayer
     /// <summary>
     /// Класс для управления сетями Modbus
     /// </summary>
-    public class NetworksManager
+    public class ModbusNetworksManager
     {
+        #region Constructors
+
+        private ModbusNetworksManager()
+        {
+            _Networks = new ModbusNetworksCollection();
+        }
+
+        #endregion
+
         #region Fields And Properties
         /// <summary>
         /// Singleton
         /// </summary>
-        private static NetworksManager _Instance;
+        static volatile ModbusNetworksManager _Instance;
         /// <summary>
         /// Возвращает объект менеджера сетей
         /// </summary>
-        public static NetworksManager Instance
+        public static ModbusNetworksManager Instance
         {
             get 
             {
@@ -28,7 +37,7 @@ namespace Modbus.OSIModel.ApplicationLayer
                     {
                         if (_Instance == null)
                         {
-                            _Instance = new NetworksManager();
+                            _Instance = new ModbusNetworksManager();
                         }
                     }
                 }
@@ -38,29 +47,19 @@ namespace Modbus.OSIModel.ApplicationLayer
         /// <summary>
         /// Список сетей 
         /// </summary>
-        private NetworksCollection _Networks;
+        ModbusNetworksCollection _Networks;
         /// <summary>
         /// Сети Modbus
         /// </summary>
-        public NetworksCollection Networks
+        public ModbusNetworksCollection Networks
         {
             get { return _Networks; }
         }
         /// <summary>
         /// Объект для синхронизации
         /// </summary>
-        private static object SyncRoot = new object();
-        #endregion
-
-        #region Constructors
-        /// <summary>
-        /// 
-        /// </summary>
-        private NetworksManager()
-        {
-            _Networks = new NetworksCollection();
-        }
-
+        static object SyncRoot = new object();
+        
         #endregion
 
         #region Methods
@@ -85,7 +84,7 @@ namespace Modbus.OSIModel.ApplicationLayer
         /// </summary>
         /// <param name="type"></param>
         /// <returns></returns>
-        public static NetworkController Create(WorkMode type)
+        public static ModbusNetworkControllerSlave Create(WorkMode type)
         {
             //NetworkController controller;
 

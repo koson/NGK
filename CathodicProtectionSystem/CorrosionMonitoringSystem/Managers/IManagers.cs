@@ -12,6 +12,14 @@ namespace NGK.CorrosionMonitoringSystem.Managers
     public interface IManagers
     {
         /// <summary>
+        /// Версия ПО
+        /// </summary>
+        Version SoftwareVersion { get; }
+        /// <summary>
+        /// Версия аппаратуры
+        /// </summary>
+        Version HardwareVersion { get; }
+        /// <summary>
         /// Менеждер для трассировки приложения
         /// </summary>
         ILogManager Logger { get; }
@@ -30,8 +38,13 @@ namespace NGK.CorrosionMonitoringSystem.Managers
         /// </summary>
         IPresentersFactory PresentersFactory { get; }
         /// <summary>
-        /// Событие возникает при изменении состояния сетевого контроллера
+        /// Сервис для работы с CAN-сетями
         /// </summary>
         ICanNetworkService CanNetworkService { get; }
+        /// <summary>
+        /// Сервис для работы с Modbus-сетью 
+        /// (режим Slave: для поддержики систем верхнего уровня )
+        /// </summary>
+        IModbusSystemInformationNetworkService ModbusSystemInfoNetworkService { get; }
     }
 }
