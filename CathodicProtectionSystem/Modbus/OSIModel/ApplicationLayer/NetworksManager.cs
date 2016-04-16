@@ -85,15 +85,15 @@ namespace Modbus.OSIModel.ApplicationLayer
         /// </summary>
         /// <param name="type"></param>
         /// <returns></returns>
-        public static NetworkController Create(Workmode type)
+        public static NetworkController Create(WorkMode type)
         {
             //NetworkController controller;
 
             switch (type)
             {
-                case Workmode.Master:
+                case WorkMode.Master:
                     { throw new NotImplementedException(); }
-                case Workmode.Slave:
+                case WorkMode.Slave:
                     {
                         throw new NotImplementedException();
                         //controller = new NetworkController(
