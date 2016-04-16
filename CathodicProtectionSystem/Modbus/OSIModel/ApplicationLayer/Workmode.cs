@@ -7,7 +7,7 @@ namespace Modbus.OSIModel.ApplicationLayer
     /// <summary>
     /// “ип сети
     /// </summary>
-    public enum Workmode
+    public enum WorkMode
     {
         /// <summary>
         /// 

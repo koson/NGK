@@ -20,9 +20,9 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
         /// <summary>
         /// Возвращает тип контроллера сети (slave или master)
         /// </summary>
-        public Workmode ControllerType
+        public WorkMode ControllerType
         {
-            get { return Workmode.Slave; }
+            get { return WorkMode.Slave; }
         }
         /// <summary>
         /// Наименование сети Modbus
