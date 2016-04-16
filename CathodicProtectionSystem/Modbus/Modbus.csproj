@@ -41,7 +41,7 @@
     <Compile Include="Convert.cs" />
     <Compile Include="EnumStatus.cs" />
     <Compile Include="OSIModel\ApplicationLayer\NetworksManager.cs" />
-    <Compile Include="OSIModel\ApplicationLayer\Workmode.cs" />
+    <Compile Include="OSIModel\ApplicationLayer\WorkMode.cs" />
     <Compile Include="OSIModel\ApplicationLayer\Slave\DataModel\DataTypes\EnumParameterType.cs" />
     <Compile Include="OSIModel\ApplicationLayer\Slave\DataModel\DataTypes\File.cs" />
     <Compile Include="OSIModel\ApplicationLayer\Slave\DataModel\DataTypes\Record.cs" />
