@@ -19,7 +19,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Master.Services.Collections
         /// <summary>
         /// Сеть, которой принадлежит данный список устройств
         /// </summary>
-        private INetworkController _Network;
+        private ICanNetworkController _Network;
         /// <summary>
         /// Сеть, которой принадлежит данный список устройств
         /// </summary>
@@ -28,7 +28,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Master.Services.Collections
         [Category("Настройки")]
         [DisplayName("Сеть CAN НГК-ЭХЗ")]
         [Description("Объект для представления сети CAN для мастера сети. Содержит список сетевых устройств и CAN-порт")]
-        public INetworkController Network
+        public ICanNetworkController Network
         {
             get { return _Network; }
             set { _Network = value; }
@@ -41,7 +41,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Master.Services.Collections
         {
             this._Network = null;
         }
-        public NetworkServicesCollection(INetworkController network)
+        public NetworkServicesCollection(ICanNetworkController network)
             : base()
         {
             this._Network = network;

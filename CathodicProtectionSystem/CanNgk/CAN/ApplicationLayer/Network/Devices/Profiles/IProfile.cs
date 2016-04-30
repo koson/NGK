@@ -9,7 +9,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices.Profiles
     /// <summary>
     /// Профиль устройства
     /// </summary>
-    public interface IProfile
+    public interface ICanDeviceProfile
     {
         #region Fields And Properties
         /// <summary>

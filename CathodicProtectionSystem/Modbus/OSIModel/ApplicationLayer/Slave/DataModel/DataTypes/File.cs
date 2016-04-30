@@ -78,12 +78,12 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.DataModel.DataTypes
         /// <summary>
         /// Устройство владелец данного файла
         /// </summary>
-        private Device _Device;
+        private ModbusSlaveDevice _Device;
         //---------------------------------------------------------------------------
         /// <summary>
         /// Возвращает устройство, которому принадлежит данный файл
         /// </summary>
-        public Device Device
+        public ModbusSlaveDevice Device
         {
             get { return _Device; }
         }
@@ -137,7 +137,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.DataModel.DataTypes
         /// исключение
         /// </summary>
         /// <param name="owner">Владелец данного файла</param>
-        internal void SetOwner(Device owner)
+        internal void SetOwner(ModbusSlaveDevice owner)
         {
             if (_Device == null)
             {

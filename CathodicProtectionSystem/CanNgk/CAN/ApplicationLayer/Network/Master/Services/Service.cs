@@ -94,11 +94,11 @@ namespace NGK.CAN.ApplicationLayer.Network.Master.Services
         /// <summary>
         /// —сылка на контроллер сервисов, которому принадлежит данный сервис
         /// </summary>
-        protected INetworkController _NetworkController;
+        protected ICanNetworkController _NetworkController;
         /// <summary>
         /// ”станавливаетс€ при дессериализации сервиса
         /// </summary>
-        internal INetworkController NetworkController
+        internal ICanNetworkController NetworkController
         {
             get { return _NetworkController; }
             set
@@ -176,7 +176,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Master.Services
         ///  онстуктор базового класса
         /// </summary>
         /// <param name="controller"> онтроллер сети</param>
-        protected Service(INetworkController controller)
+        protected Service(ICanNetworkController controller)
         {
             String msg;
 

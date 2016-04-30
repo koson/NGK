@@ -6,7 +6,7 @@ using NGK.CAN.ApplicationLayer.Network.Devices;
 
 namespace NGK.CorrosionMonitoringSystem.Models.Modbus
 {
-    public class ModbusAdapterContext
+    public class ModbusServiceContext
     {
         /// <summary>
         /// Идентификатор CAN устройства 
@@ -35,7 +35,7 @@ namespace NGK.CorrosionMonitoringSystem.Models.Modbus
         public readonly CAN CanDevice;
         public readonly Modbus ModbusDevice;
 
-        public ModbusAdapterContext(DeviceBase canDevice, File modbusDevice)
+        public ModbusServiceContext(DeviceBase canDevice, File modbusDevice)
         {
             CanDevice = new CAN();
             CanDevice.NetworkId = canDevice.Network.NetworkId;

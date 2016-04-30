@@ -9,7 +9,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
     /// <summary>
     /// Класс реализует коллекцию slave modbus-устройств
     /// </summary>
-    public class DevicesCollection: KeyedCollection<Byte, Device>
+    public class DevicesCollection: KeyedCollection<Byte, ModbusSlaveDevice>
     {
         #region Fields and Properties
         /// <summary>
@@ -52,7 +52,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
         protected override void ClearItems()
         {
             // Обнуляем владельца удаляемого элемента.
-            foreach (Device device in Items)
+            foreach (ModbusSlaveDevice device in Items)
             {
                 device.SetOwner(null);
             }
@@ -65,12 +65,12 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
             return;
         }
 
-        protected override byte GetKeyForItem(Device item)
+        protected override byte GetKeyForItem(ModbusSlaveDevice item)
         {
             return item.Address;
         }
 
-        protected override void InsertItem(int index, Device item)
+        protected override void InsertItem(int index, ModbusSlaveDevice item)
         {
             // Устанавливаем владельца добавляемого элемента.
             item.SetOwner(_NetworkController); 
@@ -93,7 +93,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
             return;
         }
 
-        protected override void SetItem(int index, Device item)
+        protected override void SetItem(int index, ModbusSlaveDevice item)
         {
             // Устанавливаем владельца добавляемого элемента.
             item.SetOwner(_NetworkController);

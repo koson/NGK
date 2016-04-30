@@ -22,7 +22,7 @@ namespace NGK.CorrosionMonitoringSystem.Services
         /// <param name="networkManager"></param>
         /// <param name="pollingInterval">Интервал обновления CAN-устройства, мсек</param>
         public CanNetworkService(IApplicationController application, 
-            INetworksManager networkManager, double pollingInterval)
+            INgkCanNetworksManager networkManager, double pollingInterval)
         {
             _NetworkManager = networkManager;
             _NetworkManager.NetworkChangedStatus += 
@@ -42,7 +42,7 @@ namespace NGK.CorrosionMonitoringSystem.Services
 
         #region Fields And Properties
 
-        INetworksManager _NetworkManager;
+        INgkCanNetworksManager _NetworkManager;
         IApplicationController _Application;
         Timer _Timer;
         ParametersPivotTable _ParatemersPivotTable;
@@ -95,7 +95,7 @@ namespace NGK.CorrosionMonitoringSystem.Services
         {
             _Devices.Clear();
 
-            foreach (NetworkController network in _NetworkManager.Networks)
+            foreach (CanNetworkController network in _NetworkManager.Networks)
             {
                 foreach (IDevice device in network.Devices)
                 {
@@ -116,7 +116,7 @@ namespace NGK.CorrosionMonitoringSystem.Services
 
             _Devices.Clear();
 
-            foreach (INetworkController network in _NetworkManager.Networks)
+            foreach (ICanNetworkController network in _NetworkManager.Networks)
             {
                 foreach (IDevice device in network.Devices)
                 {
@@ -146,7 +146,7 @@ namespace NGK.CorrosionMonitoringSystem.Services
 
         void StartCanNetwork()
         {
-            foreach (INetworkController network in NgkCanNetworksManager.Instance.Networks)
+            foreach (ICanNetworkController network in NgkCanNetworksManager.Instance.Networks)
             {
                 if (network.CanPort != null)
                 {
@@ -161,7 +161,7 @@ namespace NGK.CorrosionMonitoringSystem.Services
 
         void StopCanNetwork()
         {
-            foreach (INetworkController network in NgkCanNetworksManager.Instance.Networks)
+            foreach (ICanNetworkController network in NgkCanNetworksManager.Instance.Networks)
             {
                 network.Stop();
             }

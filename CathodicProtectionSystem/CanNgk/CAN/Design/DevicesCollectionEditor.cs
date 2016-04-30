@@ -47,7 +47,7 @@ namespace NGK.CAN.Design
         {
             // Здесь надо получить сам список сетевых устройств.
             DevicesCollection collection = 
-                ((NetworkController)Context.Instance).Devices;
+                ((CanNetworkController)Context.Instance).Devices;
 
             // Находим уникальный сетевой адрес для нового устройства
             for (byte address = 1; address < 128; address++)
@@ -160,7 +160,7 @@ namespace NGK.CAN.Design
             {
                 // Для режима design-time
                 // Нам нужны все "родственники" типа Device
-                foreach (Type type in tds.GetTypes(typeof(Prototype), false))
+                foreach (Type type in tds.GetTypes(typeof(CanDevicePrototype), false))
                 {
                     if (!result.Contains(type))
                     {
@@ -177,7 +177,7 @@ namespace NGK.CAN.Design
                 // Нам нужны все "родственники" типа Device
                 foreach (Type type in asmbl.GetTypes())
                 {
-                    if (type.BaseType == typeof(Prototype))
+                    if (type.BaseType == typeof(CanDevicePrototype))
                     {
                         if (!result.Contains(type))
                         {

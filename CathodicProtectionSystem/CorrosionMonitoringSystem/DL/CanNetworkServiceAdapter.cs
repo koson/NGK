@@ -59,7 +59,7 @@ namespace NGK.CorrosionMonitoringSystem.BL
 
             _Devices = new List<NgkCanDevice>();
             // Собираем все устройства из всех сетей            
-            foreach (NetworkController network in manager.Networks)
+            foreach (CanNetworkController network in manager.Networks)
             {
                 network.ControllerChangedStatus += _ControllerChangedStatus;
                 network.Devices.CollectionWasChanged += _DevicesAmountWasChanged;

@@ -1,56 +1,96 @@
 using System;
 using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.IO.Ports;
 using System.Text;
-using System.Configuration;
+using Common.Controlling;
 using System.Timers;
-using NGK.CAN.DataTypes;
-using NGK.CAN.DataTypes.DateTimeConvertor;
-using NGK.CAN.ApplicationLayer.Network.Devices.Profiles;
-using NGK.CAN.ApplicationLayer.Network.Devices.ObjectDictionary;
+using Mvp.WinApplication;
 using Modbus.OSIModel.ApplicationLayer;
 using Modbus.OSIModel.ApplicationLayer.Slave;
+using Modbus.OSIModel.DataLinkLayer.Slave;
 using Modbus.OSIModel.DataLinkLayer.Slave.RTU.ComPort;
-using Modbus.OSIModel.ApplicationLayer.Slave.DataModel.DataTypes;
+using NGK.CAN.DataTypes;
+using NGK.CAN.DataTypes.DateTimeConvertor;
+using NGK.CorrosionMonitoringSystem.Managers;
 using NGK.CorrosionMonitoringSystem.Models.Modbus;
+using NGK.CorrosionMonitoringSystem.DL;
+using Modbus.OSIModel.ApplicationLayer.Slave.DataModel.DataTypes;
+using NGK.CorrosionMonitoringSystem.Models;
+using NGK.CAN.ApplicationLayer.Network.Devices.Profiles;
+using NGK.CAN.ApplicationLayer.Network.Devices;
+using NGK.CAN.ApplicationLayer.Network.Master;
 
-namespace NGK.CorrosionMonitoringSystem.DL
+
+namespace NGK.CorrosionMonitoringSystem.Services
 {
-    /// <summary>
-    /// Класс для создания Modbus сети
-    /// </summary>
-    public class ModbusServiceAdapter
+    public class SystemInformationModbusNetworkService : ISystemInformationModbusNetworkService
     {
+        #region Constructors      
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="application"></param>
+        /// <param name="pollingInterval">Интервал обновления Modbus-устройства, мсек</param>
+        public SystemInformationModbusNetworkService(IApplicationController application,
+            IManagers managers, byte networkAddress,  double pollingInterval)
+        {
+            _Application = application;
+            _Managers = managers;
+
+            Address = networkAddress;
+
+            _Timer = new Timer(pollingInterval);
+            _Timer.AutoReset = true;
+            _Timer.Elapsed += new ElapsedEventHandler(EventHandler_Timer_Elapsed);
+            _Timer.Stop();
+        }
+
+        #endregion
+
         #region Fields And Properties
+
+        public Status Status
+        {
+            get
+            {
+                return _Timer.Enabled ? Status.Running : Status.Stopped;
+            }
+            set
+            {
+                switch (value)
+                {
+                    case Status.Running: { Start(); break; }
+                    case Status.Stopped: { Stop(); break; }
+                    default: { throw new NotSupportedException(); }
+                }
+            }
+        }
+
+        IApplicationController _Application;
+        IManagers _Managers;
         /// <summary>
         /// Контроллер modbus сеть в режиме slave
         /// </summary>
-        private ModbusNetworkControllerSlave _Network;
-        /// <summary>
-        /// ComPort
-        /// </summary>
-        private ComPortSlaveMode _Connection;
+        ModbusNetworkControllerSlave _Network;
         /// <summary>
         /// Устройство modbus блока КССМУ
         /// </summary>
-        private ModbusSlaveDevice _DeviceKCCM;
+        ModbusSlaveDevice _DeviceKCCM;
         /// <summary>
         /// Устанавливаем время в регистре
         /// </summary>
         public DateTime SystemTime
         {
-            get 
+            get
             {
                 UInt32 value = 0;
                 value = (((UInt32)_DeviceKCCM.HoldingRegisters[0x0000].Value) << 16);
                 value |= _DeviceKCCM.HoldingRegisters[0x0001].Value;
-                return Unix.ToDateTime(value); 
+                return Unix.ToDateTime(value);
             }
             set
             {
                 UInt32 time = Unix.ToUnixTime(value);
-                
+
                 _DeviceKCCM.HoldingRegisters[0x0000].Value = (UInt16)(time >> 16);
                 _DeviceKCCM.HoldingRegisters[0x0000].Value = (UInt16)time;
             }
@@ -59,130 +99,100 @@ namespace NGK.CorrosionMonitoringSystem.DL
         /// Таблица для хранения соответствия
         /// Наименований CAN-сетей номерам, для передачи по Modbus
         /// </summary>
-        private Dictionary<string, int> _CanNetworksTable;
-        private List<ModbusServiceContext> _Context;
-        private Timer _Timer;
-        #endregion
+        Dictionary<string, int> _CanNetworksTable;
+        List<ModbusServiceContext> _Context;
+        Timer _Timer;
 
-        #region Constructors
+        Byte _Address;
         /// <summary>
-        /// 
+        /// Сетевой адрес устройства
         /// </summary>
-        public ModbusServiceAdapter()
+        public byte Address 
         {
-            _Context = new List<ModbusServiceContext>();
-            // Создаём единственную сеть Modbus для работы
-            // сверхним уровнем
-            // Получаем настройки из файла конфигурации приложения
-            NameValueCollection settings = ConfigurationManager.AppSettings;
-            string portName = settings["PortName"];
-            int baudRate = int.Parse(settings["BaudRate"]);
-            Parity parity = (Parity)Enum.Parse(typeof(Parity), 
-                settings["Parity"]);
-            int dataBits = int.Parse(settings["DataBits"]); 
-            StopBits stopBits = (StopBits)Enum.Parse(typeof(StopBits), 
-                settings["StopBits"]);
-
-            _Connection = new ComPortSlaveMode(portName, baudRate, 
-                parity, dataBits, stopBits);
-
-            _Network = new ModbusNetworkControllerSlave("ModbusNetwork", _Connection);
-            ModbusNetworksManager.Instance.Networks.Add(_Network);
-            // Конфигурацию на основе 
-            Init(_Network);
-            // Запускаем таймер
-            _Timer = new Timer();
-            _Timer.AutoReset = true;
-            _Timer.Interval = 1000;
-            _Timer.Elapsed += new ElapsedEventHandler(EventHandler_Timer_Elapsed);
-            _Timer.Start();
+            get { return _Address; }
+            set 
+            {
+                if ((value > ModbusSlaveDevice.MaxAddress) ||
+                    (value < ModbusSlaveDevice.MinAddress))
+                {
+                    throw new ArgumentOutOfRangeException("Address", 
+                        "Попытка установить недопустимое значение севого адреса");
+                }
+                
+                _Address = value;
+            } 
         }
+
         #endregion
 
         #region Methods
-        /// <summary>
-        /// Создаёт конфигурацию сети на основе CAN-сети
-        /// </summary>
-        private void Init(ModbusNetworkControllerSlave network)
+
+        public void Start()
         {
-            network.Devices.Clear();
+            if (_Network == null)
+                throw new InvalidOperationException("Попытка запуска неинициализированного сервиса");
 
-            List<CAN.ApplicationLayer.Network.Devices.DeviceBase> canDevices =
-                new List<NGK.CAN.ApplicationLayer.Network.Devices.DeviceBase>();
-            CAN.ApplicationLayer.Network.Master.NgkCanNetworksManager canNetworkManager =
-                CAN.ApplicationLayer.Network.Master.NgkCanNetworksManager.Instance;
+            if (Status == Status.Running)
+                return;
 
-            // Создаём таблицу CAN-сетей
-            _CanNetworksTable = new Dictionary<string, int>(canNetworkManager.Networks.Count);
+            _Timer.Start();
+            OnStatusWasChanged();
+        }
 
-            foreach (CAN.ApplicationLayer.Network.Master.CanNetworkController controller
-                in canNetworkManager.Networks)
-            {
-                _CanNetworksTable.Add(controller.NetworkName,
-                    canNetworkManager.Networks.IndexOf(controller));
-            }
+        public void Stop()
+        {
+            if (Status == Status.Stopped)
+                return;
 
-            // Получаем список CAN устройств из всех сетей
-            foreach (CAN.ApplicationLayer.Network.Master.CanNetworkController controller
-                in canNetworkManager.Networks)
-            {
-                canDevices.AddRange(controller.Devices);
-            }
+            _Timer.Stop();
+            OnStatusWasChanged();
+        }
 
+        public void Suspend()
+        {
+            throw new NotSupportedException();
+        }
+
+        public void Dispose() {}
+
+        public void Initialize()
+        {
+            _Network = (ModbusNetworkControllerSlave)ModbusNetworksManager.Instance
+                .Networks[_Managers.ConfigManager.ModbusSystemInfoNetworkName];
+            _Network.Devices.Clear();
+            
             // Создаём slave-устройства и добавляем его в Modbus-сеть
-            _DeviceKCCM = CreateKCCM(1);
+            _DeviceKCCM = CreateKCCM(Address);
             _DeviceKCCM.InputRegisters[KCCM.InputRegister.SoftwareVersion].Value =
-                new NgkProductVersion(new Version(1, 0)).TotalVersion; //TODO
+                new NgkProductVersion(_Managers.SoftwareVersion).TotalVersion;
             _DeviceKCCM.InputRegisters[KCCM.InputRegister.HardwareVersion].Value =
-                new NgkProductVersion(new Version(1, 0)).TotalVersion; //TODO
+                new NgkProductVersion(_Managers.HardwareVersion).TotalVersion;
             _DeviceKCCM.InputRegisters[KCCM.InputRegister.TotalDevices].Value =
-                System.Convert.ToUInt16(canDevices.Count);
-            network.Devices.Add(_DeviceKCCM);
+                System.Convert.ToUInt16(_Managers.CanNetworkService.Devices.Count);
+            _Network.Devices.Add(_DeviceKCCM);
 
-            File mDevice;
-            ushort i = 1;
+            List<DeviceBase> allDevices = new List<DeviceBase>();
 
-            foreach (NGK.CAN.ApplicationLayer.Network.Devices.DeviceBase device in
-                canDevices)
+            _CanNetworksTable = new Dictionary<string, int>();
+
+            for(int i=0; i < NgkCanNetworksManager.Instance.Networks.Count; i++)
             {
-                switch(device.DeviceType) 
-                {
-                    case NGK.CAN.ApplicationLayer.Network.Devices.DeviceType.KIP_BATTERY_POWER_v1:
-                        {
-                            mDevice = CreateKIP01(); // Создаём пустое устройство нужного типа
-                            // Инициализируем его 
-                            mDevice.Number = i++;
-                            mDevice.Records[KIP9811AddressSpaceHelper.VisitingCard.HardwareVersion].Value =
-                                ((NgkProductVersion)device.GetObject(KIP9811v1.Indexes.hw_version)).TotalVersion;
-                            mDevice.Records[KIP9811AddressSpaceHelper.VisitingCard.SoftwareVersion].Value = 
-                                ((NgkProductVersion)device.GetObject(KIP9811v1.Indexes.fw_version)).TotalVersion;
-                            mDevice.Records[KIP9811AddressSpaceHelper.VisitingCard.SerialNumberHigh].Value = 
-                                System.Convert.ToUInt16(device.GetObject(KIP9811v1.Indexes.serial_number1));
-                            mDevice.Records[KIP9811AddressSpaceHelper.VisitingCard.SerialNumberMiddle].Value =
-                                System.Convert.ToUInt16(device.GetObject(KIP9811v1.Indexes.serial_number2));
-                            mDevice.Records[KIP9811AddressSpaceHelper.VisitingCard.SerialNumberLow].Value =
-                                System.Convert.ToUInt16(device.GetObject(KIP9811v1.Indexes.serial_number3));
-                            mDevice.Records[KIP9811AddressSpaceHelper.VisitingCard.CRC16].Value = 0; //TODO (сделать рассчёт CRC16)
-                            mDevice.Records[KIP9811AddressSpaceHelper.ServiceInformation.NetworkNumber].Value = 
-                                System.Convert.ToUInt16(_CanNetworksTable[device.Network.NetworkName]);
-                            mDevice.Records[KIP9811AddressSpaceHelper.ServiceInformation.NetwrokAddress].Value =
-                                System.Convert.ToUInt16(device.NodeId);
-                            mDevice.Records[KIP9811AddressSpaceHelper.ServiceInformation.ConectionStatus].Value = 0; // 0-норма 1-ошибка
-                            break;
-                        }
-                    case NGK.CAN.ApplicationLayer.Network.Devices.DeviceType.KIP_MAIN_POWERED_v1:
-                        {
-                            throw new NotImplementedException();
-                        }
-                    default:
-                        {
-                            throw new NotSupportedException();
-                        }
-                }
+                allDevices.AddRange(NgkCanNetworksManager.Instance.Networks[i].Devices);
+                _CanNetworksTable.Add(NgkCanNetworksManager.Instance.Networks[i].NetworkName, i + 1);
+            }
+
+            _Context = new List<ModbusServiceContext>(allDevices.Count);
+
+            ushort number = 0;
+            File modbusDevice;
+
+            foreach (DeviceBase device in allDevices)
+            {
+                modbusDevice = CreateDevice(device, ++number);
                 // Добавляем устройство
-                _DeviceKCCM.Files.Add(mDevice);
+                _DeviceKCCM.Files.Add(modbusDevice);
                 // Создаём для него контекст для данного устройства
-                _Context.Add(new ModbusServiceContext(device, mDevice));
+                _Context.Add(new ModbusServiceContext(device, modbusDevice)); 
             }
         }
         /// <summary>
@@ -190,7 +200,7 @@ namespace NGK.CorrosionMonitoringSystem.DL
         /// </summary>
         /// <param name="address">Сетевой адрес устройства</param>
         /// <returns></returns>
-        private ModbusSlaveDevice CreateKCCM(Byte address)
+        ModbusSlaveDevice CreateKCCM(Byte address)
         {
             ModbusSlaveDevice device = new ModbusSlaveDevice(address);
 
@@ -218,10 +228,57 @@ namespace NGK.CorrosionMonitoringSystem.DL
             return device;
         }
         /// <summary>
+        /// Создаём modbus устройство
+        /// </summary>
+        /// <param name="device"></param>
+        /// <returns></returns>
+        File CreateDevice(DeviceBase device, ushort fileNumber)
+        {
+            File modbusDevice;
+
+            switch (device.DeviceType)
+            {
+                case NGK.CAN.ApplicationLayer.Network.Devices.DeviceType.KIP_BATTERY_POWER_v1:
+                    {
+                        modbusDevice = CreateKIP01();
+                        ICanDeviceProfile profile = CanDevicePrototype.GetProfile(device.DeviceType);
+
+                        // Инициализируем
+                        modbusDevice.Number = fileNumber;
+                        modbusDevice.Records[KIP9811AddressSpaceHelper.VisitingCard.HardwareVersion].Value =
+                            (new NgkProductVersion(profile.HardwareVersion)).TotalVersion;
+                        modbusDevice.Records[KIP9811AddressSpaceHelper.VisitingCard.SoftwareVersion].Value =
+                            (new NgkProductVersion(profile.SoftwareVersion)).TotalVersion;
+                        modbusDevice.Records[KIP9811AddressSpaceHelper.VisitingCard.SerialNumberHigh].Value =
+                            System.Convert.ToUInt16(device.GetObject(KIP9811v1.Indexes.serial_number1));
+                        modbusDevice.Records[KIP9811AddressSpaceHelper.VisitingCard.SerialNumberMiddle].Value =
+                            System.Convert.ToUInt16(device.GetObject(KIP9811v1.Indexes.serial_number2));
+                        modbusDevice.Records[KIP9811AddressSpaceHelper.VisitingCard.SerialNumberLow].Value =
+                            System.Convert.ToUInt16(device.GetObject(KIP9811v1.Indexes.serial_number3));
+                        modbusDevice.Records[KIP9811AddressSpaceHelper.VisitingCard.CRC16].Value = 0; //TODO (сделать рассчёт CRC16)
+                        modbusDevice.Records[KIP9811AddressSpaceHelper.ServiceInformation.NetworkNumber].Value =
+                            System.Convert.ToUInt16(_CanNetworksTable[device.Network.NetworkName]);
+                        modbusDevice.Records[KIP9811AddressSpaceHelper.ServiceInformation.NetwrokAddress].Value =
+                            System.Convert.ToUInt16(device.NodeId);
+                        modbusDevice.Records[KIP9811AddressSpaceHelper.ServiceInformation.ConectionStatus].Value = 0; // 0-норма 1-ошибка
+                        break;
+                    }
+                case NGK.CAN.ApplicationLayer.Network.Devices.DeviceType.KIP_MAIN_POWERED_v1:
+                    {
+                        throw new NotImplementedException();
+                    }
+                default:
+                    {
+                        throw new NotSupportedException();
+                    }
+            }
+            return modbusDevice;
+        }
+        /// <summary>
         /// Создаёт modbus-файл устройства КИП БИ(У)-00 
         /// </summary>
         /// <returns>Modbus файл</returns>
-        private File CreateKIP00()
+        File CreateKIP00()
         {
             File file = new File();
 
@@ -252,7 +309,7 @@ namespace NGK.CorrosionMonitoringSystem.DL
             file.Records.Add(new Record(0x0005, 0, "Серийный номер: Low"));
             file.Records.Add(new Record(0x0006, 0, "CRC16"));
             file.Records.Add(new Record(0x0007, 0, "Код производителя"));
-            
+
             // Добавляем данные специфичные для объектов словаря CAN устройства
             file.Records.Add(new Record(0x000C, 0, "Регистр ошибок"));
             file.Records.Add(new Record(0x000D, 0, "Регистр ошибок регистрации"));
@@ -304,7 +361,7 @@ namespace NGK.CorrosionMonitoringSystem.DL
         /// Создаёт modbus-файл устройства КИП БИ(У)-01 
         /// </summary>
         /// <returns>Modbus файл</returns>
-        private File CreateKIP01() 
+        File CreateKIP01()
         {
             File file = new File();
 
@@ -317,7 +374,7 @@ namespace NGK.CorrosionMonitoringSystem.DL
             file.Records.Add(new Record(0x0005, 0, "Серийный номер: Low"));
             file.Records.Add(new Record(0x0006, 0, "CRC16"));
             file.Records.Add(new Record(0x0007, 0, "Код производителя"));
-            
+
             // Добавляем служебную информацию 
 
             //(2 - Устройство Сети CAN)
@@ -326,7 +383,7 @@ namespace NGK.CorrosionMonitoringSystem.DL
             file.Records.Add(new Record(0x0009, 0, "Номер сети"));
             file.Records.Add(new Record(0x000A, 1, "Сетевой адрес"));
             file.Records.Add(new Record(0x000B, 1, "Наличие связи с устройством"));
-            
+
             // Добавляем данные специфичные для объектов словаря CAN устройства
 
             file.Records.Add(new Record(0x000C, 0, "Регистр ошибок"));
@@ -381,15 +438,14 @@ namespace NGK.CorrosionMonitoringSystem.DL
         /// </summary>
         /// <param name="modbusDevice"></param>
         /// <param name="canDevice"></param>
-        private static void UdateDevice(
-            File modbusDevice, NGK.CAN.ApplicationLayer.Network.Devices.DeviceBase canDevice)
+        private static void UdateDevice(File modbusDevice, DeviceBase canDevice)
         {
-            NGK.CAN.ApplicationLayer.Network.Devices.DeviceType type =
-                (NGK.CAN.ApplicationLayer.Network.Devices.DeviceType)modbusDevice.Records[
-                ModbusVisitingCard.VisitingCard.DeviceType].Value;
+            DeviceType type =
+                (DeviceType)modbusDevice.Records[
+                KIP9811AddressSpaceHelper.VisitingCard.DeviceType].Value;
             switch (type)
             {
-                case NGK.CAN.ApplicationLayer.Network.Devices.DeviceType.KIP_BATTERY_POWER_v1:
+                case DeviceType.KIP_BATTERY_POWER_v1:
                     {
                         RemappingTableKip9811.Copy(modbusDevice, canDevice);
                         break;
@@ -397,24 +453,21 @@ namespace NGK.CorrosionMonitoringSystem.DL
                 default: { throw new NotSupportedException(); }
             }
         }
-        /// <summary>
-        /// Выполняется в отдельном потоке. Обновляет модбус-устройства данными из
-        /// СAN-устройства
-        /// </summary>
-        private void DoWork()
-        { 
-        }
-        /// <summary>
-        /// Обработчик срабатываения таймера
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void EventHandler_Timer_Elapsed(object sender, ElapsedEventArgs e)
+        void OnStatusWasChanged()
         {
-            NGK.CAN.ApplicationLayer.Network.Devices.DeviceBase device;
+            if (StatusWasChanged != null)
+                StatusWasChanged(this, new EventArgs());
+        }
+
+        #endregion
+
+        #region Event Handlers
+
+        void EventHandler_Timer_Elapsed(object sender, ElapsedEventArgs e)
+        {
+            DeviceBase device;
             File modbusDevice;
-            NGK.CAN.ApplicationLayer.Network.Master.NgkCanNetworksManager manager =
-                NGK.CAN.ApplicationLayer.Network.Master.NgkCanNetworksManager.Instance;
+            NgkCanNetworksManager manager = NgkCanNetworksManager.Instance;
 
             // Обновляем все устройства
             foreach (ModbusServiceContext context in _Context)
@@ -429,20 +482,13 @@ namespace NGK.CorrosionMonitoringSystem.DL
                 UdateDevice(modbusDevice, device);
             }
         }
-        /// <summary>
-        /// Запускает работу сети и устройства КССМУ
-        /// </summary>
-        public void Start()
-        {
-            // Запускает в работу
-            _Network.Start();
-            _DeviceKCCM.Start();
-        }
-        public void Stop()
-        {
-            // Останавливаем в работу
-            _Network.Stop();
-        }
+
+        #endregion
+
+        #region Events
+
+        public event EventHandler StatusWasChanged;
+
         #endregion
     }
 }

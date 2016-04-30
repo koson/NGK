@@ -25,7 +25,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Master
     /// Контроллер управления сетью CAN НГК-ЭХЗ
     /// </summary>
     [Serializable]
-    public sealed class NetworkController : INetworkController, ISerializable
+    public sealed class CanNetworkController : ICanNetworkController, ISerializable
     {
         #region Fields And Properties
         //private static Logger _Logger = NLog.LogManager.GetLogger("NetworkLogger");
@@ -82,16 +82,16 @@ namespace NGK.CAN.ApplicationLayer.Network.Master
         /// Описание сети
         /// </summary>
         [NonSerialized]
-        private String _Description;
+        private String _NetworkName;
         /// <summary>
         /// Описание сети
         /// </summary>
         public String NetworkName
         {
-            get { return _Description; }
+            get { return _NetworkName; }
             set 
             {
-                _Description = String.IsNullOrEmpty(value) ?
+                _NetworkName = String.IsNullOrEmpty(value) ?
                     String.Empty : value;
             }
         }
@@ -275,7 +275,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Master
         /// <summary>
         /// Конструктор по умолчанию
         /// </summary>
-        public NetworkController()
+        public CanNetworkController()
         {
             _Status = Status.Stopped;
             // По умолчанию физического уровня нет.
@@ -287,7 +287,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Master
                 _NetworkId = CreateNetwrokId();
             }
 
-            _Description = String.Format("CanNetworkController{0}", _NetworkId);
+            _NetworkName = String.Format("CanNetworkController{0}", _NetworkId);
 
             DeviceChangedData = 
                 new EventHandler(EventHandlerDeviceChangedValue);
@@ -308,11 +308,11 @@ namespace NGK.CAN.ApplicationLayer.Network.Master
         /// </summary>
         /// <param name="port">CAN-порт</param>
         /// <param name="NetworkId">Наименование сети</param>
-        public NetworkController(ICanPort port, UInt32 networkId)
+        public CanNetworkController(ICanPort port, UInt32 networkId)
         {
             _Status = Status.Stopped;
             NetworkId = networkId;
-            _Description = String.Format("CanNetworkController{0}", NetworkId);
+            _NetworkName = String.Format("CanNetworkController{0}", NetworkId);
             
             this._CanPort = port;
 
@@ -351,13 +351,13 @@ namespace NGK.CAN.ApplicationLayer.Network.Master
         /// </summary>
         /// <param name="info"></param>
         /// <param name="context"></param>
-        private NetworkController(SerializationInfo info, StreamingContext context)
+        private CanNetworkController(SerializationInfo info, StreamingContext context)
         {
             DeviceBase device;
 
             // Восстанавливаем сохранённые параметры
             _NetworkId = info.GetUInt32("NetworkId");
-            _Description = info.GetString("Description");
+            _NetworkName = info.GetString("NetworkName");
             _CanPort = (ICanPort)info.GetValue("CanPort", typeof(ICanPort));
             if (_CanPort != null)
             {
@@ -403,7 +403,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Master
         /// <summary>
         /// Деструктор класса.
         /// </summary>
-        ~NetworkController()
+        ~CanNetworkController()
         {
             Dispose();
         }
@@ -612,7 +612,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Master
                         _ThreadMsgSender = new Thread(SendOutcomingMessagesToCanPort);
                         _ThreadMsgSender.IsBackground = true;
                         _ThreadMsgSender.Name = String.Format(
-                            "Controller_{0}_MessageSender", _Description);
+                            "Controller_{0}_MessageSender", _NetworkName);
                     }
 
                     // Устанавливаем статус
@@ -714,7 +714,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Master
                     _ThreadMsgSender = null;
                     msg = String.Format(
                         "Network {0}: Stop() - Поток для обработки очереди исходящих " +
-                        "сообщений не смог завершиться за заданное время", _Description);
+                        "сообщений не смог завершиться за заданное время", _NetworkName);
                     //Logger.Warn(msg);
                 }
 
@@ -855,7 +855,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Master
                 (_CanPort.PortStatus != CanPortStatus.IsActive))
             {
                 msg = String.Format(
-                    "Network {0}: NetworkController не запущен - CAN-порт статус {1}", this._Description, 
+                    "Network {0}: NetworkController не запущен - CAN-порт статус {1}", this._NetworkName, 
                     _CanPort == null ? "nullreference" : _CanPort.PortStatus.ToString());
                 throw new InvalidOperationException(msg);  
             }
@@ -917,7 +917,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Master
             if ((_CanPort == null) || (_CanPort.PortStatus != CanPortStatus.IsActive))
             {
                 msg = String.Format(
-                    "Network {0}: NetworkController не запущен - CAN-порт статус {1}", this._Description,
+                    "Network {0}: NetworkController не запущен - CAN-порт статус {1}", this._NetworkName,
                     _CanPort == null ? "nullreference" : _CanPort.PortStatus.ToString());
                 throw new InvalidOperationException(msg);
             }
@@ -963,7 +963,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Master
         {
             // Возвращаем наименование сети
             return String.Format("Type={0}; NetworkName={1}; PortName={2}", 
-                "Master", _Description, 
+                "Master", _NetworkName, 
                 _CanPort == null ? "None": _CanPort.PortName);
             //return base.ToString();
         }
@@ -1010,7 +1010,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Master
         void ISerializable.GetObjectData(SerializationInfo info, StreamingContext context)
         {
             info.AddValue("NetworkId", _NetworkId);
-            info.AddValue("Description", _Description);
+            info.AddValue("NetworkName", _NetworkName);
             info.AddValue("TotalAttempts", _TotalAttempts);
             info.AddValue("CanPort", _CanPort);
             //info.AddValue("Devices", _DevicesList);

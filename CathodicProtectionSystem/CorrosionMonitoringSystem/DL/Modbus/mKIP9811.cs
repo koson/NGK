@@ -82,16 +82,16 @@ namespace NGK.CorrosionMonitoringSystem.DL.Modbus
         /// </summary>
         public UInt16 CRC16
         {
-            get { return _Device.Records[KIP9811Address.VisitingCard.CRC16].Value; }
-            set { _Device.Records[KIP9811Address.VisitingCard.CRC16].Value = value; }
+            get { return _Device.Records[KIP9811AddressSpaceHelper.VisitingCard.CRC16].Value; }
+            set { _Device.Records[KIP9811AddressSpaceHelper.VisitingCard.CRC16].Value = value; }
         }
         /// <summary>
         /// 0x0007
         /// </summary>
         public UInt16 VendorCode
         {
-            get { return _Device.Records[KIP9811Address.VisitingCard.VendorCode].Value; }
-            set { _Device.Records[KIP9811Address.VisitingCard.VendorCode].Value = value; }
+            get { return _Device.Records[KIP9811AddressSpaceHelper.VisitingCard.VendorCode].Value; }
+            set { _Device.Records[KIP9811AddressSpaceHelper.VisitingCard.VendorCode].Value = value; }
         }
         /// <summary>
         /// 0x0008
@@ -101,29 +101,29 @@ namespace NGK.CorrosionMonitoringSystem.DL.Modbus
             get 
             { 
                 if (Enum.IsDefined(typeof(ConnectionType), 
-                    _Device.Records[KIP9811Address.ServiceInformation.NetworkType].Value))
+                    _Device.Records[KIP9811AddressSpaceHelper.ServiceInformation.NetworkType].Value))
                 {
-                    return (ConnectionType)_Device.Records[KIP9811Address.ServiceInformation.NetworkType].Value;
+                    return (ConnectionType)_Device.Records[KIP9811AddressSpaceHelper.ServiceInformation.NetworkType].Value;
                 }
                 throw new InvalidCastException();
             }
-            set { _Device.Records[KIP9811Address.VisitingCard.VendorCode].Value = (UInt16)value; } 
+            set { _Device.Records[KIP9811AddressSpaceHelper.VisitingCard.VendorCode].Value = (UInt16)value; } 
         }
         /// <summary>
         /// 0x0009
         /// </summary>
         public UInt16 NetworkNumber
         {
-            get { return _Device.Records[KIP9811Address.ServiceInformation.NetworkNumber].Value; }
-            set { _Device.Records[KIP9811Address.ServiceInformation.NetworkNumber].Value = value; }
+            get { return _Device.Records[KIP9811AddressSpaceHelper.ServiceInformation.NetworkNumber].Value; }
+            set { _Device.Records[KIP9811AddressSpaceHelper.ServiceInformation.NetworkNumber].Value = value; }
         }
         /// <summary>
         /// 0x000A
         /// </summary>
         public UInt16 NetworkAddress
         {
-            get { return _Device.Records[KIP9811Address.ServiceInformation.NetwrokAddress].Value; }
-            set { _Device.Records[KIP9811Address.ServiceInformation.NetwrokAddress].Value = value; }
+            get { return _Device.Records[KIP9811AddressSpaceHelper.ServiceInformation.NetwrokAddress].Value; }
+            set { _Device.Records[KIP9811AddressSpaceHelper.ServiceInformation.NetwrokAddress].Value = value; }
         }
         /// <summary>
         /// 0x000B
@@ -132,7 +132,7 @@ namespace NGK.CorrosionMonitoringSystem.DL.Modbus
         {
             get
             {
-                return mKIP9811.ToBoolean(_Device.Records[KIP9811Address.ServiceInformation.ConectionStatus].Value);
+                return mKIP9811.ToBoolean(_Device.Records[KIP9811AddressSpaceHelper.ServiceInformation.ConectionStatus].Value);
             }
             set 
             {
@@ -143,7 +143,7 @@ namespace NGK.CorrosionMonitoringSystem.DL.Modbus
                     boolCode = 1;
                 }
                 
-                _Device.Records[KIP9811Address.ServiceInformation.ConectionStatus].Value = boolCode;
+                _Device.Records[KIP9811AddressSpaceHelper.ServiceInformation.ConectionStatus].Value = boolCode;
             }
         }
         /// <summary>
@@ -151,16 +151,16 @@ namespace NGK.CorrosionMonitoringSystem.DL.Modbus
         /// </summary>        
         public UInt16 ErrorsRegister
         {
-            get { return _Device.Records[KIP9811Address.Errors].Value; }
-            set { _Device.Records[KIP9811Address.Errors].Value = value; }
+            get { return _Device.Records[KIP9811AddressSpaceHelper.Errors].Value; }
+            set { _Device.Records[KIP9811AddressSpaceHelper.Errors].Value = value; }
         }
         /// <summary>
         /// 0x000D
         /// </summary>
         public UInt16 RegistrationErrorsRegister
         {
-            get { return _Device.Records[KIP9811Address.ErrorsRegistration].Value; }
-            set { _Device.Records[KIP9811Address.ErrorsRegistration].Value = value; }
+            get { return _Device.Records[KIP9811AddressSpaceHelper.ErrorsRegistration].Value; }
+            set { _Device.Records[KIP9811AddressSpaceHelper.ErrorsRegistration].Value = value; }
         }
         /// <summary>
         /// 0x000E
@@ -169,15 +169,15 @@ namespace NGK.CorrosionMonitoringSystem.DL.Modbus
         {
             get
             {
-                if (Enum.IsDefined(typeof(DeviceStatus), _Device.Records[KIP9811Address.DeviceStatus].Value))
+                if (Enum.IsDefined(typeof(DeviceStatus), _Device.Records[KIP9811AddressSpaceHelper.DeviceStatus].Value))
                 {
-                    return (DeviceStatus)_Device.Records[KIP9811Address.DeviceStatus].Value;
+                    return (DeviceStatus)_Device.Records[KIP9811AddressSpaceHelper.DeviceStatus].Value;
                 }
                 throw new InvalidCastException();
             }
             set
             {
-                _Device.Records[KIP9811Address.DeviceStatus].Value = (UInt16)value;
+                _Device.Records[KIP9811AddressSpaceHelper.DeviceStatus].Value = (UInt16)value;
             }
         }
         /// <summary>
@@ -187,14 +187,14 @@ namespace NGK.CorrosionMonitoringSystem.DL.Modbus
         {
             get 
             {
-                UInt32 time = (UInt32)_Device.Records[KIP9811Address.datetime_low].Value;
-                time |= (((UInt32)_Device.Records[KIP9811Address.datetime_high].Value) << 16);
+                UInt32 time = (UInt32)_Device.Records[KIP9811AddressSpaceHelper.datetime_low].Value;
+                time |= (((UInt32)_Device.Records[KIP9811AddressSpaceHelper.datetime_high].Value) << 16);
                 return time;
             }
             set
             {
-                _Device.Records[KIP9811Address.datetime_low].Value = (UInt16)value;
-                _Device.Records[KIP9811Address.datetime_high].Value = (UInt16)(value >> 16);
+                _Device.Records[KIP9811AddressSpaceHelper.datetime_low].Value = (UInt16)value;
+                _Device.Records[KIP9811AddressSpaceHelper.datetime_high].Value = (UInt16)(value >> 16);
             }
         }
         #endregion
@@ -210,11 +210,11 @@ namespace NGK.CorrosionMonitoringSystem.DL.Modbus
         /// <param name="device"></param>
         public mKIP9811(File device)
         {
-            if (device.Records[KIP9811Address.VisitingCard.DeviceType].Value != 
+            if (device.Records[KIP9811AddressSpaceHelper.VisitingCard.DeviceType].Value != 
                 (UInt16)NGK.CAN.ApplicationLayer.Network.Devices.DeviceType.KIP_BATTERY_POWER_v1)
             {
                 throw new Exception(String.Format("Недопустимый тип устройства: {0}",
-                    device.Records[KIP9811Address.VisitingCard.DeviceType].Value));
+                    device.Records[KIP9811AddressSpaceHelper.VisitingCard.DeviceType].Value));
             }
 
             _Device = device;

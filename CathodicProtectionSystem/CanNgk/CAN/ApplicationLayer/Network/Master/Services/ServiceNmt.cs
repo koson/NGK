@@ -56,7 +56,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Master.Services
         /// Конструктор
         /// </summary>
         /// <param name="controller">Контроллер сети</param>
-        public ServiceNmt(INetworkController controller)
+        public ServiceNmt(ICanNetworkController controller)
             : base(controller)
         {
             //Инициализируем контексты устройств

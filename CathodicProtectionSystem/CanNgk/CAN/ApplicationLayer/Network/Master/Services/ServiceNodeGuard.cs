@@ -217,7 +217,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Master.Services
         /// Конструктор
         /// </summary>
         /// <param name="controller">Контроллер сети</param>
-        public ServiceNodeGuard(INetworkController controller)
+        public ServiceNodeGuard(ICanNetworkController controller)
             : base(controller)
         {
             _Context = new Context(_NetworkController.Devices.ToArray());

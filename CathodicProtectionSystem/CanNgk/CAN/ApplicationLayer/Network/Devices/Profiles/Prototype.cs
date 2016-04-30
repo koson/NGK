@@ -8,7 +8,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices.Profiles
     /// <summary>
     /// 
     /// </summary>
-    public abstract class Prototype : IProfile
+    public abstract class CanDevicePrototype : ICanDeviceProfile
     {
         #region Fields And Properties
 
@@ -33,7 +33,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices.Profiles
 
         #region Constructors
 
-        public Prototype()
+        public CanDevicePrototype()
         {
             CreateObjectDictionary();
         }
@@ -48,7 +48,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices.Profiles
         /// </summary>
         /// <param name="type">Тип устройства</param>
         /// <returns>Профиль устройства</returns>
-        public static IProfile GetProfile(DeviceType type)
+        public static ICanDeviceProfile GetProfile(DeviceType type)
         {
             string msg;
 

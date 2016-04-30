@@ -22,7 +22,7 @@ namespace Test.ControllerTest
             port.FrameFormat = FrameFormat.StandardFrame;
             port.Mode = PortMode.NORMAL;
 
-            NetworkController controller = new NetworkController(port, 1);
+            CanNetworkController controller = new CanNetworkController(port, 1);
             controller.Devices.Add(DeviceBase.Create(DeviceType.KIP_MAIN_POWERED_v1));
             controller.Start();
             return;
@@ -35,7 +35,7 @@ namespace Test.ControllerTest
             port.FrameFormat = FrameFormat.StandardFrame;
             port.Mode = PortMode.NORMAL;
 
-            NetworkController controller = new NetworkController(port, 1);
+            CanNetworkController controller = new CanNetworkController(port, 1);
             controller.Devices.Add(DeviceBase.Create(DeviceType.KIP_MAIN_POWERED_v1));
 
             NetworkControllersCollection collection = new NetworkControllersCollection();

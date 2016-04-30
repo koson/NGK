@@ -45,6 +45,6 @@ namespace NGK.CorrosionMonitoringSystem.Managers
         /// Сервис для работы с Modbus-сетью 
         /// (режим Slave: для поддержики систем верхнего уровня )
         /// </summary>
-        IModbusSystemInformationNetworkService ModbusSystemInfoNetworkService { get; }
+        ISystemInformationModbusNetworkService ModbusSystemInfoNetworkService { get; }
     }
 }

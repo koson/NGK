@@ -7,10 +7,8 @@ using NGK.CAN.ApplicationLayer.Network.Devices.ObjectDictionary;
 using NGK.CAN.ApplicationLayer.Network.Devices.ObjectDictionary.Collections;
 using NGK.CAN.ApplicationLayer.Network.Master;
 
-//========================================================================================
 namespace NGK.CAN.ApplicationLayer.Network.Devices
 {
-    //====================================================================================
     /// <summary>
     /// Интерфейс реализует функционал для работы с устройством со стороны
     /// пользователя (отображение параметров на форме и т.п.).
@@ -111,7 +109,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices
         [Category("Сетевые настройки")]
         [DisplayName("Сеть CAN НГК-ЭХЗ")]
         [Description("Сеть, которой принадлежит данное устройство")]
-        INetworkController Network
+        ICanNetworkController Network
         {
             get;
             set; 
@@ -162,7 +160,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices
         /// <summary>
         /// Профиль устройства
         /// </summary>
-        IProfile Profile{ get; }
+        ICanDeviceProfile Profile{ get; }
 
         /// <summary>
         /// Уникальный идентификатор объекта

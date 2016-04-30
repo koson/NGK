@@ -131,7 +131,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Master.Services
         /// Конструктор
         /// </summary>
         /// <param name="controller"></param>
-        public ServiceBootUp(INetworkController controller)
+        public ServiceBootUp(ICanNetworkController controller)
             : base(controller)
         { 
         }

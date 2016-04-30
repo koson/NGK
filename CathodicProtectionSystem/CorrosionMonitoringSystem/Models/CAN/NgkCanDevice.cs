@@ -232,7 +232,7 @@ namespace NGK.CorrosionMonitoringSystem.Models
                         }
 
                         parameter.Modified = modified;
-                        parameter.Value = Prototype.GetProfile(device.DeviceType)
+                        parameter.Value = CanDevicePrototype.GetProfile(device.DeviceType)
                             .ComplexParameters[parameter.Name].Converter.ConvertTo(values.ToArray());
                     }
                     else
@@ -303,7 +303,7 @@ namespace NGK.CorrosionMonitoringSystem.Models
                         }
 
                         parameter.Modified = modified;
-                        parameter.Value = Prototype.GetProfile(device.DeviceType)
+                        parameter.Value = CanDevicePrototype.GetProfile(device.DeviceType)
                             .ComplexParameters[parameter.Name].Converter.ConvertTo(values.ToArray());
                     }
                     else

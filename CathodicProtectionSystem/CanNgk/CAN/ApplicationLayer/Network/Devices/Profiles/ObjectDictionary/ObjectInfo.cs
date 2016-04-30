@@ -12,7 +12,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices.Profiles.ObjectDictionary
     {
         #region Constructors
 
-        public ObjectInfo(IProfile deviceProfile, UInt16 index, string name, string description,
+        public ObjectInfo(ICanDeviceProfile deviceProfile, UInt16 index, string name, string description,
             bool readOnly, bool sdoCanRead, bool visible, string displayName,
             string measureUnit, ObjectCategory category, ICanDataTypeConvertor convertor,
             UInt32 defaultValue)
@@ -32,7 +32,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices.Profiles.ObjectDictionary
             ComplexParameterName = null;
         }
 
-        public ObjectInfo(IProfile deviceProfile, UInt16 index, string name, string description,
+        public ObjectInfo(ICanDeviceProfile deviceProfile, UInt16 index, string name, string description,
             bool readOnly, bool sdoCanRead, bool visible, string displayName,
             string measureUnit, ObjectCategory category, ICanDataTypeConvertor convertor,
             UInt32 defaultValue, String complexParameterName)
@@ -113,7 +113,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices.Profiles.ObjectDictionary
             get { return ComplexParameterName != null; }
         }
 
-        public readonly IProfile DeviceProfile;
+        public readonly ICanDeviceProfile DeviceProfile;
 
         #endregion
     }

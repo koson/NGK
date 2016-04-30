@@ -15,7 +15,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
     /// Класс для реализации Slave - устройства сети modbus
     /// </summary>
     [Serializable]
-    public class Device: INetworkFunctions, IManageable
+    public class ModbusSlaveDevice: INetworkFunctions, IManageable
     {
         /// <summary>
         /// Структура подзапроса или группы читаемых регистров из файла в запросе
@@ -28,7 +28,23 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
             public UInt16 RecordNumber;
             public UInt16 RecordLength;
         }
+
+        #region Constants        
+        #endregion 
+
         #region Fields and Properties
+        /// <summary>
+        /// Максимальный адрес подчиненного устройства
+        /// </summary>
+        public static byte MaxAddress { get { return 247; } }
+        /// <summary>
+        /// Минимальный адрес подчинённого устройства
+        /// </summary>
+        public static byte MinAddress { get { return 1; } }
+        /// <summary>
+        /// Адресс для широковещательного запроса
+        /// </summary>
+        public static byte BroadcastAddress { get { return 0; } }
         /// <summary>
         /// Сетевой адрес устройства
         /// </summary>
@@ -41,7 +57,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
             get { return _Address; }
             set 
             {
-                if ((value == 0) || (value > 247))
+                if ((value < MinAddress) || (value > MaxAddress))
                 {
                     throw new ArgumentOutOfRangeException("Address",
                         "Попытка установить запрещённое значение сетевого адреса устройства. " +
@@ -174,11 +190,12 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
             }
         }
         #endregion
+
         #region Constructors
         /// <summary>
         /// Конструктор
         /// </summary>
-        public Device()
+        public ModbusSlaveDevice()
         {
             _Status = Status.Stopped;
             Address = 1;
@@ -209,7 +226,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
         /// Конструктор
         /// </summary>
         /// <param name="address">Сетевой адрес устройсва</param>
-        public Device(Byte address)
+        public ModbusSlaveDevice(Byte address)
         {
             _Status = Status.Stopped;
             Address = address;
@@ -237,6 +254,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
                 new EventHandler(EventHandler_Files_ListWasChanged);
         }
         #endregion
+
         #region Methods
         /// <summary>
         /// Запускает устройство. Устанавливает активный статус устройству. 
@@ -1814,6 +1832,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
         }
         //---------------------------------------------------------------------------
         #endregion
+
         #region IManageable Members
         //---------------------------------------------------------------------------
         void IManageable.Start()

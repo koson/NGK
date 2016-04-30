@@ -270,7 +270,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.Dialogs
             column.HeaderText = "Владелец";
             column.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
             column.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            column.ValueType = typeof(Device);
+            column.ValueType = typeof(ModbusSlaveDevice);
             column.Visible = true;
             column.ReadOnly = true;
             _DataGridViewHoldingRegisters.Columns.Add(column);
@@ -352,7 +352,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.Dialogs
             column.HeaderText = "Владелец";
             column.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
             column.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            column.ValueType = typeof(Device);
+            column.ValueType = typeof(ModbusSlaveDevice);
             column.Visible = true;
             column.ReadOnly = true;
             _DataGridViewInputRegisters.Columns.Add(column);
@@ -434,7 +434,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.Dialogs
             column.DataPropertyName = "Device";
             column.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
             column.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            column.ValueType = typeof(Device);
+            column.ValueType = typeof(ModbusSlaveDevice);
             column.Visible = true;
             column.ReadOnly = true;
             _DataGridViewCoils.Columns.Add(column);
@@ -516,7 +516,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.Dialogs
             column.HeaderText = "Владелец";
             column.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
             column.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            column.ValueType = typeof(Device);
+            column.ValueType = typeof(ModbusSlaveDevice);
             column.Visible = true;
             column.ReadOnly = true;
             _DataGridViewDiscretesInputs.Columns.Add(column);
@@ -582,7 +582,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.Dialogs
             column.HeaderText = "Владелец";
             column.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
             column.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            column.ValueType = typeof(Device);
+            column.ValueType = typeof(ModbusSlaveDevice);
             column.Visible = true;
             column.ReadOnly = true;
             _DataGridViewFiles.Columns.Add(column);
@@ -662,7 +662,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.Dialogs
             column.DataPropertyName = "Device";
             column.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
             column.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            column.ValueType = typeof(Device);
+            column.ValueType = typeof(ModbusSlaveDevice);
             column.Visible = true;
             column.ReadOnly = true;
             _DataGridViewRecords.Columns.Add(column);
@@ -1345,14 +1345,14 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.Dialogs
         private void AddDevice()
         {
             Byte address;
-            Device device;
+            ModbusSlaveDevice device;
             
             // Находим свобоный адрес и добавляем устройство с этим адресом 
             for (address = 1; address < 248; address++)
 			{
                 if (!_Network.Devices.Contains(address))
                 {
-                    device = new Device(address);
+                    device = new ModbusSlaveDevice(address);
                     _BindingSourceDevicesList.Add(device);
 
                     if (_BindingSourceDevicesList.Count > 0)
@@ -1391,10 +1391,10 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.Dialogs
         private void AddHoldingRegister()
         {
             UInt16 address;
-            Device device;
+            ModbusSlaveDevice device;
             HoldingRegister register;
 
-            device = (Device)_BindingSourceDevicesList.Current;
+            device = (ModbusSlaveDevice)_BindingSourceDevicesList.Current;
 
             for (address = 0; address <= UInt16.MaxValue; address++)
             {
@@ -1425,13 +1425,13 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.Dialogs
         {
             CurrencyManager manager;
             HoldingRegister register;
-            Device device;
+            ModbusSlaveDevice device;
 
             manager = _DataGridViewHoldingRegisters.BindingContext[
                 _DataGridViewHoldingRegisters.DataSource, 
                 _DataGridViewHoldingRegisters.DataMember] as CurrencyManager;
             register = (HoldingRegister)manager.Current;
-            device = (Device)_BindingSourceDevicesList.Current;
+            device = (ModbusSlaveDevice)_BindingSourceDevicesList.Current;
             device.HoldingRegisters.Remove(register);
             _BindingSourceDevicesList.ResetCurrentItem();
 
@@ -1446,10 +1446,10 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.Dialogs
         private void AddInputRegister()
         {
             UInt16 address;
-            Device device;
+            ModbusSlaveDevice device;
             InputRegister register;
 
-            device = (Device)_BindingSourceDevicesList.Current;
+            device = (ModbusSlaveDevice)_BindingSourceDevicesList.Current;
 
             for (address = 0; address <= UInt16.MaxValue; address++)
             {
@@ -1478,13 +1478,13 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.Dialogs
         {
             CurrencyManager manager;
             InputRegister register;
-            Device device;
+            ModbusSlaveDevice device;
 
             manager = _DataGridViewInputRegisters.BindingContext[
                 _DataGridViewInputRegisters.DataSource,
                 _DataGridViewInputRegisters.DataMember] as CurrencyManager;
             register = (InputRegister)manager.Current;
-            device = (Device)_BindingSourceDevicesList.Current;
+            device = (ModbusSlaveDevice)_BindingSourceDevicesList.Current;
             device.InputRegisters.Remove(register);
             _BindingSourceDevicesList.ResetCurrentItem();
 
@@ -1500,10 +1500,10 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.Dialogs
         private void AddCoil()
         {
             UInt16 address;
-            Device device;
+            ModbusSlaveDevice device;
             Coil coil;
 
-            device = (Device)_BindingSourceDevicesList.Current;
+            device = (ModbusSlaveDevice)_BindingSourceDevicesList.Current;
 
             for (address = 0; address <= UInt16.MaxValue; address++)
             {
@@ -1532,13 +1532,13 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.Dialogs
         {
             CurrencyManager manager;
             Coil coil;
-            Device device;
+            ModbusSlaveDevice device;
 
             manager = _DataGridViewCoils.BindingContext[
                 _DataGridViewCoils.DataSource,
                 _DataGridViewCoils.DataMember] as CurrencyManager;
             coil = (Coil)manager.Current;
-            device = (Device)_BindingSourceDevicesList.Current;
+            device = (ModbusSlaveDevice)_BindingSourceDevicesList.Current;
             device.Coils.Remove(coil);
             _BindingSourceDevicesList.ResetCurrentItem();
 
@@ -1555,10 +1555,10 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.Dialogs
         private void AddDiscreteInput()
         {
             UInt16 address;
-            Device device;
+            ModbusSlaveDevice device;
             DiscreteInput input;
 
-            device = (Device)_BindingSourceDevicesList.Current;
+            device = (ModbusSlaveDevice)_BindingSourceDevicesList.Current;
 
             for (address = 0; address <= UInt16.MaxValue; address++)
             {
@@ -1587,13 +1587,13 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.Dialogs
         {
             CurrencyManager manager;
             DiscreteInput input;
-            Device device;
+            ModbusSlaveDevice device;
 
             manager = _DataGridViewDiscretesInputs.BindingContext[
                 _DataGridViewDiscretesInputs.DataSource,
                 _DataGridViewDiscretesInputs.DataMember] as CurrencyManager;
             input = (DiscreteInput)manager.Current;
-            device = (Device)_BindingSourceDevicesList.Current;
+            device = (ModbusSlaveDevice)_BindingSourceDevicesList.Current;
             device.DiscretesInputs.Remove(input);
             _BindingSourceDevicesList.ResetCurrentItem();
 
@@ -1608,10 +1608,10 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.Dialogs
         private void AddFile()
         {
             UInt16 number;
-            Device device;
+            ModbusSlaveDevice device;
             File file;
 
-            device = (Device)_BindingSourceDevicesList.Current;
+            device = (ModbusSlaveDevice)_BindingSourceDevicesList.Current;
 
             for (number = 1; number < 10000; number++)
             {
@@ -1647,10 +1647,10 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.Dialogs
         private void RemoveFile()
         {
             File file;
-            Device device;
+            ModbusSlaveDevice device;
             
             file = (File)_BindingSourceFile.Current;
-            device = (Device)_BindingSourceDevicesList.Current;
+            device = (ModbusSlaveDevice)_BindingSourceDevicesList.Current;
             device.Files.Remove(file);
             _BindingSourceDevicesList.ResetCurrentItem();
             

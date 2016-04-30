@@ -107,7 +107,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Master.Services
         /// <param name="periodOfTimeSync">
         /// Период синхронизации времени в удалённых устройствах сети, сек
         /// </param>
-        public ServicePdoReceive(INetworkController controller, 
+        public ServicePdoReceive(ICanNetworkController controller, 
             Int32 periodOfTimeSync)
             : base(controller)
         {

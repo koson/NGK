@@ -275,6 +275,12 @@ namespace NGK.CorrosionMonitoringSystem.Managers.AppConfigManager
             get { return "ModbusSystemInfoNetwork"; }
         }
 
+        public byte ModbusAddress
+        {
+            get { return Byte.Parse(GetParameter("ModbusAddress")); }
+            set { SetParameter("ModbusAddress", value); }
+        }
+
         public string SerialPortName
         {
             get { return GetParameter("PortName"); }

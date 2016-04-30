@@ -13,11 +13,11 @@ namespace NGK.CAN.ApplicationLayer.Network.Master.Collections
     /// </summary>
     [Serializable]
     public sealed class NetworkControllersCollection : 
-        KeyedCollection<UInt32, NetworkController>
+        KeyedCollection<UInt32, CanNetworkController>
     {
         #region Methods
 
-        protected override UInt32 GetKeyForItem(NetworkController item)
+        protected override UInt32 GetKeyForItem(CanNetworkController item)
         {
             return item.NetworkId;
         }

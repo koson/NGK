@@ -21,7 +21,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Master
     /// </summary>
     /// <remarks>Реализует паттерн Singlton</remarks>
     [Serializable]
-    public sealed class NgkCanNetworksManager : INetworksManager
+    public sealed class NgkCanNetworksManager : INgkCanNetworksManager
     {
         #region Fields And Properties
 
@@ -82,7 +82,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Master
             {
                 int total = 0;
 
-                foreach (NetworkController network in _NetworksList)
+                foreach (CanNetworkController network in _NetworksList)
                 {
                     total += network.Devices.Count;
                 }
@@ -101,7 +101,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Master
             {
                 int mount = 0;
  
-                foreach (NetworkController network in _NetworksList)
+                foreach (CanNetworkController network in _NetworksList)
                 {
                     foreach (IDevice device in network.Devices)
                     {
@@ -158,7 +158,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Master
                 BinaryFormatter bf = new BinaryFormatter();
                 _NetworksList = (NetworkControllersCollection)bf.Deserialize(fs);
 
-                foreach (NetworkController network in _NetworksList)
+                foreach (CanNetworkController network in _NetworksList)
                 {
                     network.ControllerChangedStatus += new EventHandler(EventHandler_ControllerChangedStatus);
                 }
@@ -168,7 +168,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Master
 
         void EventHandler_ControllerChangedStatus(object sender, EventArgs e)
         {
-            INetworkController network = (INetworkController)sender;
+            ICanNetworkController network = (ICanNetworkController)sender;
             OnNetworkChangedStatus(new NetworkChangedStatusEventAgrs(network));
         }
 

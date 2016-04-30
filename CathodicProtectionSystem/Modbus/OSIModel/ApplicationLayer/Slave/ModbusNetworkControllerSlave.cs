@@ -233,7 +233,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
             if (args.Message.Address == 0)
             {
                 // Рассылаем принятое сообщение по устройствам
-                foreach (Device device in _Devices)
+                foreach (ModbusSlaveDevice device in _Devices)
                 {
                     device.GetIncommingMessage(args.Message);
                 }
@@ -335,7 +335,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
             {
                 if (_Connection.IsOpen)
                 {
-                    foreach (Device device in _Devices)
+                    foreach (ModbusSlaveDevice device in _Devices)
                     {
                         device.Stop();
                     }
@@ -382,7 +382,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
 
                 // Сохраняем список устройств
                 writer.WriteStartElement("Devices");
-                foreach (Device device in _Devices)
+                foreach (ModbusSlaveDevice device in _Devices)
                 {
                     writer.WriteStartElement("Device");
                     // Сохраняем свойства элемента "Device"
@@ -505,18 +505,18 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
             XmlReaderSettings xmlrdsettings;
             XmlReader reader;
             ModbusNetworkControllerSlave network;
-            Device device;
+            ModbusSlaveDevice device;
             Coil coil;
             DiscreteInput dinput;
             HoldingRegister hregister;
             InputRegister iregister;
             File file;
             Record record;
-            List<Device> devices;
+            List<ModbusSlaveDevice> devices;
             String networkName;
 
             networkName = String.Empty;
-            devices = new List<Device>();
+            devices = new List<ModbusSlaveDevice>();
 
             xmlrdsettings = new XmlReaderSettings();
             xmlrdsettings.IgnoreComments = true;
@@ -557,7 +557,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
                                     {
                                         if (reader.HasAttributes)
                                         {
-                                            device = new Device(Byte.Parse(reader.GetAttribute("Address")));
+                                            device = new ModbusSlaveDevice(Byte.Parse(reader.GetAttribute("Address")));
                                             device.Description = reader.GetAttribute("Description");                                          
                                             device.Status = (Status)Enum.Parse(typeof(Status), 
                                                 reader.GetAttribute("Status"));
@@ -895,7 +895,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
             // Создаём сеть из полученных данных
             network = new ModbusNetworkControllerSlave(networkName, null);
 
-            foreach (Device item in devices)
+            foreach (ModbusSlaveDevice item in devices)
             {
                 network.Devices.Add(item);
             }

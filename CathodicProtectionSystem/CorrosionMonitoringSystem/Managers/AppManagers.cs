@@ -28,7 +28,8 @@ namespace NGK.CorrosionMonitoringSystem.Managers
             _CanNetwrokService = new CanNetworkService(application, 
                 NgkCanNetworksManager.Instance, 300);
             _ModbusSystemInfoNetworkService = 
-                new ModbusSystemInformationNetworkService(application, this, 400);
+                new SystemInformationModbusNetworkService(application, this, 
+                _ConfigManager.ModbusAddress, 400);
         }
 
         #endregion
@@ -40,7 +41,7 @@ namespace NGK.CorrosionMonitoringSystem.Managers
         ILogManager _Logger;
         PresentersFactory _WindowsFactory;
         CanNetworkService _CanNetwrokService;
-        ModbusSystemInformationNetworkService _ModbusSystemInfoNetworkService;
+        SystemInformationModbusNetworkService _ModbusSystemInfoNetworkService;
 
         IApplicationController _Application;
         /// <summary>
@@ -83,7 +84,7 @@ namespace NGK.CorrosionMonitoringSystem.Managers
             get { return _CanNetwrokService; }
         }
 
-        public IModbusSystemInformationNetworkService ModbusSystemInfoNetworkService
+        public ISystemInformationModbusNetworkService ModbusSystemInfoNetworkService
         {
             get { return _ModbusSystemInfoNetworkService; }
         }

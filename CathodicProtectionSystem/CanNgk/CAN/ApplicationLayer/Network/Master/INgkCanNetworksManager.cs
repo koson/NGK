@@ -5,20 +5,20 @@ namespace NGK.CAN.ApplicationLayer.Network.Master
 {
     public class NetworkChangedStatusEventAgrs : EventArgs
     {
-        public NetworkChangedStatusEventAgrs(INetworkController network)
+        public NetworkChangedStatusEventAgrs(ICanNetworkController network)
         {
             _Network = network;
         }
 
-        INetworkController _Network;
+        ICanNetworkController _Network;
 
-        public INetworkController Network
+        public ICanNetworkController Network
         {
             get { return _Network; }
         }
     }
 
-    public interface INetworksManager
+    public interface INgkCanNetworksManager
     {
         /// <summary>
         /// Список сетей в системе

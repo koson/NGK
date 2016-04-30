@@ -346,7 +346,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Master.Services
         /// Конструктор
         /// </summary>
         /// <param name="controller"></param>
-        public ServiceEmcy(INetworkController controller)
+        public ServiceEmcy(ICanNetworkController controller)
             : base(controller)
         { 
         }

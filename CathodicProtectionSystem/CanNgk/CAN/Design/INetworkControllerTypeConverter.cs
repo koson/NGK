@@ -47,9 +47,9 @@ namespace NGK.CAN.Design
             {
                 if (value != null)
                 {
-                    if (value is INetworkController)
+                    if (value is ICanNetworkController)
                     {
-                        return ((INetworkController)value).NetworkName;
+                        return ((ICanNetworkController)value).NetworkName;
                     }
                 }
             }

@@ -19,7 +19,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Master
     /// Интерфейс для контроллера сети
     /// </summary>
     [TypeConverter(typeof(INetworkControllerTypeConverter))]
-    public interface INetworkController : IManageable, IDisposable
+    public interface ICanNetworkController : IManageable, IDisposable
     {
         [DisplayName("Сеть CAN НГК-ЭХЗ")]
         [Description("Идентификатор сети")]

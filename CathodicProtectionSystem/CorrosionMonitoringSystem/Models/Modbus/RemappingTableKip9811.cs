@@ -7,7 +7,7 @@ using NGK.CAN.DataTypes.DateTimeConvertor;
 using Modbus.OSIModel.ApplicationLayer.Slave.DataModel.DataTypes;
 using NGK.CorrosionMonitoringSystem.Models.Modbus;
 
-namespace NGK.CorrosionMonitoringSystem.DL.MatchingAddresses
+namespace NGK.CorrosionMonitoringSystem.Models.Modbus
 {
     public static class RemappingTableKip9811
     {
@@ -79,7 +79,7 @@ namespace NGK.CorrosionMonitoringSystem.DL.MatchingAddresses
             {
                 throw new InvalidCastException("Требуется устройство CAN типа КИП-9811");
             }
-            if (modbusDevice.Records[KIP9811Address.VisitingCard.DeviceType].Value !=
+            if (modbusDevice.Records[KIP9811AddressSpaceHelper.VisitingCard.DeviceType].Value !=
                 (UInt16)DeviceType.KIP_BATTERY_POWER_v1)
             {
                 throw new InvalidCastException("Требуется устройство modbus типа КИП-9811");

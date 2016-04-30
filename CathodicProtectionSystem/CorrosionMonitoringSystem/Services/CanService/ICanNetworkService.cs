@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Text;
 using Common.Controlling;
 using NGK.CorrosionMonitoringSystem.Models;
 using System.Data;
+using NGK.CAN.ApplicationLayer.Network.Devices;
 
 namespace NGK.CorrosionMonitoringSystem.Services
 {

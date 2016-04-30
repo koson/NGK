@@ -36,7 +36,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices
         [NonSerialized]
         protected DeviceStatus _Status;
         [NonSerialized]
-        protected INetworkController _Network;
+        protected ICanNetworkController _Network;
         [NonSerialized]
         protected String _LocationName;
         [NonSerialized]
@@ -50,7 +50,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices
         [NonSerialized]
         private bool _RegistrationError; // Only for БИУ-01
         [NonSerialized]
-        private IProfile _Profile;
+        private ICanDeviceProfile _Profile;
         [NonSerialized]
         private Guid _Id;
         /// <summary>
@@ -172,7 +172,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices
         /// <summary>
         /// Сеть
         /// </summary>
-        public INetworkController Network
+        public ICanNetworkController Network
         {
             get { return _Network; }
             set { _Network = value; }
@@ -216,7 +216,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices
         /// <summary>
         /// 
         /// </summary>
-        public IProfile Profile
+        public ICanDeviceProfile Profile
         {
             get { return _Profile; }
         }
@@ -337,7 +337,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices
         /// <summary>
         /// Конструктор
         /// </summary>
-        internal DeviceBase(IProfile profile)
+        internal DeviceBase(ICanDeviceProfile profile)
         {
             _Id = Guid.NewGuid();
             _Profile = profile;
@@ -474,7 +474,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices
         /// </summary>
         /// <param name="profile"></param>
         /// <returns></returns>
-        public static DeviceBase Create(IProfile profile)
+        public static DeviceBase Create(ICanDeviceProfile profile)
         {
             return new DeviceBase(profile);
         }
@@ -486,7 +486,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices
         /// <returns></returns>
         public static DeviceBase Create(DeviceType type)
         {
-            IProfile profile = Prototype.GetProfile(type);
+            ICanDeviceProfile profile = CanDevicePrototype.GetProfile(type);
             return new DeviceBase(profile);
         }
         

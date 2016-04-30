@@ -12,13 +12,13 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices.Profiles
     /// <summary>
     /// Реализует профиль устройства КИП 9811 версии 1
     /// </summary>
-    public sealed class KIP9811v1 : Prototype
+    public sealed class KIP9811v1 : CanDevicePrototype
     {
         #region Fields And Properties
 
         private static KIP9811v1 _Instance;
 
-        public static IProfile Instance
+        public static ICanDeviceProfile Instance
         {
             get
             {

@@ -128,7 +128,8 @@ namespace NGK.CorrosionMonitoringSystem
                 MessageBox.Show("Ошибка при конфигурировании системы. " +
                     "Приложение будет закрыто",
                     "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                _Application.Exit();
+                //_Application.Exit();
+                throw;
             }
         }
 
@@ -177,7 +178,7 @@ namespace NGK.CorrosionMonitoringSystem
                 exception.Message, exception.StackTrace), "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             Application.Exit();
             #else
-            Application.Exit();
+            _Application.Exit();
             #endif
             return;
         }

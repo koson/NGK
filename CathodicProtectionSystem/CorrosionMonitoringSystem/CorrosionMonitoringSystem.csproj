@@ -62,9 +62,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DL\MatchingAddresses\RemappingTableKip9811.cs" />
-    <Compile Include="Models\Modbus\ModbusAdapterContext.cs" />
-    <Compile Include="Models\Modbus\ModbusAddressSpace\KIP9811Address.cs" />
+    <Compile Include="Models\Modbus\RemappingTableKip9811.cs" />
+    <Compile Include="Services\ModbusService\ModbusServiceContext.cs" />
+    <Compile Include="Models\Modbus\ModbusAddressSpace\KIP9811AddressSpaceHelper.cs" />
     <Compile Include="Models\Modbus\ModbusAddressSpace\KIP00.cs" />
     <Compile Include="DL\CanNetworkServiceAdapter.cs" />
     <Compile Include="Models\Modbus\ModbusAddressSpace\KCCM.cs" />
@@ -80,9 +80,9 @@
     <Compile Include="Managers\LogManager\ILogManager.cs" />
     <Compile Include="Managers\AppManagers.cs" />
     <Compile Include="Managers\SysLogManager\ISysLogManager.cs" />
-    <Compile Include="Models\NgkCanDevice.cs" />
-    <Compile Include="Models\ParametersCollection.cs" />
-    <Compile Include="Models\Parameter.cs" />
+    <Compile Include="Models\CAN\NgkCanDevice.cs" />
+    <Compile Include="Models\CAN\ParametersCollection.cs" />
+    <Compile Include="Models\CAN\Parameter.cs" />
     <Compile Include="Models\ParametersPivotTable.cs" />
     <Compile Include="Presenters\DeviceDetailPresenter.cs" />
     <Compile Include="Presenters\DeviceListPresenter.cs" />
@@ -134,14 +134,14 @@
     </Compile>
     <Compile Include="Presenters\NavigationMenuPresenter.cs" />
     <Compile Include="Services\ApplicationServices.cs" />
-    <Compile Include="Services\CanNetworkService.cs" />
+    <Compile Include="Services\CanService\CanNetworkService.cs" />
     <Compile Include="Services\IApplicationServices.cs" />
-    <Compile Include="Services\ICanNetworkService.cs" />
-    <Compile Include="Services\IModbusNetworkService.cs" />
+    <Compile Include="Services\CanService\ICanNetworkService.cs" />
+    <Compile Include="Services\ModbusService\ISystemInformationModbusNetworkService.cs" />
     <Compile Include="Services\INavigationService.cs" />
     <Compile Include="Services\IShowAppMenuService.cs" />
     <Compile Include="Services\IWindowsService.cs" />
-    <Compile Include="Services\ModbusNetworkService.cs" />
+    <Compile Include="Services\ModbusService\SystemInformationModbusNetworkService.cs" />
     <Compile Include="Services\WindowsService.cs" />
     <Compile Include="Views\DeviceDetailView\DeviceDetailView.cs">
       <SubType>UserControl</SubType>
@@ -221,9 +221,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="newtorkconfig.bin.nwc">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Include="NLog.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -232,6 +229,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="ModbusRequests.txt" />
+    <None Include="newtorkconfig.bin.nwc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Resources\LOGO.jpg" />
   </ItemGroup>
   <ItemGroup>
@@ -242,6 +242,7 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="DL\MatchingAddresses\" />
     <Folder Include="Views\MonitoringHistoryView\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

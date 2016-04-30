@@ -64,11 +64,11 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.DataModel.DataTypes
         /// <summary>
         /// Modbus-устройство содержащее данный элемент данных
         /// </summary>
-        private Device _Device;
+        private ModbusSlaveDevice _Device;
         /// <summary>
         /// Modbus-устройство, владелец данного элемента данных
         /// </summary>
-        public Device Device
+        public ModbusSlaveDevice Device
         {
             get { return _Device; }
         }
@@ -135,7 +135,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave.DataModel.DataTypes
         /// данного параметра из устройства, при этом владелец устанавливается в null
         /// </summary>
         /// <param name="owner">Устройство владелец</param>
-        internal void SetOwner(Device owner)
+        internal void SetOwner(ModbusSlaveDevice owner)
         {
             if (_Device == null)
             {

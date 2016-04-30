@@ -4,7 +4,7 @@ using System.Text;
 
 namespace NGK.CorrosionMonitoringSystem.Models.Modbus
 {
-    public class KIP9811Address : ModbusVisitingCard
+    public class KIP9811AddressSpaceHelper : ModbusVisitingCard
     {
         /// <summary>
         /// Регистр ошибок

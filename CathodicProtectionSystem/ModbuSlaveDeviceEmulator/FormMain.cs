@@ -87,7 +87,7 @@ namespace ModbuSlaveDevicesNetwork
             object sender, EventArgs e)
         {
             BindingSource bs = (BindingSource)sender;
-            Device device = (Device)bs.Current;
+            ModbusSlaveDevice device = (ModbusSlaveDevice)bs.Current;
 
             if (device != null)
             {
@@ -219,7 +219,7 @@ namespace ModbuSlaveDevicesNetwork
         private void EventHandler_TreeViewNetwork_AfterSelect(
             object sender, TreeViewEventArgs e)
         {
-            Device device;
+            ModbusSlaveDevice device;
             TreeView control = (TreeView)sender;
 
             if ((e.Action == TreeViewAction.ByKeyboard) ||
@@ -230,9 +230,9 @@ namespace ModbuSlaveDevicesNetwork
                 {
                     _TabControlDeviceProperties.Visible = false;
                 }
-                else if (e.Node.Tag is Device)
+                else if (e.Node.Tag is ModbusSlaveDevice)
                 {
-                    device = e.Node.Tag as Device;
+                    device = e.Node.Tag as ModbusSlaveDevice;
                     _TabControlDeviceProperties.Visible = true;
 
                     _TabControlDeviceProperties.Enabled = true;
@@ -255,7 +255,7 @@ namespace ModbuSlaveDevicesNetwork
         private void EventHandler_TreeViewNetwork_AfterCheck(
             object sender, TreeViewEventArgs e)
         {
-            Device device;
+            ModbusSlaveDevice device;
             TreeView control = (TreeView)sender;
 
             if ((e.Action == TreeViewAction.ByKeyboard) || 
@@ -267,7 +267,7 @@ namespace ModbuSlaveDevicesNetwork
                     // действия со всем списком устройств
                     foreach (TreeNode node in control.TopNode.Nodes)
                     {
-                        device = (Device)node.Tag;
+                        device = (ModbusSlaveDevice)node.Tag;
 
                         if (e.Node.Checked)
                         {
@@ -285,7 +285,7 @@ namespace ModbuSlaveDevicesNetwork
                 {
                     // Если выбран узел конкретного устройства, по выполняем
                     // действия по отношению к нему
-                    device = (Device)e.Node.Tag;
+                    device = (ModbusSlaveDevice)e.Node.Tag;
 
                     if (e.Node.Checked)
                     {
@@ -623,7 +623,7 @@ namespace ModbuSlaveDevicesNetwork
                     {
                         control.TopNode.Checked = true;
 
-                        foreach (Device device in network.Devices)
+                        foreach (ModbusSlaveDevice device in network.Devices)
                         {
                             node = new TreeNode();
                             node.Name = "Node 0x" + device.Address.ToString("X2");

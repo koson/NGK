@@ -17,9 +17,9 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices.Collections
     {
         #region Fields And Properties
 
-        private INetworkController _Network;
+        private ICanNetworkController _Network;
         
-        public INetworkController Owner
+        public ICanNetworkController Owner
         {
             get { return _Network; }
         }
@@ -52,7 +52,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices.Collections
             throw new NotImplementedException();
         }
 
-        public DevicesCollection(INetworkController network)
+        public DevicesCollection(ICanNetworkController network)
         {
             if (network == null)
             {

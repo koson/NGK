@@ -22,7 +22,7 @@ namespace NGK.CorrosionMonitoringSystem.Models
 
             if (_IsComplexParameter)
             {
-                ComplexParameter complexParam = Prototype.GetProfile(_DeviceType)
+                ComplexParameter complexParam = CanDevicePrototype.GetProfile(_DeviceType)
                     .ComplexParameters[info.ComplexParameterName];
 
                 _Name = complexParam.Name;
@@ -74,9 +74,9 @@ namespace NGK.CorrosionMonitoringSystem.Models
             }
             else
             {
-                _ValueType = _IsComplexParameter ? Prototype.GetProfile(_DeviceType)
+                _ValueType = _IsComplexParameter ? CanDevicePrototype.GetProfile(_DeviceType)
                     .ComplexParameters[_Name].Converter.ValueType :
-                    Prototype.GetProfile(_DeviceType)
+                    CanDevicePrototype.GetProfile(_DeviceType)
                         .ObjectInfoList[index].DataTypeConvertor.OutputDataType;
 
                 _Value = Activator.CreateInstance(_ValueType);
@@ -150,7 +150,7 @@ namespace NGK.CorrosionMonitoringSystem.Models
             get
             {
                 return _IsComplexParameter ? 
-                    Prototype.GetProfile(_DeviceType).ComplexParameters[Name].LinkedIndexes : 
+                    CanDevicePrototype.GetProfile(_DeviceType).ComplexParameters[Name].LinkedIndexes : 
                     _Indexes;
             }
         }

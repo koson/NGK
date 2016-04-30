@@ -262,7 +262,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Master.Services
         /// Конструктор 
         /// </summary>
         /// <param name="controller"></param>
-        public ServiceSdoUpload(INetworkController controller)
+        public ServiceSdoUpload(ICanNetworkController controller)
             : base(controller)
         {            
             //Инициализируем контексты устройств

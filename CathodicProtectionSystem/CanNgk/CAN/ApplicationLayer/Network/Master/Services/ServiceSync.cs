@@ -87,7 +87,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Master.Services
         /// 
         /// </summary>
         /// <param name="controller">Контроллер сети</param>
-        public ServiceSync(INetworkController controller)
+        public ServiceSync(ICanNetworkController controller)
             : base(controller)
         {
             this._TimerSyncMessage = new Timer(PERIOD_SYNC);
@@ -101,7 +101,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Master.Services
         /// </summary>
         /// <param name="controller">Контроллер сети</param>
         /// <param name="periodSync">Период следования запроса Sync, мсек</param>
-        public ServiceSync(INetworkController controller, Double periodSync)
+        public ServiceSync(ICanNetworkController controller, Double periodSync)
             : base(controller)
         {
             this._TimerSyncMessage = new Timer(periodSync);

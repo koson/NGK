@@ -194,7 +194,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Master.Services
         /// Конструктор
         /// </summary>
         /// <param name="controller">Контроллер сети</param>
-        public ServicePdoTransmit(INetworkController controller)
+        public ServicePdoTransmit(ICanNetworkController controller)
             : base(controller)
         {
         }
