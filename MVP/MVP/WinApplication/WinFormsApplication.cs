@@ -21,10 +21,15 @@ namespace Mvp.WinApplication
             Application.SetCompatibleTextRenderingDefault(false);
 
             _AppContext = new ApplicationContext();
+            // О SynchronizationContext смотри здесь оригинал и перевод
+            // http://www.codeproject.com/Articles/31971/Understanding-SynchronizationContext-Part-I
+            // https://habrahabr.ru/post/232169/
+            // Здесь SynchronizationContext создаётся для приложений не имеющих UI 
+            // (т.е консольных) 
             SynchronizationContext.SetSynchronizationContext(
                 new SynchronizationContext());
             _SyncContext = SynchronizationContext.Current;
-
+            
             _Version = Assembly.GetCallingAssembly().GetName().Version;
         }
         
@@ -39,8 +44,8 @@ namespace Mvp.WinApplication
         public ApplicationContext AppContext 
         { 
             get 
-            { 
-                return _AppContext; 
+            {
+                return _AppContext;
             } 
         } 
 
@@ -98,6 +103,10 @@ namespace Mvp.WinApplication
                     lastForm.Close();
                 }
                 ((IView)_AppContext.MainForm).Show();
+
+                // После добавления формы или любого контрола в приложении
+                // создаётся UI-поток и теперь привязываем контекс к UI-потоку. 
+                _SyncContext = SynchronizationContext.Current;
             }
         }
 

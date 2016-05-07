@@ -30,6 +30,7 @@ namespace NGK.CorrosionMonitoringSystem.Managers.Factory
         IApplicationController _Application;
         IManagers _Managers;
 
+
         #endregion
 
         #region Methods

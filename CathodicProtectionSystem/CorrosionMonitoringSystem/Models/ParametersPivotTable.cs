@@ -17,7 +17,7 @@ namespace NGK.CorrosionMonitoringSystem.Models
     public class ParametersPivotTable
     {
         #region Constructors
-        
+
         public ParametersPivotTable(NgkCanDevice[] devices)
         {
             _Devices = devices;
@@ -28,11 +28,11 @@ namespace NGK.CorrosionMonitoringSystem.Models
         #endregion
 
         #region Fields And Properties
-        
+
         /// <summary>
         /// Сводная таблица
         /// </summary>
-        private DataTable _PivotTable;
+        DataTable _PivotTable;
         /// <summary>
         /// Сводная таблица
         /// </summary>
@@ -45,7 +45,7 @@ namespace NGK.CorrosionMonitoringSystem.Models
         /// <summary>
         /// Список устройств в сети относящихся к КИП 
         /// </summary>
-        private NgkCanDevice[] _Devices;
+        NgkCanDevice[] _Devices;
 
         #endregion
 
@@ -56,12 +56,11 @@ namespace NGK.CorrosionMonitoringSystem.Models
         public void Update()
         {
             for (int i = 0; i < _Devices.Length; i++)
-			{
+            {
                 UpdateDivice(_Devices[i]);
-			}
+            }
             // Генерируем событие
-            this.OnTableWasUpdated();
-
+            OnTableWasUpdated();
             return;
         }
         /// <summary>
@@ -117,7 +116,7 @@ namespace NGK.CorrosionMonitoringSystem.Models
         private void InitTable()
         {
             DataColumn column;
-            
+
             _PivotTable = new DataTable("PitovTable");
 
             column = new DataColumn();
@@ -241,7 +240,7 @@ namespace NGK.CorrosionMonitoringSystem.Models
         /// Событие происходит при обновлении таблицы.
         /// </summary>
         public event EventHandler TableWasUpdated;
-        
+
         #endregion
     }// End Of Class
 }// End Of Namespace

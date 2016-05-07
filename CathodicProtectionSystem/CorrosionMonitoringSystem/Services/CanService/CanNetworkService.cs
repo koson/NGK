@@ -9,6 +9,7 @@ using NGK.CorrosionMonitoringSystem.Models;
 using Mvp.WinApplication;
 using Common.Controlling;
 using System.Data;
+using System.Diagnostics;
 
 namespace NGK.CorrosionMonitoringSystem.Services
 {
@@ -207,33 +208,10 @@ namespace NGK.CorrosionMonitoringSystem.Services
                 }
 
                 FaultyDevices = faultyDevices;
+
+                // Обновляем сводную таблицу
+                _ParatemersPivotTable.Update();
             }, null);
-
-
-            //if (_Application.CurrentForm.InvokeRequired)
-            //{
-            //    _Application.CurrentForm.Invoke((System.Windows.Forms.MethodInvoker)
-            //        delegate()
-            //        {
-            //            IDevice canDevice;
-            //            int faultyDevices = 0;
-
-            //            foreach (NgkCanDevice device in _Devices)
-            //            {
-            //                canDevice = NetworksManager.Instance.Networks[device.NetworkId]
-            //                    .Devices[device.NodeId];
-            //                NgkCanDevice.Update(device, canDevice);
-
-            //                if (canDevice.Status == DeviceStatus.CommunicationError)
-            //                    faultyDevices++;
-            //            }
-
-            //            FaultyDevices = faultyDevices;
-            //        });
-            //}
-
-            // Обновляем сводную таблицу
-            _ParatemersPivotTable.Update();
         }
 
         void EventHandler_NetworkManager_NetworkChangedStatus(
