@@ -11,7 +11,7 @@ namespace Mvp.WinApplication
 
         public ApplicationServiceBase(IApplicationController application)
         {
- 
+            _Application = application;
         }
 
         #endregion

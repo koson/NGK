@@ -10,6 +10,13 @@ namespace Mvp.WinApplication
     /// </summary>
     public interface IApplicationService: IManageable, IDisposable
     {
+        /// <summary>
+        /// Ќаименование сервиса
+        /// </summary>
+        string ServiceName { get; }
+        /// <summary>
+        /// ѕриложение которому принадлежит данный сервис
+        /// </summary>
         IApplicationController Application { get; }
         /// <summary>
         /// ¬озвращает статус сервиса: инициализирован или нет
