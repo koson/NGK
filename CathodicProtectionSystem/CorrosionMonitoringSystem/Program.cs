@@ -15,6 +15,7 @@ using NGK.CAN.ApplicationLayer.Network.Devices;
 using Modbus.OSIModel.DataLinkLayer.Slave.RTU.ComPort;
 using Modbus.OSIModel.ApplicationLayer.Slave;
 using Modbus.OSIModel.ApplicationLayer;
+using Common.Controlling;
 
 namespace NGK.CorrosionMonitoringSystem
 {
@@ -33,6 +34,9 @@ namespace NGK.CorrosionMonitoringSystem
         [STAThread]
         static void Main()
         {
+            _Logger = LogManager.GetLogger("CorrosionMonitoringSystemLogger");
+            _Logger.Info("Запуск приложения");
+
             AppDomain.CurrentDomain.UnhandledException +=
                 new UnhandledExceptionEventHandler(EventHandler_CurrentDomain_UnhandledException);
             
@@ -78,7 +82,16 @@ namespace NGK.CorrosionMonitoringSystem
         static void EventHandler_Application_ApplicationClosing(
             object sender, EventArgs e)
         {
-            Managers.CanNetworkService.Stop();
+            if (Managers != null)
+            {
+                if ((Managers.ModbusSystemInfoNetworkService != null) &&
+                    (Managers.ModbusSystemInfoNetworkService.Status == Status.Running))
+                    Managers.ModbusSystemInfoNetworkService.Stop();
+
+                if ((Managers.CanNetworkService != null) &&
+                    (Managers.CanNetworkService.Status == Status.Running))
+                    Managers.CanNetworkService.Stop();
+            }
             _Logger.Info("Приложение остановлено");
         }
 
@@ -89,8 +102,6 @@ namespace NGK.CorrosionMonitoringSystem
 
             // Создаём объект для ведения логов приложения
             presenter.WtriteText("Инициализация системы логирования...");
-
-            _Logger = LogManager.GetLogger("CorrosionMonitoringSystemLogger");
 
             //Загружаем конфигурацию сети CAN НГК ЭХЗ
             presenter.WtriteText("Загрузка конфигурации сети CAN НГК ЭХЗ...");
@@ -165,13 +176,13 @@ namespace NGK.CorrosionMonitoringSystem
         static void EventHandler_CurrentDomain_UnhandledException(
             object sender, UnhandledExceptionEventArgs e)
         {
-            if (e.IsTerminating)
-            {
-                // CLR - останавливается
-            }
             Exception exception = e.ExceptionObject as Exception;
-
             _Logger.FatalException("Фатальная ошибка, приложение будет остановлено", exception);
+
+            //if (e.IsTerminating)
+            //{
+            //    // CLR - останавливается
+            //}
 
             #if(DEBUG)
             MessageBox.Show(String.Format("Фатальная ошибка, приложение будет остановлено. Описание: {0} Стек: {1}", 
@@ -180,7 +191,6 @@ namespace NGK.CorrosionMonitoringSystem
             #else
             _Application.Exit();
             #endif
-            return;
         }
     }
 }

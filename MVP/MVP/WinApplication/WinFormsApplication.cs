@@ -19,6 +19,8 @@ namespace Mvp.WinApplication
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+            Application.ApplicationExit += 
+                new EventHandler(EventHandler_Application_ApplicationExit);
 
             _AppContext = new ApplicationContext();
             // О SynchronizationContext смотри здесь оригинал и перевод
@@ -79,6 +81,12 @@ namespace Mvp.WinApplication
         #endregion
 
         #region EventHadler
+
+        void EventHandler_Application_ApplicationExit(object sender, EventArgs e)
+        {
+            OnApplicationClosing();
+        }
+
         #endregion
 
         #region Methods

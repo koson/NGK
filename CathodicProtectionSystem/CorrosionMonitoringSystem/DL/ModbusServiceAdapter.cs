@@ -59,9 +59,11 @@ namespace NGK.CorrosionMonitoringSystem.DL
         /// Таблица для хранения соответствия
         /// Наименований CAN-сетей номерам, для передачи по Modbus
         /// </summary>
-        private Dictionary<string, int> _CanNetworksTable;
-        private List<ModbusServiceContext> _Context;
-        private Timer _Timer;
+        Dictionary<string, int> _CanNetworksTable;
+        List<ModbusServiceContext> _Context;
+        Timer _Timer;
+        static Object SyncRoot = new Object();
+
         #endregion
 
         #region Constructors
@@ -398,13 +400,6 @@ namespace NGK.CorrosionMonitoringSystem.DL
             }
         }
         /// <summary>
-        /// Выполняется в отдельном потоке. Обновляет модбус-устройства данными из
-        /// СAN-устройства
-        /// </summary>
-        private void DoWork()
-        { 
-        }
-        /// <summary>
         /// Обработчик срабатываения таймера
         /// </summary>
         /// <param name="sender"></param>
@@ -420,29 +415,27 @@ namespace NGK.CorrosionMonitoringSystem.DL
             foreach (ModbusServiceContext context in _Context)
             {
                 // Получаем CAN-устройство
-                //UInt32 x = context.CanDevice.NetworkId;
-                //Byte y = context.CanDevice.NodeId;
-                //device = manager.Networks[x].Devices[y];
                 device = manager.Networks[context.CanDevice.NetworkId]
                     .Devices[context.CanDevice.NodeId];
                 modbusDevice = _DeviceKCCM.Files[context.ModbusDevice.FileNumber];
-                UdateDevice(modbusDevice, device);
+                lock (SyncRoot)
+                {
+                    UdateDevice(modbusDevice, device);
+                }
             }
         }
-        /// <summary>
-        /// Запускает работу сети и устройства КССМУ
-        /// </summary>
         public void Start()
         {
             // Запускает в работу
             _Network.Start();
             _DeviceKCCM.Start();
         }
+
         public void Stop()
         {
-            // Останавливаем в работу
             _Network.Stop();
         }
+
         #endregion
     }
 }

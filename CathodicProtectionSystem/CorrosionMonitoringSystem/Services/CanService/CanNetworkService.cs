@@ -37,6 +37,9 @@ namespace NGK.CorrosionMonitoringSystem.Services
             _Timer.AutoReset = true;
             _Timer.Interval = pollingInterval;
             _Timer.Elapsed += new ElapsedEventHandler(EventHandler_Timer_Elapsed);
+
+            //Исключения для тестирования логирования падения приложения
+            //throw new Exception("Тестовое исключение");
         }
 
         #endregion
