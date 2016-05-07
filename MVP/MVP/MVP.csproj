@@ -46,8 +46,10 @@
     <Compile Include="View\IViewRegion.cs" />
     <Compile Include="View\ViewRegion.cs" />
     <Compile Include="View\ViewType.cs" />
-    <Compile Include="WinApplication\IApplicationController.cs" />
-    <Compile Include="WinApplication\WinFormsApplication.cs" />
+    <Compile Include="WinApplication\ApplicationController\IApplicationController.cs" />
+    <Compile Include="WinApplication\ApplicationService\ApplicationServiceBase.cs" />
+    <Compile Include="WinApplication\ApplicationService\IApplicationService.cs" />
+    <Compile Include="WinApplication\ApplicationController\WinFormsApplication.cs" />
     <Compile Include="View\IView.cs" />
   </ItemGroup>
   <ItemGroup>

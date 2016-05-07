@@ -32,7 +32,7 @@ namespace Common.Controlling
         /// </summary>
         [Description("Текущее состояние")]
         Status Status
-        { get; set; }
+        { get; }
         /// <summary>
         /// Событие происходит при изменении состояния объекта
         /// </summary>

@@ -189,6 +189,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
                 }
             }
         }
+
         #endregion
 
         #region Constructors
@@ -253,6 +254,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
             _Files.ListWasChanged +=
                 new EventHandler(EventHandler_Files_ListWasChanged);
         }
+
         #endregion
 
         #region Methods
@@ -637,41 +639,36 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
         #endregion
 
         #region Events
-        //---------------------------------------------------------------------------
         /// <summary>
         /// Событие возникает после того, как мастер-устройство произвело
         /// запись одного или более дискретных входов/выходов
         /// </summary>
         public event EventHandler MasterChangedCoils;
-        //---------------------------------------------------------------------------
         /// <summary>
         /// Событие возникает после того, как мастер-устройство произвело
         /// запись одного или более регистров хранения
         /// </summary>
         public event EventHandler MasterChangedHoldingRegisters;
-        //---------------------------------------------------------------------------
         /// <summary>
         /// Событие возникает после того, как мастер-устройство произсело
         /// запись в файл
         /// </summary>
         //public event EventHandler MasterRecordedFile;
-        //---------------------------------------------------------------------------
         /// <summary>
         /// Событие происходит после изменения конфигурации модели данных устройства
         /// </summary>
         public event EventHandler DeviceChangedConfiguration;
-        //---------------------------------------------------------------------------
         /// <summary>
         /// Событие происходит после изменения статуса устройства
         /// </summary>
         public event EventHandler StatusWasChanged;
-        //---------------------------------------------------------------------------
+
         #endregion
 
         // !!! Необоходимо сделать статическим методами, для того что бы уменьшить
         // размер устройтва в ОЗУ.
         #region INetworkFunctions Members
-        //---------------------------------------------------------------------------
+
         Result INetworkFunctions.ReadCoils(Modbus.OSIModel.Message.Message request)
         {
             Message.Result result;
@@ -793,7 +790,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
             return result;
 
         }
-        //---------------------------------------------------------------------------
+
         Result INetworkFunctions.ReadDiscreteInputs(Message.Message request)
         {
             Message.Result result;
@@ -921,7 +918,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
             }
             return result;
         }
-        //---------------------------------------------------------------------------
+
         Result INetworkFunctions.ReadHoldingRegisters(Message.Message request)
         {
             Message.Result result;
@@ -1023,7 +1020,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
             }
             return result;
         }
-        //---------------------------------------------------------------------------
+
         Result INetworkFunctions.ReadInputRegisters(Message.Message request)
         {
             Message.Result result;
@@ -1124,7 +1121,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
             }
             return result;
         }
-        //---------------------------------------------------------------------------
+
         Result INetworkFunctions.WriteSingleCoil(Message.Message request)
         {
             Message.Result result;
@@ -1229,7 +1226,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
             }
             return result;
         }
-        //---------------------------------------------------------------------------
+
         Result INetworkFunctions.WriteSingleRegister(Message.Message request)
         {
             Message.Result result;
@@ -1301,7 +1298,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
             }
             return result;
         }
-        //---------------------------------------------------------------------------
+
         Result INetworkFunctions.WriteMultipleCoils(Message.Message request)
         {
             Message.Result result;
@@ -1433,7 +1430,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
             }
             return result;
         }
-        //---------------------------------------------------------------------------
+
         Result INetworkFunctions.WriteMultipleRegisters(Message.Message request)
         {
             Message.Result result;
@@ -1535,7 +1532,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
             }
             return result;
         }
-        //---------------------------------------------------------------------------
+
         Result INetworkFunctions.ReadFileRecord(Message.Message request)
         {
             Message.Result result;
@@ -1812,7 +1809,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
             }
             //return result;
         }
-        //---------------------------------------------------------------------------
+
         Result INetworkFunctions.FunctionNotSupported(Message.Message request)
         {
             Message.Message answer;
@@ -1830,50 +1827,16 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
                     request, answer);
             return result;
         }
-        //---------------------------------------------------------------------------
+
         #endregion
 
         #region IManageable Members
-        //---------------------------------------------------------------------------
-        void IManageable.Start()
-        {
-            Start();
-        }
-        //---------------------------------------------------------------------------
-        void IManageable.Stop()
-        {
-            Stop();
-        }
-        //---------------------------------------------------------------------------
+
         void IManageable.Suspend()
         {
             throw new NotSupportedException("Данный метод не поддерживается");
         }
-        //---------------------------------------------------------------------------
-        Status IManageable.Status
-        {
-            get
-            {
-                return Status;
-            }
-            set
-            {
-                Status = value;
-            }
-        }
-        //---------------------------------------------------------------------------
-        event EventHandler IManageable.StatusWasChanged
-        {
-            add 
-            {
-                StatusWasChanged += value;
-            }
-            remove 
-            {
-                StatusWasChanged -= value;
-            }
-        }
-        //---------------------------------------------------------------------------
+
         #endregion
     }
 }

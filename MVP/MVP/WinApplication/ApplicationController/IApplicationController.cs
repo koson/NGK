@@ -10,7 +10,7 @@ namespace Mvp.WinApplication
 {
     public interface IApplicationController
     {
-        #region Fields And Properties
+        #region Properties
 
         SynchronizationContext SyncContext { get; }
         
@@ -19,13 +19,19 @@ namespace Mvp.WinApplication
         /// Возвращает текущее окно системы
         /// </summary>
         IPresenter CurrentPresenter { get; }
-        
+        /// <summary>
+        /// Текущая форма
+        /// </summary>
         Form CurrentForm { get; }
         /// <summary>
         /// Версия ПО
         /// </summary>
         Version Version { get; }
-        
+        /// <summary>
+        /// Сервисы приложения
+        /// </summary>
+        IApplicationService[] AppServices { get; }
+
         #endregion
 
         #region Methods
@@ -41,6 +47,11 @@ namespace Mvp.WinApplication
         /// <param name="view"></param>
         /// <returns></returns>
         DialogResult ShowDialog(IPresenter presenter);
+        /// <summary>
+        /// Регистрирует сервис приложения
+        /// </summary>
+        /// <param name="service"></param>
+        void RegisterApplicationService(IApplicationService service);
 
         #endregion
     }
