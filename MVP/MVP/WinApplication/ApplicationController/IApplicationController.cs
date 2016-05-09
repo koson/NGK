@@ -51,7 +51,7 @@ namespace Mvp.WinApplication
         /// Регистрирует сервис приложения
         /// </summary>
         /// <param name="service"></param>
-        void RegisterApplicationService(IApplicationService service);
+        void RegisterApplicationService(ApplicationServiceBase service);
 
         #endregion
     }

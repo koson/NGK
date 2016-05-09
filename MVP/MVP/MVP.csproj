@@ -47,6 +47,7 @@
     <Compile Include="View\ViewRegion.cs" />
     <Compile Include="View\ViewType.cs" />
     <Compile Include="WinApplication\ApplicationController\IApplicationController.cs" />
+    <Compile Include="WinApplication\ApplicationServiceCollection.cs" />
     <Compile Include="WinApplication\ApplicationService\ApplicationServiceBase.cs" />
     <Compile Include="WinApplication\ApplicationService\IApplicationService.cs" />
     <Compile Include="WinApplication\ApplicationController\WinFormsApplication.cs" />

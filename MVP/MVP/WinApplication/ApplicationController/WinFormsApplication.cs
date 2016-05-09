@@ -8,6 +8,7 @@ using Mvp.Presenter;
 using Mvp.View;
 using System.Threading;
 using System.Reflection;
+using Mvp.WinApplication.Collections.ObjectModel;
 
 namespace Mvp.WinApplication
 {
@@ -33,12 +34,14 @@ namespace Mvp.WinApplication
             _SyncContext = SynchronizationContext.Current;
             
             _Version = Assembly.GetCallingAssembly().GetName().Version;
+            _AppServices = new ApplicationServiceCollection();
         }
         
         #endregion
 
         #region Fields And Properties
 
+        private static Object SyncRoot = new Object();
         private ApplicationContext _AppContext;
         private IPresenter _CurrentPresenter;
         private SynchronizationContext _SyncContext;
@@ -77,6 +80,25 @@ namespace Mvp.WinApplication
 
         Version _Version;
         public Version Version { get { return _Version; } }
+
+        ApplicationServiceCollection _AppServices;
+
+        public IApplicationService[] AppServices
+        {
+            get 
+            {
+                List<IApplicationService> list;
+                lock (SyncRoot)
+                {
+                    list = new List<IApplicationService>(_AppServices.Count);
+                    foreach (IApplicationService service in _AppServices)
+                    {
+                        list.Add(service);
+                    }
+                }
+                return list.ToArray();
+            }
+        }
 
         #endregion
 
@@ -158,6 +180,12 @@ namespace Mvp.WinApplication
             }
         }
 
+        public void RegisterApplicationService(ApplicationServiceBase service)
+        {
+            service.Register(this);
+            _AppServices.Add(service);
+        }
+
         #endregion
 
         #region Events
@@ -173,6 +201,5 @@ namespace Mvp.WinApplication
         public event EventHandler ApplicationClosing;
 
         #endregion
-
     }
 }

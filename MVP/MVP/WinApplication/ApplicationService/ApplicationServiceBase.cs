@@ -9,18 +9,28 @@ namespace Mvp.WinApplication
     {
         #region Constructors
 
-        public ApplicationServiceBase(IApplicationController application)
+        public ApplicationServiceBase(string serviceName)
         {
-            _Application = application;
+            _ServiceName = serviceName;
+            _Application = null;
         }
 
         #endregion
 
         #region Fields And Properties
 
+        string _ServiceName;
+
+        public string ServiceName
+        {
+            get { return _ServiceName; }
+        }
+
         IApplicationController _Application;
 
         public IApplicationController Application { get { return _Application; } }
+
+        bool IsRegistred { get { return _Application != null; } }
 
         bool _IsInitialized = false;
 
@@ -83,6 +93,17 @@ namespace Mvp.WinApplication
         public virtual void Dispose() 
         {
             _IsInitialized = false;
+        }
+
+        internal void Register(IApplicationController application)
+        {
+            if (application == null)
+                throw new NullReferenceException();
+
+            if (IsRegistred)
+                throw new InvalidOperationException();
+
+            _Application = application;
         }
 
         void OnStatusWasChanged()
