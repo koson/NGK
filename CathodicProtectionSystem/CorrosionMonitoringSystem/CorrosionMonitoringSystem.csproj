@@ -133,16 +133,10 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="Presenters\NavigationMenuPresenter.cs" />
-    <Compile Include="Services\ApplicationServices.cs" />
     <Compile Include="Services\CanService\CanNetworkService.cs" />
-    <Compile Include="Services\IApplicationServices.cs" />
     <Compile Include="Services\CanService\ICanNetworkService.cs" />
     <Compile Include="Services\ModbusService\ISystemInformationModbusNetworkService.cs" />
-    <Compile Include="Services\INavigationService.cs" />
-    <Compile Include="Services\IShowAppMenuService.cs" />
-    <Compile Include="Services\IWindowsService.cs" />
     <Compile Include="Services\ModbusService\SystemInformationModbusNetworkService.cs" />
-    <Compile Include="Services\WindowsService.cs" />
     <Compile Include="Views\DeviceDetailView\DeviceDetailView.cs">
       <SubType>UserControl</SubType>
     </Compile>
