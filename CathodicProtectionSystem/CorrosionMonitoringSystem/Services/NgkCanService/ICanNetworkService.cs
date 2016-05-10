@@ -29,12 +29,6 @@ namespace NGK.CorrosionMonitoringSystem.Services
         #endregion
 
         #region Methods
-
-        /// <summary>
-        /// Инициализирует сервис
-        /// </summary>
-        void Initialize();
-
         #endregion
 
         #region Events

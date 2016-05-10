@@ -13,7 +13,8 @@ using System.Diagnostics;
 
 namespace NGK.CorrosionMonitoringSystem.Services
 {
-    public class CanNetworkService: ICanNetworkService, IDisposable
+    public class CanNetworkService: ApplicationServiceBase,
+        ICanNetworkService, IDisposable
     {
         #region Constructors
         /// <summary>
@@ -22,14 +23,14 @@ namespace NGK.CorrosionMonitoringSystem.Services
         /// <param name="application"></param>
         /// <param name="networkManager"></param>
         /// <param name="pollingInterval">Интервал обновления CAN-устройства, мсек</param>
-        public CanNetworkService(IApplicationController application, 
-            INgkCanNetworksManager networkManager, double pollingInterval)
+        public CanNetworkService(string serviceName, 
+            INgkCanNetworksManager networkManager, double pollingInterval):
+            base(serviceName)
         {
             _NetworkManager = networkManager;
             _NetworkManager.NetworkChangedStatus += 
                 new EventHandler<NetworkChangedStatusEventAgrs>(
                 EventHandler_NetworkManager_NetworkChangedStatus);
-            _Application = application;
 
             _Devices = new BindingList<NgkCanDevice>();
 
@@ -37,9 +38,6 @@ namespace NGK.CorrosionMonitoringSystem.Services
             _Timer.AutoReset = true;
             _Timer.Interval = pollingInterval;
             _Timer.Elapsed += new ElapsedEventHandler(EventHandler_Timer_Elapsed);
-
-            //Исключения для тестирования логирования падения приложения
-            //throw new Exception("Тестовое исключение");
         }
 
         #endregion
@@ -47,17 +45,22 @@ namespace NGK.CorrosionMonitoringSystem.Services
         #region Fields And Properties
 
         INgkCanNetworksManager _NetworkManager;
-        IApplicationController _Application;
         Timer _Timer;
         ParametersPivotTable _ParatemersPivotTable;
 
         BindingList<NgkCanDevice> _Devices;
+        /// <summary>
+        /// Список устройств в системе
+        /// </summary>
         public BindingList<NgkCanDevice> Devices 
         { 
             get { return _Devices; } 
         }
 
-        int _FaultyDevices;    
+        int _FaultyDevices;
+        /// <summary>
+        /// Количество неисправных устройств
+        /// </summary>
         public int FaultyDevices 
         { 
             get { return _FaultyDevices; }
@@ -71,21 +74,10 @@ namespace NGK.CorrosionMonitoringSystem.Services
 
             } 
         }
-
-        public Status Status
-        {
-            get { return _Timer.Enabled ? Status.Running : Status.Stopped; }
-            set
-            {
-                switch (value)
-                {
-                    case Status.Running: { Start(); break; }
-                    case Status.Stopped: { Start(); break; }
-                    default: { throw new NotSupportedException(); }
-                }
-            }
-        }
-
+        /// <summary>
+        /// Сводная таблица параметров системы коррозионного 
+        /// мониторинга
+        /// </summary>
         public DataTable ParametersPivotTable 
         {
             get { return _ParatemersPivotTable.PivotTable; } 
@@ -95,7 +87,7 @@ namespace NGK.CorrosionMonitoringSystem.Services
 
         #region Methods
 
-        public void Initialize()
+        public override void  Initialize(object context)
         {
             _Devices.Clear();
 
@@ -109,13 +101,14 @@ namespace NGK.CorrosionMonitoringSystem.Services
 
             _ParatemersPivotTable = new ParametersPivotTable(
                 (new List<NgkCanDevice>(_Devices)).ToArray());
+
+            base.Initialize(context);
         }
 
-        public void Start()
+        public override void Start()
         {
-            if (Status == Status.Running)
-                return;
-            
+            base.Start();
+
             StartCanNetwork();
 
             _Devices.Clear();
@@ -132,17 +125,15 @@ namespace NGK.CorrosionMonitoringSystem.Services
             OnStatusWasChanged();
         }
 
-        public void Stop()
+        public override void Stop()
         {
-            if (Status == Status.Stopped)
-                return;
-
+            base.Stop();
             _Timer.Stop();
             StopCanNetwork();
             OnStatusWasChanged();
         }
 
-        public void Suspend()
+        public override void Suspend()
         {
             throw new NotSupportedException(
                 "The method or operation is not implemented.");
@@ -171,7 +162,7 @@ namespace NGK.CorrosionMonitoringSystem.Services
             }
         }
 
-        public void Dispose()
+        public override void Dispose()
         {
             if (_Timer != null)
                 _Timer.Dispose();
@@ -195,7 +186,7 @@ namespace NGK.CorrosionMonitoringSystem.Services
 
         void EventHandler_Timer_Elapsed(object sender, ElapsedEventArgs e)
         {
-            _Application.SyncContext.Post(delegate(object state) 
+            Application.SyncContext.Post(delegate(object state) 
             {
                 IDevice canDevice;
                 int faultyDevices = 0;

@@ -106,6 +106,16 @@ namespace Mvp.WinApplication
 
         void EventHandler_Application_ApplicationExit(object sender, EventArgs e)
         {
+            foreach (ApplicationServiceBase service in _AppServices)
+            {
+                service.Stop();
+            }
+
+            foreach (ApplicationServiceBase service in _AppServices)
+            {
+                service.Dispose();
+            }
+
             OnApplicationClosing();
         }
 

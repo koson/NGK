@@ -25,8 +25,6 @@ namespace NGK.CorrosionMonitoringSystem.Managers
             _Logger = null; //TODO: Не реализовано
             _SystemLogger = null; //TODO: Не реализовано
             _WindowsFactory = new PresentersFactory(application, this);
-            _CanNetwrokService = new CanNetworkService(application, 
-                NgkCanNetworksManager.Instance, 300);
             _ModbusSystemInfoNetworkService = 
                 new SystemInformationModbusNetworkService(application, this, 
                 _ConfigManager.ModbusAddress, 400);
@@ -40,7 +38,6 @@ namespace NGK.CorrosionMonitoringSystem.Managers
         ISysLogManager _SystemLogger;
         ILogManager _Logger;
         PresentersFactory _WindowsFactory;
-        CanNetworkService _CanNetwrokService;
         SystemInformationModbusNetworkService _ModbusSystemInfoNetworkService;
 
         IApplicationController _Application;
@@ -81,7 +78,15 @@ namespace NGK.CorrosionMonitoringSystem.Managers
 
         public ICanNetworkService CanNetworkService
         {
-            get { return _CanNetwrokService; }
+            get 
+            { 
+                foreach(ApplicationServiceBase service in _Application.AppServices)
+                {
+                    if (service.ServiceName == ServiceHelper.ServiceNames.NgkCanService)
+                        return service as ICanNetworkService;
+                }
+                return null; 
+            }
         }
 
         public ISystemInformationModbusNetworkService ModbusSystemInfoNetworkService

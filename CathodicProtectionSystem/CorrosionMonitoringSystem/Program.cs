@@ -16,6 +16,7 @@ using Modbus.OSIModel.DataLinkLayer.Slave.RTU.ComPort;
 using Modbus.OSIModel.ApplicationLayer.Slave;
 using Modbus.OSIModel.ApplicationLayer;
 using Common.Controlling;
+using NGK.CorrosionMonitoringSystem.Services;
 
 namespace NGK.CorrosionMonitoringSystem
 {
@@ -106,7 +107,12 @@ namespace NGK.CorrosionMonitoringSystem
             //Загружаем конфигурацию сети CAN НГК ЭХЗ
             presenter.WtriteText("Загрузка конфигурации сети CAN НГК ЭХЗ...");
             LoadCanNetworkConfig();
-            Managers.CanNetworkService.Initialize();
+            //Создаём сетевой сервис и регистрируем его
+            CanNetworkService canNetworkService = new CanNetworkService(
+                ServiceHelper.ServiceNames.NgkCanService,
+                NgkCanNetworksManager.Instance, 300);
+            _Application.RegisterApplicationService(canNetworkService);
+            canNetworkService.Initialize(null);
 
             //Загружаем конфигурацию для сети Modbus 
             presenter.WtriteText("Загрузка конфигурации сети Modbus...");
