@@ -622,9 +622,9 @@ namespace NGK.CAN.ApplicationLayer.Network.Master
                     foreach (Service service in _NetworkServices)
                     {
                         // !!! Для отладки будем управляеть работой сервисов в ручную
-#if !DEBUG 
+//#if !DEBUG 
                         service.Start();
-#endif
+//#endif
                     }
                     
                     //_NetworkServices[ServiceType.NodeGuard].Start();
