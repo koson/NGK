@@ -36,5 +36,6 @@ namespace NGK.CorrosionMonitoringSystem.Managers.AppConfigManager
         Parity SerialPortParity { get; set; }
         int SerialPortDataBits { get; set; }
         StopBits SerialPortStopBits { get; set; }
+        byte ModbusAddress { get; set; }
     }
 }

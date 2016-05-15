@@ -25,9 +25,6 @@ namespace NGK.CorrosionMonitoringSystem.Managers
             _Logger = null; //TODO: Не реализовано
             _SystemLogger = null; //TODO: Не реализовано
             _WindowsFactory = new PresentersFactory(application, this);
-            _ModbusSystemInfoNetworkService = 
-                new SystemInformationModbusNetworkService(application, this, 
-                _ConfigManager.ModbusAddress, 400);
         }
 
         #endregion
@@ -91,7 +88,15 @@ namespace NGK.CorrosionMonitoringSystem.Managers
 
         public ISystemInformationModbusNetworkService ModbusSystemInfoNetworkService
         {
-            get { return _ModbusSystemInfoNetworkService; }
+            get 
+            {
+                foreach (ApplicationServiceBase service in _Application.AppServices)
+                {
+                    if (service.ServiceName == ServiceHelper.ServiceNames.SystemInformationModbusService)
+                        return service as ISystemInformationModbusNetworkService;
+                }
+                return null;
+            }
         }
 
         #endregion

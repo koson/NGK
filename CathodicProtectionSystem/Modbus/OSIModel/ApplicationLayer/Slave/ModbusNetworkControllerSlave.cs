@@ -14,7 +14,8 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
     /// Класс реализует контроллер сети Modubs со стороны slave-устройств 
     /// подключенных в внешней цепи через IDataLinkLayer
     /// </summary>
-    public class ModbusNetworkControllerSlave: ModbusNetworkControllerBase
+    public class ModbusNetworkControllerSlave: 
+        ModbusNetworkControllerBase, IModbusNetworkControllerSlave
     {
         #region Fields and Properties
         /// <summary>
@@ -96,11 +97,11 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
         /// <summary>
         /// Коллекция устройств в данной сети
         /// </summary>
-        DevicesCollection _Devices;
+        ModbusSlaveDevicesCollection _Devices;
         /// <summary>
         /// Возвращает коллекцию устройств в сети
         /// </summary>
-        public DevicesCollection Devices
+        public ModbusSlaveDevicesCollection Devices
         {
             get { return _Devices; }
         }
@@ -160,7 +161,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
             _NetworkName = GetNewName(); 
 
             //Stop();
-            _Devices = new DevicesCollection(this);
+            _Devices = new ModbusSlaveDevicesCollection(this);
             _Devices.ItemsListWasChanged +=
                 new EventHandler(EventHandler_DevicesCollection_ItemsListWasChanged);
         }
@@ -184,7 +185,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
                 _NetworkName = networkName;
             }
 
-            _Devices = new DevicesCollection(this);
+            _Devices = new ModbusSlaveDevicesCollection(this);
             _Devices.ItemsListWasChanged +=
                 new EventHandler(EventHandler_DevicesCollection_ItemsListWasChanged);
 

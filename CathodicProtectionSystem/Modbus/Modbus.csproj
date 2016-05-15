@@ -42,6 +42,7 @@
     <Compile Include="EnumStatus.cs" />
     <Compile Include="OSIModel\ApplicationLayer\ModbusNetworkControllerBase.cs" />
     <Compile Include="OSIModel\ApplicationLayer\ModbusNetworksManager.cs" />
+    <Compile Include="OSIModel\ApplicationLayer\Slave\IModbusNetworkControllerSlave.cs" />
     <Compile Include="OSIModel\ApplicationLayer\WorkMode.cs" />
     <Compile Include="OSIModel\ApplicationLayer\Slave\DataModel\DataTypes\EnumParameterType.cs" />
     <Compile Include="OSIModel\ApplicationLayer\Slave\DataModel\DataTypes\File.cs" />
@@ -65,12 +66,12 @@
     <Compile Include="OSIModel\ApplicationLayer\Slave\DataModel\DataTypes\DiscreteInput.cs" />
     <Compile Include="OSIModel\ApplicationLayer\Slave\DataModel\DataTypes\HoldingRegister.cs" />
     <Compile Include="OSIModel\ApplicationLayer\Slave\DataModel\DataTypes\InputRegister.cs" />
-    <Compile Include="OSIModel\ApplicationLayer\Slave\DevicesCollection.cs" />
+    <Compile Include="OSIModel\ApplicationLayer\Slave\ModbusSlaveDevicesCollection.cs" />
     <Compile Include="OSIModel\ApplicationLayer\Slave\DataModel\DiscretesInputsCollection.cs" />
     <Compile Include="OSIModel\ApplicationLayer\Slave\DataModel\HoldingRegistersCollection.cs" />
     <Compile Include="OSIModel\ApplicationLayer\Slave\DataModel\InputRegistersCollection.cs" />
     <Compile Include="OSIModel\ApplicationLayer\Slave\NetworkAPI\INetworkFunctions.cs" />
-    <Compile Include="OSIModel\ApplicationLayer\Slave\Device.cs" />
+    <Compile Include="OSIModel\ApplicationLayer\Slave\ModbusSlaveDevice.cs" />
     <Compile Include="OSIModel\ApplicationLayer\Slave\ModbusNetworkControllerSlave.cs" />
     <Compile Include="OSIModel\ApplicationLayer\Slave\NetworkErrorOccurredEventHandler.cs" />
     <Compile Include="OSIModel\ApplicationLayer\ModbusNetworksCollection.cs" />

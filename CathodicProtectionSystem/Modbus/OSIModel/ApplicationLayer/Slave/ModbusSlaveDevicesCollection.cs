@@ -9,7 +9,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
     /// <summary>
     /// Класс реализует коллекцию slave modbus-устройств
     /// </summary>
-    public class DevicesCollection: KeyedCollection<Byte, ModbusSlaveDevice>
+    public class ModbusSlaveDevicesCollection: KeyedCollection<Byte, ModbusSlaveDevice>
     {
         #region Fields and Properties
         /// <summary>
@@ -29,7 +29,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
         /// <summary>
         /// 
         /// </summary>
-        private DevicesCollection()
+        private ModbusSlaveDevicesCollection()
         { 
             throw new NotImplementedException(); 
         }
@@ -37,7 +37,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Slave
         /// 
         /// </summary>
         /// <param name="network"></param>
-        public DevicesCollection(ModbusNetworkControllerSlave network)
+        public ModbusSlaveDevicesCollection(ModbusNetworkControllerSlave network)
         {
             if (network == null)
             {

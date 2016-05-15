@@ -22,7 +22,8 @@ using NGK.CAN.ApplicationLayer.Network.Master;
 
 namespace NGK.CorrosionMonitoringSystem.Services
 {
-    public class SystemInformationModbusNetworkService : ISystemInformationModbusNetworkService
+    public class SystemInformationModbusNetworkService : ApplicationServiceBase,
+        ISystemInformationModbusNetworkService, IDisposable
     {
         #region Constructors      
         /// <summary>
@@ -30,12 +31,13 @@ namespace NGK.CorrosionMonitoringSystem.Services
         /// </summary>
         /// <param name="application"></param>
         /// <param name="pollingInterval">Интервал обновления Modbus-устройства, мсек</param>
-        public SystemInformationModbusNetworkService(IApplicationController application,
-            IManagers managers, byte networkAddress,  double pollingInterval)
+        public SystemInformationModbusNetworkService(string serviceName,
+            IManagers managers, IModbusNetworkControllerSlave network, 
+            byte networkAddress,  double pollingInterval):
+            base(serviceName)
         {
-            _Application = application;
             _Managers = managers;
-
+            _Network = network;
             Address = networkAddress;
 
             _Timer = new Timer(pollingInterval);
@@ -48,29 +50,11 @@ namespace NGK.CorrosionMonitoringSystem.Services
 
         #region Fields And Properties
 
-        public Status Status
-        {
-            get
-            {
-                return _Timer.Enabled ? Status.Running : Status.Stopped;
-            }
-            set
-            {
-                switch (value)
-                {
-                    case Status.Running: { Start(); break; }
-                    case Status.Stopped: { Stop(); break; }
-                    default: { throw new NotSupportedException(); }
-                }
-            }
-        }
-
-        IApplicationController _Application;
         IManagers _Managers;
         /// <summary>
         /// Контроллер modbus сеть в режиме slave
         /// </summary>
-        ModbusNetworkControllerSlave _Network;
+        IModbusNetworkControllerSlave _Network;
         /// <summary>
         /// Устройство modbus блока КССМУ
         /// </summary>
@@ -127,38 +111,31 @@ namespace NGK.CorrosionMonitoringSystem.Services
 
         #region Methods
 
-        public void Start()
+        public override void OnStarting()
         {
-            if (_Network == null)
-                throw new InvalidOperationException("Попытка запуска неинициализированного сервиса");
-
-            if (Status == Status.Running)
-                return;
-
             _Timer.Start();
-            OnStatusWasChanged();
         }
 
-        public void Stop()
+        public override void OnStopping()
         {
-            if (Status == Status.Stopped)
-                return;
-
             _Timer.Stop();
-            OnStatusWasChanged();
         }
 
-        public void Suspend()
+        public override void Suspend()
         {
             throw new NotSupportedException();
         }
 
-        public void Dispose() {}
-
-        public void Initialize()
+        public override void Dispose() 
         {
-            _Network = (ModbusNetworkControllerSlave)ModbusNetworksManager.Instance
-                .Networks[_Managers.ConfigManager.ModbusSystemInfoNetworkName];
+            if (_Timer != null)
+                _Timer.Dispose();
+
+            base.Dispose();
+        }
+
+        public override void Initialize(object context)
+        {
             _Network.Devices.Clear();
             
             // Создаём slave-устройства и добавляем его в Modbus-сеть
@@ -194,6 +171,8 @@ namespace NGK.CorrosionMonitoringSystem.Services
                 // Создаём для него контекст для данного устройства
                 _Context.Add(new ModbusServiceContext(device, modbusDevice)); 
             }
+
+            base.Initialize(context);
         }
         /// <summary>
         /// Создаёт modbus slave-устройство КССМУ 

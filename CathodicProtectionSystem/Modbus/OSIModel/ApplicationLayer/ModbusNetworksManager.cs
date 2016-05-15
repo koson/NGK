@@ -56,6 +56,29 @@ namespace Modbus.OSIModel.ApplicationLayer
             get { return _Networks; }
         }
         /// <summary>
+        /// Сети Modbus типа Slave;
+        /// </summary>
+        public IModbusNetworkControllerSlave[] SlaveNetworks
+        {
+            get
+            {
+                List<IModbusNetworkControllerSlave> result = new List<IModbusNetworkControllerSlave>();
+
+                foreach (ModbusNetworkControllerBase network in _Networks)
+                {
+                    if (network is IModbusNetworkControllerSlave)
+                    {
+                        result.Add(network as IModbusNetworkControllerSlave);
+                    }
+                }
+                return result.ToArray();
+            }
+        }
+
+        //public IModbusNetworkControllerMaster MasterNetworks
+        //{ 
+        //}
+        /// <summary>
         /// Объект для синхронизации
         /// </summary>
         static object SyncRoot = new object();

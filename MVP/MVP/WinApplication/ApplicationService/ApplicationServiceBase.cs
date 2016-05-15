@@ -128,7 +128,7 @@ namespace Mvp.WinApplication
             _Application = application;
         }
 
-        protected void OnStatusWasChanged()
+        protected virtual void OnStatusWasChanged()
         {
             if (StatusWasChanged != null)
             {

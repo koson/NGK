@@ -107,17 +107,10 @@ namespace NGK.CorrosionMonitoringSystem
             //Загружаем конфигурацию сети CAN НГК ЭХЗ
             presenter.WtriteText("Загрузка конфигурации сети CAN НГК ЭХЗ...");
             LoadCanNetworkConfig();
-            //Создаём сетевой сервис и регистрируем его
-            CanNetworkService canNetworkService = new CanNetworkService(
-                ServiceHelper.ServiceNames.NgkCanService,
-                NgkCanNetworksManager.Instance, 300);
-            _Application.RegisterApplicationService(canNetworkService);
-            canNetworkService.Initialize(null);
 
             //Загружаем конфигурацию для сети Modbus 
             presenter.WtriteText("Загрузка конфигурации сети Modbus...");
             LoadModbusNetworkConfig();
-            Managers.ModbusSystemInfoNetworkService.Initialize();
 
             System.Threading.Thread.Sleep(300);
             presenter.WtriteText("Загрузка БД...");
@@ -127,8 +120,10 @@ namespace NGK.CorrosionMonitoringSystem
             
             presenter.WtriteText("Запуск системы мониторинга...");
             Managers.CanNetworkService.Start();
-            presenter.WtriteText("Запуск Modbus-сервиса поддержики систем верхнего уровня...");
+            //TODO: создать запись в журнал
+            presenter.WtriteText("Запуск информационного Modbus-сервиса...");
             Managers.ModbusSystemInfoNetworkService.Start();
+            //TODO: создать запись в журнал
 
             _Logger.Info("Приложение запущено");
         }
@@ -139,6 +134,13 @@ namespace NGK.CorrosionMonitoringSystem
             {
                 NgkCanNetworksManager.Instance.LoadConfig(Application.StartupPath +
                     @"\newtorkconfig.bin.nwc");
+
+                //Создаём сетевой сервис и регистрируем его
+                CanNetworkService canNetworkService = new CanNetworkService(
+                    ServiceHelper.ServiceNames.NgkCanService,
+                    NgkCanNetworksManager.Instance, 300);
+                _Application.RegisterApplicationService(canNetworkService);
+                canNetworkService.Initialize(null);
             }
             catch
             {
@@ -164,6 +166,13 @@ namespace NGK.CorrosionMonitoringSystem
                 ModbusNetworkControllerSlave modbusNetwork = new ModbusNetworkControllerSlave(
                     Managers.ConfigManager.ModbusSystemInfoNetworkName, serialPort);
                 ModbusNetworksManager.Instance.Networks.Add(modbusNetwork);
+
+                // Создаём сервис приложения
+                SystemInformationModbusNetworkService modbusSystemInfoNetworkService = 
+                    new SystemInformationModbusNetworkService(ServiceHelper.ServiceNames.SystemInformationModbusService, 
+                    Managers, modbusNetwork, Managers.ConfigManager.ModbusAddress, 400);
+                _Application.RegisterApplicationService(modbusSystemInfoNetworkService);
+                modbusSystemInfoNetworkService.Initialize(null);
             }
             catch
             {

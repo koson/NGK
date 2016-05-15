@@ -130,8 +130,7 @@ namespace NGK.CorrosionMonitoringSystem.Services
 
         public override void Suspend()
         {
-            throw new NotSupportedException(
-                "The method or operation is not implemented.");
+            throw new NotSupportedException();
         }
 
         void StartCanNetwork()
@@ -161,12 +160,6 @@ namespace NGK.CorrosionMonitoringSystem.Services
         {
             if (_Timer != null)
                 _Timer.Dispose();
-        }
-
-        void OnStatusWasChanged()
-        {
-            if (StatusWasChanged != null)
-                StatusWasChanged(this, new EventArgs());
         }
 
         void OnFaultyDevicesChanged()
@@ -214,7 +207,6 @@ namespace NGK.CorrosionMonitoringSystem.Services
         #region Events
 
         public event EventHandler FaultyDevicesChanged;
-        public event EventHandler StatusWasChanged;
         
         #endregion
     }
