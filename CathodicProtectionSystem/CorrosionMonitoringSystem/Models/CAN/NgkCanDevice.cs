@@ -11,7 +11,7 @@ using NGK.CAN.ApplicationLayer.Network.Devices.Profiles;
 namespace NGK.CorrosionMonitoringSystem.Models
 {
     [Serializable]
-    public sealed class NgkCanDevice
+    public sealed class NgkCanDevice: INotifyPropertyChanged
     {
         #region Helper
         
@@ -90,6 +90,7 @@ namespace NGK.CorrosionMonitoringSystem.Models
             set 
             {
                 _Parameters[ParameterNames.DEVICE_STATUS].Value = value;
+                OnPropertyChanged("Status");
             }
         }
 
@@ -251,6 +252,8 @@ namespace NGK.CorrosionMonitoringSystem.Models
 
         #endregion
 
+        #region Method
+
         public static void Update(NgkCanDevice device, IDevice canDevice)
         {
             string msg;
@@ -319,5 +322,19 @@ namespace NGK.CorrosionMonitoringSystem.Models
                 }
             }
         }
+
+        public void OnPropertyChanged(string propertyName)
+        {
+            if (PropertyChanged != null)
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        #endregion
+
+        #region INotifyPropertyChanged Members
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        #endregion
     }
 }

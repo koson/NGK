@@ -11,7 +11,7 @@ using Common.Controlling;
 namespace NGK.CAN.ApplicationLayer.Network.Master.Services
 {
     /// <summary>
-    /// 
+    /// Сервис для синхронизации даты и времени в сети.
     /// </summary>
     public sealed class ServicePdoReceive: Service
     {

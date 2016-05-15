@@ -7,6 +7,7 @@ using NGK.CAN.ApplicationLayer.Network.Master;
 using NGK.CAN.DataTypes;
 using NGK.CAN.ApplicationLayer.Network.Devices;
 using NGK.CAN.ApplicationLayer.Network.Devices.ObjectDictionary;
+using System.ComponentModel;
 
 namespace NGK.CorrosionMonitoringSystem.Models
 {
@@ -14,11 +15,11 @@ namespace NGK.CorrosionMonitoringSystem.Models
     /// Класс формирует сводную таблицу значений объектов словаря каждого устройства сети
     /// (только для КИП). Следит за изменениями этих параметров.
     /// </summary>
-    public class ParametersPivotTable
+    public class ParametersPivotTable : INotifyPropertyChanged
     {
         #region Constructors
 
-        public ParametersPivotTable(NgkCanDevice[] devices)
+        public ParametersPivotTable(BindingList<NgkCanDevice> devices)
         {
             _Devices = devices;
             // Создаём таблицу
@@ -45,7 +46,7 @@ namespace NGK.CorrosionMonitoringSystem.Models
         /// <summary>
         /// Список устройств в сети относящихся к КИП 
         /// </summary>
-        NgkCanDevice[] _Devices;
+        BindingList<NgkCanDevice> _Devices;
 
         #endregion
 
@@ -55,13 +56,12 @@ namespace NGK.CorrosionMonitoringSystem.Models
         /// </summary>
         public void Update()
         {
-            for (int i = 0; i < _Devices.Length; i++)
+            for (int i = 0; i < _Devices.Count; i++)
             {
                 UpdateDivice(_Devices[i]);
             }
             // Генерируем событие
             OnTableWasUpdated();
-            return;
         }
         /// <summary>
         /// Обновляет данные из указанного устройства
@@ -88,7 +88,8 @@ namespace NGK.CorrosionMonitoringSystem.Models
                     break;
                 }
             }
-            row["PolarisationPotential_2008"] = device.Parameters["polarization_pot"].Value; //index = 0x2008;
+            
+            row["PolarisationPotential_2008"] = device.Parameters["polarization_pot"].Value; //index = 0x2008;            
             row["ProtectionPotential_2009"] = device.Parameters["protection_pot"].Value; //index = 0x2009;
             row["ProtectionCurrent_200B"] = device.Parameters["protection_cur"].Value; //index = 0x200B;
             row["PolarisationCurrent_200С"] = device.Parameters["polarization_cur"].Value; //index = 0x200C;
@@ -233,6 +234,12 @@ namespace NGK.CorrosionMonitoringSystem.Models
             return;
         }
 
+        private void OnPropertyChanged(string propertyName)
+        {
+            if (PropertyChanged != null)
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+        }
+
         #endregion
 
         #region Events
@@ -241,6 +248,8 @@ namespace NGK.CorrosionMonitoringSystem.Models
         /// </summary>
         public event EventHandler TableWasUpdated;
 
+        public event PropertyChangedEventHandler PropertyChanged;
+        
         #endregion
-    }// End Of Class
-}// End Of Namespace
+    }
+}

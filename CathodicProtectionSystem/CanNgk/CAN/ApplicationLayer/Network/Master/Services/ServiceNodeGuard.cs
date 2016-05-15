@@ -344,11 +344,11 @@ namespace NGK.CAN.ApplicationLayer.Network.Master.Services
             
             device = _Context.CurrentDevice;
             
-            if (device.Device.Status == DeviceStatus.CommunicationError)
-            {
+            //if (device.Device.Status == DeviceStatus.CommunicationError)
+            //{
                 // Если устройство не доступно, пропускаем его
-                return;
-            }
+                //return;
+            //}
 
             // Проверяем статус запроса 
             if (device.CurrentTransaction == null)

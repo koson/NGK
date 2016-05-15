@@ -99,8 +99,7 @@ namespace NGK.CorrosionMonitoringSystem.Services
                 }
             }
 
-            _ParatemersPivotTable = new ParametersPivotTable(
-                (new List<NgkCanDevice>(_Devices)).ToArray());
+            _ParatemersPivotTable = new ParametersPivotTable(_Devices); 
 
             base.Initialize(context);
         }
@@ -167,7 +166,7 @@ namespace NGK.CorrosionMonitoringSystem.Services
             if (FaultyDevicesChanged != null)
                 FaultyDevicesChanged(this, new EventArgs());
         }
-
+        
         #endregion
 
         #region Event Handlers
@@ -207,7 +206,7 @@ namespace NGK.CorrosionMonitoringSystem.Services
         #region Events
 
         public event EventHandler FaultyDevicesChanged;
-        
+
         #endregion
     }
 }

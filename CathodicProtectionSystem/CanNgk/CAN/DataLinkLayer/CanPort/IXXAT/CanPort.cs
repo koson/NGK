@@ -1482,6 +1482,14 @@ namespace NGK.CAN.DataLinkLayer.CanPort.IXXAT
                                     //    canMessage.TimeStamp, canMessage.Identifier, canMessage.DataLength));
                                     //Trace.TraceInformation("{0}: class CanPort.ReceiveMessages: TimeStamp: {1,10}  ID: {2,3:X}  DLC: {3,1}  Data:",
                                     //    DateTime.Now.ToString(new System.Globalization.CultureInfo("ru-Ru", false)), canMessage.TimeStamp, canMessage.Identifier, canMessage.DataLength);
+                                    
+                                    // Ловим это, отправляемых сообщений
+                                    if (canMessage.SelfReceptionRequest == true)
+                                    {
+                                        Debug.WriteLine(String.Format("Message was sent: {0}", canMessage.ToString()));
+                                        break;
+                                    }
+                                    
                                     message = new Frame();
                                     message.TimeStamp = canMessage.TimeStamp;
                                     message.Identifier = canMessage.Identifier;
@@ -1886,7 +1894,9 @@ namespace NGK.CAN.DataLinkLayer.CanPort.IXXAT
                 //#endif
 
                 // Write the CAN message into the transmit FIFO
+                Debug.WriteLine(String.Format("Send: {0}", canMsg.ToString()));
                 this._Writer.SendMessage(canMsg);
+                Debug.WriteLine(String.Format("Buffer: {0}", this._Writer.FreeCount));
             }
             return;
         }
