@@ -61,8 +61,14 @@ namespace Mvp.WinApplication
         public virtual void Start()
         {
             if (IsInitialized)
+            {
                 if (Status != Status.Running)
+                {
+                    OnStarting();
                     Status = Status.Running;
+                    OnStatusWasChanged();
+                }
+            }
             else
                 throw new InvalidOperationException("Попытка запустить не инициализированный сервис");
         }
@@ -70,20 +76,36 @@ namespace Mvp.WinApplication
         public virtual void Stop()
         {
             if (IsInitialized)
+            {
                 if (Status != Status.Stopped)
+                {
+                    OnStopping();
                     Status = Status.Stopped;
-                else
-                    throw new InvalidOperationException("Попытка остановить не инициализированный сервис");
+                    OnStatusWasChanged();
+                }
+            }
+            else
+                throw new InvalidOperationException("Попытка остановить не инициализированный сервис");
         }
 
         public virtual void Suspend()
         {
             if (IsInitialized)
+            {
                 if (Status == Status.Running)
+                {
+                    OnSuspending();
                     Status = Status.Paused;
-                else
-                    throw new InvalidOperationException("Попытка приостановить не инициализированный сервис");
+                    OnStatusWasChanged();
+                }
+            }
+            else
+                throw new InvalidOperationException("Попытка приостановить не инициализированный сервис");
         }
+
+        public virtual void OnStarting() { }
+        public virtual void OnStopping() { }
+        public virtual void OnSuspending() { }
 
         public virtual void Initialize(object context)
         {

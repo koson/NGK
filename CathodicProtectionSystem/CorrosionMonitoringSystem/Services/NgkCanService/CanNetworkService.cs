@@ -105,10 +105,8 @@ namespace NGK.CorrosionMonitoringSystem.Services
             base.Initialize(context);
         }
 
-        public override void Start()
+        public override void OnStarting()
         {
-            base.Start();
-
             StartCanNetwork();
 
             _Devices.Clear();
@@ -122,15 +120,12 @@ namespace NGK.CorrosionMonitoringSystem.Services
             }
 
             _Timer.Start();
-            OnStatusWasChanged();
         }
 
-        public override void Stop()
+        public override void OnStopping()
         {
-            base.Stop();
             _Timer.Stop();
             StopCanNetwork();
-            OnStatusWasChanged();
         }
 
         public override void Suspend()
