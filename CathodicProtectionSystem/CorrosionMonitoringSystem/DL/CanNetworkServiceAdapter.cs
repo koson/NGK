@@ -128,7 +128,7 @@ namespace NGK.CorrosionMonitoringSystem.BL
 
             dvc = NgkCanNetworksManager.Instance.Networks[device.NetworkId]
                 .Devices[device.NodeId];
-            NgkCanDevice.Update(device, dvc);
+            device.Update(dvc);
         }
         /// <summary>
         /// Обновляет значения объектного словаря устройства
@@ -141,7 +141,7 @@ namespace NGK.CorrosionMonitoringSystem.BL
             dvc = NgkCanNetworksManager.Instance.Networks[device.NetworkId]
                 .Devices[device.NodeId];
             // Обновляем словарь объектов модели
-            NgkCanDevice.Update(device, dvc);
+            device.Update(dvc);
         }
 
         #endregion

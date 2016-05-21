@@ -182,7 +182,7 @@ namespace NGK.CorrosionMonitoringSystem.Services
                 {
                     canDevice = NgkCanNetworksManager.Instance.Networks[device.NetworkId]
                         .Devices[device.NodeId];
-                    NgkCanDevice.Update(device, canDevice);
+                    device.Update(canDevice);
 
                     if (canDevice.Status == DeviceStatus.CommunicationError)
                         faultyDevices++;

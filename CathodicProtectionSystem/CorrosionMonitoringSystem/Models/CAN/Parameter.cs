@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text;
 using System.ComponentModel;
 using NGK.CAN.ApplicationLayer.Network.Devices.Profiles.ObjectDictionary;
@@ -10,7 +11,7 @@ using NGK.CAN.ApplicationLayer.Network.Devices.Profiles;
 
 namespace NGK.CorrosionMonitoringSystem.Models
 {
-    public class Parameter
+    public class Parameter : INotifyPropertyChanged
     {
         #region Constructors
 
@@ -167,7 +168,11 @@ namespace NGK.CorrosionMonitoringSystem.Models
         public string Name
         {
             get { return _Name; }
-            set { _Name = value; }
+            set 
+            { 
+                _Name = value;
+                OnPropertyChanged("Name");
+            }
         }
 
         private string _Description;
@@ -182,7 +187,11 @@ namespace NGK.CorrosionMonitoringSystem.Models
         public string Description
         {
             get { return _Description; }
-            set { _Description = value; }
+            set 
+            { 
+                _Description = value;
+                OnPropertyChanged("Description");
+            }
         }
 
         private bool _ReadOnly;
@@ -197,7 +206,11 @@ namespace NGK.CorrosionMonitoringSystem.Models
         public bool ReadOnly
         {
             get { return _ReadOnly; }
-            set { _ReadOnly = value; }
+            set 
+            { 
+                _ReadOnly = value;
+                OnPropertyChanged("ReadOnly");
+            }
         }
 
         private bool _Visible;
@@ -213,7 +226,11 @@ namespace NGK.CorrosionMonitoringSystem.Models
         public bool Visible
         {
             get { return _Visible; }
-            set { _Visible = value; }
+            set 
+            { 
+                _Visible = value;
+                OnPropertyChanged("Visible");
+            }
         }
 
         private string _DisplayName;
@@ -228,7 +245,11 @@ namespace NGK.CorrosionMonitoringSystem.Models
         public string DisplayName
         {
             get { return _DisplayName; }
-            set { _DisplayName = value; }
+            set 
+            { 
+                _DisplayName = value;
+                OnPropertyChanged("DisplayName");
+            }
         }
 
         private string _MeasureUnit;
@@ -243,7 +264,11 @@ namespace NGK.CorrosionMonitoringSystem.Models
         public string MeasureUnit
         {
             get { return _MeasureUnit; }
-            set { _MeasureUnit = value; }
+            set 
+            { 
+                _MeasureUnit = value;
+                OnPropertyChanged("MeasureUnit");
+            }
         }
 
         private ObjectCategory _Category;
@@ -258,7 +283,11 @@ namespace NGK.CorrosionMonitoringSystem.Models
         public ObjectCategory Category
         {
             get { return _Category; }
-            set { _Category = value; }
+            set 
+            { 
+                _Category = value;
+                OnPropertyChanged("Category");
+            }
         }
 
         private object _Value;
@@ -273,7 +302,11 @@ namespace NGK.CorrosionMonitoringSystem.Models
         public Object Value
         {
             get { return _Value; }
-            set { _Value = value; }
+            set 
+            { 
+                _Value = value;
+                OnPropertyChanged("Value");
+            }
         }
 
         private DateTime _Modified;
@@ -288,7 +321,11 @@ namespace NGK.CorrosionMonitoringSystem.Models
         public DateTime Modified
         {
             get { return _Modified; }
-            set { _Modified = value; }
+            set 
+            { 
+                _Modified = value;
+                OnPropertyChanged("Modified");
+            }
         }
 
         private ObjectStatus _Status;
@@ -304,7 +341,11 @@ namespace NGK.CorrosionMonitoringSystem.Models
         public ObjectStatus Status
         {
             get { return _Status; }
-            set { _Status = value; }
+            set 
+            { 
+                _Status = value;
+                OnPropertyChanged("Status");
+            }
         }
 
         #endregion
@@ -319,6 +360,18 @@ namespace NGK.CorrosionMonitoringSystem.Models
             return new Parameter(true, false, paramName, displayName,
                 description, readOnly, visible, measureUnit, category, deviceType, 0, value);
         }
+
+        void OnPropertyChanged(string parameterName)
+        {
+            if (PropertyChanged != null)
+                PropertyChanged(this, new PropertyChangedEventArgs(parameterName));
+        }
+
+        #endregion
+
+        #region INotifyPropertyChanged Members
+
+        public event PropertyChangedEventHandler PropertyChanged;
 
         #endregion
     }

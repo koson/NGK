@@ -254,32 +254,32 @@ namespace NGK.CorrosionMonitoringSystem.Models
 
         #region Method
 
-        public static void Update(NgkCanDevice device, IDevice canDevice)
+        public void Update(IDevice canDevice)
         {
             string msg;
 
-            if (device.Id != canDevice.Id)
+            if (Id != canDevice.Id)
             {
                 msg = String.Format(
                     "Ќе удалось обновить параметры устройтсва. Ќе совпадает Id устройств");
                 throw new InvalidOperationException(msg);
             }
 
-            if (device.NetworkId == 0)
+            if (NetworkId == 0)
             {
                 // Ќе обновл€ем устройство, если оно неприв€зано к сети
                 return;
             }
 
-            device.Status = canDevice.Status;
+            Status = canDevice.Status;
 
-            if (!((device.Status == DeviceStatus.ConfigurationError) || 
-                (device.Status == DeviceStatus.Operational)))
+            if (!((Status == DeviceStatus.ConfigurationError) ||
+                (Status == DeviceStatus.Operational)))
             {
                 return;
             }
 
-            foreach (Parameter parameter in device.Parameters)
+            foreach (Parameter parameter in Parameters)
             {
                 if (parameter.IsSpecialParameter)
                 {
@@ -306,7 +306,7 @@ namespace NGK.CorrosionMonitoringSystem.Models
                         }
 
                         parameter.Modified = modified;
-                        parameter.Value = CanDevicePrototype.GetProfile(device.DeviceType)
+                        parameter.Value = CanDevicePrototype.GetProfile(DeviceType)
                             .ComplexParameters[parameter.Name].Converter.ConvertTo(values.ToArray());
                     }
                     else
@@ -323,7 +323,7 @@ namespace NGK.CorrosionMonitoringSystem.Models
             }
         }
 
-        public void OnPropertyChanged(string propertyName)
+        void OnPropertyChanged(string propertyName)
         {
             if (PropertyChanged != null)
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
