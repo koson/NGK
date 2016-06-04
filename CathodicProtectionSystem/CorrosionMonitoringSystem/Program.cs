@@ -17,12 +17,13 @@ using Modbus.OSIModel.ApplicationLayer.Slave;
 using Modbus.OSIModel.ApplicationLayer;
 using Common.Controlling;
 using NGK.CorrosionMonitoringSystem.Services;
+using NGK.CorrosionMonitoringSystem.Managers.LogManager;
 
 namespace NGK.CorrosionMonitoringSystem
 {
     static class Program
     {
-        public static Logger _Logger;
+        public static NLogManager _Logger;
         public static WinFormsApplication _Application;
         public static IManagers Managers;
 
@@ -35,7 +36,7 @@ namespace NGK.CorrosionMonitoringSystem
         [STAThread]
         static void Main()
         {
-            _Logger = LogManager.GetLogger("CorrosionMonitoringSystemLogger");
+            _Logger = new NLogManager("CorrosionMonitoringSystemLogger");
             _Logger.Info("Запуск приложения");
 
             AppDomain.CurrentDomain.UnhandledException +=
@@ -138,7 +139,7 @@ namespace NGK.CorrosionMonitoringSystem
                 //Создаём сетевой сервис и регистрируем его
                 CanNetworkService canNetworkService = new CanNetworkService(
                     ServiceHelper.ServiceNames.NgkCanService,
-                    NgkCanNetworksManager.Instance, 300);
+                    NgkCanNetworksManager.Instance, 300, Managers);
                 _Application.RegisterApplicationService(canNetworkService);
                 canNetworkService.Initialize(null);
             }

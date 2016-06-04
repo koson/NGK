@@ -10,6 +10,7 @@ using Mvp.WinApplication;
 using Common.Controlling;
 using System.Data;
 using System.Diagnostics;
+using NGK.CorrosionMonitoringSystem.Managers;
 
 namespace NGK.CorrosionMonitoringSystem.Services
 {
@@ -24,9 +25,11 @@ namespace NGK.CorrosionMonitoringSystem.Services
         /// <param name="networkManager"></param>
         /// <param name="pollingInterval">Интервал обновления CAN-устройства, мсек</param>
         public CanNetworkService(string serviceName, 
-            INgkCanNetworksManager networkManager, double pollingInterval):
+            INgkCanNetworksManager networkManager, double pollingInterval, IManagers managers):
             base(serviceName)
         {
+            _Managers = managers;
+
             _NetworkManager = networkManager;
             _NetworkManager.NetworkChangedStatus += 
                 new EventHandler<NetworkChangedStatusEventAgrs>(
@@ -44,6 +47,7 @@ namespace NGK.CorrosionMonitoringSystem.Services
 
         #region Fields And Properties
 
+        readonly IManagers _Managers;
         INgkCanNetworksManager _NetworkManager;
         Timer _Timer;
         ParametersPivotTable _ParatemersPivotTable;
@@ -89,13 +93,23 @@ namespace NGK.CorrosionMonitoringSystem.Services
 
         public override void  Initialize(object context)
         {
+            NgkCanDevice ngkDevice;
+
+            foreach (NgkCanDevice item in _Devices)
+            {
+                item.DeviceChangedStatus -= EventHandler_NgkDevice_DeviceChangedStatus;
+            }
+
             _Devices.Clear();
 
             foreach (CanNetworkController network in _NetworkManager.Networks)
             {
                 foreach (IDevice device in network.Devices)
                 {
-                    _Devices.Add(new NgkCanDevice(device));
+                    ngkDevice = new NgkCanDevice(device);
+                    _Devices.Add(ngkDevice);
+                    ngkDevice.DeviceChangedStatus +=
+                        new EventHandler(EventHandler_NgkDevice_DeviceChangedStatus);
                 }
             }
 
@@ -108,15 +122,7 @@ namespace NGK.CorrosionMonitoringSystem.Services
         {
             StartCanNetwork();
 
-            _Devices.Clear();
-
-            foreach (ICanNetworkController network in _NetworkManager.Networks)
-            {
-                foreach (IDevice device in network.Devices)
-                {
-                    _Devices.Add(new NgkCanDevice(device));
-                }
-            }
+            Initialize(null);
 
             _Timer.Start();
         }
@@ -200,6 +206,16 @@ namespace NGK.CorrosionMonitoringSystem.Services
         {
             //TODO: Сделать пометку в журнал и оповещение об отключение сети.
         }
+
+        void EventHandler_NgkDevice_DeviceChangedStatus(object sender, EventArgs e)
+        {
+            NgkCanDevice device = (NgkCanDevice)sender;
+            _Managers.Logger.Info(String.Format(
+                "Устройство NodeId={0}, Network={1} изменило состояние на: {2}", 
+                device.NodeId, device.NetworkName, device.Status));
+        }
+
+
 
         #endregion
 

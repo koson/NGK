@@ -62,6 +62,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Managers\LogManager\NLogManager.cs" />
     <Compile Include="Models\Modbus\RemappingTableKip9811.cs" />
     <Compile Include="Services\ModbusService\ModbusServiceContext.cs" />
     <Compile Include="Models\Modbus\ModbusAddressSpace\KIP9811AddressSpaceHelper.cs" />

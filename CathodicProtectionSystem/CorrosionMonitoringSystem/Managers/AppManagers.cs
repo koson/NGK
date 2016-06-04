@@ -22,7 +22,7 @@ namespace NGK.CorrosionMonitoringSystem.Managers
         {
             _Application = application;
             _ConfigManager = AppConfigManager.ConfigManager.Instance;
-            _Logger = null; //TODO: Не реализовано
+            _Logger = (ILogManager)Program._Logger;
             _SystemLogger = null; //TODO: Не реализовано
             _WindowsFactory = new PresentersFactory(application, this);
         }

@@ -89,8 +89,12 @@ namespace NGK.CorrosionMonitoringSystem.Models
             get { return (DeviceStatus)_Parameters[ParameterNames.DEVICE_STATUS].Value; }
             set 
             {
-                _Parameters[ParameterNames.DEVICE_STATUS].Value = value;
-                OnPropertyChanged("Status");
+                if ((DeviceStatus)_Parameters[ParameterNames.DEVICE_STATUS].Value != value)
+                {
+                    _Parameters[ParameterNames.DEVICE_STATUS].Value = value;
+                    OnPropertyChanged("Status");
+                    OnDeviceChangedStatus();
+                }
             }
         }
 
@@ -329,12 +333,18 @@ namespace NGK.CorrosionMonitoringSystem.Models
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
         }
 
+        void OnDeviceChangedStatus()
+        {
+            if (DeviceChangedStatus != null)
+                DeviceChangedStatus(this, new EventArgs());
+        }
+
         #endregion
 
         #region INotifyPropertyChanged Members
 
         public event PropertyChangedEventHandler PropertyChanged;
-
+        public event EventHandler DeviceChangedStatus;
         #endregion
     }
 }

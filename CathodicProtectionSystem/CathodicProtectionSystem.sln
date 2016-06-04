@@ -17,7 +17,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Utils", "Utils", "{5EB75C60
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeyboradTestUtil", "KeyboradTestUtil\KeyboradTestUtil.csproj", "{4C4CE19F-961D-4D9A-B90C-BA154A34471D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestCanPortNim351", "TestCanPortNim351\TestCanPortNim351.csproj", "{5805974B-8B2F-4B62-B6C7-4B9D2111083B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CanPortNim351Terminal", "TestCanPortNim351\CanPortNim351Terminal.csproj", "{5805974B-8B2F-4B62-B6C7-4B9D2111083B}"
 EndProject
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "SetupCathodicProtectionSystem", "SetupCathodicProtectionSystem\SetupCathodicProtectionSystem.vdproj", "{213C0BE4-7AFF-4807-A9FC-EAE9E035460D}"
 EndProject
