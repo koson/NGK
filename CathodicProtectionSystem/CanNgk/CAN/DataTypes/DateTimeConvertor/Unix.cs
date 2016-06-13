@@ -25,7 +25,10 @@ namespace NGK.CAN.DataTypes.DateTimeConvertor
 
             ts = (dateTime.ToUniversalTime()).Subtract(unixStartTime);
 
-            return System.Convert.ToUInt32(ts.TotalSeconds);
+            if (ts.TotalSeconds >= 0)
+                return System.Convert.ToUInt32(ts.TotalSeconds);
+            else
+                return System.Convert.ToUInt32(unixStartTime.TimeOfDay.TotalSeconds);
         }
         /// <summary>
         /// Преобразует данные в формате хранения времени UNIX-систем

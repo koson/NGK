@@ -34,6 +34,7 @@ namespace NGK.CorrosionMonitoringSystem.Models
                 _MeasureUnit = complexParam.MeasureUnit;
                 _Category = complexParam.Category;
                 _ValueType = complexParam.Converter.ValueType;
+                _DefaultValue = complexParam.DefaultValue;
             }
             else
             {
@@ -46,6 +47,7 @@ namespace NGK.CorrosionMonitoringSystem.Models
                 _MeasureUnit = info.MeasureUnit;
                 _Category = info.Category;
                 _ValueType = info.DataTypeConvertor.OutputDataType;
+                _DefaultValue = info.DataTypeConvertor.ConvertToOutputValue(info.DefaultValue);
             }
 
             _Value = Activator.CreateInstance(_ValueType); 
@@ -56,7 +58,7 @@ namespace NGK.CorrosionMonitoringSystem.Models
         private Parameter(bool isSpecialParam, bool isComplexParam, string paramName, 
             string displayName, string description, bool readOnly, bool visible, 
             string measureUnit, ObjectCategory category, DeviceType deviceType, 
-            UInt16 index, object value)
+            UInt16 index, object value, object defaultValue)
         {
             _IsSpecialParameter = isSpecialParam;
             _IsComplexParameter = isComplexParam;
@@ -309,6 +311,19 @@ namespace NGK.CorrosionMonitoringSystem.Models
             }
         }
 
+        private Object _DefaultValue;
+
+        [Browsable(true)]
+        [ReadOnly(true)]
+        [Category("Параметр")]
+        [DisplayName("Значение по умолчанию")]
+        [Description("Значение параметра (объекта словаря) по умолчанию")]
+        public Object DefaultValue
+        {
+            get { return _DefaultValue; }
+            set { _DefaultValue = value; }
+        }
+
         private DateTime _Modified;
         /// <summary>
         /// Время последнего получения значения объекта
@@ -355,10 +370,10 @@ namespace NGK.CorrosionMonitoringSystem.Models
         public static Parameter CreateSpecialParameter(string paramName,
             string displayName, string description, string measureUnit, 
             bool readOnly, bool visible, ObjectCategory category, 
-            DeviceType deviceType, object value)
+            DeviceType deviceType, object value, object defaultValue)
         {
             return new Parameter(true, false, paramName, displayName,
-                description, readOnly, visible, measureUnit, category, deviceType, 0, value);
+                description, readOnly, visible, measureUnit, category, deviceType, 0, value, defaultValue);
         }
 
         void OnPropertyChanged(string parameterName)

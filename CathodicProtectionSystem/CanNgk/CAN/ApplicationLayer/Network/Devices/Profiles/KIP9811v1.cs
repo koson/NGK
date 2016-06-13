@@ -92,7 +92,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices.Profiles
             // Определяем сложные (составные) объекты:
             _ComplexParameters.Add(new ComplexParameter("SerialNumber", "Серийный номер",
                 "Серийный номер устройства", true, true, string.Empty, 
-                ObjectCategory.System, new SerialNumberConverter(), 
+                ObjectCategory.System, new SerialNumberConverter(), (UInt64)0,
                 0x2003, 0x2004, 0x2005));
 
             _ObjectInfoList.Add(new ObjectInfo(this, 0x2000, "device_type", "Тип устройства",

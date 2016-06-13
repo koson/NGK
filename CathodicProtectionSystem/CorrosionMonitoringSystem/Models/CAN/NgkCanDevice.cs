@@ -180,30 +180,30 @@ namespace NGK.CorrosionMonitoringSystem.Models
             // Добавляем общие для всех устройств параметры
             _Parameters.Add(Parameter.CreateSpecialParameter(ParameterNames.ID, 
                 "GUID", "Уникальный идентификатор устройства", string.Empty, 
-                true, false, ObjectCategory.System, device.DeviceType, device.Id));
+                true, false, ObjectCategory.System, device.DeviceType, device.Id, Guid.Empty));
             _Parameters.Add(Parameter.CreateSpecialParameter(ParameterNames.DEVICE_TYPE,
                 "Тип устройства", "Тип устройства", string.Empty,
-                true, false, ObjectCategory.System, device.DeviceType, device.DeviceType));
+                true, false, ObjectCategory.System, device.DeviceType, device.DeviceType, DeviceType.UnknownTypeOfDevice));
             _Parameters.Add(Parameter.CreateSpecialParameter(ParameterNames.NODE_ID, 
                 "Сетевой адрес", "Сетевой идентификатор устройтсва", string.Empty,
-                true, true, ObjectCategory.System, device.DeviceType, device.NodeId));
+                true, true, ObjectCategory.System, device.DeviceType, device.NodeId, (byte)1));
             _Parameters.Add(Parameter.CreateSpecialParameter(ParameterNames.LOCATION,
                 "Расположение", "Наименование места установки оборудования", string.Empty,
-                true, true, ObjectCategory.System, device.DeviceType, device.LocationName));
+                true, true, ObjectCategory.System, device.DeviceType, device.LocationName, String.Empty));
             _Parameters.Add(Parameter.CreateSpecialParameter(ParameterNames.POLLING_INTERVAL,
                 "Периуд опроса", "Период опроса устройства, мсек", "мсек",
-                true, true, ObjectCategory.System, device.DeviceType, device.PollingInterval));
+                true, true, ObjectCategory.System, device.DeviceType, device.PollingInterval, (uint)1000));
             _Parameters.Add(Parameter.CreateSpecialParameter(ParameterNames.DEVICE_STATUS,
                 "Состояние устройства", "Состояние устройства", string.Empty,
-                true, true, ObjectCategory.System, device.DeviceType, device.Status));
+                true, true, ObjectCategory.System, device.DeviceType, device.Status, DeviceStatus.Stopped));
             _Parameters.Add(Parameter.CreateSpecialParameter(ParameterNames.NETWORK_ID,
                 "ID сети", "ID CAN сети", string.Empty,
                 true, true, ObjectCategory.System, device.DeviceType,
-                device.Network == null ? 0 : device.Network.NetworkId));
+                device.Network == null ? 0 : device.Network.NetworkId, (uint)0));
             _Parameters.Add(Parameter.CreateSpecialParameter(ParameterNames.NETWORK_NAME, 
                 "Сеть CAN", "Наименование сети", string.Empty,
                 true, true, ObjectCategory.System, device.DeviceType,
-                device.Network == null ? "Не установлена" : device.Network.NetworkName));
+                device.Network == null ? "Не установлена" : device.Network.NetworkName, "Не установлена"));
 
             foreach (ObjectInfo info in device.Profile.ObjectInfoList)
             {
@@ -248,6 +248,8 @@ namespace NGK.CorrosionMonitoringSystem.Models
                             parameter.Modified = modified;
                             parameter.Status = dataObject.Status;
                             parameter.Value = dataObject.TotalValue;
+                            parameter.DefaultValue = 
+                                dataObject.Info.DataTypeConvertor.ConvertToOutputValue(dataObject.Info.DefaultValue);
                         }
                     }
                 }
@@ -261,6 +263,7 @@ namespace NGK.CorrosionMonitoringSystem.Models
         public void Update(IDevice canDevice)
         {
             string msg;
+            ObjectInfo objectInfo;
 
             if (Id != canDevice.Id)
             {
@@ -280,6 +283,40 @@ namespace NGK.CorrosionMonitoringSystem.Models
             if (!((Status == DeviceStatus.ConfigurationError) ||
                 (Status == DeviceStatus.Operational)))
             {
+                // Сбрасываем измеренные значения, если устройство 
+                // находиться в состоянии ошибки соединения
+                if (Status == DeviceStatus.CommunicationError)
+                {
+                    foreach (Parameter parameter in Parameters)
+                    {
+                        if (parameter.IsSpecialParameter)
+                        {
+                            continue;
+                        }
+
+                        if (parameter.Category == ObjectCategory.Measured)
+                        {
+                            if (parameter.IsComplexParameter)
+                            {
+                                ComplexParameter cmplx = canDevice.Profile.ComplexParameters[parameter.Name];
+                                if ((ValueType)parameter.Value != (ValueType)cmplx.DefaultValue)
+                                    parameter.Value = cmplx.DefaultValue;
+                            }
+                            else
+                            {
+                                objectInfo =
+                                    canDevice.Profile.ObjectInfoList[parameter.Indexes[0]];
+                                object newValue = 
+                                    objectInfo.DataTypeConvertor.ConvertToOutputValue(objectInfo.DefaultValue);
+                                if (objectInfo.DataTypeConvertor.ConvertToBasis((ValueType)parameter.Value) !=
+                                    objectInfo.DefaultValue)
+                                {
+                                    parameter.Value = newValue;
+                                }    
+                            }
+                        }
+                    }
+                }
                 return;
             }
 

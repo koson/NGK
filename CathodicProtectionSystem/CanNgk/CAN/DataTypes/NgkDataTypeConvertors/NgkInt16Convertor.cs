@@ -46,7 +46,9 @@ namespace NGK.CAN.DataTypes
 
             if (totalValue is Int16)
             {
-                return (UInt32)totalValue;
+                Int32 value = Convert.ToInt32(totalValue); // Учитываем знак
+                UInt32 result = (UInt32)value;
+                return result;
             }
 
             msg = String.Format("Преобразование невозможно. Передан тип {0}, ожидается {1}",
