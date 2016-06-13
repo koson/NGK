@@ -92,6 +92,14 @@ namespace NGK.CorrosionMonitoringSystem.Views
             Dispose();
         }
 
+        public void HideColumn(string columnName)
+        {
+            if (_DataGridView.Columns.Contains(columnName))
+            {
+                _DataGridView.Columns[columnName].Visible = false;
+            }
+        }
+
         #endregion
 
         #region EventHandlers

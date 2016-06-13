@@ -263,6 +263,43 @@ namespace NGK.CorrosionMonitoringSystem.Managers.AppConfigManager
             set { SetParameter("PivotTableCorrosion_speed_2010ColumnWidth", value); }
         }
 
+        public bool PivotTableNodeIdColumnVisble
+        {
+            get { return Boolean.Parse(GetParameter("NodeIdColumnVisble")); }
+        }
+        public bool PivotTableLocationColumnVisble
+        {
+            get { return Boolean.Parse(GetParameter("LocationColumnVisble")); }
+        }
+        public bool PivotTablePolarisationPotentialColumnVisble
+        {
+            get { return Boolean.Parse(GetParameter("PolarisationPotentialColumnVisble")); }
+        }
+        public bool PivotTableProtectionPotentialColumnVisble 
+        {
+            get { return Boolean.Parse(GetParameter("ProtectionPotentialColumnVisble")); }
+        }
+        public bool PivotTableProtectionCurrentColumnVisble
+        {
+            get { return Boolean.Parse(GetParameter("ProtectionCurrentColumnVisble")); }
+        }
+        public bool PivotTablePolarisationCurrentColumnVisble 
+        {
+            get { return Boolean.Parse(GetParameter("PolarisationCurrentColumnVisble")); }
+        }
+        public bool PivotTableCorrosionDepthColumnVisble
+        {
+            get { return Boolean.Parse(GetParameter("CorrosionDepthColumnVisble")); }
+        }
+        public bool PivotTableCorrosionSpeedColumnVisble
+        {
+            get { return Boolean.Parse(GetParameter("CorrosionSpeedColumnVisble")); }
+        }
+        public bool PivotTableTamperColumnVisble
+        {
+            get { return Boolean.Parse(GetParameter("TamperColumnVisble")); }
+        }
+
         #endregion
 
         #region Настройки COM-порта для работы Modbus (Slave)

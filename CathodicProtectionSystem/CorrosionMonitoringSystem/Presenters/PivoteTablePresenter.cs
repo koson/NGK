@@ -26,6 +26,33 @@ namespace NGK.CorrosionMonitoringSystem.Presenters
             _Managers = managers;
      
             view.Parameters = _Managers.CanNetworkService.ParametersPivotTable;
+
+            if (!_Managers.ConfigManager.PivotTableCorrosionDepthColumnVisble)
+                view.HideColumn("Corrosion_depth_200F");
+
+            if (!_Managers.ConfigManager.PivotTableCorrosionSpeedColumnVisble)
+                view.HideColumn("Corrosion_speed_2010");
+
+            if (!_Managers.ConfigManager.PivotTableLocationColumnVisble)
+                view.HideColumn("Location");
+
+            if (!_Managers.ConfigManager.PivotTableNodeIdColumnVisble)
+                view.HideColumn("NodeId");
+
+            if (!_Managers.ConfigManager.PivotTablePolarisationCurrentColumnVisble)
+                view.HideColumn("PolarisationCurrent_200Ñ");
+
+            if (!_Managers.ConfigManager.PivotTablePolarisationPotentialColumnVisble)
+                view.HideColumn("PolarisationPotential_2008");
+
+            if (!_Managers.ConfigManager.PivotTableProtectionCurrentColumnVisble)
+                view.HideColumn("ProtectionCurrent_200B");
+
+            if (!_Managers.ConfigManager.PivotTableProtectionPotentialColumnVisble)
+                view.HideColumn("ProtectionPotential_2009");
+
+            if (!_Managers.ConfigManager.PivotTableTamperColumnVisble)
+                view.HideColumn("Tamper_2015");
         }
         
         #endregion

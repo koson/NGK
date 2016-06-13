@@ -9,5 +9,6 @@ namespace NGK.CorrosionMonitoringSystem.Views
     public interface IPivotTableView : IView
     {
         DataTable Parameters { set; }
+        void HideColumn(string columnName);
     }
 }
