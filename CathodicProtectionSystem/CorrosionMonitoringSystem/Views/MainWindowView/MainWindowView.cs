@@ -162,6 +162,11 @@ namespace NGK.CorrosionMonitoringSystem.Views
             _ButtonF4.Click += new EventHandler(EventHandler_Button_Click);
             _ButtonF5.Click += new EventHandler(EventHandler_Button_Click);
             _ButtonF6.Click += new EventHandler(EventHandler_Button_Click);
+
+            _PanelSystemButtonsRegion.VisibleChanged +=
+                new EventHandler(EventHandler_PanelSystemButtonsRegion_VisibleChanged);
+            _PanelWorkingRegion.GotFocus += 
+                new EventHandler(EventHandler_PanelWorkingRegion_GotFocus);
         }
 
         void EventHandler_Timer_Tick(object sender, EventArgs e)
@@ -187,6 +192,33 @@ namespace NGK.CorrosionMonitoringSystem.Views
         {
             ICommand cmd = (ICommand)sender;
             _ButtonF2.Enabled = cmd.Status;
+        }
+
+        void EventHandler_PanelSystemButtonsRegion_VisibleChanged(object sender, EventArgs e)
+        {
+            Panel control = (Panel)sender;
+
+            // Если панель скрывается, то переводим фокус ввода на рабочий регион
+            if (!control.Visible)
+            {
+                bool result = _PanelWorkingRegion.Focus();
+                result = _PanelWorkingRegion.Focused;
+            }
+            else
+            {
+                if (!_ButtonF6.Focused)
+                    _ButtonF6.Focus();
+            }
+        }
+
+        void EventHandler_PanelWorkingRegion_GotFocus(object sender, EventArgs e)
+        {
+            Panel control = (Panel)sender;
+
+            if (control.Controls.Count > 0)
+            {
+                control.Controls[0].Focus();
+            }
         }
 
         #endregion
