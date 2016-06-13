@@ -14,11 +14,12 @@ namespace Test
         {
             //DataTypesTest.TestDataTypeInfo_GetTotalValue();
             //DataTypesTest.TestDataTypeInfo_SetValue();
+            DataTypesTest.TestNgkInt16Convertor();
             //NetworkControllerTest.NetworkTest();
             //NetworkControllerTest.SerializeNetworkControllerCollectionTest();
             //DeviceClassTest.ToStingTest();
             //DeviceClassTest.CreateFromStringTest();
-            EnumerationTest.Test();
+            //EnumerationTest.Test();
             Console.ReadLine();
         }
     }

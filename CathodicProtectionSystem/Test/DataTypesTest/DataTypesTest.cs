@@ -50,5 +50,29 @@ namespace Test.DataTypes
                 Console.WriteLine("Ошибка: {0}", ex.Message);
             }
         }
+
+        public static void TestNgkInt16Convertor()
+        {
+            Int16 value;
+            UInt32 basis;
+            NgkInt16Converter converter = new NgkInt16Converter();
+
+            try
+            {
+                if (converter.OutputDataType != typeof(Int16))
+                    throw new Exception();
+
+                value = Int16.MaxValue;
+                basis = converter.ConvertToBasis(value);
+                value = (Int16)converter.ConvertToOutputValue(basis);
+
+                value = Int16.MinValue;
+                basis = converter.ConvertToBasis(value);
+                value = (Int16)converter.ConvertToOutputValue(basis);
+            }
+            catch (Exception ex)
+            { 
+            }
+        }
     }
 }

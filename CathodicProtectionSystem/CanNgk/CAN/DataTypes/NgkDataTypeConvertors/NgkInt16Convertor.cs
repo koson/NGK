@@ -37,7 +37,11 @@ namespace NGK.CAN.DataTypes
 
         public override ValueType ConvertToOutputValue(uint basis)
         {
-            return System.Convert.ToInt16(basis);
+            unchecked
+            {
+                return (Int16)basis;
+            }
+            //return System.Convert.ToInt16(basis);
         }
 
         public override uint ConvertToBasis(ValueType totalValue)
