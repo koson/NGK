@@ -22,6 +22,7 @@ namespace NGK.CorrosionMonitoringSystem.Views
             _ViewRegionCollection = new ViewRegionCollection();
             _ViewRegionCollection.Add(new ViewRegion(_PanelWorkingRegion));
             _ViewRegionCollection.Add(new ViewRegion(_PanelTitleRegion));
+            _PanelSystemButtonsRegion.Hide();
         }
 
         #endregion
