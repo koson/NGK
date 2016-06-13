@@ -8,6 +8,7 @@ using System.Windows.Forms;
 using NGK.CorrosionMonitoringSystem.Views;
 using Mvp.View;
 using NGK.CorrosionMonitoringSystem.Models;
+using NGK.CAN.ApplicationLayer.Network.Devices;
 
 namespace NGK.CorrosionMonitoringSystem.Views
 {
@@ -30,9 +31,11 @@ namespace NGK.CorrosionMonitoringSystem.Views
             _DataGridView.Dock = DockStyle.Fill;
             _DataGridView.MultiSelect = false;
             _DataGridView.RowHeadersVisible = false;
-            _DataGridView.RowHeadersWidthSizeMode = 
+            _DataGridView.RowHeadersWidthSizeMode =
                 DataGridViewRowHeadersWidthSizeMode.AutoSizeToDisplayedHeaders;
             _DataGridView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            _DataGridView.RowPostPaint += 
+                new DataGridViewRowPostPaintEventHandler(EventHandler_DataGridView_RowPostPaint);
 
             DataGridViewCellStyle headerCellStyle = new DataGridViewCellStyle();
             headerCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
@@ -43,14 +46,15 @@ namespace NGK.CorrosionMonitoringSystem.Views
 
             _BindingSourceDevices = new BindingSource();
             _BindingSourceDevices.AllowNew = false;
-            _BindingSourceDevices.CurrentItemChanged += 
+            _BindingSourceDevices.CurrentItemChanged +=
                 new EventHandler(EventHandler_BindingSourceDevices_CurrentItemChanged);
-            _BindingSourceDevices.ListChanged += 
+            _BindingSourceDevices.ListChanged +=
                 new System.ComponentModel.ListChangedEventHandler(
                 EventHandler_BindingSourceDevices_ListChanged);
 
             _DataGridView.DataSource = _BindingSourceDevices;
         }
+
 
         #endregion
 
@@ -83,14 +87,14 @@ namespace NGK.CorrosionMonitoringSystem.Views
 
         public BindingList<NgkCanDevice> Devices
         {
-            set 
+            set
             {
                 _BindingSourceDevices.DataSource = null;
                 _BindingSourceDevices.DataSource = value;
             }
         }
 
-        public NgkCanDevice SelectedDevice 
+        public NgkCanDevice SelectedDevice
         {
             get
             {
@@ -98,6 +102,42 @@ namespace NGK.CorrosionMonitoringSystem.Views
                         (NgkCanDevice)_BindingSourceDevices.Current;
             }
         }
+
+        private Color _DeviceIsStoppedColor = Color.Orange;
+        public Color DeviceIsStoppedColor
+        {
+            get { return _DeviceIsStoppedColor; }
+            set { _DeviceIsStoppedColor = value; }
+        }
+
+        private Color _DeviceIsInPreoperationalModeColor = Color.Yellow;
+        public Color DeviceIsInPreoperationalModeColor
+        {
+            get { return _DeviceIsInPreoperationalModeColor; }
+            set { _DeviceIsInPreoperationalModeColor = value; }
+        }
+
+        private Color _DeviceIsInOperationalModeColor = DataGridView.DefaultBackColor;
+        public Color DeviceIsInOperationalModeColor
+        {
+            get { return _DeviceIsInOperationalModeColor; }
+            set { _DeviceIsInOperationalModeColor = value; }
+        }
+
+        private Color _DeviceIsInCommunicationErrorColor = Color.Red;
+        public Color DeviceIsInCommunicationErrorColor
+        {
+            get { return _DeviceIsInCommunicationErrorColor; }
+            set { _DeviceIsInCommunicationErrorColor = value; }
+        }
+
+        private Color _DeviceIsInConfigurationErrorColor = DataGridView.DefaultBackColor;
+        public Color DeviceIsInConfigurationErrorColor
+        {
+            get { return _DeviceIsInConfigurationErrorColor; }
+            set { _DeviceIsInConfigurationErrorColor = value; }
+        }
+
 
         #endregion
 
@@ -129,12 +169,53 @@ namespace NGK.CorrosionMonitoringSystem.Views
             return;
         }
 
+        void EventHandler_DataGridView_RowPostPaint(object sender, DataGridViewRowPostPaintEventArgs e)
+        {
+            DataGridView control = (DataGridView)sender;
+            DataGridViewRow row = control.Rows[e.RowIndex];
+
+            DeviceStatus status = (DeviceStatus)row.Cells["Status"].Value;
+            switch (status)
+            {
+                case DeviceStatus.Stopped:
+                    {
+                        if (row.DefaultCellStyle.BackColor != DeviceIsStoppedColor)
+                            row.DefaultCellStyle.BackColor = DeviceIsStoppedColor;
+                        break;
+                    }
+                case DeviceStatus.Preoperational:
+                    {
+                        if (row.DefaultCellStyle.BackColor != DeviceIsInPreoperationalModeColor)
+                            row.DefaultCellStyle.BackColor = DeviceIsInPreoperationalModeColor;
+                        break;
+                    }
+                case DeviceStatus.Operational:
+                    {
+                        if (row.DefaultCellStyle.BackColor != DeviceIsInOperationalModeColor)
+                            row.DefaultCellStyle.BackColor = DeviceIsInOperationalModeColor;
+                        break;
+                    }
+                case DeviceStatus.CommunicationError:
+                    {
+                        if (row.DefaultCellStyle.BackColor != DeviceIsInCommunicationErrorColor)
+                            row.DefaultCellStyle.BackColor = DeviceIsInCommunicationErrorColor;
+                        break;
+                    }
+                case DeviceStatus.ConfigurationError:
+                    {
+                        if (row.DefaultCellStyle.BackColor != DeviceIsInConfigurationErrorColor)
+                            row.DefaultCellStyle.BackColor = DeviceIsInConfigurationErrorColor;
+                        break;
+                    }
+            }
+        }
+
         #endregion
 
         #region Event
 
         public event EventHandler SelectedDeviceChanged;
-        
+
         #endregion
     }
 }
