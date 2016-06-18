@@ -43,6 +43,7 @@ namespace NGK.CorrosionMonitoringSystem.Views
             _DataGridView.ColumnHeadersDefaultCellStyle = headerCellStyle;
 
             _DataGridView.DefaultCellStyle.NullValue = "---";
+            _DataGridView.DefaultCellStyle.DataSourceNullValue = null;
 
             _DataGridView.DataBindingComplete += 
                 new DataGridViewBindingCompleteEventHandler(EventHandler_DataGridView_DataBindingComplete);
