@@ -15,13 +15,21 @@ namespace NGK.CorrosionMonitoringSystem.Models
     /// Класс формирует сводную таблицу значений объектов словаря каждого устройства сети
     /// (только для КИП). Следит за изменениями этих параметров.
     /// </summary>
-    public class ParametersPivotTable : INotifyPropertyChanged
+    public class ParametersPivotTable
     {
         #region Constructors
 
         public ParametersPivotTable(BindingList<NgkCanDevice> devices)
         {
             _Devices = devices;
+            
+            Devices = new BindingList<IDeviceSummaryParameters>();
+            
+            foreach (NgkCanDevice device in devices)
+            {
+                Devices.Add(device);
+            }
+
             InitTable();
         }
 
@@ -32,7 +40,7 @@ namespace NGK.CorrosionMonitoringSystem.Models
         /// <summary>
         /// Сводная таблица
         /// </summary>
-        DataTable _PivotTable;
+        private DataTable _PivotTable;
         /// <summary>
         /// Сводная таблица
         /// </summary>
@@ -45,7 +53,9 @@ namespace NGK.CorrosionMonitoringSystem.Models
         /// <summary>
         /// Список устройств в сети относящихся к КИП 
         /// </summary>
-        BindingList<NgkCanDevice> _Devices;
+        private BindingList<NgkCanDevice> _Devices;
+
+        public readonly BindingList<IDeviceSummaryParameters> Devices;
 
         #endregion
 
@@ -243,12 +253,6 @@ namespace NGK.CorrosionMonitoringSystem.Models
             return;
         }
 
-        private void OnPropertyChanged(string propertyName)
-        {
-            if (PropertyChanged != null)
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-        }
-
         #endregion
 
         #region Events
@@ -256,8 +260,6 @@ namespace NGK.CorrosionMonitoringSystem.Models
         /// Событие происходит при обновлении таблицы.
         /// </summary>
         public event EventHandler TableWasUpdated;
-
-        public event PropertyChangedEventHandler PropertyChanged;
         
         #endregion
     }

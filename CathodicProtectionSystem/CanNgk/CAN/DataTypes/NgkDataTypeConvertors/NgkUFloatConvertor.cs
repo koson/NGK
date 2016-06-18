@@ -99,6 +99,5 @@ namespace NGK.CAN.DataTypes
         }
 
         #endregion
-
     }
 }

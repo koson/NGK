@@ -87,6 +87,11 @@ namespace NGK.CorrosionMonitoringSystem.Services
             get { return _ParatemersPivotTable.PivotTable; } 
         }
 
+        public BindingList<IDeviceSummaryParameters> DeviceParameters
+        {
+            get { return _ParatemersPivotTable.Devices; }
+        }
+
         #endregion
 
         #region Methods
@@ -214,8 +219,6 @@ namespace NGK.CorrosionMonitoringSystem.Services
                 "Устройство NodeId={0}, Network={1} изменило состояние на: {2}", 
                 device.NodeId, device.NetworkName, device.Status));
         }
-
-
 
         #endregion
 

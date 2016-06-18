@@ -11,7 +11,7 @@ namespace NGK.CorrosionMonitoringSystem.Views
 {
     public interface IDeviceListView : IView
     {
-        BindingList<NgkCanDevice> Devices { set; }
+        BindingList<IDeviceInfo> Devices { set; }
         NgkCanDevice SelectedDevice { get; }
         event EventHandler SelectedDeviceChanged;
     }

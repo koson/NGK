@@ -25,6 +25,7 @@ namespace NGK.CorrosionMonitoringSystem.Services
         /// Сводная таблица параметров системы
         /// </summary>
         DataTable ParametersPivotTable { get; }
+        BindingList<IDeviceSummaryParameters> DeviceParameters { get; }
 
         #endregion
 

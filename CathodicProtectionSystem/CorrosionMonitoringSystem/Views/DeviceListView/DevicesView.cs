@@ -55,7 +55,6 @@ namespace NGK.CorrosionMonitoringSystem.Views
             _DataGridView.DataSource = _BindingSourceDevices;
         }
 
-
         #endregion
 
         #region Fields And Properties
@@ -85,7 +84,7 @@ namespace NGK.CorrosionMonitoringSystem.Views
 
         BindingSource _BindingSourceDevices;
 
-        public BindingList<NgkCanDevice> Devices
+        public BindingList<IDeviceInfo> Devices
         {
             set
             {

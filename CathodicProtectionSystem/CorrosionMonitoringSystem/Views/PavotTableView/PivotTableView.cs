@@ -6,6 +6,7 @@ using System.Data;
 using System.Text;
 using System.Windows.Forms;
 using Mvp.View;
+using NGK.CorrosionMonitoringSystem.Models;
 
 namespace NGK.CorrosionMonitoringSystem.Views
 {
@@ -45,8 +46,8 @@ namespace NGK.CorrosionMonitoringSystem.Views
             _DataGridView.DefaultCellStyle.NullValue = "---";
             _DataGridView.DefaultCellStyle.DataSourceNullValue = null;
 
-            _DataGridView.DataBindingComplete += 
-                new DataGridViewBindingCompleteEventHandler(EventHandler_DataGridView_DataBindingComplete);
+            //_DataGridView.DataBindingComplete += 
+            //    new DataGridViewBindingCompleteEventHandler(EventHandler_DataGridView_DataBindingComplete);
 
             _BindingSourceParameters = new BindingSource();
             _BindingSourceParameters.AllowNew = false;
@@ -87,6 +88,15 @@ namespace NGK.CorrosionMonitoringSystem.Views
             }
         }
 
+        public BindingList<IDeviceSummaryParameters> DeviceParameters
+        {
+            set 
+            { 
+                _BindingSourceParameters.DataSource = null;
+                _BindingSourceParameters.DataSource = value;
+            }
+        }
+
         #endregion
 
         #region Methods
@@ -121,6 +131,10 @@ namespace NGK.CorrosionMonitoringSystem.Views
                 column.HeaderText = table.Columns[column.Name].Caption;
             }
         }
+
+        #endregion
+
+        #region IPivotTableView Members
 
         #endregion
     }

@@ -11,7 +11,7 @@ using NGK.CAN.ApplicationLayer.Network.Devices.Profiles;
 namespace NGK.CorrosionMonitoringSystem.Models
 {
     [Serializable]
-    public sealed class NgkCanDevice: INotifyPropertyChanged
+    public sealed class NgkCanDevice : INotifyPropertyChanged, IDeviceSummaryParameters, IDeviceInfo
     {
         #region Helper
         
@@ -167,6 +167,42 @@ namespace NGK.CorrosionMonitoringSystem.Models
         public ParametersCollection Parameters
         {
             get { return _Parameters; }
+        }
+
+        public float? PolarisationPotential
+        {
+            get
+            {
+                return (bool)Parameters["polarisation_pot_en"].Value ?
+                    (float?)Parameters["polarization_pot"].Value : null;
+            }
+        }
+
+        public float? PolarisationCurrent
+        {
+            get
+            {
+                return (bool)Parameters["polarisation_cur_en"].Value ?
+                    (float?)Parameters["polarization_cur"].Value : null;
+            }
+        }
+
+        public float? ProtectionPotential
+        {
+            get
+            {
+                return (bool)Parameters["protection_pot_en"].Value ?
+                    (float?)Parameters["protection_pot"].Value : null;
+            }
+        }
+
+        public float? ProtectionCurrent
+        {
+            get
+            {
+                return (bool)Parameters["protection_cur_en"].Value ?
+                    (float?)Parameters["protection_cur"].Value : null;
+            }
         }
 
         #endregion
@@ -382,6 +418,7 @@ namespace NGK.CorrosionMonitoringSystem.Models
 
         public event PropertyChangedEventHandler PropertyChanged;
         public event EventHandler DeviceChangedStatus;
+
         #endregion
     }
 }
