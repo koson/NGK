@@ -41,6 +41,9 @@ namespace NGK.CorrosionMonitoringSystem.Views
             headerCellStyle.ForeColor = Color.Blue;
             headerCellStyle.WrapMode = DataGridViewTriState.True;
             _DataGridView.ColumnHeadersDefaultCellStyle = headerCellStyle;
+
+            _DataGridView.DefaultCellStyle.NullValue = "---";
+
             _DataGridView.DataBindingComplete += 
                 new DataGridViewBindingCompleteEventHandler(EventHandler_DataGridView_DataBindingComplete);
 

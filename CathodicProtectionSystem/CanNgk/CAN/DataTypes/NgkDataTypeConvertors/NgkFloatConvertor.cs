@@ -55,7 +55,6 @@ namespace NGK.CAN.DataTypes
             msg = String.Format("Преобразование невозможно. Передан тип {0}, ожидается {1}",
                 totalValue.GetType(), typeof(Single));
             throw new InvalidCastException(msg);
-
         }
 
         /// <summary>

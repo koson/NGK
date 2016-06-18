@@ -33,13 +33,16 @@ namespace NGK.CAN.DataTypes
             get { return typeof(Boolean); }
         }
 
+        public const UInt32 BasisTrue = Byte.MaxValue; // 255
+        public const UInt32 BasisFalse = Byte.MinValue; // 0
+
         #endregion
 
         #region Methods
         
         public override ValueType ConvertToOutputValue(uint basis)
         {
-            return basis == 0 ? false : true;
+            return basis == BasisFalse ? false : true;
         }
 
         public override uint ConvertToBasis(ValueType outputValue)
@@ -48,7 +51,7 @@ namespace NGK.CAN.DataTypes
 
             if (outputValue is Boolean)
             {
-                return ((bool)outputValue) ? (UInt32)0 : (UInt32)255;
+                return ((bool)outputValue) ? BasisFalse : BasisTrue;
             }
 
             msg = String.Format("Преобразование невозможно. Передан тип {0}, ожидается {1}",

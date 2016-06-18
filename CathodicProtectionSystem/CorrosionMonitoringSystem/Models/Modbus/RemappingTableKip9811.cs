@@ -157,15 +157,18 @@ namespace NGK.CorrosionMonitoringSystem.Models.Modbus
             //0x0024
             modbusDevice.Records[0x0024].Value = canDevice.ElectrodeArea;
             //0x0025, 0x0026
-            var32 = (UInt32)canDevice.GetObject(_TableAddress[0x0025]);
-            modbusDevice.Records[0x0025].Value = (UInt16)(var32 >> 16);
-            var32 = (UInt32)canDevice.GetObject(_TableAddress[0x0026]);
-            modbusDevice.Records[0x0026].Value = (UInt16)var32;
-            //0x0036, 0x0037
-            var32 = Unix.ToUnixTime((DateTime)canDevice.GetObject(_TableAddress[0x0036]));
-            modbusDevice.Records[0x0036].Value = (UInt16)(var32 >> 16);
-            var32 = Unix.ToUnixTime((DateTime)canDevice.GetObject(_TableAddress[0x0037]));
-            modbusDevice.Records[0x0037].Value = (UInt16)var32;
+            unchecked
+            {
+                var32 = (UInt32)canDevice.GetObject(_TableAddress[0x0025]);
+                modbusDevice.Records[0x0025].Value = (UInt16)(var32 >> 16);
+                var32 = (UInt32)canDevice.GetObject(_TableAddress[0x0026]);
+                modbusDevice.Records[0x0026].Value = (UInt16)var32;
+                //0x0036, 0x0037
+                var32 = Unix.ToUnixTime((DateTime)canDevice.GetObject(_TableAddress[0x0036]));
+                modbusDevice.Records[0x0036].Value = (UInt16)(var32 >> 16);
+                var32 = Unix.ToUnixTime((DateTime)canDevice.GetObject(_TableAddress[0x0037]));
+                modbusDevice.Records[0x0037].Value = (UInt16)var32;
+            }
             return;
         }
 

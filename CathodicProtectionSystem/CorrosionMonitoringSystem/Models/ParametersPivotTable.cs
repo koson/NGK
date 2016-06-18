@@ -22,7 +22,6 @@ namespace NGK.CorrosionMonitoringSystem.Models
         public ParametersPivotTable(BindingList<NgkCanDevice> devices)
         {
             _Devices = devices;
-            // Создаём таблицу
             InitTable();
         }
 
@@ -88,14 +87,24 @@ namespace NGK.CorrosionMonitoringSystem.Models
                     break;
                 }
             }
-            
-            row["PolarisationPotential_2008"] = device.Parameters["polarization_pot"].Value; //index = 0x2008;            
-            row["ProtectionPotential_2009"] = device.Parameters["protection_pot"].Value; //index = 0x2009;
-            row["ProtectionCurrent_200B"] = device.Parameters["protection_cur"].Value; //index = 0x200B;
-            row["PolarisationCurrent_200С"] = device.Parameters["polarization_cur"].Value; //index = 0x200C;
-            row["Corrosion_depth_200F"] = device.Parameters["corrosion_depth"].Value; //index = 0x200F;
-            row["Corrosion_speed_2010"] = device.Parameters["corrosion_speed"].Value; //index = 0x2010;
-            row["Tamper_2015"] = device.Parameters["tamper"].Value; //index = 0x2015;
+            //index = 0x2008;
+            row["PolarisationPotential_2008"] = (bool)device.Parameters["polarisation_pot_en"].Value ? 
+                device.Parameters["polarization_pot"].Value : DBNull.Value;  
+            //index = 0x2009;
+            row["ProtectionPotential_2009"] = (bool)device.Parameters["protection_pot_en"].Value ?
+                device.Parameters["protection_pot"].Value : DBNull.Value;
+            //index = 0x200B;
+            row["ProtectionCurrent_200B"] = (bool)device.Parameters["protection_cur_en"].Value ?
+                device.Parameters["protection_cur"].Value : DBNull.Value;
+            //index = 0x200C;
+            row["PolarisationCurrent_200С"] = (bool)device.Parameters["polarisation_cur_en"].Value ?
+                device.Parameters["polarization_cur"].Value : DBNull.Value;
+            //index = 0x200F;
+            row["Corrosion_depth_200F"] = device.Parameters["corrosion_depth"].Value;
+            //index = 0x2010;
+            row["Corrosion_speed_2010"] = device.Parameters["corrosion_speed"].Value;
+            //index = 0x2015;
+            row["Tamper_2015"] = device.Parameters["tamper"].Value; 
         }
         /// <summary>
         /// Обработчик события изменения данных устройства из списка.
@@ -141,7 +150,7 @@ namespace NGK.CorrosionMonitoringSystem.Models
 
             column = new DataColumn();
             column.ColumnName = "PolarisationPotential_2008";
-            column.AllowDBNull = false;
+            column.AllowDBNull = true; // Null - устанавливается если данное измерение отключено в КИП 
             column.Caption = "Поляризационный потенциал, B";
             column.DataType = typeof(float);
             column.ReadOnly = false;
@@ -151,7 +160,7 @@ namespace NGK.CorrosionMonitoringSystem.Models
 
             column = new DataColumn();
             column.ColumnName = "ProtectionPotential_2009";
-            column.AllowDBNull = false;
+            column.AllowDBNull = true; // Null - устанавливается если данное измерение отключено в КИП
             column.Caption = "Защитный потенциал, B";
             column.DataType = typeof(float);
             column.ReadOnly = false;
@@ -161,7 +170,7 @@ namespace NGK.CorrosionMonitoringSystem.Models
 
             column = new DataColumn();
             column.ColumnName = "ProtectionCurrent_200B";
-            column.AllowDBNull = false;
+            column.AllowDBNull = true; // Null - устанавливается если данное измерение отключено в КИП
             column.Caption = "Ток катодной защиты, A";
             column.DataType = typeof(float);
             column.ReadOnly = false;
@@ -171,7 +180,7 @@ namespace NGK.CorrosionMonitoringSystem.Models
 
             column = new DataColumn();
             column.ColumnName = "PolarisationCurrent_200С";
-            column.AllowDBNull = false;
+            column.AllowDBNull = true; // Null - устанавливается если данное измерение отключено в КИП
             column.Caption = "Ток поляризации, mA";
             column.DataType = typeof(float);
             column.ReadOnly = false;
