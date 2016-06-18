@@ -38,7 +38,7 @@ namespace NGK.CAN.DataTypes
         public override ValueType ConvertToOutputValue(uint basis)
         {
             //Int16 value = Convert.ToInt16(basis);
-            Int16 value = (Int16)basis;
+            UInt16 value = (UInt16)basis;
             return Convert.ToSingle(value * _Scaler);
         }
 

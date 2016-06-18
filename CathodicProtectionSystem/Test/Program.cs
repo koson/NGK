@@ -14,7 +14,8 @@ namespace Test
         {
             //DataTypesTest.TestDataTypeInfo_GetTotalValue();
             //DataTypesTest.TestDataTypeInfo_SetValue();
-            DataTypesTest.TestNgkInt16Convertor();
+            //DataTypesTest.TestNgkInt16Convertor();
+            DataTypesTest.TestNgkFloatConvertor();
             //NetworkControllerTest.NetworkTest();
             //NetworkControllerTest.SerializeNetworkControllerCollectionTest();
             //DeviceClassTest.ToStingTest();

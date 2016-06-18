@@ -74,5 +74,29 @@ namespace Test.DataTypes
             { 
             }
         }
+
+        public static void TestNgkFloatConvertor()
+        {
+            UInt32 basis;
+            float value;
+
+            NgkFloatConverter converter = new NgkFloatConverter(ScalerTypes.x001);
+
+            value = Convert.ToSingle(UInt16.MaxValue) * Convert.ToSingle(ScalerTypes.x001);
+            basis = converter.ConvertToBasis(value);
+            value = (Single)converter.ConvertToOutputValue(basis);
+
+            converter = new NgkFloatConverter(ScalerTypes.x005);
+
+            value = Convert.ToSingle(UInt16.MaxValue) * Convert.ToSingle(ScalerTypes.x005);
+            basis = converter.ConvertToBasis(value);
+            value = (Single)converter.ConvertToOutputValue(basis);
+
+            converter = new NgkFloatConverter(ScalerTypes.x01);
+
+            value = Convert.ToSingle(UInt16.MaxValue) * Convert.ToSingle(ScalerTypes.x01);
+            basis = converter.ConvertToBasis(value);
+            value = (Single)converter.ConvertToOutputValue(basis);
+        }
     }
 }
