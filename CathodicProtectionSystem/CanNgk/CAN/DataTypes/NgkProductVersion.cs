@@ -13,7 +13,7 @@ namespace NGK.CAN.DataTypes
     /// Мажорная часть формируется: 100 * текущий номер. Диапазон допустимых значений 100…65500;
     /// Минорная  часть формируется: 1 * текущий номер. Диапазон допустимых значений 1…99;
     /// </remarks>
-    public struct NgkProductVersion
+    public struct NgkProductVersion: IEquatable<NgkProductVersion>
     {
         #region Fields And Properties
         /// <summary>
@@ -96,6 +96,7 @@ namespace NGK.CAN.DataTypes
                 Major = Convert.ToUInt16(value.Major);
             }
         }
+
         #endregion
 
         #region Constructors
@@ -135,7 +136,33 @@ namespace NGK.CAN.DataTypes
                 this.Major.ToString("D3"),
                 this.Minor.ToString("D2")); ;
         }
-        
+
+        public static bool operator ==(NgkProductVersion v1, NgkProductVersion v2)
+        {
+            return v1.TotalVersion == v2.TotalVersion;
+        }
+
+        public static bool operator !=(NgkProductVersion v1, NgkProductVersion v2)
+        {
+            return v1.TotalVersion != v2.TotalVersion;
+        }
+
+        public override bool Equals(object obj)
+        {
+            return obj is NgkProductVersion ?
+                this.TotalVersion == ((NgkProductVersion)obj).TotalVersion : false;
+            //return base.Equals(obj);
+        }
+
+        #endregion
+
+        #region IEquatable<NgkProductVersion> Members
+
+        public bool Equals(NgkProductVersion other)
+        {
+            return this.TotalVersion == other.TotalVersion;
+        }
+
         #endregion
     }
 }

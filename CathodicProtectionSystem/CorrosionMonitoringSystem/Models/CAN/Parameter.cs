@@ -301,13 +301,32 @@ namespace NGK.CorrosionMonitoringSystem.Models
         [Category("Параметр")]
         [DisplayName("Значение")]
         [Description("Значение параметра (объекта словаря)")]
-        public Object Value
+        public object Value
         {
             get { return _Value; }
             set 
-            { 
-                _Value = value;
-                OnPropertyChanged("Value");
+            {
+                if (ValueType == value.GetType())
+                {
+                    if (ValueType.IsValueType)
+                    {
+                        if (!((ValueType)_Value).Equals(value))
+                        {
+                            _Value = value;
+                            OnPropertyChanged("Value");
+                        }
+                    }
+                    else
+                    {
+                        if (_Value != value)
+                        {
+                            _Value = value;
+                            OnPropertyChanged("Value");
+                        }
+                    }
+                }
+                else
+                    throw new ArgumentException("Попытка установить значение недопустимого типа");
             }
         }
 
@@ -337,9 +356,12 @@ namespace NGK.CorrosionMonitoringSystem.Models
         {
             get { return _Modified; }
             set 
-            { 
-                _Modified = value;
-                OnPropertyChanged("Modified");
+            {
+                if (_Modified != value)
+                {
+                    _Modified = value;
+                    OnPropertyChanged("Modified");
+                }
             }
         }
 
@@ -357,9 +379,12 @@ namespace NGK.CorrosionMonitoringSystem.Models
         {
             get { return _Status; }
             set 
-            { 
-                _Status = value;
-                OnPropertyChanged("Status");
+            {
+                if (_Status != value)
+                {
+                    _Status = value;
+                    OnPropertyChanged("Status");
+                }
             }
         }
 

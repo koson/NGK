@@ -442,6 +442,7 @@ namespace NGK.CorrosionMonitoringSystem.Models
                         if (!parameter.IsSpecialParameter)
                         {
                             DataObject dataObject = canDevice.ObjectDictionary[parameter.Indexes[0]];
+      
                             parameter.Modified = dataObject.Modified;
                             parameter.Status = dataObject.Status;
                             parameter.Value = dataObject.TotalValue;
