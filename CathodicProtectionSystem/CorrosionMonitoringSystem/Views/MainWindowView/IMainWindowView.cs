@@ -17,5 +17,10 @@ namespace NGK.CorrosionMonitoringSystem.Views
         IViewRegion TitleRegion { get; }
         ICommand ShowMenuCommand { set; }
         ICommand[] ButtonCommands { set; }
+
+        bool CursorEnabled { get; set; }
+        bool ShowInTaskbar { get; set; }
+        bool FormBorderEnable { get; set; }
+        bool FullScreen { get; set; }
     }
 }

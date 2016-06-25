@@ -132,6 +132,17 @@ namespace NGK.CorrosionMonitoringSystem.Managers.AppConfigManager
             }
         }
 
+        public bool FullScreen
+        {
+            get
+            {
+#if DEBUG
+                return false;
+#endif
+                return Boolean.Parse(GetParameter("FullScreen"));
+            }
+        }
+
         #endregion
 
         #region Настройки грида отображения устройств системы

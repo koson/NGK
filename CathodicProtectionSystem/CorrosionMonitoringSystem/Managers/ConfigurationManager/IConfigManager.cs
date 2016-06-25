@@ -9,6 +9,7 @@ namespace NGK.CorrosionMonitoringSystem.Managers.AppConfigManager
         bool CursorEnable { get; }
         bool FormBorderEnable { get; }
         bool ShowInTaskbar { get; }
+        bool FullScreen { get; }
         bool IsDebug { get; }
 
         ushort[] HiddenIndexesKip9810 { get; }

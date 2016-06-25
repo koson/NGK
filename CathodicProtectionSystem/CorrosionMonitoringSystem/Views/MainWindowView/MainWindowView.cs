@@ -147,6 +147,46 @@ namespace NGK.CorrosionMonitoringSystem.Views
             }
         }
 
+        public bool FormBorderEnable 
+        { 
+            get { return FormBorderStyle != FormBorderStyle.None; }
+            set {  FormBorderStyle = value ? FormBorderStyle.Sizable : FormBorderStyle.None; }
+        }
+
+        public bool FullScreen 
+        {
+            get { return WindowState == FormWindowState.Maximized; }
+            set { WindowState = value ? FormWindowState.Maximized : FormWindowState.Normal; }
+        }
+
+        /// <summary>
+        /// Хранит состояние курсора. Если true - курсор отображён, если 
+        /// false - скрыт
+        /// </summary>
+        private Boolean _CursorState;
+
+        /// <summary>
+        /// Возвращает устанавливает состояние курсора (скрыт - false 
+        /// или отображён - true)
+        /// </summary>
+        public Boolean CursorEnabled
+        {
+            get { return _CursorState; }
+            set
+            {
+                if (value)
+                {
+                    Cursor.Show();
+                    this._CursorState = value;
+                }
+                else
+                {
+                    Cursor.Hide();
+                    this._CursorState = value;
+                }
+            }
+        }
+
         #endregion
 
         #region Event Handlers

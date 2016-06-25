@@ -38,7 +38,11 @@ namespace NGK.CorrosionMonitoringSystem.Presenters
             _StopCorrosionMonitoringSystemCommand = new Command("Стоп",
                 OnStopCorrosionMonitoringSystem, CanStopCorrosionMonitoringSystem);
             _Commands.Add(_StopCorrosionMonitoringSystemCommand);
-            
+
+            ViewConcrete.FormBorderEnable = _Managers.ConfigManager.FormBorderEnable;
+            ViewConcrete.ShowInTaskbar = _Managers.ConfigManager.ShowInTaskbar;
+            ViewConcrete.CursorEnabled = _Managers.ConfigManager.CursorEnable;
+            ViewConcrete.FullScreen = _Managers.ConfigManager.FullScreen;
 
             ViewConcrete.ShowMenuCommand = _ShowMenuCommand;
 
