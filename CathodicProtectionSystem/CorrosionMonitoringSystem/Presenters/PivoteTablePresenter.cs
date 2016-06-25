@@ -26,7 +26,7 @@ namespace NGK.CorrosionMonitoringSystem.Presenters
             _Managers = managers;
      
             //view.Parameters = _Managers.CanNetworkService.ParametersPivotTable;
-            view.DeviceParameters = _Managers.CanNetworkService.DeviceParameters;
+            view.ParametersPivotTable = _Managers.CanNetworkService.ParametersPivotTable;
 
             if (!_Managers.ConfigManager.PivotTableCorrosionDepthColumnVisble)
                 view.HideColumn("Corrosion_depth_200F");

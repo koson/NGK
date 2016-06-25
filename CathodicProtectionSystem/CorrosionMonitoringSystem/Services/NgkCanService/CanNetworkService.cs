@@ -82,12 +82,7 @@ namespace NGK.CorrosionMonitoringSystem.Services
         /// Сводная таблица параметров системы коррозионного 
         /// мониторинга
         /// </summary>
-        public DataTable ParametersPivotTable 
-        {
-            get { return _ParatemersPivotTable.PivotTable; } 
-        }
-
-        public BindingList<IDeviceSummaryParameters> DeviceParameters
+        public BindingList<IDeviceSummaryParameters> ParametersPivotTable
         {
             get { return _ParatemersPivotTable.Devices; }
         }

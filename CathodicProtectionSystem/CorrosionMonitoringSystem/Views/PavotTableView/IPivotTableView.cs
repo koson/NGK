@@ -10,8 +10,7 @@ namespace NGK.CorrosionMonitoringSystem.Views
 {
     public interface IPivotTableView : IView
     {
-        DataTable Parameters { set; }
-        BindingList<IDeviceSummaryParameters> DeviceParameters { set; }
+        BindingList<IDeviceSummaryParameters> ParametersPivotTable { set; }
         void HideColumn(string columnName);
     }
 }

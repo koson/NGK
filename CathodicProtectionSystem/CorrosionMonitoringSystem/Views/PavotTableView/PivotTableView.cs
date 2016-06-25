@@ -46,16 +46,8 @@ namespace NGK.CorrosionMonitoringSystem.Views
             _DataGridView.DefaultCellStyle.NullValue = "---";
             _DataGridView.DefaultCellStyle.DataSourceNullValue = null;
 
-            //_DataGridView.DataBindingComplete += 
-            //    new DataGridViewBindingCompleteEventHandler(EventHandler_DataGridView_DataBindingComplete);
-
             _BindingSourceParameters = new BindingSource();
             _BindingSourceParameters.AllowNew = false;
-            //_BindingSourceParameters.CurrentItemChanged +=
-            //    new EventHandler(EventHandler_BindingSourceParameters_CurrentItemChanged);
-            //_BindingSourceParameters.ListChanged +=
-            //    new System.ComponentModel.ListChangedEventHandler(
-            //    EventHandler_BindingSourceParameters_ListChanged);
 
             _DataGridView.DataSource = _BindingSourceParameters;
 
@@ -65,30 +57,21 @@ namespace NGK.CorrosionMonitoringSystem.Views
 
         #region Fields And Properties
 
-        BindingSource _BindingSourceParameters;
+        private BindingSource _BindingSourceParameters;
 
         public ViewType ViewType
         {
             get { return ViewType.Region; }
         }
 
-        IViewRegion[] _ViewRegions = new IViewRegion[0];
+        private IViewRegion[] _ViewRegions = new IViewRegion[0];
 
         public IViewRegion[] ViewRegions
         {
             get { return _ViewRegions; }
         }
 
-        public DataTable Parameters
-        {
-            set 
-            {
-                _BindingSourceParameters.DataSource = null;
-                _BindingSourceParameters.DataSource = value;
-            }
-        }
-
-        public BindingList<IDeviceSummaryParameters> DeviceParameters
+        public BindingList<IDeviceSummaryParameters> ParametersPivotTable
         {
             set 
             { 
@@ -117,21 +100,6 @@ namespace NGK.CorrosionMonitoringSystem.Views
         #endregion
 
         #region EventHandlers
-        
-        void EventHandler_DataGridView_DataBindingComplete(
-            object sender, DataGridViewBindingCompleteEventArgs e)
-        {
-            DataGridView dgv = (DataGridView)sender;
-
-            // Меняем заголовки столбцов
-            //DataTable table = (DataTable)((BindingSource)dgv.DataSource).DataSource;
-
-            //foreach (DataGridViewColumn column in dgv.Columns)
-            //{
-            //    column.HeaderText = table.Columns[column.Name].Caption;
-            //}
-        }
-
         #endregion
 
         #region IPivotTableView Members
