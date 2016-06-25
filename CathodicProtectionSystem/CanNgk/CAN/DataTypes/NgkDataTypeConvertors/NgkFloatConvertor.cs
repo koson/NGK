@@ -13,7 +13,7 @@ namespace NGK.CAN.DataTypes
         /// <param name="scaler">см. struct Scaler</param>
         public NgkFloatConverter(decimal scaler)
         {
-            _Signed = false;
+            _Signed = true;
             _Scaler = scaler;
         }
 
@@ -38,7 +38,7 @@ namespace NGK.CAN.DataTypes
         public override ValueType ConvertToOutputValue(uint basis)
         {
             //Int16 value = Convert.ToInt16(basis);
-            UInt16 value = (UInt16)basis;
+            Int16 value = (Int16)basis;
             return Convert.ToSingle(value * _Scaler);
         }
 
