@@ -30,7 +30,7 @@ namespace NGK.CorrosionMonitoringSystem.Models
                 Devices.Add(device);
             }
 
-            InitTable();
+            //InitTable();
         }
 
         #endregion
@@ -63,195 +63,182 @@ namespace NGK.CorrosionMonitoringSystem.Models
         /// <summary>
         /// Обновляет данные в сводной таблице
         /// </summary>
-        public void Update()
-        {
-            for (int i = 0; i < _Devices.Count; i++)
-            {
-                UpdateDivice(_Devices[i]);
-            }
-            // Генерируем событие
-            OnTableWasUpdated();
-        }
+        //public void Update()
+        //{
+        //    for (int i = 0; i < _Devices.Count; i++)
+        //    {
+        //        UpdateDivice(_Devices[i]);
+        //    }
+        //    // Генерируем событие
+        //    OnTableWasUpdated();
+        //}
         /// <summary>
         /// Обновляет данные из указанного устройства
         /// </summary>
         /// <param name="device">Сетевое устройство</param>
-        private void UpdateDivice(NgkCanDevice device)
-        {
-            DataRow row;
-
-            row = null;
-
-            if (device == null)
-            {
-                return;
-            }
-
-            // Ищем строку с указанным устройством
-            foreach (DataRow item in _PivotTable.Rows)
-            {
-                if (device.NodeId == System.Convert.ToByte(item["NodeId"]))
-                {
-                    // Строка с нужным устройством найдена
-                    row = item;
-                    break;
-                }
-            }
-            //index = 0x2008;
-            row["PolarisationPotential_2008"] = (bool)device.Parameters["polarisation_pot_en"].Value ? 
-                device.Parameters["polarization_pot"].Value : DBNull.Value;  
-            //index = 0x2009;
-            row["ProtectionPotential_2009"] = (bool)device.Parameters["protection_pot_en"].Value ?
-                device.Parameters["protection_pot"].Value : DBNull.Value;
-            //index = 0x200B;
-            row["ProtectionCurrent_200B"] = (bool)device.Parameters["protection_cur_en"].Value ?
-                device.Parameters["protection_cur"].Value : DBNull.Value;
-            //index = 0x200C;
-            row["PolarisationCurrent_200С"] = (bool)device.Parameters["polarisation_cur_en"].Value ?
-                device.Parameters["polarization_cur"].Value : DBNull.Value;
-            //index = 0x200F;
-            row["Corrosion_depth_200F"] = device.Parameters["corrosion_depth"].Value;
-            //index = 0x2010;
-            row["Corrosion_speed_2010"] = device.Parameters["corrosion_speed"].Value;
-            //index = 0x2015;
-            row["Tamper_2015"] = device.Parameters["tamper"].Value; 
-        }
-        /// <summary>
-        /// Обработчик события изменения данных устройства из списка.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        //public void EventHandler_Device_DataWasChanged(object sender, EventArgs e)
+        //private void UpdateDivice(NgkCanDevice device)
         //{
-        //    IDevice device = (IDevice)sender;
+        //    DataRow row;
 
-        //    // Обновляем данные в сводной таблице
-        //    this.UpdateDivice(device);
-        //    return;
+        //    row = null;
+
+        //    if (device == null)
+        //    {
+        //        return;
+        //    }
+
+        //    // Ищем строку с указанным устройством
+        //    foreach (DataRow item in _PivotTable.Rows)
+        //    {
+        //        if (device.NodeId == System.Convert.ToByte(item["NodeId"]))
+        //        {
+        //            // Строка с нужным устройством найдена
+        //            row = item;
+        //            break;
+        //        }
+        //    }
+        //    //index = 0x2008;
+        //    row["PolarisationPotential_2008"] = (bool)device.Parameters["polarisation_pot_en"].Value ? 
+        //        device.Parameters["polarization_pot"].Value : DBNull.Value;  
+        //    //index = 0x2009;
+        //    row["ProtectionPotential_2009"] = (bool)device.Parameters["protection_pot_en"].Value ?
+        //        device.Parameters["protection_pot"].Value : DBNull.Value;
+        //    //index = 0x200B;
+        //    row["ProtectionCurrent_200B"] = (bool)device.Parameters["protection_cur_en"].Value ?
+        //        device.Parameters["protection_cur"].Value : DBNull.Value;
+        //    //index = 0x200C;
+        //    row["PolarisationCurrent_200С"] = (bool)device.Parameters["polarisation_cur_en"].Value ?
+        //        device.Parameters["polarization_cur"].Value : DBNull.Value;
+        //    //index = 0x200F;
+        //    row["Corrosion_depth_200F"] = device.Parameters["corrosion_depth"].Value;
+        //    //index = 0x2010;
+        //    row["Corrosion_speed_2010"] = device.Parameters["corrosion_speed"].Value;
+        //    //index = 0x2015;
+        //    row["Tamper_2015"] = device.Parameters["tamper"].Value; 
         //}
         /// <summary>
         /// Инициализирует структуру сводной таблицы (т.е. создаются столбцы соотвествующие
         /// индексам объектов устройств)
         /// </summary>
-        private void InitTable()
-        {
-            DataColumn column;
+        //private void InitTable()
+        //{
+        //    DataColumn column;
 
-            _PivotTable = new DataTable("PitovTable");
+        //    _PivotTable = new DataTable("PitovTable");
 
-            column = new DataColumn();
-            column.ColumnName = "NodeId";
-            column.AllowDBNull = false;
-            column.Caption = "Сетевой адрес";
-            column.DataType = typeof(Byte);
-            column.ReadOnly = false;
-            column.Unique = true;
-            _PivotTable.Columns.Add(column);
+        //    column = new DataColumn();
+        //    column.ColumnName = "NodeId";
+        //    column.AllowDBNull = false;
+        //    column.Caption = "Сетевой адрес";
+        //    column.DataType = typeof(Byte);
+        //    column.ReadOnly = false;
+        //    column.Unique = true;
+        //    _PivotTable.Columns.Add(column);
 
-            column = new DataColumn();
-            column.ColumnName = "Location";
-            column.AllowDBNull = false;
-            column.Caption = "Расположение";
-            column.DataType = typeof(String);
-            column.ReadOnly = false;
-            column.Unique = false;
-            column.DefaultValue = String.Empty;
-            _PivotTable.Columns.Add(column);
+        //    column = new DataColumn();
+        //    column.ColumnName = "Location";
+        //    column.AllowDBNull = false;
+        //    column.Caption = "Расположение";
+        //    column.DataType = typeof(String);
+        //    column.ReadOnly = false;
+        //    column.Unique = false;
+        //    column.DefaultValue = String.Empty;
+        //    _PivotTable.Columns.Add(column);
 
-            column = new DataColumn();
-            column.ColumnName = "PolarisationPotential_2008";
-            column.AllowDBNull = true; // Null - устанавливается если данное измерение отключено в КИП 
-            column.Caption = "Поляризационный потенциал, B";
-            column.DataType = typeof(float);
-            column.ReadOnly = false;
-            column.Unique = false;
-            column.DefaultValue = 0;
-            _PivotTable.Columns.Add(column);
+        //    column = new DataColumn();
+        //    column.ColumnName = "PolarisationPotential_2008";
+        //    column.AllowDBNull = true; // Null - устанавливается если данное измерение отключено в КИП 
+        //    column.Caption = "Поляризационный потенциал, B";
+        //    column.DataType = typeof(float);
+        //    column.ReadOnly = false;
+        //    column.Unique = false;
+        //    column.DefaultValue = 0;
+        //    _PivotTable.Columns.Add(column);
 
-            column = new DataColumn();
-            column.ColumnName = "ProtectionPotential_2009";
-            column.AllowDBNull = true; // Null - устанавливается если данное измерение отключено в КИП
-            column.Caption = "Защитный потенциал, B";
-            column.DataType = typeof(float);
-            column.ReadOnly = false;
-            column.Unique = false;
-            column.DefaultValue = 0;
-            _PivotTable.Columns.Add(column);
+        //    column = new DataColumn();
+        //    column.ColumnName = "ProtectionPotential_2009";
+        //    column.AllowDBNull = true; // Null - устанавливается если данное измерение отключено в КИП
+        //    column.Caption = "Защитный потенциал, B";
+        //    column.DataType = typeof(float);
+        //    column.ReadOnly = false;
+        //    column.Unique = false;
+        //    column.DefaultValue = 0;
+        //    _PivotTable.Columns.Add(column);
 
-            column = new DataColumn();
-            column.ColumnName = "ProtectionCurrent_200B";
-            column.AllowDBNull = true; // Null - устанавливается если данное измерение отключено в КИП
-            column.Caption = "Ток катодной защиты, A";
-            column.DataType = typeof(float);
-            column.ReadOnly = false;
-            column.Unique = false;
-            column.DefaultValue = 0;
-            _PivotTable.Columns.Add(column);
+        //    column = new DataColumn();
+        //    column.ColumnName = "ProtectionCurrent_200B";
+        //    column.AllowDBNull = true; // Null - устанавливается если данное измерение отключено в КИП
+        //    column.Caption = "Ток катодной защиты, A";
+        //    column.DataType = typeof(float);
+        //    column.ReadOnly = false;
+        //    column.Unique = false;
+        //    column.DefaultValue = 0;
+        //    _PivotTable.Columns.Add(column);
 
-            column = new DataColumn();
-            column.ColumnName = "PolarisationCurrent_200С";
-            column.AllowDBNull = true; // Null - устанавливается если данное измерение отключено в КИП
-            column.Caption = "Ток поляризации, mA";
-            column.DataType = typeof(float);
-            column.ReadOnly = false;
-            column.Unique = false;
-            column.DefaultValue = 0;
-            _PivotTable.Columns.Add(column);
+        //    column = new DataColumn();
+        //    column.ColumnName = "PolarisationCurrent_200С";
+        //    column.AllowDBNull = true; // Null - устанавливается если данное измерение отключено в КИП
+        //    column.Caption = "Ток поляризации, mA";
+        //    column.DataType = typeof(float);
+        //    column.ReadOnly = false;
+        //    column.Unique = false;
+        //    column.DefaultValue = 0;
+        //    _PivotTable.Columns.Add(column);
 
-            column = new DataColumn();
-            column.ColumnName = "Corrosion_depth_200F";
-            column.AllowDBNull = false;
-            column.Caption = "Глубина коррозии, мкм";
-            column.DataType = typeof(UInt16);
-            column.ReadOnly = false;
-            column.Unique = false;
-            column.DefaultValue = 0;
-            _PivotTable.Columns.Add(column);
+        //    column = new DataColumn();
+        //    column.ColumnName = "Corrosion_depth_200F";
+        //    column.AllowDBNull = false;
+        //    column.Caption = "Глубина коррозии, мкм";
+        //    column.DataType = typeof(UInt16);
+        //    column.ReadOnly = false;
+        //    column.Unique = false;
+        //    column.DefaultValue = 0;
+        //    _PivotTable.Columns.Add(column);
 
-            column = new DataColumn();
-            column.ColumnName = "Corrosion_speed_2010";
-            column.AllowDBNull = false;
-            column.Caption = "Скорость коррозии, мкм/год";
-            column.DataType = typeof(UInt16);
-            column.ReadOnly = false;
-            column.Unique = false;
-            column.DefaultValue = 0;
-            _PivotTable.Columns.Add(column);
+        //    column = new DataColumn();
+        //    column.ColumnName = "Corrosion_speed_2010";
+        //    column.AllowDBNull = false;
+        //    column.Caption = "Скорость коррозии, мкм/год";
+        //    column.DataType = typeof(UInt16);
+        //    column.ReadOnly = false;
+        //    column.Unique = false;
+        //    column.DefaultValue = 0;
+        //    _PivotTable.Columns.Add(column);
 
-            column = new DataColumn();
-            column.ColumnName = "Tamper_2015";
-            column.AllowDBNull = false;
-            column.Caption = "Вскрытие";
-            column.DataType = typeof(Boolean);
-            column.ReadOnly = false;
-            column.Unique = false;
-            column.DefaultValue = false;
-            _PivotTable.Columns.Add(column);
+        //    column = new DataColumn();
+        //    column.ColumnName = "Tamper_2015";
+        //    column.AllowDBNull = false;
+        //    column.Caption = "Вскрытие";
+        //    column.DataType = typeof(Boolean);
+        //    column.ReadOnly = false;
+        //    column.Unique = false;
+        //    column.DefaultValue = false;
+        //    _PivotTable.Columns.Add(column);
 
-            // Добавляем строки устройств в таблицу
-            foreach (NgkCanDevice device in _Devices)
-            {
-                DataRow row = _PivotTable.NewRow();
-                row["NodeId"] = device.NodeId;
-                row["Location"] = device.Location;
-                _PivotTable.Rows.Add(row);
-            }
+        //    // Добавляем строки устройств в таблицу
+        //    foreach (NgkCanDevice device in _Devices)
+        //    {
+        //        DataRow row = _PivotTable.NewRow();
+        //        row["NodeId"] = device.NodeId;
+        //        row["Location"] = device.Location;
+        //        _PivotTable.Rows.Add(row);
+        //    }
 
-            Update();
+        //    Update();
 
-            return;
-        }
+        //    return;
+        //}
         /// <summary>
         /// Генерирует событие обновления данных в сводной таблице
         /// </summary>
-        private void OnTableWasUpdated()
-        {
-            if (this.TableWasUpdated != null)
-            {
-                this.TableWasUpdated(this, new EventArgs());
-            }
-            return;
-        }
+        //private void OnTableWasUpdated()
+        //{
+        //    if (this.TableWasUpdated != null)
+        //    {
+        //        this.TableWasUpdated(this, new EventArgs());
+        //    }
+        //    return;
+        //}
 
         #endregion
 

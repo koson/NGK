@@ -5,7 +5,7 @@ using System.ComponentModel;
 
 namespace NGK.CorrosionMonitoringSystem.Models
 {
-    public interface IDeviceSummaryParameters
+    public interface IDeviceSummaryParameters: INotifyPropertyChanged
     {
         /// <summary>
         /// 
@@ -42,5 +42,20 @@ namespace NGK.CorrosionMonitoringSystem.Models
         /// </summary>
         [DisplayName("Ток катодной защиты, A")]
         float? ProtectionCurrent { get; }
+        /// <summary>
+        /// Глубина коррозии (0x200F)
+        /// </summary>
+        [DisplayName("Глубина коррозии, мкм")]
+        UInt32 CorrosionDepth { get;}
+        /// <summary>
+        /// Скорость коррозии (0x2010)
+        /// </summary>
+        [DisplayName("Скорость коррозии, мкм/год")]
+        UInt32 CorrosionSpeed { get; }
+        /// <summary>
+        /// Вскрытие корпуса прибора
+        /// </summary>
+        [DisplayName("Вскрытие")]
+        Boolean Tamper { get; }
     }
 }

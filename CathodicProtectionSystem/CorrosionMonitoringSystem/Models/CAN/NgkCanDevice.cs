@@ -14,7 +14,7 @@ namespace NGK.CorrosionMonitoringSystem.Models
     public sealed class NgkCanDevice : INotifyPropertyChanged, IDeviceSummaryParameters, IDeviceInfo
     {
         #region Helper
-        
+
         public struct ParameterNames
         {
             public const UInt16 ID_ADR = 0x0000;
@@ -33,6 +33,18 @@ namespace NGK.CorrosionMonitoringSystem.Models
             public const string NETWORK_ID = "Network Id";
             public const UInt16 NETWORK_NAME_ADR = 0x0007;
             public const string NETWORK_NAME = "Network Name";
+
+            public const string POLARISATION_POTENTIAL_ENABLED = "polarisation_pot_en";
+            public const string POLARISATION_POTENTIAL = "polarization_pot";
+            public const string POLARISATION_CURRENT_ENABLED = "polarisation_cur_en";
+            public const string POLARISATION_CURRENT = "polarization_cur";
+            public const string PROTECTION_POTENTIAL_ENABLED = "protection_pot_en";
+            public const string PROTECTION_POTENTIAL = "protection_pot";
+            public const string PROTECTION_CURRENT_ENABLED = "protection_cur_en";
+            public const string PROTECTION_CURRENT = "protection_cur";
+            public const string CORROSION_DEPTH = "corrosion_depth";
+            public const string CORROSION_SPEED = "corrosion_speed";
+            public const string TAMPER = "tamper";
         }
 
         #endregion
@@ -87,7 +99,7 @@ namespace NGK.CorrosionMonitoringSystem.Models
         public DeviceStatus Status
         {
             get { return (DeviceStatus)_Parameters[ParameterNames.DEVICE_STATUS].Value; }
-            set 
+            set
             {
                 if ((DeviceStatus)_Parameters[ParameterNames.DEVICE_STATUS].Value != value)
                 {
@@ -156,9 +168,9 @@ namespace NGK.CorrosionMonitoringSystem.Models
             //        .SetObjectValue(ParameterNames.POLLING_INTERVAL_ADR, value);
             //}
         }
-        
+
         private ParametersCollection _Parameters;
-        
+
         [Browsable(true)]
         [ReadOnly(true)]
         [Category("Данные")]
@@ -173,8 +185,8 @@ namespace NGK.CorrosionMonitoringSystem.Models
         {
             get
             {
-                return (bool)Parameters["polarisation_pot_en"].Value ?
-                    (float?)Parameters["polarization_pot"].Value : null;
+                return (bool)Parameters[ParameterNames.POLARISATION_POTENTIAL_ENABLED].Value ?
+                    (float?)Parameters[ParameterNames.POLARISATION_POTENTIAL].Value : null;
             }
         }
 
@@ -182,8 +194,8 @@ namespace NGK.CorrosionMonitoringSystem.Models
         {
             get
             {
-                return (bool)Parameters["polarisation_cur_en"].Value ?
-                    (float?)Parameters["polarization_cur"].Value : null;
+                return (bool)Parameters[ParameterNames.POLARISATION_CURRENT_ENABLED].Value ?
+                    (float?)Parameters[ParameterNames.POLARISATION_CURRENT].Value : null;
             }
         }
 
@@ -191,8 +203,8 @@ namespace NGK.CorrosionMonitoringSystem.Models
         {
             get
             {
-                return (bool)Parameters["protection_pot_en"].Value ?
-                    (float?)Parameters["protection_pot"].Value : null;
+                return (bool)Parameters[ParameterNames.PROTECTION_POTENTIAL_ENABLED].Value ?
+                    (float?)Parameters[ParameterNames.PROTECTION_POTENTIAL].Value : null;
             }
         }
 
@@ -200,8 +212,32 @@ namespace NGK.CorrosionMonitoringSystem.Models
         {
             get
             {
-                return (bool)Parameters["protection_cur_en"].Value ?
-                    (float?)Parameters["protection_cur"].Value : null;
+                return (bool)Parameters[ParameterNames.PROTECTION_CURRENT_ENABLED].Value ?
+                    (float?)Parameters[ParameterNames.PROTECTION_CURRENT].Value : null;
+            }
+        }
+
+        public UInt32 CorrosionDepth
+        {
+            get
+            {
+                return (UInt32)Parameters[ParameterNames.CORROSION_DEPTH].Value;
+            }
+        }
+
+        public UInt32 CorrosionSpeed
+        {
+            get
+            {
+                return (UInt32)Parameters[ParameterNames.CORROSION_SPEED].Value;
+            }
+        }
+
+        public Boolean Tamper
+        {
+            get
+            {
+                return (bool)Parameters[ParameterNames.TAMPER].Value;
             }
         }
 
@@ -214,13 +250,13 @@ namespace NGK.CorrosionMonitoringSystem.Models
             _Parameters = new ParametersCollection();
 
             // Добавляем общие для всех устройств параметры
-            _Parameters.Add(Parameter.CreateSpecialParameter(ParameterNames.ID, 
-                "GUID", "Уникальный идентификатор устройства", string.Empty, 
+            _Parameters.Add(Parameter.CreateSpecialParameter(ParameterNames.ID,
+                "GUID", "Уникальный идентификатор устройства", string.Empty,
                 true, false, ObjectCategory.System, device.DeviceType, device.Id, Guid.Empty));
             _Parameters.Add(Parameter.CreateSpecialParameter(ParameterNames.DEVICE_TYPE,
                 "Тип устройства", "Тип устройства", string.Empty,
                 true, false, ObjectCategory.System, device.DeviceType, device.DeviceType, DeviceType.UnknownTypeOfDevice));
-            _Parameters.Add(Parameter.CreateSpecialParameter(ParameterNames.NODE_ID, 
+            _Parameters.Add(Parameter.CreateSpecialParameter(ParameterNames.NODE_ID,
                 "Сетевой адрес", "Сетевой идентификатор устройтсва", string.Empty,
                 true, true, ObjectCategory.System, device.DeviceType, device.NodeId, (byte)1));
             _Parameters.Add(Parameter.CreateSpecialParameter(ParameterNames.LOCATION,
@@ -236,7 +272,7 @@ namespace NGK.CorrosionMonitoringSystem.Models
                 "ID сети", "ID CAN сети", string.Empty,
                 true, true, ObjectCategory.System, device.DeviceType,
                 device.Network == null ? 0 : device.Network.NetworkId, (uint)0));
-            _Parameters.Add(Parameter.CreateSpecialParameter(ParameterNames.NETWORK_NAME, 
+            _Parameters.Add(Parameter.CreateSpecialParameter(ParameterNames.NETWORK_NAME,
                 "Сеть CAN", "Наименование сети", string.Empty,
                 true, true, ObjectCategory.System, device.DeviceType,
                 device.Network == null ? "Не установлена" : device.Network.NetworkName, "Не установлена"));
@@ -284,12 +320,27 @@ namespace NGK.CorrosionMonitoringSystem.Models
                             parameter.Modified = modified;
                             parameter.Status = dataObject.Status;
                             parameter.Value = dataObject.TotalValue;
-                            parameter.DefaultValue = 
+                            parameter.DefaultValue =
                                 dataObject.Info.DataTypeConvertor.ConvertToOutputValue(dataObject.Info.DefaultValue);
                         }
                     }
                 }
             }
+
+            Parameters[ParameterNames.POLARISATION_CURRENT].PropertyChanged +=
+                new PropertyChangedEventHandler(EventHandler_NgkCanDevice_PropertyChanged);
+            Parameters[ParameterNames.POLARISATION_POTENTIAL].PropertyChanged +=
+                new PropertyChangedEventHandler(EventHandler_NgkCanDevice_PropertyChanged);
+            Parameters[ParameterNames.PROTECTION_POTENTIAL].PropertyChanged +=
+                new PropertyChangedEventHandler(EventHandler_NgkCanDevice_PropertyChanged);
+            Parameters[ParameterNames.PROTECTION_CURRENT].PropertyChanged +=
+                new PropertyChangedEventHandler(EventHandler_NgkCanDevice_PropertyChanged);
+            Parameters[ParameterNames.CORROSION_DEPTH].PropertyChanged +=
+                new PropertyChangedEventHandler(EventHandler_NgkCanDevice_PropertyChanged);
+            Parameters[ParameterNames.CORROSION_SPEED].PropertyChanged +=
+                new PropertyChangedEventHandler(EventHandler_NgkCanDevice_PropertyChanged);
+            Parameters[ParameterNames.TAMPER].PropertyChanged +=
+                new PropertyChangedEventHandler(EventHandler_NgkCanDevice_PropertyChanged);
         }
 
         #endregion
@@ -342,13 +393,13 @@ namespace NGK.CorrosionMonitoringSystem.Models
                             {
                                 objectInfo =
                                     canDevice.Profile.ObjectInfoList[parameter.Indexes[0]];
-                                object newValue = 
+                                object newValue =
                                     objectInfo.DataTypeConvertor.ConvertToOutputValue(objectInfo.DefaultValue);
                                 if (objectInfo.DataTypeConvertor.ConvertToBasis((ValueType)parameter.Value) !=
                                     objectInfo.DefaultValue)
                                 {
                                     parameter.Value = newValue;
-                                }    
+                                }
                             }
                         }
                     }
@@ -410,6 +461,57 @@ namespace NGK.CorrosionMonitoringSystem.Models
         {
             if (DeviceChangedStatus != null)
                 DeviceChangedStatus(this, new EventArgs());
+        }
+
+        #endregion
+
+        #region Events Handlers
+
+        private void EventHandler_NgkCanDevice_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            Parameter parameter = (Parameter)sender;
+
+            if (e.PropertyName == "Value")
+            {
+                switch (parameter.Name)
+                {
+                    case ParameterNames.POLARISATION_CURRENT:
+                        {
+                            OnPropertyChanged("PolarisationCurrent");
+                            break;
+                        }
+                    case ParameterNames.POLARISATION_POTENTIAL:
+                        {
+                            OnPropertyChanged("PolarisationPotential");
+                            break;
+                        }
+                    case ParameterNames.PROTECTION_CURRENT:
+                        {
+                            OnPropertyChanged("ProtectionCurrent");
+                            break;
+                        }
+                    case ParameterNames.PROTECTION_POTENTIAL:
+                        {
+                            OnPropertyChanged("ProtectionPotential");
+                            break;
+                        }
+                    case ParameterNames.CORROSION_DEPTH:
+                        {
+                            OnPropertyChanged("CorrosionDepth");
+                            break;
+                        }
+                    case ParameterNames.CORROSION_SPEED:
+                        {
+                            OnPropertyChanged("CorrosionSpeed");
+                            break;
+                        }
+                    case ParameterNames.TAMPER:
+                        {
+                            OnPropertyChanged("Tamper");
+                            break;
+                        }
+                }
+            }
         }
 
         #endregion

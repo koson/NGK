@@ -202,7 +202,7 @@ namespace NGK.CorrosionMonitoringSystem.Services
                 FaultyDevices = faultyDevices;
 
                 // Обновляем сводную таблицу
-                _ParatemersPivotTable.Update();
+                //_ParatemersPivotTable.Update();
             }, null);
         }
 

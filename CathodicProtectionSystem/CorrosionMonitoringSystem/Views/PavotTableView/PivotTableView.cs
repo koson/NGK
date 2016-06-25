@@ -124,12 +124,12 @@ namespace NGK.CorrosionMonitoringSystem.Views
             DataGridView dgv = (DataGridView)sender;
 
             // Меняем заголовки столбцов
-            DataTable table = (DataTable)((BindingSource)dgv.DataSource).DataSource;
+            //DataTable table = (DataTable)((BindingSource)dgv.DataSource).DataSource;
 
-            foreach (DataGridViewColumn column in dgv.Columns)
-            {
-                column.HeaderText = table.Columns[column.Name].Caption;
-            }
+            //foreach (DataGridViewColumn column in dgv.Columns)
+            //{
+            //    column.HeaderText = table.Columns[column.Name].Caption;
+            //}
         }
 
         #endregion
