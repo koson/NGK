@@ -33,7 +33,6 @@ namespace NGK.CorrosionMonitoringSystem.Views
             this._ToolStripButtonTotalDevices = new System.Windows.Forms.ToolStripButton();
             this._ToolStripButtonFaultyDevices = new System.Windows.Forms.ToolStripButton();
             this._ToolStripStatusLabelDateTime = new System.Windows.Forms.ToolStripStatusLabel();
-            this._ToolStripButtonSystemLog = new System.Windows.Forms.ToolStripButton();
             this._PanelTitleRegion = new System.Windows.Forms.Panel();
             this._LabelTilte = new System.Windows.Forms.Label();
             this._PanelSystemButtonsRegion = new System.Windows.Forms.Panel();
@@ -55,12 +54,11 @@ namespace NGK.CorrosionMonitoringSystem.Views
             this._StatusStripMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this._ToolStripButtonTotalDevices,
             this._ToolStripButtonFaultyDevices,
-            this._ToolStripButtonSystemLog,
             this._ToolStripStatusLabelDateTime});
-            this._StatusStripMain.Location = new System.Drawing.Point(0, 511);
+            this._StatusStripMain.Location = new System.Drawing.Point(0, 513);
             this._StatusStripMain.Margin = new System.Windows.Forms.Padding(5);
             this._StatusStripMain.Name = "_StatusStripMain";
-            this._StatusStripMain.Size = new System.Drawing.Size(884, 26);
+            this._StatusStripMain.Size = new System.Drawing.Size(884, 24);
             this._StatusStripMain.TabIndex = 3;
             this._StatusStripMain.Text = "SystemStatusStrip";
             // 
@@ -70,7 +68,7 @@ namespace NGK.CorrosionMonitoringSystem.Views
             this._ToolStripButtonTotalDevices.Image = ((System.Drawing.Image)(resources.GetObject("_ToolStripButtonTotalDevices.Image")));
             this._ToolStripButtonTotalDevices.ImageTransparentColor = System.Drawing.Color.Magenta;
             this._ToolStripButtonTotalDevices.Name = "_ToolStripButtonTotalDevices";
-            this._ToolStripButtonTotalDevices.Size = new System.Drawing.Size(124, 24);
+            this._ToolStripButtonTotalDevices.Size = new System.Drawing.Size(127, 22);
             this._ToolStripButtonTotalDevices.Text = "Всего устройств";
             this._ToolStripButtonTotalDevices.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this._ToolStripButtonTotalDevices.ToolTipText = "Всего устройств в системе";
@@ -81,7 +79,7 @@ namespace NGK.CorrosionMonitoringSystem.Views
             this._ToolStripButtonFaultyDevices.Image = ((System.Drawing.Image)(resources.GetObject("_ToolStripButtonFaultyDevices.Image")));
             this._ToolStripButtonFaultyDevices.ImageTransparentColor = System.Drawing.Color.Magenta;
             this._ToolStripButtonFaultyDevices.Name = "_ToolStripButtonFaultyDevices";
-            this._ToolStripButtonFaultyDevices.Size = new System.Drawing.Size(184, 24);
+            this._ToolStripButtonFaultyDevices.Size = new System.Drawing.Size(183, 22);
             this._ToolStripButtonFaultyDevices.Text = "Неисправных устройств:";
             this._ToolStripButtonFaultyDevices.ToolTipText = "Количество нейсправных устройств";
             // 
@@ -89,19 +87,9 @@ namespace NGK.CorrosionMonitoringSystem.Views
             // 
             this._ToolStripStatusLabelDateTime.AutoToolTip = true;
             this._ToolStripStatusLabelDateTime.Name = "_ToolStripStatusLabelDateTime";
-            this._ToolStripStatusLabelDateTime.Size = new System.Drawing.Size(74, 21);
+            this._ToolStripStatusLabelDateTime.Size = new System.Drawing.Size(72, 19);
             this._ToolStripStatusLabelDateTime.Text = "DateTime";
             this._ToolStripStatusLabelDateTime.ToolTipText = "Системное время";
-            // 
-            // _ToolStripButtonSystemLog
-            // 
-            this._ToolStripButtonSystemLog.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this._ToolStripButtonSystemLog.Image = ((System.Drawing.Image)(resources.GetObject("_ToolStripButtonSystemLog.Image")));
-            this._ToolStripButtonSystemLog.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this._ToolStripButtonSystemLog.Name = "_ToolStripButtonSystemLog";
-            this._ToolStripButtonSystemLog.Size = new System.Drawing.Size(98, 24);
-            this._ToolStripButtonSystemLog.Text = "Сообщения:";
-            this._ToolStripButtonSystemLog.ToolTipText = "Количество непрочитанных сообщений";
             // 
             // _PanelTitleRegion
             // 
@@ -129,7 +117,7 @@ namespace NGK.CorrosionMonitoringSystem.Views
             this._PanelSystemButtonsRegion.Dock = System.Windows.Forms.DockStyle.Right;
             this._PanelSystemButtonsRegion.Location = new System.Drawing.Point(711, 26);
             this._PanelSystemButtonsRegion.Name = "_PanelSystemButtonsRegion";
-            this._PanelSystemButtonsRegion.Size = new System.Drawing.Size(173, 485);
+            this._PanelSystemButtonsRegion.Size = new System.Drawing.Size(173, 487);
             this._PanelSystemButtonsRegion.TabIndex = 5;
             // 
             // _TableLayoutPanelButtonsPanel
@@ -151,7 +139,7 @@ namespace NGK.CorrosionMonitoringSystem.Views
             this._TableLayoutPanelButtonsPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
             this._TableLayoutPanelButtonsPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
             this._TableLayoutPanelButtonsPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this._TableLayoutPanelButtonsPanel.Size = new System.Drawing.Size(173, 485);
+            this._TableLayoutPanelButtonsPanel.Size = new System.Drawing.Size(173, 487);
             this._TableLayoutPanelButtonsPanel.TabIndex = 0;
             // 
             // _ButtonF6
@@ -159,7 +147,7 @@ namespace NGK.CorrosionMonitoringSystem.Views
             this._ButtonF6.Dock = System.Windows.Forms.DockStyle.Fill;
             this._ButtonF6.Location = new System.Drawing.Point(3, 391);
             this._ButtonF6.Name = "_ButtonF6";
-            this._ButtonF6.Size = new System.Drawing.Size(167, 91);
+            this._ButtonF6.Size = new System.Drawing.Size(167, 93);
             this._ButtonF6.TabIndex = 14;
             this._ButtonF6.Text = "Скрыть панель";
             this._ButtonF6.UseVisualStyleBackColor = true;
@@ -209,7 +197,7 @@ namespace NGK.CorrosionMonitoringSystem.Views
             this._PanelWorkingRegion.Dock = System.Windows.Forms.DockStyle.Fill;
             this._PanelWorkingRegion.Location = new System.Drawing.Point(0, 26);
             this._PanelWorkingRegion.Name = "_PanelWorkingRegion";
-            this._PanelWorkingRegion.Size = new System.Drawing.Size(711, 485);
+            this._PanelWorkingRegion.Size = new System.Drawing.Size(711, 487);
             this._PanelWorkingRegion.TabIndex = 6;
             // 
             // MainWindowView
@@ -243,7 +231,6 @@ namespace NGK.CorrosionMonitoringSystem.Views
         private System.Windows.Forms.ToolStripButton _ToolStripButtonTotalDevices;
         private System.Windows.Forms.ToolStripButton _ToolStripButtonFaultyDevices;
         private System.Windows.Forms.ToolStripStatusLabel _ToolStripStatusLabelDateTime;
-        private System.Windows.Forms.ToolStripButton _ToolStripButtonSystemLog;
         private System.Windows.Forms.Panel _PanelTitleRegion;
         private System.Windows.Forms.Label _LabelTilte;
         private System.Windows.Forms.Button _ButtonF6;

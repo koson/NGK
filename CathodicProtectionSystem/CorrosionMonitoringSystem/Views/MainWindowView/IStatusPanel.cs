@@ -16,10 +16,5 @@ namespace NGK.CorrosionMonitoringSystem.Views
         /// Неисправных устройств в системе
         /// </summary>
         Int32 FaultyDevices { set; }
-
-        /// <summary>
-        /// Непрочитанные сообщения в журнале событий
-        /// </summary>
-        Int32 UnreadMessages { set; }
     }
 }
