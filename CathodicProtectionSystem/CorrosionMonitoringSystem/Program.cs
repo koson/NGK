@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Drawing;
 using System.Globalization;
-using NLog;
 using Mvp.WinApplication;
 using Mvp.View;
 using Mvp.Presenter;
@@ -17,13 +16,13 @@ using Modbus.OSIModel.ApplicationLayer.Slave;
 using Modbus.OSIModel.ApplicationLayer;
 using Common.Controlling;
 using NGK.CorrosionMonitoringSystem.Services;
-using NGK.CorrosionMonitoringSystem.Managers.LogManager;
+using Infrastructure.LogManager;
 
 namespace NGK.CorrosionMonitoringSystem
 {
     static class Program
     {
-        public static NLogManager _Logger;
+        public static ILogManager _Logger;
         public static WinFormsApplication _Application;
         public static IManagers Managers;
 
@@ -36,7 +35,8 @@ namespace NGK.CorrosionMonitoringSystem
         [STAThread]
         static void Main()
         {
-            _Logger = new NLogManager("CorrosionMonitoringSystemLogger");
+            //_Logger = new NLogManager("CorrosionMonitoringSystemLogger");
+            _Logger = NLogManager.Instance;
             _Logger.Info("Запуск приложения");
 
             AppDomain.CurrentDomain.UnhandledException +=

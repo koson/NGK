@@ -98,6 +98,10 @@ namespace Test.DataTypes
             basis = converter.ConvertToBasis(value);
             value = (Single)converter.ConvertToOutputValue(basis);
 
+            value = -1 * Convert.ToSingle(ScalerTypes.x01);
+            basis = converter.ConvertToBasis(value);
+            value = (Single)converter.ConvertToOutputValue(basis);
+
             basis = 0xFF38;
             converter = new NgkFloatConverter(ScalerTypes.x001);
             value = (Single)converter.ConvertToOutputValue(basis);

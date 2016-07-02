@@ -11,6 +11,7 @@ using NGK.CAN.ApplicationLayer.Network.Devices.Profiles.ObjectDictionary;
 using NGK.CAN.DataTypes;
 using Common.Controlling;
 using Common.Collections.ObjectModel;
+using Infrastructure.LogManager;
 
 namespace NGK.CAN.ApplicationLayer.Network.Master.Services
 {
@@ -232,15 +233,6 @@ namespace NGK.CAN.ApplicationLayer.Network.Master.Services
         #endregion
 
         #region Fields And Properties
-
-        protected override NLog.Logger Logger
-        {
-            get 
-            {
-                return null;
-                //throw new Exception("The method or operation is not implemented."); 
-            }
-        }
 
         public override ServiceType  ServiceType
         {

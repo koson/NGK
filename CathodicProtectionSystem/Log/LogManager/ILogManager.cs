@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace NGK.CorrosionMonitoringSystem.Managers.LogManager
+namespace Infrastructure.LogManager
 {
     public interface ILogManager
     {

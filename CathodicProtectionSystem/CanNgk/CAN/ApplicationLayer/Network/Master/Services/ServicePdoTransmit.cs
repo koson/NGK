@@ -1,11 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using NLog;
 using NGK.CAN.DataLinkLayer.Message;
 using NGK.CAN.ApplicationLayer.Network.Devices;
 using NGK.CAN.ApplicationLayer.Network.Devices.Profiles.ObjectDictionary;
 using Common.Controlling;
+using Infrastructure.LogManager;
 
 namespace NGK.CAN.ApplicationLayer.Network.Master.Services
 {
@@ -165,13 +165,6 @@ namespace NGK.CAN.ApplicationLayer.Network.Master.Services
         #endregion
 
         #region Fields And Properties
-
-        private static Logger _Logger = null; //LogManager.GetLogger("PdoTransmitLogger");
-
-        protected override Logger Logger
-        {
-            get { return _Logger; }
-        }
 
         public override ServiceType ServiceType
         {

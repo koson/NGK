@@ -50,7 +50,6 @@
   <ItemGroup>
     <Reference Include="Accessibility" />
     <Reference Include="Microsoft.VisualBasic" />
-    <Reference Include="NLog, Version=2.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Data" />
@@ -62,7 +61,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Managers\LogManager\NLogManager.cs" />
     <Compile Include="Models\CAN\IDeviceInfo.cs" />
     <Compile Include="Models\CAN\IDeviceSummaryParameters.cs" />
     <Compile Include="Models\Modbus\RemappingTableKip9811.cs" />
@@ -80,7 +78,6 @@
     <Compile Include="Managers\Factory\IPresentersFactory.cs" />
     <Compile Include="Managers\Factory\PresentersFactory.cs" />
     <Compile Include="Managers\IManagers.cs" />
-    <Compile Include="Managers\LogManager\ILogManager.cs" />
     <Compile Include="Managers\AppManagers.cs" />
     <Compile Include="Managers\SysLogManager\ISysLogManager.cs" />
     <Compile Include="Models\CAN\NgkCanDevice.cs" />
@@ -211,6 +208,10 @@
     <ProjectReference Include="..\DAL\DAL.csproj">
       <Project>{3B3C9818-D909-45E4-8587-873E4989DA8A}</Project>
       <Name>DAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Log\Log.csproj">
+      <Project>{8ED7A1A3-E261-4395-81A4-F2EC5565A4DF}</Project>
+      <Name>Log</Name>
     </ProjectReference>
     <ProjectReference Include="..\Modbus\Modbus.csproj">
       <Project>{B5A4D2E6-8BCF-40E2-BD06-0DB320E688B0}</Project>

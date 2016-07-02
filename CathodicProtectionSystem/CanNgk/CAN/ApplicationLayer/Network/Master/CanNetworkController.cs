@@ -8,7 +8,6 @@ using System.ComponentModel;
 using System.Runtime.Serialization;
 using System.Security.Permissions;
 using System.Drawing.Design;
-using NLog;
 using NGK.CAN.DataLinkLayer.Message;
 using NGK.CAN.DataLinkLayer.CanPort;
 using NGK.CAN.ApplicationLayer.Network.Master.Services;

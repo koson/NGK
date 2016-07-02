@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using NGK.CorrosionMonitoringSystem.Managers.AppConfigManager;
-using NGK.CorrosionMonitoringSystem.Managers.LogManager;
+using Infrastructure.LogManager;
 using NGK.CorrosionMonitoringSystem.Managers.SysLogManager;
 using NGK.CorrosionMonitoringSystem.Managers.Factory;
 using NGK.CorrosionMonitoringSystem.Services;

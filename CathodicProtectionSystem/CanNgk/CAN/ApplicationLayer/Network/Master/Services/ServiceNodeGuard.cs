@@ -1,12 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using NLog;
 using NGK.CAN.DataLinkLayer.Message;
 using NGK.CAN.ApplicationLayer.Network.Devices;
 using NGK.CAN.ApplicationLayer.Transactions;
 using Common.Controlling;
 using Common.Collections.ObjectModel;
+using Infrastructure.LogManager;
 
 namespace NGK.CAN.ApplicationLayer.Network.Master.Services
 {
@@ -187,14 +187,6 @@ namespace NGK.CAN.ApplicationLayer.Network.Master.Services
         #endregion
 
         #region Fields And Properties
-
-        //private static Logger _Logger = LogManager.GetLogger("NodeGuardLogger");
-
-        protected override Logger Logger
-        {
-            //get { return _Logger; }
-            get { return null; }
-        }
 
         public override ServiceType ServiceType
         {

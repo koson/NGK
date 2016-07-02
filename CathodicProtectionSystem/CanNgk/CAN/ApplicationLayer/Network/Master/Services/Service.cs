@@ -5,9 +5,9 @@ using System.ComponentModel;
 using System.Runtime.Serialization;
 using System.Security.Permissions;
 using System.Threading;
-using NLog;
 using NGK.CAN.DataLinkLayer.Message;
 using Common.Controlling;
+using Infrastructure.LogManager;
 
 namespace NGK.CAN.ApplicationLayer.Network.Master.Services
 {
@@ -21,9 +21,21 @@ namespace NGK.CAN.ApplicationLayer.Network.Master.Services
         /// <summary>
         /// Возвращает экземпляр логера
         /// </summary>
-        protected abstract Logger Logger
+        protected ILogManager Logger
         {
-            get;
+            get 
+            {
+                return _LogEnabled ? NLogManager.Instance : null; 
+            } 
+        }
+        private bool _LogEnabled = false;
+        /// <summary>
+        /// Разрешает/запрещает логирование 
+        /// </summary>
+        protected virtual bool LogEnabled
+        {
+            get { return _LogEnabled; }
+            set { _LogEnabled = value; }
         }
         /// <summary>
         /// Возвращает наименование сервиса

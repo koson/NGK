@@ -2,11 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.ComponentModel;
-using NLog;
 using NGK.CAN.ApplicationLayer.Transactions;
 using NGK.CAN.DataLinkLayer.Message;
 using NGK.CAN.DataTypes.DateTimeConvertor;
 using Common.Controlling;
+using Infrastructure.LogManager;
 
 namespace NGK.CAN.ApplicationLayer.Network.Master.Services
 {
@@ -16,11 +16,6 @@ namespace NGK.CAN.ApplicationLayer.Network.Master.Services
     public sealed class ServicePdoReceive: Service
     {
         #region Fields And Properties
-
-        protected override Logger Logger
-        {
-            get { return null; }
-        }
 
         public override ServiceType ServiceType
         {

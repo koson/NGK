@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Text;
 using System.Timers;
 using System.ComponentModel;
-using NLog;
 using NGK.CAN.ApplicationLayer.Transactions;
 using NGK.CAN.DataLinkLayer.Message;
 using Common.Controlling;
+using Infrastructure.LogManager;
 
 namespace NGK.CAN.ApplicationLayer.Network.Master.Services
 {
@@ -16,14 +16,6 @@ namespace NGK.CAN.ApplicationLayer.Network.Master.Services
     public sealed class ServiceSync: Service
     {
         #region Fields And Properties
-
-        //private static Logger _Logger = LogManager.GetLogger("SyncLogger");
-
-        protected override Logger Logger
-        {
-            //get { return _Logger; }
-            get { return null; }
-        }
 
         public override ServiceType ServiceType
         {
