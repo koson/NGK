@@ -21,9 +21,10 @@ namespace NGK.CAN.DataTypes.DateTimeConvertor
             DateTime unixStartTime;
             TimeSpan ts;
 
-            unixStartTime = new System.DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+            unixStartTime = new System.DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Local);
 
-            ts = (dateTime.ToUniversalTime()).Subtract(unixStartTime);
+            //ts = (dateTime.ToUniversalTime()).Subtract(unixStartTime);
+            ts = dateTime.Subtract(unixStartTime);
 
             if (ts.TotalSeconds >= 0)
                 return System.Convert.ToUInt32(ts.TotalSeconds);
@@ -41,7 +42,7 @@ namespace NGK.CAN.DataTypes.DateTimeConvertor
             DateTime unixStartTime;
 
             unixStartTime =
-                new System.DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+                new System.DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Local);
 
             return unixStartTime.AddSeconds(unixTimeFormat);
         }

@@ -32,6 +32,8 @@ namespace NGK.CorrosionMonitoringSystem.Views.DeviceDetailView
             _DataGridView.RowHeadersWidthSizeMode =
                 DataGridViewRowHeadersWidthSizeMode.AutoSizeToDisplayedHeaders;
             _DataGridView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            _DataGridView.DataBindingComplete += 
+                new DataGridViewBindingCompleteEventHandler(EventHandler_DataGridView_DataBindingComplete);
 
             DataGridViewCellStyle headerCellStyle = new DataGridViewCellStyle();
             headerCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
@@ -49,6 +51,8 @@ namespace NGK.CorrosionMonitoringSystem.Views.DeviceDetailView
 
             _DataGridView.DataSource = _BindingSourceParameters;
         }
+
+
 
         #endregion
 
@@ -98,6 +102,19 @@ namespace NGK.CorrosionMonitoringSystem.Views.DeviceDetailView
         void EventHandler_BindingSourceDevices_CurrentItemChanged(object sender, EventArgs e)
         {
             return;
+        }
+
+        void EventHandler_DataGridView_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
+            DataGridView control = (DataGridView)sender;
+
+            foreach (DataGridViewColumn column in control.Columns)
+            {
+                if (column.ValueType == typeof(DateTime))
+                {
+                    column.DefaultCellStyle.Format = "G";
+                }
+            }
         }
 
         #endregion

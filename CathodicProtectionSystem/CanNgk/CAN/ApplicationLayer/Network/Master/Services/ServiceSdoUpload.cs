@@ -309,7 +309,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Master.Services
             DataObject obj;
             // Индексы объектов которые не обрабатываем!!!
             List<UInt16> notHandledIndexes = new List<ushort>();
-            notHandledIndexes.AddRange(new UInt16[] { 0x2001, 0x2002 });
+            notHandledIndexes.AddRange(new UInt16[] { 0x2001, 0x2002, 0x2003, 0x2004, 0x2005, 0x2006, 0x2007 });
 
             if (Status != Status.Running)
             {
@@ -433,8 +433,10 @@ namespace NGK.CAN.ApplicationLayer.Network.Master.Services
                     {
                         if (notHandledIndexes.Contains(obj.Index))
                         {
-                            // Обновляем время последнего прочтения
-                            obj.Value = obj.Value;
+                            // Не проверияем данные индексы на соответствие конфигурации
+                            // Просто устанавливаем новые принятые значения
+                            obj.Value = msghelper.Value;
+                            obj.Status = ObjectStatus.NoError;
                             // Закрываем транзакцию
                             deviceContex.CurrentTransaction.Stop(msghelper.Answer);
                             continue;

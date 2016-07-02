@@ -7,6 +7,7 @@ using NGK.CAN.ApplicationLayer.Network.Devices.Profiles.ObjectDictionary;
 using Common.ComponentModel;
 using NGK.CAN.ApplicationLayer.Network.Devices.ObjectDictionary;
 using NGK.CAN.ApplicationLayer.Network.Devices.Profiles;
+using System.Diagnostics;
 
 namespace NGK.CorrosionMonitoringSystem.Models
 {
@@ -439,14 +440,13 @@ namespace NGK.CorrosionMonitoringSystem.Models
                     }
                     else
                     {
-                        if (!parameter.IsSpecialParameter)
-                        {
-                            DataObject dataObject = canDevice.ObjectDictionary[parameter.Indexes[0]];
-      
-                            parameter.Modified = dataObject.Modified;
-                            parameter.Status = dataObject.Status;
-                            parameter.Value = dataObject.TotalValue;
-                        }
+                        DataObject dataObject = canDevice.ObjectDictionary[parameter.Indexes[0]];
+                        parameter.Modified = dataObject.Modified;
+                        parameter.Status = dataObject.Status;
+                        parameter.Value = dataObject.TotalValue;
+
+                        if (parameter.Indexes[0] == 0x2013)
+                            Program._Logger.Info(String.Format("Время - {0}; Секунды - {1}", dataObject.TotalValue, dataObject.Value));
                     }
                 }
             }

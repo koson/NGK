@@ -106,5 +106,19 @@ namespace Test.DataTypes
             converter = new NgkFloatConverter(ScalerTypes.x001);
             value = (Single)converter.ConvertToOutputValue(basis);
         }
+
+        public static void TestDataTimeConvertor()
+        {
+            NgkDateTimeConverter converter = new NgkDateTimeConverter();
+            DateTime dt = (DateTime)converter.ConvertToOutputValue(1467467749);
+            string s = dt.ToString();
+
+            dt = DateTime.Now;
+            UInt32 basis = converter.ConvertToBasis(dt);
+            DateTime result = (DateTime)converter.ConvertToOutputValue(basis);
+            s = result.ToString();
+
+            return;
+        }
     }
 }
