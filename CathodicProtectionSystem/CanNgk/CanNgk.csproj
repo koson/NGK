@@ -177,6 +177,7 @@
     <Compile Include="CAN\DataTypes\NgkDataTypeConvertors\NgkUInt16Convertor.cs" />
     <Compile Include="CAN\DataTypes\Helper\ScalerTypes.cs" />
     <Compile Include="CAN\DataTypes\NgkProductVersion.cs" />
+    <Compile Include="CAN\DataTypes\TypeConverters\Converter.cs" />
     <Compile Include="CAN\Design\DevicesCollectionEditor.cs" />
     <Compile Include="CAN\Design\INetworkControllerTypeConverter.cs">
       <SubType>Code</SubType>

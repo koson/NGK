@@ -445,8 +445,8 @@ namespace NGK.CorrosionMonitoringSystem.Models
                         parameter.Status = dataObject.Status;
                         parameter.Value = dataObject.TotalValue;
 
-                        if (parameter.Indexes[0] == 0x2013)
-                            Program._Logger.Info(String.Format("Время - {0}; Секунды - {1}", dataObject.TotalValue, dataObject.Value));
+                        //if (parameter.Indexes[0] == 0x2013)
+                        //    Program._Logger.Info(String.Format("Время - {0}; Секунды - {1}", dataObject.TotalValue, dataObject.Value));
                     }
                 }
             }

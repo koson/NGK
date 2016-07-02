@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using NGK.CAN.DataTypes;
+using System.ComponentModel;
 
 namespace NGK.CAN.ApplicationLayer.Network.Devices.Profiles.ObjectDictionary
 {
@@ -11,11 +12,27 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices.Profiles.ObjectDictionary
     public class ObjectInfo
     {
         #region Constructors
-
+        
+        /// <summary>
+        /// Конструктор простого объекта словаря
+        /// </summary>
+        /// <param name="deviceProfile"></param>
+        /// <param name="index"></param>
+        /// <param name="name"></param>
+        /// <param name="description"></param>
+        /// <param name="readOnly"></param>
+        /// <param name="sdoCanRead"></param>
+        /// <param name="visible"></param>
+        /// <param name="displayName"></param>
+        /// <param name="measureUnit"></param>
+        /// <param name="category"></param>
+        /// <param name="convertor"></param>
+        /// <param name="defaultValue"></param>
+        /// <param name="typeConverter"></param>
         public ObjectInfo(ICanDeviceProfile deviceProfile, UInt16 index, string name, string description,
             bool readOnly, bool sdoCanRead, bool visible, string displayName,
             string measureUnit, ObjectCategory category, ICanDataTypeConvertor convertor,
-            UInt32 defaultValue)
+            UInt32 defaultValue, TypeConverter typeConverter)
         {
             DeviceProfile = deviceProfile;
             Index = index;
@@ -30,8 +47,26 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices.Profiles.ObjectDictionary
             DataTypeConvertor = convertor;
             DefaultValue = defaultValue;
             ComplexParameterName = null;
+            TypeConverter = typeConverter;
         }
 
+        /// <summary>
+        /// Конструктор для создания комплексного (составног) объекта (значение которое состоит
+        /// из нескольких объектов словаря)
+        /// </summary>
+        /// <param name="deviceProfile"></param>
+        /// <param name="index"></param>
+        /// <param name="name"></param>
+        /// <param name="description"></param>
+        /// <param name="readOnly"></param>
+        /// <param name="sdoCanRead"></param>
+        /// <param name="visible"></param>
+        /// <param name="displayName"></param>
+        /// <param name="measureUnit"></param>
+        /// <param name="category"></param>
+        /// <param name="convertor"></param>
+        /// <param name="defaultValue"></param>
+        /// <param name="complexParameterName"></param>
         public ObjectInfo(ICanDeviceProfile deviceProfile, UInt16 index, string name, string description,
             bool readOnly, bool sdoCanRead, bool visible, string displayName,
             string measureUnit, ObjectCategory category, ICanDataTypeConvertor convertor,
@@ -93,7 +128,8 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices.Profiles.ObjectDictionary
         /// </summary>
         public readonly ObjectCategory Category;
         /// <summary>
-        /// Тип данных значения объекта
+        /// Конвертер для преобразования данных полученных из сети 
+        /// в выходное значение и обратно 
         /// </summary>
         public readonly ICanDataTypeConvertor DataTypeConvertor;
         /// <summary>
@@ -112,6 +148,12 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices.Profiles.ObjectDictionary
         {
             get { return ComplexParameterName != null; }
         }
+
+        /// <summary>
+        /// Конвертер для преобразования заняения объекта строку и обратно
+        /// (Значение объетка TotalValue )
+        /// </summary>
+        public readonly TypeConverter TypeConverter;
 
         public readonly ICanDeviceProfile DeviceProfile;
 
