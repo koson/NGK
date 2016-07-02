@@ -61,7 +61,7 @@ namespace NGK.MeasuringDeviceTech.Classes.MeasuringDevice.Converters
             }
             else
             {
-                throw new Exception("Невозможно конверитировать свойсвто, неизвестный объект");
+                throw new Exception("Невозможно конверитировать свойство, неизвестный объект");
             }
             return var;
             //return base.ConvertFrom(context, culture, value);
