@@ -237,19 +237,19 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices.Profiles
 
             _ObjectInfoList.Add(new ObjectInfo(this, 0x2021, "usipk_period", "Период опроса УСИКПСТ, сек",
                 false, true, true, "Период опроса УСИКПСТ", "сек.", ObjectCategory.Configuration,
-                new NgkUInt16WithStatusDisabledConverter(ScalerTypes.x10), 0xFFFF)); //10
+                new NgkUInt16WithStatusDisabledConverter(ScalerTypes.x10), (UInt32)10));
 
             _ObjectInfoList.Add(new ObjectInfo(this, 0x2022, "corr_sense_period", "Период опроса датчиков коррозии, сек",
                 false, true, true, "Период опроса датчиков коррозии", "сек.", ObjectCategory.Configuration,
-                new NgkUInt16Convertor(ScalerTypes.x10), (UInt32)0));
+                new NgkUInt16WithStatusDisabledConverter(ScalerTypes.x10), (UInt32)0));
 
             _ObjectInfoList.Add(new ObjectInfo(this, 0x2023, "aux1_period", "Период опроса канала 1, сек",
                 false, true, true, "Период опроса канала 1", "сек.", ObjectCategory.Configuration,
-                new NgkUInt16Convertor(ScalerTypes.x10), (UInt32)0));
+                new NgkUInt16WithStatusDisabledConverter(ScalerTypes.x10), (UInt32)0));
 
             _ObjectInfoList.Add(new ObjectInfo(this, 0x2024, "aux2_period", "Период опроса канала 2, сек",
                 false, true, true, "Период опроса канала 2", "сек.", ObjectCategory.Configuration,
-                new NgkUInt16Convertor(ScalerTypes.x10), (UInt32)0));
+                new NgkUInt16WithStatusDisabledConverter(ScalerTypes.x10), (UInt32)0));
 
             _ObjectInfoList.Add(new ObjectInfo(this, 0x2026, "shunt_nom", "Номинал шунта, А",
                 false, true, true, "Номинал шунта", "A", ObjectCategory.Configuration,

@@ -28,8 +28,7 @@ namespace NGK.CAN.DataTypes
 
         public override string ToString()
         {
-            UInt32WithStatusDisabledConverter converter = new UInt32WithStatusDisabledConverter();
-            return (string)converter.ConvertTo(this, typeof(string));
+            return Value == 0xFFFF * 10 ? "Откл." : Value.ToString();
         }
     }
 }

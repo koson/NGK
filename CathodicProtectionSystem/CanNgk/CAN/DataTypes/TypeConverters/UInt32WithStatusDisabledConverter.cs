@@ -8,7 +8,7 @@ namespace NGK.CAN.DataTypes.TypeConverters
     /// <summary>
     /// Конвертер типа UInt32WithStatusDisabled, 
     /// </summary>
-    public class UInt32WithStatusDisabledConverter: TypeConverter  //UInt16Converter
+    public class UInt32WithStatusDisabledConverter: TypeConverter //UInt32Converter
     {
         public const string DisabledString = "Откл.";
         public const uint DisabledCode = 10 * 0xFFFF;
