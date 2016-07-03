@@ -15,7 +15,7 @@ namespace NGK.CAN.DataTypes
     /// Минорная  часть формируется: 1 * текущий номер. Диапазон допустимых значений 1…99;
     /// </remarks>
     [Serializable]
-    public class NgkProductVersionConvertor: ICanDataTypeConvertor
+    public class NgkProductVersionConvertor: INgkDataTypeConvertor
     {
         #region Constructors
         /// <summary>

@@ -71,7 +71,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices.Profiles
 
             _ObjectInfoList.Add(new ObjectInfo(this, 0x2002, "hw_version", "Версия аппаратуры", 
                 true, true, true, "Версия аппаратуры", String.Empty, ObjectCategory.System,
-                NgkProductVersionConvertor.Instance, 
+                NgkProductVersionConvertor.Instance,
                 NgkProductVersionConvertor.Instance.ConvertToBasis(new NgkProductVersion(new Version(1, 0)))));
 
             _ObjectInfoList.Add(new ObjectInfo(this, 0x2003, "serial_number1", "Серийный номер устройства",
@@ -158,7 +158,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices.Profiles
 
             _ObjectInfoList.Add(new ObjectInfo(this, 0x2015, "tamper", "Вскрытие", 
                 false, false, true, "Вскрытие", String.Empty, ObjectCategory.System, 
-                new NgkBooleanConverter(),  (new NgkBooleanConverter()).ConvertToBasis(false)));
+                new NgkBooleanConverter(), (new NgkBooleanConverter()).ConvertToBasis(false)));
 
             _ObjectInfoList.Add(new ObjectInfo(this, 0x2016, "supply_voltage_low", "Питания неисправно",
                 false, true, true, "Напряжение питания ниже нормы", String.Empty, ObjectCategory.Measured,

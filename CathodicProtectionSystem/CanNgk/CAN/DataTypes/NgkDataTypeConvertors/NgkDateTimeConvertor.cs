@@ -6,7 +6,7 @@ using NGK.CAN.DataTypes.DateTimeConvertor;
 
 namespace NGK.CAN.DataTypes
 {
-    public sealed class NgkDateTimeConverter : CanDataTypeConvertorBase
+    public sealed class NgkDateTimeConverter : NgkDataTypeConvertorBase
     {
         #region Constructors
         /// <summary>

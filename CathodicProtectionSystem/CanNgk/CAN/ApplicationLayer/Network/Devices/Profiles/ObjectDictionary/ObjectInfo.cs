@@ -31,8 +31,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices.Profiles.ObjectDictionary
         /// <param name="typeConverter"></param>
         public ObjectInfo(ICanDeviceProfile deviceProfile, UInt16 index, string name, string description,
             bool readOnly, bool sdoCanRead, bool visible, string displayName,
-            string measureUnit, ObjectCategory category, ICanDataTypeConvertor convertor,
-            UInt32 defaultValue, TypeConverter typeConverter)
+            string measureUnit, ObjectCategory category, INgkDataTypeConvertor convertor, UInt32 defaultValue)
         {
             DeviceProfile = deviceProfile;
             Index = index;
@@ -47,7 +46,6 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices.Profiles.ObjectDictionary
             DataTypeConvertor = convertor;
             DefaultValue = defaultValue;
             ComplexParameterName = null;
-            TypeConverter = typeConverter;
         }
 
         /// <summary>
@@ -69,7 +67,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices.Profiles.ObjectDictionary
         /// <param name="complexParameterName"></param>
         public ObjectInfo(ICanDeviceProfile deviceProfile, UInt16 index, string name, string description,
             bool readOnly, bool sdoCanRead, bool visible, string displayName,
-            string measureUnit, ObjectCategory category, ICanDataTypeConvertor convertor,
+            string measureUnit, ObjectCategory category, INgkDataTypeConvertor convertor,
             UInt32 defaultValue, String complexParameterName)
         {
             DeviceProfile = deviceProfile;
@@ -131,9 +129,9 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices.Profiles.ObjectDictionary
         /// Конвертер для преобразования данных полученных из сети 
         /// в выходное значение и обратно 
         /// </summary>
-        public readonly ICanDataTypeConvertor DataTypeConvertor;
+        public readonly INgkDataTypeConvertor DataTypeConvertor;
         /// <summary>
-        /// Значение по умолчнию (Значение в формате передаваемого посети)
+        /// Значение по умолчнию (Значение в формате передаваемого по сети)
         /// </summary>
         public UInt32 DefaultValue;
         /// <summary>
@@ -148,12 +146,6 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices.Profiles.ObjectDictionary
         {
             get { return ComplexParameterName != null; }
         }
-
-        /// <summary>
-        /// Конвертер для преобразования заняения объекта строку и обратно
-        /// (Значение объетка TotalValue )
-        /// </summary>
-        public readonly TypeConverter TypeConverter;
 
         public readonly ICanDeviceProfile DeviceProfile;
 

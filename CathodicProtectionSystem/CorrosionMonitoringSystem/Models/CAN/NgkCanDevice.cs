@@ -356,7 +356,7 @@ namespace NGK.CorrosionMonitoringSystem.Models
             if (Id != canDevice.Id)
             {
                 msg = String.Format(
-                    "Не удалось обновить параметры устройтсва. Не совпадает Id устройств");
+                    "Не удалось обновить параметры устройства. Не совпадает Id устройств");
                 throw new InvalidOperationException(msg);
             }
 
@@ -382,7 +382,7 @@ namespace NGK.CorrosionMonitoringSystem.Models
                             continue;
                         }
 
-                        if (parameter.Category == ObjectCategory.Measured)
+                        //if (parameter.Category == ObjectCategory.Measured)
                         {
                             if (parameter.IsComplexParameter)
                             {

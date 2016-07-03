@@ -5,7 +5,7 @@ using System.Text;
 namespace NGK.CAN.DataTypes
 {
     [Serializable]
-    public abstract class CanDataTypeConvertorBase: ICanDataTypeConvertor
+    public abstract class NgkDataTypeConvertorBase: INgkDataTypeConvertor
     {
         #region Fields And Properties
         

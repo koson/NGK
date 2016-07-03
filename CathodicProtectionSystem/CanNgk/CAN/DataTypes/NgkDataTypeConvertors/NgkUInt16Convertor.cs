@@ -12,7 +12,7 @@ namespace NGK.CAN.DataTypes
     /// Предстваляет собой целое число UInt32 = основа числа (Basis) * множитель (Scaler) 
     /// </summary>
     [Serializable]
-    public sealed class NgkUInt16Convertor : CanDataTypeConvertorBase
+    public sealed class NgkUInt16Convertor : NgkDataTypeConvertorBase
     {
         #region Constructors
         /// <summary>

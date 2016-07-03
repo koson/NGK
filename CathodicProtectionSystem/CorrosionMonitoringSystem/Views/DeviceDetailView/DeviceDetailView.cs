@@ -7,6 +7,7 @@ using System.Text;
 using System.Windows.Forms;
 using Mvp.View;
 using NGK.CorrosionMonitoringSystem.Models;
+using NGK.CAN.DataTypes;
 
 namespace NGK.CorrosionMonitoringSystem.Views.DeviceDetailView
 {
@@ -34,6 +35,8 @@ namespace NGK.CorrosionMonitoringSystem.Views.DeviceDetailView
             _DataGridView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             _DataGridView.DataBindingComplete += 
                 new DataGridViewBindingCompleteEventHandler(EventHandler_DataGridView_DataBindingComplete);
+            //_DataGridView.CellFormatting += 
+            //    new DataGridViewCellFormattingEventHandler(_DataGridView_CellFormatting);
 
             DataGridViewCellStyle headerCellStyle = new DataGridViewCellStyle();
             headerCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
@@ -51,8 +54,6 @@ namespace NGK.CorrosionMonitoringSystem.Views.DeviceDetailView
 
             _DataGridView.DataSource = _BindingSourceParameters;
         }
-
-
 
         #endregion
 
@@ -116,6 +117,11 @@ namespace NGK.CorrosionMonitoringSystem.Views.DeviceDetailView
                 }
             }
         }
+
+        //void _DataGridView_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        //{
+        //    DataGridView control = (DataGridView)sender;
+        //}
 
         #endregion
     }

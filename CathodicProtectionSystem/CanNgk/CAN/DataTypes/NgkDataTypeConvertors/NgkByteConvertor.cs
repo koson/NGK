@@ -5,7 +5,7 @@ using NGK.CAN.DataTypes.Helper;
 
 namespace NGK.CAN.DataTypes
 {
-    public sealed class NgkByteConverter : CanDataTypeConvertorBase
+    public sealed class NgkByteConverter : NgkDataTypeConvertorBase
     {
         #region Constructors
         /// <summary>

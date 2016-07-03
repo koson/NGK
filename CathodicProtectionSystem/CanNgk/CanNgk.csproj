@@ -163,8 +163,10 @@
     <Compile Include="CAN\ApplicationLayer\Transactions\TransactionType.cs" />
     <Compile Include="CAN\DataLinkLayer\CanPort\IXXAT\CanPort.cs" />
     <Compile Include="CAN\DataLinkLayer\CanPort\IXXAT\FilterIds.cs" />
-    <Compile Include="CAN\DataTypes\NgkDataTypeConvertors\DataTypeConvertorBase.cs" />
-    <Compile Include="CAN\DataTypes\NgkDataTypeConvertors\IDataTypeConvertor.cs" />
+    <Compile Include="CAN\DataTypes\NgkDataTypeConvertors\NgkUInt16WithDisableConverter.cs" />
+    <Compile Include="CAN\DataTypes\UInt32WithStatusDisabled.cs" />
+    <Compile Include="CAN\DataTypes\NgkDataTypeConvertors\NgkDataTypeConvertorBase.cs" />
+    <Compile Include="CAN\DataTypes\NgkDataTypeConvertors\INgkDataTypeConvertor.cs" />
     <Compile Include="CAN\DataTypes\NgkDataTypeConvertors\NgkBooleanConvertor.cs" />
     <Compile Include="CAN\DataTypes\NgkDataTypeConvertors\NgkByteConvertor.cs" />
     <Compile Include="CAN\DataTypes\NgkDataTypeConvertors\NgkDateTimeConvertor.cs" />
@@ -177,7 +179,7 @@
     <Compile Include="CAN\DataTypes\NgkDataTypeConvertors\NgkUInt16Convertor.cs" />
     <Compile Include="CAN\DataTypes\Helper\ScalerTypes.cs" />
     <Compile Include="CAN\DataTypes\NgkProductVersion.cs" />
-    <Compile Include="CAN\DataTypes\TypeConverters\Converter.cs" />
+    <Compile Include="CAN\DataTypes\TypeConverters\UInt32WithStatusDisabledConverter.cs" />
     <Compile Include="CAN\Design\DevicesCollectionEditor.cs" />
     <Compile Include="CAN\Design\INetworkControllerTypeConverter.cs">
       <SubType>Code</SubType>

@@ -6,6 +6,7 @@ using NGK.CAN.ApplicationLayer.Network.Devices.Profiles.ObjectDictionary.Collect
 using NGK.CAN.ApplicationLayer.Network.Devices.Profiles.ObjectDictionary.ComplexParameterConverters;
 using NGK.CAN.DataTypes;
 using NGK.CAN.DataTypes.Helper;
+using NGK.CAN.DataTypes.TypeConverters;
 
 namespace NGK.CAN.ApplicationLayer.Network.Devices.Profiles
 {
@@ -101,7 +102,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices.Profiles
 
             _ObjectInfoList.Add(new ObjectInfo(this, 0x2001, "fw_version", "Версия ПО",
                 true, true, true, "Версия ПО", String.Empty, ObjectCategory.System,
-                NgkProductVersionConvertor.Instance,
+                NgkProductVersionConvertor.Instance, 
                 NgkProductVersionConvertor.Instance.ConvertToBasis(new NgkProductVersion(new Version(1, 0)))));
 
             _ObjectInfoList.Add(new ObjectInfo(this, 0x2002, "hw_version", "Версия аппаратуры",
@@ -179,7 +180,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices.Profiles
             _ObjectInfoList.Add(new ObjectInfo(this, 0x2012, "supply_voltage",
                 "Питающее напряжение, B",
                 false, true, true, "Питающее напряжение", "B", ObjectCategory.Measured,
-                new NgkUFloatConvertor(ScalerTypes.x005), (UInt32)0));
+                new NgkUFloatConvertor(ScalerTypes.x005), (UInt32)0, null));
 
             _ObjectInfoList.Add(new ObjectInfo(this, 0x2013, "battery_voltage",
                 "Напряжение батареи, B",
@@ -236,7 +237,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices.Profiles
 
             _ObjectInfoList.Add(new ObjectInfo(this, 0x2021, "usipk_period", "Период опроса УСИКПСТ, сек",
                 false, true, true, "Период опроса УСИКПСТ", "сек.", ObjectCategory.Configuration,
-                new NgkUInt16Convertor(ScalerTypes.x10), (UInt32)10));
+                new NgkUInt16WithStatusDisabledConverter(ScalerTypes.x10), 0xFFFF)); //10
 
             _ObjectInfoList.Add(new ObjectInfo(this, 0x2022, "corr_sense_period", "Период опроса датчиков коррозии, сек",
                 false, true, true, "Период опроса датчиков коррозии", "сек.", ObjectCategory.Configuration,

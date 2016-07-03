@@ -5,7 +5,7 @@ using Infrastructure.LogManager;
 
 namespace NGK.CAN.DataTypes
 {
-    public sealed class NgkFloatConverter : CanDataTypeConvertorBase
+    public sealed class NgkFloatConverter : NgkDataTypeConvertorBase
     {
         #region Constructors
         /// <summary>

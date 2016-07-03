@@ -8,7 +8,7 @@ namespace NGK.CAN.DataTypes
     /// <summary>
     /// Базовый класс для создания типов данных
     /// </summary>
-    public interface ICanDataTypeConvertor: IXmlSerializable
+    public interface INgkDataTypeConvertor: IXmlSerializable
     {
         #region Fields And Properties
 

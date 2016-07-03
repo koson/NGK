@@ -4,21 +4,21 @@ using System.Text;
 
 namespace NGK.CAN.DataTypes
 {
-    public sealed class NgkUFloatConvertor : NgkDataTypeConvertorBase
+    public class NgkUInt16WithStatusDisabledConverter: NgkDataTypeConvertorBase
     {
         #region Constructors
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="scaler">см. struct Scaler</param>
-        public NgkUFloatConvertor(decimal scaler)
+        /// <param name="scaler">см. struct ScalerTypes</param>
+        public NgkUInt16WithStatusDisabledConverter(decimal scaler)
         {
             _Signed = false;
             _Scaler = scaler;
         }
 
         #endregion
-        
+
         #region Fields And Properties
 
         public override bool IsBoolean
@@ -28,33 +28,30 @@ namespace NGK.CAN.DataTypes
 
         public override Type OutputDataType
         {
-            get { return typeof(Single); }
+            get { return typeof(UInt32WithStatusDisabled); }
         }
-        #endregion
 
+        #endregion
+        
         #region Methods
 
         public override ValueType ConvertToOutputValue(uint basis)
         {
-            UInt16 basis16 = System.Convert.ToUInt16(basis);
-
-            return Convert.ToSingle(basis * _Scaler);
+            return new UInt32WithStatusDisabled(Convert.ToUInt32(basis * _Scaler));
         }
 
         public override uint ConvertToBasis(ValueType totalValue)
         {
             String msg;
 
-            if (totalValue is Single)
+            if (totalValue is UInt32WithStatusDisabled)
             {
-                return Convert.ToUInt32(
-                    ((Single)totalValue) / Convert.ToSingle(_Scaler));
+                return Convert.ToUInt32(((UInt32WithStatusDisabled)totalValue).Value / _Scaler);
             }
 
             msg = String.Format("Преобразование невозможно. Передан тип {0}, ожидается {1}",
-                totalValue.GetType(), typeof(Single));
+                totalValue.GetType(), typeof(UInt32WithStatusDisabled));
             throw new InvalidCastException(msg);
-
         }
 
         /// <summary>
