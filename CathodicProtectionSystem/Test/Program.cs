@@ -5,6 +5,7 @@ using Test.DataTypes;
 using Test.ControllerTest;
 using Test.DeviceTest;
 using Test.EnumTest;
+using Test.NullableTypeTest;
 
 namespace Test
 {
@@ -16,12 +17,13 @@ namespace Test
             //DataTypesTest.TestDataTypeInfo_SetValue();
             //DataTypesTest.TestNgkInt16Convertor();
             //DataTypesTest.TestNgkFloatConvertor();
-            DataTypesTest.TestDataTimeConvertor();
+            //DataTypesTest.TestDataTimeConvertor();
             //NetworkControllerTest.NetworkTest();
             //NetworkControllerTest.SerializeNetworkControllerCollectionTest();
             //DeviceClassTest.ToStingTest();
             //DeviceClassTest.CreateFromStringTest();
             //EnumerationTest.Test();
+            NullableTypesTest.Test();
             Console.ReadLine();
         }
     }

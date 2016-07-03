@@ -50,8 +50,8 @@ namespace NGK.CorrosionMonitoringSystem.Models
                 _DefaultValue = info.DataTypeConvertor.ConvertToOutputValue(info.DefaultValue);
             }
 
-            _Value = Activator.CreateInstance(_ValueType); 
-            _Modified = DateTime.Now;
+            _Value = Activator.CreateInstance(_ValueType);
+            _Modified = null;
             _Status = ObjectStatus.NoError;
         }
 
@@ -68,7 +68,7 @@ namespace NGK.CorrosionMonitoringSystem.Models
             _MeasureUnit = measureUnit;
             _Category = category;
             _DeviceType = deviceType;
-            _Modified = DateTime.Now;
+            _Modified = null;
             _Status = ObjectStatus.NoError;
             if (_IsSpecialParameter)
             {
@@ -343,7 +343,7 @@ namespace NGK.CorrosionMonitoringSystem.Models
             set { _DefaultValue = value; }
         }
 
-        private DateTime _Modified;
+        private DateTime? _Modified;
         /// <summary>
         /// Время последнего получения значения объекта
         /// </summary>
@@ -352,12 +352,20 @@ namespace NGK.CorrosionMonitoringSystem.Models
         [Category("Параметр")]
         [DisplayName("Время обновления")]
         [Description("Дата и время последнего чтения объекта из устройтсва (объекта словаря)")]
-        public DateTime Modified
+        public DateTime? Modified
         {
             get { return _Modified; }
             set 
             {
-                if (_Modified != value)
+                if (value.HasValue && _Modified.HasValue)
+                {
+                    if (_Modified != value)
+                    {
+                        _Modified = value;
+                        OnPropertyChanged("Modified");
+                    }
+                }
+                else
                 {
                     _Modified = value;
                     OnPropertyChanged("Modified");

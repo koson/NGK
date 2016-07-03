@@ -50,6 +50,109 @@ namespace NGK.CorrosionMonitoringSystem.Models
 
         #endregion
 
+        #region Constructor
+
+        public NgkCanDevice(IDevice device)
+        {
+            _Parameters = new ParametersCollection();
+
+            // Добавляем общие для всех устройств параметры
+            _Parameters.Add(Parameter.CreateSpecialParameter(ParameterNames.ID,
+                "GUID", "Уникальный идентификатор устройства", string.Empty,
+                true, false, ObjectCategory.System, device.DeviceType, device.Id, Guid.Empty));
+            _Parameters.Add(Parameter.CreateSpecialParameter(ParameterNames.DEVICE_TYPE,
+                "Тип устройства", "Тип устройства", string.Empty,
+                true, false, ObjectCategory.System, device.DeviceType, device.DeviceType, DeviceType.UnknownTypeOfDevice));
+            _Parameters.Add(Parameter.CreateSpecialParameter(ParameterNames.NODE_ID,
+                "Сетевой адрес", "Сетевой идентификатор устройтсва", string.Empty,
+                true, true, ObjectCategory.System, device.DeviceType, device.NodeId, (byte)1));
+            _Parameters.Add(Parameter.CreateSpecialParameter(ParameterNames.LOCATION,
+                "Расположение", "Наименование места установки оборудования", string.Empty,
+                true, true, ObjectCategory.System, device.DeviceType, device.LocationName, String.Empty));
+            _Parameters.Add(Parameter.CreateSpecialParameter(ParameterNames.POLLING_INTERVAL,
+                "Периуд опроса", "Период опроса устройства, мсек", "мсек",
+                true, true, ObjectCategory.System, device.DeviceType, device.PollingInterval, (uint)1000));
+            _Parameters.Add(Parameter.CreateSpecialParameter(ParameterNames.DEVICE_STATUS,
+                "Состояние устройства", "Состояние устройства", string.Empty,
+                true, true, ObjectCategory.System, device.DeviceType, device.Status, DeviceStatus.Stopped));
+            _Parameters.Add(Parameter.CreateSpecialParameter(ParameterNames.NETWORK_ID,
+                "ID сети", "ID CAN сети", string.Empty,
+                true, true, ObjectCategory.System, device.DeviceType,
+                device.Network == null ? 0 : device.Network.NetworkId, (uint)0));
+            _Parameters.Add(Parameter.CreateSpecialParameter(ParameterNames.NETWORK_NAME,
+                "Сеть CAN", "Наименование сети", string.Empty,
+                true, true, ObjectCategory.System, device.DeviceType,
+                device.Network == null ? "Не установлена" : device.Network.NetworkName, "Не установлена"));
+
+            foreach (ObjectInfo info in device.Profile.ObjectInfoList)
+            {
+                Parameter prm = new Parameter(info);
+                if (!_Parameters.Contains(prm.Name))
+                    _Parameters.Add(prm);
+            }
+
+            foreach (Parameter parameter in _Parameters)
+            {
+                if ((parameter.Category == ObjectCategory.Configuration) ||
+                    (parameter.Category == ObjectCategory.System) ||
+                    (parameter.Category == ObjectCategory.Measured))
+                {
+                    DateTime modified = DateTime.Now;
+
+                    if (parameter.IsComplexParameter)
+                    {
+                        List<object> values = new List<object>();
+                        ObjectStatus status = ObjectStatus.NoError;
+
+                        foreach (UInt16 index in parameter.Indexes)
+                        {
+                            DataObject dataObject = device.ObjectDictionary[index];
+                            values.Add(device.GetObject(index));
+
+                            if (dataObject.Modified > modified)
+                                modified = dataObject.Modified;
+
+                            if (dataObject.Status != ObjectStatus.NoError)
+                                status = dataObject.Status;
+                        }
+
+                        parameter.Modified = null; // modified;
+                        parameter.Value = CanDevicePrototype.GetProfile(device.DeviceType)
+                            .ComplexParameters[parameter.Name].Converter.ConvertTo(values.ToArray());
+                    }
+                    else
+                    {
+                        if (!parameter.IsSpecialParameter)
+                        {
+                            DataObject dataObject = device.ObjectDictionary[parameter.Indexes[0]];
+                            parameter.Modified = null; //modified;
+                            parameter.Status = dataObject.Status;
+                            parameter.Value = dataObject.TotalValue;
+                            parameter.DefaultValue =
+                                dataObject.Info.DataTypeConvertor.ConvertToOutputValue(dataObject.Info.DefaultValue);
+                        }
+                    }
+                }
+            }
+
+            Parameters[ParameterNames.POLARISATION_CURRENT].PropertyChanged +=
+                new PropertyChangedEventHandler(EventHandler_NgkCanDevice_PropertyChanged);
+            Parameters[ParameterNames.POLARISATION_POTENTIAL].PropertyChanged +=
+                new PropertyChangedEventHandler(EventHandler_NgkCanDevice_PropertyChanged);
+            Parameters[ParameterNames.PROTECTION_POTENTIAL].PropertyChanged +=
+                new PropertyChangedEventHandler(EventHandler_NgkCanDevice_PropertyChanged);
+            Parameters[ParameterNames.PROTECTION_CURRENT].PropertyChanged +=
+                new PropertyChangedEventHandler(EventHandler_NgkCanDevice_PropertyChanged);
+            Parameters[ParameterNames.CORROSION_DEPTH].PropertyChanged +=
+                new PropertyChangedEventHandler(EventHandler_NgkCanDevice_PropertyChanged);
+            Parameters[ParameterNames.CORROSION_SPEED].PropertyChanged +=
+                new PropertyChangedEventHandler(EventHandler_NgkCanDevice_PropertyChanged);
+            Parameters[ParameterNames.TAMPER].PropertyChanged +=
+                new PropertyChangedEventHandler(EventHandler_NgkCanDevice_PropertyChanged);
+        }
+
+        #endregion
+
         #region Fields And Propetries
 
         [Browsable(false)]
@@ -244,108 +347,6 @@ namespace NGK.CorrosionMonitoringSystem.Models
 
         #endregion
 
-        #region Constructor
-
-        public NgkCanDevice(IDevice device)
-        {
-            _Parameters = new ParametersCollection();
-
-            // Добавляем общие для всех устройств параметры
-            _Parameters.Add(Parameter.CreateSpecialParameter(ParameterNames.ID,
-                "GUID", "Уникальный идентификатор устройства", string.Empty,
-                true, false, ObjectCategory.System, device.DeviceType, device.Id, Guid.Empty));
-            _Parameters.Add(Parameter.CreateSpecialParameter(ParameterNames.DEVICE_TYPE,
-                "Тип устройства", "Тип устройства", string.Empty,
-                true, false, ObjectCategory.System, device.DeviceType, device.DeviceType, DeviceType.UnknownTypeOfDevice));
-            _Parameters.Add(Parameter.CreateSpecialParameter(ParameterNames.NODE_ID,
-                "Сетевой адрес", "Сетевой идентификатор устройтсва", string.Empty,
-                true, true, ObjectCategory.System, device.DeviceType, device.NodeId, (byte)1));
-            _Parameters.Add(Parameter.CreateSpecialParameter(ParameterNames.LOCATION,
-                "Расположение", "Наименование места установки оборудования", string.Empty,
-                true, true, ObjectCategory.System, device.DeviceType, device.LocationName, String.Empty));
-            _Parameters.Add(Parameter.CreateSpecialParameter(ParameterNames.POLLING_INTERVAL,
-                "Периуд опроса", "Период опроса устройства, мсек", "мсек",
-                true, true, ObjectCategory.System, device.DeviceType, device.PollingInterval, (uint)1000));
-            _Parameters.Add(Parameter.CreateSpecialParameter(ParameterNames.DEVICE_STATUS,
-                "Состояние устройства", "Состояние устройства", string.Empty,
-                true, true, ObjectCategory.System, device.DeviceType, device.Status, DeviceStatus.Stopped));
-            _Parameters.Add(Parameter.CreateSpecialParameter(ParameterNames.NETWORK_ID,
-                "ID сети", "ID CAN сети", string.Empty,
-                true, true, ObjectCategory.System, device.DeviceType,
-                device.Network == null ? 0 : device.Network.NetworkId, (uint)0));
-            _Parameters.Add(Parameter.CreateSpecialParameter(ParameterNames.NETWORK_NAME,
-                "Сеть CAN", "Наименование сети", string.Empty,
-                true, true, ObjectCategory.System, device.DeviceType,
-                device.Network == null ? "Не установлена" : device.Network.NetworkName, "Не установлена"));
-
-            foreach (ObjectInfo info in device.Profile.ObjectInfoList)
-            {
-                Parameter prm = new Parameter(info);
-                if (!_Parameters.Contains(prm.Name))
-                    _Parameters.Add(prm);
-            }
-
-            foreach (Parameter parameter in _Parameters)
-            {
-                if ((parameter.Category == ObjectCategory.Configuration) ||
-                    (parameter.Category == ObjectCategory.System))
-                {
-                    DateTime modified = DateTime.Now;
-
-                    if (parameter.IsComplexParameter)
-                    {
-                        List<object> values = new List<object>();
-                        ObjectStatus status = ObjectStatus.NoError;
-
-                        foreach (UInt16 index in parameter.Indexes)
-                        {
-                            DataObject dataObject = device.ObjectDictionary[index];
-                            values.Add(device.GetObject(index));
-
-                            if (dataObject.Modified > modified)
-                                modified = dataObject.Modified;
-
-                            if (dataObject.Status != ObjectStatus.NoError)
-                                status = dataObject.Status;
-                        }
-
-                        parameter.Modified = modified;
-                        parameter.Value = CanDevicePrototype.GetProfile(device.DeviceType)
-                            .ComplexParameters[parameter.Name].Converter.ConvertTo(values.ToArray());
-                    }
-                    else
-                    {
-                        if (!parameter.IsSpecialParameter)
-                        {
-                            DataObject dataObject = device.ObjectDictionary[parameter.Indexes[0]];
-                            parameter.Modified = modified;
-                            parameter.Status = dataObject.Status;
-                            parameter.Value = dataObject.TotalValue;
-                            parameter.DefaultValue =
-                                dataObject.Info.DataTypeConvertor.ConvertToOutputValue(dataObject.Info.DefaultValue);
-                        }
-                    }
-                }
-            }
-
-            Parameters[ParameterNames.POLARISATION_CURRENT].PropertyChanged +=
-                new PropertyChangedEventHandler(EventHandler_NgkCanDevice_PropertyChanged);
-            Parameters[ParameterNames.POLARISATION_POTENTIAL].PropertyChanged +=
-                new PropertyChangedEventHandler(EventHandler_NgkCanDevice_PropertyChanged);
-            Parameters[ParameterNames.PROTECTION_POTENTIAL].PropertyChanged +=
-                new PropertyChangedEventHandler(EventHandler_NgkCanDevice_PropertyChanged);
-            Parameters[ParameterNames.PROTECTION_CURRENT].PropertyChanged +=
-                new PropertyChangedEventHandler(EventHandler_NgkCanDevice_PropertyChanged);
-            Parameters[ParameterNames.CORROSION_DEPTH].PropertyChanged +=
-                new PropertyChangedEventHandler(EventHandler_NgkCanDevice_PropertyChanged);
-            Parameters[ParameterNames.CORROSION_SPEED].PropertyChanged +=
-                new PropertyChangedEventHandler(EventHandler_NgkCanDevice_PropertyChanged);
-            Parameters[ParameterNames.TAMPER].PropertyChanged +=
-                new PropertyChangedEventHandler(EventHandler_NgkCanDevice_PropertyChanged);
-        }
-
-        #endregion
-
         #region Method
 
         public void Update(IDevice canDevice)
@@ -382,7 +383,7 @@ namespace NGK.CorrosionMonitoringSystem.Models
                             continue;
                         }
 
-                        //if (parameter.Category == ObjectCategory.Measured)
+                        if (parameter.Category == ObjectCategory.Measured)
                         {
                             if (parameter.IsComplexParameter)
                             {

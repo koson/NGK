@@ -37,6 +37,7 @@
     <Compile Include="DataTypesTest\DataTypesTest.cs" />
     <Compile Include="DeviceTest\DeviceTest.cs" />
     <Compile Include="EnumTest\EnumerationTest.cs" />
+    <Compile Include="NullableTypeTest\NullableTypesTest.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

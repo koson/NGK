@@ -7,16 +7,22 @@ using NGK.CAN.DataTypes.TypeConverters;
 namespace NGK.CAN.DataTypes
 {
     /// <summary>
-    /// Предназначен для представления чисел типа UInt16
-    /// для отображения на GUI
+    /// Предназначен для представления чисел типа UInt16 имеющим одно значение в качестве "Оключено"
+    /// (для отображения на GUI)
     /// </summary>
     [TypeConverter(typeof(UInt32WithStatusDisabledConverter))]
     public struct UInt32WithStatusDisabled
     {
+        #region Constructor
+
         public UInt32WithStatusDisabled(UInt32 value)
         {
             _Value = value;
         }
+
+        #endregion
+
+        #region Fields And Properties
 
         private UInt32 _Value;
 
@@ -26,9 +32,44 @@ namespace NGK.CAN.DataTypes
             set { _Value = value; }
         }
 
+        #endregion 
+
+        #region Methods
+
         public override string ToString()
         {
             return Value == 0xFFFF * 10 ? "Откл." : Value.ToString();
         }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj is UInt32WithStatusDisabled)
+            {
+                return this == (UInt32WithStatusDisabled)obj;
+            }
+            else
+                return base.Equals(obj);
+        }
+
+        #endregion 
+
+        #region Operators
+
+        public static bool operator ==(UInt32WithStatusDisabled operand1, UInt32WithStatusDisabled operand2)
+        {
+            return operand1._Value == operand2._Value;
+        }
+
+        public static bool operator !=(UInt32WithStatusDisabled operand1, UInt32WithStatusDisabled operand2)
+        {
+            return operand1._Value != operand2._Value;
+        }
+
+        #endregion
     }
 }
