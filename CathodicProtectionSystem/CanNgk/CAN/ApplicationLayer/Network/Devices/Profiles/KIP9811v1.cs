@@ -167,11 +167,11 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices.Profiles
 
             _ObjectInfoList.Add(new ObjectInfo(this, 0x200F, "corrosion_depth", "Глубина коррозии, мкм",
                 false, true, true, "Глубина коррозии", "мкм", ObjectCategory.Measured,
-                new NgkUInt16Convertor(ScalerTypes.x1), (UInt32)0));
+                new NgkUInt16WithStatusDisabledConverter(ScalerTypes.x1), (UInt32)0xFFFF));
 
             _ObjectInfoList.Add(new ObjectInfo(this, 0x2010, "corrosion_speed", "Скорость коррозии, мкм/год",
                 false, true, true, "Скорость коррозии", "мкм/год", ObjectCategory.Measured,
-                new NgkUInt16Convertor(ScalerTypes.x1), (UInt32)0));
+                new NgkUInt16WithStatusDisabledConverter(ScalerTypes.x1), (UInt32)0xFFFF));
 
             _ObjectInfoList.Add(new ObjectInfo(this, 0x2011, "usipk_state", "Состояние УСИКПСТ",
                 false, true, true, "Состояние УСИКПСТ", String.Empty, ObjectCategory.Measured,
@@ -237,7 +237,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices.Profiles
 
             _ObjectInfoList.Add(new ObjectInfo(this, 0x2021, "usipk_period", "Период опроса УСИКПСТ, сек",
                 false, true, true, "Период опроса УСИКПСТ", "сек.", ObjectCategory.Configuration,
-                new NgkUInt16WithStatusDisabledConverter(ScalerTypes.x10), (UInt32)10));
+                new NgkUInt16WithStatusDisabledConverter(ScalerTypes.x10), (UInt32)0xFFFF)); // Откл.
 
             _ObjectInfoList.Add(new ObjectInfo(this, 0x2022, "corr_sense_period", "Период опроса датчиков коррозии, сек",
                 false, true, true, "Период опроса датчиков коррозии", "сек.", ObjectCategory.Configuration,

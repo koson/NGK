@@ -24,6 +24,8 @@ namespace NGK.CAN.DataTypes
 
         #region Fields And Properties
 
+        public const UInt16 DisabledCode = 0xFFFF;  
+
         private UInt32 _Value;
 
         public UInt32 Value
@@ -32,13 +34,18 @@ namespace NGK.CAN.DataTypes
             set { _Value = value; }
         }
 
+        public bool IsEnabled
+        {
+            get { return Value == DisabledCode * 10; }
+        }
+
         #endregion 
 
         #region Methods
 
         public override string ToString()
         {
-            return Value == 0xFFFF * 10 ? "Откл." : Value.ToString();
+            return IsEnabled ? "Откл." : Value.ToString();
         }
 
         public override int GetHashCode()

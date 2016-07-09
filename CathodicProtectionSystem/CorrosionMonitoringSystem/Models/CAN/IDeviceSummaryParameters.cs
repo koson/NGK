@@ -46,12 +46,12 @@ namespace NGK.CorrosionMonitoringSystem.Models
         /// Глубина коррозии (0x200F)
         /// </summary>
         [DisplayName("Глубина коррозии, мкм")]
-        UInt32 CorrosionDepth { get;}
+        UInt32? CorrosionDepth { get;}
         /// <summary>
         /// Скорость коррозии (0x2010)
         /// </summary>
         [DisplayName("Скорость коррозии, мкм/год")]
-        UInt32 CorrosionSpeed { get; }
+        UInt32? CorrosionSpeed { get; }
         /// <summary>
         /// Вскрытие корпуса прибора
         /// </summary>

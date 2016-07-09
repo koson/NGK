@@ -8,6 +8,9 @@ using Common.ComponentModel;
 using NGK.CAN.ApplicationLayer.Network.Devices.ObjectDictionary;
 using NGK.CAN.ApplicationLayer.Network.Devices.Profiles;
 using System.Diagnostics;
+using System.Globalization;
+using NGK.CAN.DataTypes;
+using WinForms = System.Windows.Forms;
 
 namespace NGK.CorrosionMonitoringSystem.Models
 {
@@ -321,19 +324,23 @@ namespace NGK.CorrosionMonitoringSystem.Models
             }
         }
 
-        public UInt32 CorrosionDepth
+        public UInt32? CorrosionDepth
         {
             get
             {
-                return (UInt32)Parameters[ParameterNames.CORROSION_DEPTH].Value;
+                UInt32WithStatusDisabled value =
+                    (UInt32WithStatusDisabled)Parameters[ParameterNames.CORROSION_DEPTH].Value;
+                return value.IsEnabled ? (UInt32?)value.Value : null;
             }
         }
 
-        public UInt32 CorrosionSpeed
+        public UInt32? CorrosionSpeed
         {
             get
             {
-                return (UInt32)Parameters[ParameterNames.CORROSION_SPEED].Value;
+                UInt32WithStatusDisabled value =
+                    (UInt32WithStatusDisabled)Parameters[ParameterNames.CORROSION_SPEED].Value;
+                return value.IsEnabled ? (UInt32?)value.Value : null;
             }
         }
 
@@ -445,9 +452,6 @@ namespace NGK.CorrosionMonitoringSystem.Models
                         parameter.Modified = dataObject.Modified;
                         parameter.Status = dataObject.Status;
                         parameter.Value = dataObject.TotalValue;
-
-                        //if (parameter.Indexes[0] == 0x2013)
-                        //    Program._Logger.Info(String.Format("Время - {0}; Секунды - {1}", dataObject.TotalValue, dataObject.Value));
                     }
                 }
             }
