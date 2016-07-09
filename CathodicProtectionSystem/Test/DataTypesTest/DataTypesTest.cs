@@ -113,6 +113,9 @@ namespace Test.DataTypes
             DateTime dt = (DateTime)converter.ConvertToOutputValue(1467467749);
             string s = dt.ToString();
 
+            DateTime x = (DateTime)converter.ConvertToOutputValue(8459639);
+            s = x.ToString();
+
             dt = DateTime.Now;
             UInt32 basis = converter.ConvertToBasis(dt);
             DateTime result = (DateTime)converter.ConvertToOutputValue(basis);

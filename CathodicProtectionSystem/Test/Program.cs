@@ -6,6 +6,7 @@ using Test.ControllerTest;
 using Test.DeviceTest;
 using Test.EnumTest;
 using Test.NullableTypeTest;
+using System.Globalization;
 
 namespace Test
 {
@@ -23,7 +24,9 @@ namespace Test
             //DeviceClassTest.ToStingTest();
             //DeviceClassTest.CreateFromStringTest();
             //EnumerationTest.Test();
-            NullableTypesTest.Test();
+            //NullableTypesTest.Test();
+            //Console.WriteLine(DateTime.Now.ToString(CultureInfo.CreateSpecificCulture("ru-RU")));
+            SDOServiceTest.Test();
             Console.ReadLine();
         }
     }

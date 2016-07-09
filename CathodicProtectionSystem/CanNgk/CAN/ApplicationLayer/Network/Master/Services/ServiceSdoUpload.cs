@@ -61,7 +61,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Master.Services
         }
         // Константа для определения длины данных в байтах.
         // Передаётся в ответе на запрос в 0-вом байте данных сообщения
-        private enum DataLenght: byte
+        public enum DataLenght: byte
         {
             NotDefined = 0,
             OneByte = 0x4F,
@@ -73,30 +73,30 @@ namespace NGK.CAN.ApplicationLayer.Network.Master.Services
         /// <summary>
         /// Структура для предствавления содержимого ответа на запрос по SDO
         /// </summary>
-        private struct IncomingMessageStuctureSdo
+        public struct IncomingMessageStuctureSdo
         {
             #region Fields And Pproperties
             /// <summary>
             /// Длина данных в ответе
             /// </summary>
-            internal DataLenght DL; 
+            public DataLenght DL; 
             /// <summary>
             /// Индекс объекта
             /// </summary>
-            internal UInt16 Index;
+            public UInt16 Index;
             /// <summary>
             /// Подиндекс объекта
             /// </summary>
-            internal Byte SubIndex;
+            public Byte SubIndex;
             /// <summary>
             /// Неформатированное значение числа (знаковое/безнаковое, целое/вещественное)
             /// 4 байта или в случае исключения - код исключения 
             /// </summary>
-            internal UInt32 Value;
+            public UInt32 Value;
             /// <summary>
             /// Ответное сообщение содержит исключение (устройство вернуло ошибку)
             /// </summary>
-            internal Boolean HasExсeption
+            public Boolean HasExсeption
             {
                 get 
                 {
@@ -107,7 +107,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Master.Services
             /// <summary>
             /// Возвращает true, если сообщение имеет неверный формат сообщения
             /// </summary>
-            internal bool HasIncorrectStructure
+            public bool HasIncorrectStructure
             {
                 get
                 {
@@ -117,17 +117,17 @@ namespace NGK.CAN.ApplicationLayer.Network.Master.Services
             /// <summary>
             /// Возвращает код исключения (если исключение содержиться в ответе)
             /// </summary>
-            internal UInt32? ExceptionCode
+            public UInt32? ExceptionCode
             {
                 get { return HasExсeption ? (UInt32?)Value : null; }
             }
-            internal Byte CobeId;
-            internal Frame? Answer;
+            public Byte CobeId;
+            public Frame? Answer;
             /// <summary>
             /// Возвращает true если сообщение пердназначено
             /// для данного сервиса
             /// </summary>
-            internal bool IsForService
+            public bool IsForService
             {
                 get
                 {
@@ -158,7 +158,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Master.Services
             /// </summary>
             /// <param name="message">Ответное сообщение</param>
             /// <returns>Структура данных ответа</returns>
-            internal static IncomingMessageStuctureSdo Parse(Frame message)
+            public static IncomingMessageStuctureSdo Parse(Frame message)
             {
                 const Byte MASK_COBEID = 0x7F; // Выделяет 7 бит содержащих CodeId из поля Id 
 
@@ -198,7 +198,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Master.Services
                                     (message.Data[ANSWER_STUCTURE.D0] |
                                     ((UInt32)message.Data[ANSWER_STUCTURE.D1] << 8) |
                                     ((UInt32)message.Data[ANSWER_STUCTURE.D2] << 16) |
-                                    ((UInt32)message.Data[ANSWER_STUCTURE.D3] << 32)));
+                                    ((UInt32)message.Data[ANSWER_STUCTURE.D3] << 24)));
                                 break;
                             }
                         case DataLenght.NotDefined:
@@ -361,6 +361,9 @@ namespace NGK.CAN.ApplicationLayer.Network.Master.Services
                                 NetworkController.NetworkId,deviceContex.CurrentTransaction.Request.Value.ToString(),
                                 message.ToString());
                         }
+
+                        //Logger.Error(msg + " " + "Сообщение: " +  msghelper.Answer.ToString());
+
                         continue;
                     }
 
@@ -401,7 +404,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Master.Services
                    if (!deviceContex.Device.Profile.ObjectInfoList.Contains(msghelper.Index))
                    {
                        msg = String.Format("Network {0}: SDO Service: " +
-                           "Ненайдено описание объекта c индексом {1} в профиле устройства {2}",
+                           "Не найдено описание объекта c индексом {1} в профиле устройства {2}",
                            _NetworkController.NetworkName, msghelper.Index, deviceContex.Device.Profile.DeviceType);
                        deviceContex.CurrentTransaction.Abort(msghelper.Answer, msg);
                        throw new InvalidOperationException(msg);
@@ -414,7 +417,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Master.Services
                     if (!deviceContex.Device.ObjectDictionary.Contains(msghelper.Index))
                     {
                         msg = String.Format("Network {0}: SDO Service: " +
-                            "Ненайден объект c индексом {1} в словаре устройства {2}",
+                            "Не найден объект c индексом {1} в словаре устройства {2}",
                            _NetworkController.NetworkName, msghelper.Index, deviceContex.Device.NodeId);
                        deviceContex.CurrentTransaction.Abort(msghelper.Answer, msg);
                        throw new InvalidOperationException(msg);
@@ -465,6 +468,9 @@ namespace NGK.CAN.ApplicationLayer.Network.Master.Services
                             // Устанавливаем код состояния объекта словаря
                             obj.Status = ObjectStatus.NoError;
                             deviceContex.CurrentTransaction.Stop(msghelper.Answer);
+
+                            //Logger.Info(String.Format("Сервис SDO: объект index - {0}, значение - {1}  Сообщение - {2} ",
+                            //    obj.Index, obj.Value, msghelper.Answer.ToString()));
                         }
                     }
                     else
@@ -474,6 +480,9 @@ namespace NGK.CAN.ApplicationLayer.Network.Master.Services
                         obj.Value = msghelper.Value;
                         obj.Status = ObjectStatus.NoError;
                         deviceContex.CurrentTransaction.Stop(msghelper.Answer);
+
+                        //Logger.Info(String.Format("Сервис SDO: объект index - {0}, значение - {1}  Сообщение - {2} ",
+                        //    obj.Index, obj.Value, msghelper.Answer.ToString()));
                     }
                 }
             }
