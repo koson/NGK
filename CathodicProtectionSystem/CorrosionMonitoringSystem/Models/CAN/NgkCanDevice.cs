@@ -301,8 +301,16 @@ namespace NGK.CorrosionMonitoringSystem.Models
         {
             get
             {
-                return (bool)Parameters[ParameterNames.POLARISATION_CURRENT_ENABLED].Value ?
-                    (float?)Parameters[ParameterNames.POLARISATION_CURRENT].Value : null;
+                if ((bool)Parameters[ParameterNames.POLARISATION_CURRENT_ENABLED].Value)
+                {
+                    float? v = (float?)Parameters[ParameterNames.POLARISATION_CURRENT].Value;
+                    if (v.HasValue)
+                        return v.Value == 327.67f ? null : v;
+                    else
+                        return null;
+                }
+                else
+                    return null;
             }
         }
 
@@ -310,8 +318,10 @@ namespace NGK.CorrosionMonitoringSystem.Models
         {
             get
             {
-                return (bool)Parameters[ParameterNames.PROTECTION_POTENTIAL_ENABLED].Value ?
-                    (float?)Parameters[ParameterNames.PROTECTION_POTENTIAL].Value : null;
+                if ((bool)Parameters[ParameterNames.PROTECTION_POTENTIAL_ENABLED].Value)
+                    return (float?)Parameters[ParameterNames.PROTECTION_POTENTIAL].Value;
+                else
+                    return null;
             }
         }
 
@@ -319,8 +329,17 @@ namespace NGK.CorrosionMonitoringSystem.Models
         {
             get
             {
-                return (bool)Parameters[ParameterNames.PROTECTION_CURRENT_ENABLED].Value ?
-                    (float?)Parameters[ParameterNames.PROTECTION_CURRENT].Value : null;
+                if ((bool)Parameters[ParameterNames.PROTECTION_CURRENT_ENABLED].Value)
+                {
+                    float? v = (float?)Parameters[ParameterNames.PROTECTION_CURRENT].Value;
+
+                    if (v.HasValue)
+                        return v.Value == 0xFFFF * 0.05 ? null : v;
+                    else
+                        return null;
+                }
+                else
+                    return null;
             }
         }
 
@@ -328,9 +347,9 @@ namespace NGK.CorrosionMonitoringSystem.Models
         {
             get
             {
-                UInt32WithStatusDisabled value =
-                    (UInt32WithStatusDisabled)Parameters[ParameterNames.CORROSION_DEPTH].Value;
-                return value.IsEnabled ? (UInt32?)value.Value : null;
+                UInt32 value =
+                    (UInt32)Parameters[ParameterNames.CORROSION_DEPTH].Value;
+                return value == 0xFFFF ? null : (UInt32?)value;
             }
         }
 
@@ -338,9 +357,9 @@ namespace NGK.CorrosionMonitoringSystem.Models
         {
             get
             {
-                UInt32WithStatusDisabled value =
-                    (UInt32WithStatusDisabled)Parameters[ParameterNames.CORROSION_SPEED].Value;
-                return value.IsEnabled ? (UInt32?)value.Value : null;
+                UInt32 value =
+                    (UInt32)Parameters[ParameterNames.CORROSION_SPEED].Value;
+                return value == 0xFFFF ? null : (UInt32?)value;
             }
         }
 
