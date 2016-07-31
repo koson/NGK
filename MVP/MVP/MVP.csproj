@@ -39,6 +39,9 @@
     <Compile Include="Input\CommandAttribute.cs" />
     <Compile Include="Input\CommandsControlModeAttribute.cs" />
     <Compile Include="Input\ICommand.cs" />
+    <Compile Include="Plugin\IPlugin.cs" />
+    <Compile Include="Plugin\PluginBase.cs" />
+    <Compile Include="Plugin\PluginsService.cs" />
     <Compile Include="Presenter\IPresenter.cs" />
     <Compile Include="Presenter\Presenter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

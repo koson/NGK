@@ -9,6 +9,8 @@ using Mvp.View;
 using System.Threading;
 using System.Reflection;
 using Mvp.WinApplication.Collections.ObjectModel;
+using Mvp.Plugin;
+using System.IO;
 
 namespace Mvp.WinApplication
 {
@@ -180,6 +182,15 @@ namespace Mvp.WinApplication
             {
                 ApplicationStarting(this, new EventArgs());
             }
+
+            string pluginsFolder = Path.Combine(
+                Path.GetDirectoryName(Assembly.GetEntryAssembly().Location),
+                "Plugins");
+
+            PluginsService service = new PluginsService(pluginsFolder, true);
+            service.Register(this);
+            service.Initialize(null);
+            service.Start();
         }
 
         private void OnApplicationClosing()

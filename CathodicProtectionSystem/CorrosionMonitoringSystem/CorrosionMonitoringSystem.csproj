@@ -242,6 +242,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DL\MatchingAddresses\" />
+    <Folder Include="Plugins\" />
     <Folder Include="Views\MonitoringHistoryView\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
