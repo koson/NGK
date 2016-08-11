@@ -79,7 +79,7 @@ namespace NGK.CorrosionMonitoringSystem.Views
                 }
                 else
                 { 
-                    _LabelOutputInfo.Text = value;
+                    _LabelOutputInfo.Text = value; 
                 }
             }
         }

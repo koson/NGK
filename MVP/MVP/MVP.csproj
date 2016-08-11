@@ -39,9 +39,6 @@
     <Compile Include="Input\CommandAttribute.cs" />
     <Compile Include="Input\CommandsControlModeAttribute.cs" />
     <Compile Include="Input\ICommand.cs" />
-    <Compile Include="Plugin\IPlugin.cs" />
-    <Compile Include="Plugin\PluginBase.cs" />
-    <Compile Include="Plugin\PluginsService.cs" />
     <Compile Include="Presenter\IPresenter.cs" />
     <Compile Include="Presenter\Presenter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -49,7 +46,6 @@
     <Compile Include="View\IViewRegion.cs" />
     <Compile Include="View\ViewRegion.cs" />
     <Compile Include="View\ViewType.cs" />
-    <Compile Include="WinApplication\ApplicationController\ApplicationStartingEventArgs.cs" />
     <Compile Include="WinApplication\ApplicationController\IApplicationController.cs" />
     <Compile Include="WinApplication\ApplicationServiceCollection.cs" />
     <Compile Include="WinApplication\ApplicationService\ApplicationServiceBase.cs" />

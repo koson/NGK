@@ -9,9 +9,6 @@ using Mvp.View;
 using System.Threading;
 using System.Reflection;
 using Mvp.WinApplication.Collections.ObjectModel;
-using Mvp.Plugin;
-using System.IO;
-using WinForms = System.Windows.Forms;
 
 namespace Mvp.WinApplication
 {
@@ -19,11 +16,11 @@ namespace Mvp.WinApplication
     {
         #region Constructors
         
-        private WinFormsApplication()
+        public WinFormsApplication()
         {
-            WinForms::Application.EnableVisualStyles();
-            WinForms::Application.SetCompatibleTextRenderingDefault(false);
-            WinForms::Application.ApplicationExit += 
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+            Application.ApplicationExit += 
                 new EventHandler(EventHandler_Application_ApplicationExit);
 
             _AppContext = new ApplicationContext();
@@ -45,24 +42,6 @@ namespace Mvp.WinApplication
         #region Fields And Properties
 
         private static Object SyncRoot = new Object();
-        private static volatile WinFormsApplication _Application;
-
-        public static WinFormsApplication Application
-        {
-            get
-            {
-                if (_Application == null)
-                {
-                    lock (SyncRoot)
-                    {
-                        if (_Application == null)
-                            _Application = new WinFormsApplication();
-                    }
-                }
-                return _Application;
-            }
-        }
-
         private ApplicationContext _AppContext;
         private IPresenter _CurrentPresenter;
         private SynchronizationContext _SyncContext;
@@ -95,8 +74,8 @@ namespace Mvp.WinApplication
 
         public CultureInfo CurrentCulture 
         {
-            get { return WinForms::Application.CurrentCulture; }
-            set { WinForms::Application.CurrentCulture = value; }
+            get { return Application.CurrentCulture; }
+            set { Application.CurrentCulture = value; }
         }
 
         Version _Version;
@@ -182,23 +161,8 @@ namespace Mvp.WinApplication
         /// </summary>
         public void Run() 
         {
-            OnApplicationStarting(null);
-            WinForms::Application.Run(_AppContext); 
-        }
-
-        public void Run(IPresenter mainFormPresenter)
-        {
-            OnApplicationStarting(null);
-            ShowWindow(mainFormPresenter);
-            WinForms::Application.Run(_AppContext);
-        }
-
-        public void Run(IPresenter mainFormPresenter, IPresenter splashScreenPresenter)
-        {
-            OnApplicationStarting(splashScreenPresenter);
-            //ShowWindow(mainFormPresenter);
-            mainFormPresenter.Show();
-            WinForms::Application.Run(_AppContext);
+            OnApplicationStarting();
+            Application.Run(_AppContext); 
         }
 
         /// <summary>
@@ -210,27 +174,12 @@ namespace Mvp.WinApplication
             Application.Exit();
         }
         
-        private void OnApplicationStarting(IPresenter splashScreenPresenter)
+        private void OnApplicationStarting()
         {
-            if (splashScreenPresenter != null)
-            {
-                //ShowWindow(splashScreenPresenter);
-                splashScreenPresenter.Show();
-            }
-
             if (ApplicationStarting != null)
             {
-                ApplicationStarting(this, new ApplicationStartingEventArgs(splashScreenPresenter));
+                ApplicationStarting(this, new EventArgs());
             }
-
-            string pluginsFolder = Path.Combine(
-                Path.GetDirectoryName(Assembly.GetEntryAssembly().Location),
-                "Plugins");
-
-            PluginsService service = new PluginsService(pluginsFolder, true);
-            service.Register(this);
-            service.Initialize(null);
-            service.Start();
         }
 
         private void OnApplicationClosing()
@@ -255,31 +204,11 @@ namespace Mvp.WinApplication
         /// Событие происходит сразу после вызова метода Run,
         /// но до запуска приложения
         /// </summary>
-        public event EventHandler<ApplicationStartingEventArgs> ApplicationStarting;
+        public event EventHandler ApplicationStarting;
         /// <summary>
         /// Событие происходит перед закрытием приложения
         /// </summary>
         public event EventHandler ApplicationClosing;
-        /// <summary>
-        /// Событие возникает при возникновении необработанного исключения
-        /// </summary>
-        public event UnhandledExceptionEventHandler UnhandledException
-        {
-            add
-            {
-                lock (SyncRoot)
-                {
-                    AppDomain.CurrentDomain.UnhandledException += value;
-                }
-            }
-            remove
-            {
-                lock (SyncRoot)
-                {
-                    AppDomain.CurrentDomain.UnhandledException -= value;
-                }
-            }
-        }
 
         #endregion
     }

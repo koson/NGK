@@ -23,8 +23,8 @@ namespace NGK.CorrosionMonitoringSystem.Presenters
             _Name = "SplashScreen";
             _Managers = managers;
             _View = view;
-            //_View.ViewShown += 
-            //    new EventHandler(EventHandler_View_ViewShown);
+            _View.ViewShown += 
+                new EventHandler(EventHandler_View_ViewShown);
         }
 
         #endregion
@@ -58,9 +58,9 @@ namespace NGK.CorrosionMonitoringSystem.Presenters
         void EventHandler_Worker_RunWorkerCompleted(
             object sender, RunWorkerCompletedEventArgs e)
         {
-            //IPresenter presenter =
-            //    _Managers.PresentersFactory.CreateMainWindow();
-            //presenter.Show();
+            IPresenter presenter =
+                _Managers.PresentersFactory.CreateMainWindow();
+            presenter.Show();
         }
 
         void EventHandler_Worker_DoWork(object sender, DoWorkEventArgs e)

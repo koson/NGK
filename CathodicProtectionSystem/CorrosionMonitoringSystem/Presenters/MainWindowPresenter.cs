@@ -48,16 +48,16 @@ namespace NGK.CorrosionMonitoringSystem.Presenters
 
             ViewConcrete.ButtonCommands = null;
 
-            //ViewConcrete.TotalDevices = _Managers.CanNetworkService.Devices.Count;
-            //ViewConcrete.FaultyDevices = _Managers.CanNetworkService.FaultyDevices;
-            //_Managers.CanNetworkService.StatusWasChanged +=
-            //    new EventHandler(EventHandler_CanNetworkService_StatusWasChanged);
-            //_Managers.CanNetworkService.FaultyDevicesChanged +=
-            //    new EventHandler(EventHandler_CanNetworkService_FaultyDevicesChanged);
+            ViewConcrete.TotalDevices = _Managers.CanNetworkService.Devices.Count;
+            ViewConcrete.FaultyDevices = _Managers.CanNetworkService.FaultyDevices;
+            _Managers.CanNetworkService.StatusWasChanged += 
+                new EventHandler(EventHandler_CanNetworkService_StatusWasChanged);
+            _Managers.CanNetworkService.FaultyDevicesChanged += 
+                new EventHandler(EventHandler_CanNetworkService_FaultyDevicesChanged);
 
-            //IPresenter presenter =
-            //    _Managers.PresentersFactory.Create(ViewMode.PivoteTable);
-            //WorkingRegionPresenter = presenter;
+            IPresenter presenter =
+                _Managers.PresentersFactory.Create(ViewMode.PivoteTable);
+            WorkingRegionPresenter = presenter;
 
             base.UpdateStatusCommands();
         }
@@ -146,23 +146,6 @@ namespace NGK.CorrosionMonitoringSystem.Presenters
             {
                 WorkingRegionChanged(this, new EventArgs());
             }
-        }
-
-        public override void Show()
-        {
-            ViewConcrete.TotalDevices = _Managers.CanNetworkService.Devices.Count;
-            ViewConcrete.FaultyDevices = _Managers.CanNetworkService.FaultyDevices;
-            _Managers.CanNetworkService.StatusWasChanged +=
-                new EventHandler(EventHandler_CanNetworkService_StatusWasChanged);
-            _Managers.CanNetworkService.FaultyDevicesChanged +=
-                new EventHandler(EventHandler_CanNetworkService_FaultyDevicesChanged);
-
-            IPresenter presenter =
-                _Managers.PresentersFactory.Create(ViewMode.PivoteTable);
-            WorkingRegionPresenter = presenter;
-            
-            base.UpdateStatusCommands();
-            base.Show();
         }
 
         #endregion
@@ -270,7 +253,7 @@ namespace NGK.CorrosionMonitoringSystem.Presenters
         }
         bool CanRunCorrosionMonitoringSystem()
         {
-            return _Managers.CanNetworkService != null && _Managers.CanNetworkService.Status == 
+            return _Managers.CanNetworkService.Status == 
                 Common.Controlling.Status.Stopped;
         }
 
@@ -282,7 +265,7 @@ namespace NGK.CorrosionMonitoringSystem.Presenters
         }
         bool CanStopCorrosionMonitoringSystem()
         {
-            return _Managers.CanNetworkService != null && _Managers.CanNetworkService.Status ==
+            return _Managers.CanNetworkService.Status ==
                 Common.Controlling.Status.Running;
         }
 
