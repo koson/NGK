@@ -4,11 +4,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.50727</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{44DF6B58-4BDD-40D8-993C-7B61AECF0510}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <ProjectGuid>{91C91DFA-7E9B-4715-AEDA-7D5F59A171E0}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Mvp</RootNamespace>
-    <AssemblyName>MVP</AssemblyName>
+    <RootNamespace>TestPlugins</RootNamespace>
+    <AssemblyName>TestPlugins</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -30,40 +30,43 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Input\Command.cs" />
-    <Compile Include="Input\CommandAttribute.cs" />
-    <Compile Include="Input\CommandsControlModeAttribute.cs" />
-    <Compile Include="Input\ICommand.cs" />
-    <Compile Include="Plugin\IPlugin.cs" />
-    <Compile Include="Plugin\PluginBase.cs" />
-    <Compile Include="Plugin\PluginsService.cs" />
-    <Compile Include="Presenter\IPresenter.cs" />
-    <Compile Include="Presenter\Presenter.cs" />
+    <Compile Include="Form1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form1.Designer.cs">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="View\Collections\ViewRegionCollection.cs" />
-    <Compile Include="View\IViewRegion.cs" />
-    <Compile Include="View\ViewRegion.cs" />
-    <Compile Include="View\ViewType.cs" />
-    <Compile Include="WinApplication\ApplicationController\ApplicationStartingEventArgs.cs" />
-    <Compile Include="WinApplication\ApplicationController\IApplicationController.cs" />
-    <Compile Include="WinApplication\ApplicationServiceCollection.cs" />
-    <Compile Include="WinApplication\ApplicationService\ApplicationServiceBase.cs" />
-    <Compile Include="WinApplication\ApplicationService\IApplicationService.cs" />
-    <Compile Include="WinApplication\ApplicationController\WinFormsApplication.cs" />
-    <Compile Include="View\IView.cs" />
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Documents\usefulreference.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\CathodicProtectionSystem\Common\Common.csproj">
-      <Project>{78E073B6-AD50-429C-9261-4DE3438D8EAE}</Project>
-      <Name>Common</Name>
+    <ProjectReference Include="..\..\MVP\MVP\MVP.csproj">
+      <Project>{44DF6B58-4BDD-40D8-993C-7B61AECF0510}</Project>
+      <Name>MVP</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

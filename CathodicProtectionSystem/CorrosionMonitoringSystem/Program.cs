@@ -39,16 +39,61 @@ namespace NGK.CorrosionMonitoringSystem
             _Logger = NLogManager.Instance;
             _Logger.Info("Запуск приложения");
 
-            AppDomain.CurrentDomain.UnhandledException +=
-                new UnhandledExceptionEventHandler(EventHandler_CurrentDomain_UnhandledException);
-            
-            _Application = new WinFormsApplication();
+            //AppDomain.CurrentDomain.UnhandledException +=
+            //    new UnhandledExceptionEventHandler(EventHandler_CurrentDomain_UnhandledException);
+
+            _Application = WinFormsApplication.Application;
             _Application.CurrentCulture = new CultureInfo("ru-Ru");
+            //_Application.ApplicationStarting += 
+            //    new EventHandler(EventHandler_Application_ApplicationRunning);
             _Application.ApplicationStarting += 
-                new EventHandler(EventHandler_Application_ApplicationRunning);
+                new EventHandler<ApplicationStartingEventArgs>(_Application_ApplicationStarting);
             _Application.ApplicationClosing += 
                 new EventHandler(EventHandler_Application_ApplicationClosing);
-            _Application.Run();
+
+            Managers = new AppManagers(_Application);
+
+            //Создаём presenter splash screen 
+            SplashScreenView splashscreenView = new SplashScreenView();
+            SplashScreenPresenter splashscreenPresenter =
+                new SplashScreenPresenter(_Application, splashscreenView, null, Managers);
+
+            //Создаём presenter основного окна
+            IPresenter mainFormPresenter =
+                Managers.PresentersFactory.CreateMainWindow();
+
+            _Application.Run(mainFormPresenter, splashscreenPresenter);
+        }
+
+        static void _Application_ApplicationStarting(object sender, ApplicationStartingEventArgs e)
+        {
+            SplashScreenPresenter presenter = (SplashScreenPresenter)e.SplashScreen;
+            // Создаём объект для ведения логов приложения
+            presenter.WtriteText("Инициализация системы логирования...");
+
+            //Загружаем конфигурацию сети CAN НГК ЭХЗ
+            presenter.WtriteText("Загрузка конфигурации сети CAN НГК ЭХЗ...");
+            LoadCanNetworkConfig();
+
+            //Загружаем конфигурацию для сети Modbus 
+            presenter.WtriteText("Загрузка конфигурации сети Modbus...");
+            LoadModbusNetworkConfig();
+
+            System.Threading.Thread.Sleep(300);
+            presenter.WtriteText("Загрузка БД...");
+            System.Threading.Thread.Sleep(300);
+            presenter.WtriteText("Загрузка журнала событий...");
+            System.Threading.Thread.Sleep(300);
+
+            presenter.WtriteText("Запуск системы мониторинга...");
+            Managers.CanNetworkService.Start();
+            //TODO: создать запись в журнал
+            presenter.WtriteText("Запуск информационного Modbus-сервиса...");
+            Managers.ModbusSystemInfoNetworkService.Start();
+            //TODO: создать запись в журнал
+
+            _Logger.Info("Приложение запущено");
+            return;
         }
 
         /// <summary>
@@ -60,7 +105,7 @@ namespace NGK.CorrosionMonitoringSystem
         {
             WinFormsApplication app = (WinFormsApplication)sender;
 
-            Managers = new AppManagers(app);
+            //Managers = new AppManagers(app);
 
             if (Managers.ConfigManager.CursorEnable)
             {
@@ -71,14 +116,14 @@ namespace NGK.CorrosionMonitoringSystem
                 Cursor.Hide();
             }
 
-            //Создаём presenter splash screen 
-            SplashScreenView splashscreenView = new SplashScreenView();
-            SplashScreenPresenter splashscreenPresenter =
-                new SplashScreenPresenter(app, splashscreenView, null, Managers);
-            //Подключем метод для выполнения инициализации приложения
-            splashscreenPresenter.SystemInitializationRunning += new EventHandler(
-                EventHandler_SplashscreenPresenter_SystemInitializationRunning);
-            app.ShowWindow(splashscreenPresenter);
+            ////Создаём presenter splash screen 
+            //SplashScreenView splashscreenView = new SplashScreenView();
+            //SplashScreenPresenter splashscreenPresenter =
+            //    new SplashScreenPresenter(app, splashscreenView, null, Managers);
+            ////Подключем метод для выполнения инициализации приложения
+            //splashscreenPresenter.SystemInitializationRunning += new EventHandler(
+            //    EventHandler_SplashscreenPresenter_SystemInitializationRunning);
+            //app.ShowWindow(splashscreenPresenter);
         }
 
         static void EventHandler_Application_ApplicationClosing(
