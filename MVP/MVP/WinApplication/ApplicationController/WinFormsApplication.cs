@@ -12,6 +12,7 @@ using Mvp.WinApplication.Collections.ObjectModel;
 using Mvp.Plugin;
 using System.IO;
 using WinForms = System.Windows.Forms;
+using System.ComponentModel;
 
 namespace Mvp.WinApplication
 {
@@ -193,12 +194,37 @@ namespace Mvp.WinApplication
             WinForms::Application.Run(_AppContext);
         }
 
+        private IPresenter _mainFormPresenter;
+
         public void Run(IPresenter mainFormPresenter, IPresenter splashScreenPresenter)
         {
-            OnApplicationStarting(splashScreenPresenter);
-            //ShowWindow(mainFormPresenter);
-            mainFormPresenter.Show();
+            _mainFormPresenter = mainFormPresenter;
+
+            if (splashScreenPresenter != null)
+            {
+                splashScreenPresenter.Show();
+            }
+
+            BackgroundWorker worker = new BackgroundWorker();
+            worker.DoWork += new DoWorkEventHandler(worker_DoWork);
+            worker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(worker_RunWorkerCompleted);
+            worker.RunWorkerAsync(splashScreenPresenter);
+
+            //OnApplicationStarting(splashScreenPresenter);
+            //mainFormPresenter.Show();
             WinForms::Application.Run(_AppContext);
+        }
+
+        void worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            _mainFormPresenter.Show();
+            WinForms::Application.Run(_AppContext);
+        }
+
+        void worker_DoWork(object sender, DoWorkEventArgs e)
+        {
+            IPresenter splashScreen = (IPresenter)e.Argument;
+            OnApplicationStarting(splashScreen);
         }
 
         /// <summary>
@@ -212,12 +238,6 @@ namespace Mvp.WinApplication
         
         private void OnApplicationStarting(IPresenter splashScreenPresenter)
         {
-            if (splashScreenPresenter != null)
-            {
-                //ShowWindow(splashScreenPresenter);
-                splashScreenPresenter.Show();
-            }
-
             if (ApplicationStarting != null)
             {
                 ApplicationStarting(this, new ApplicationStartingEventArgs(splashScreenPresenter));

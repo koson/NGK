@@ -47,6 +47,7 @@ namespace Mvp.Presenter
             _View = view;
             _Application = application;
         }
+
         #endregion
 
         #region Fields And Properties
@@ -77,6 +78,11 @@ namespace Mvp.Presenter
         protected T _View;
 
         public IView View
+        {
+            get { return _View; }
+        }
+
+        public T SpecialView
         {
             get { return _View; }
         }
