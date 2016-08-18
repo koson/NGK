@@ -12,14 +12,14 @@ namespace TestPlugins.Services
         private static SplashScreenPresenter _SplashScreenPresenter;
         private static MainFormPresenter _MainFormPresenter;
 
-        public static IPresenter Create<T>() where T : IPresenter
+        public static IFormPresenter CreateForm<T>() where T : IFormPresenter
         {
             if (typeof(T) == typeof(SplashScreenPresenter))
             {
                 if (_SplashScreenPresenter == null)
                 {
                     SplashScreenView view = new SplashScreenView();
-                    _SplashScreenPresenter = new SplashScreenPresenter(view, Program.Application);
+                    _SplashScreenPresenter = new SplashScreenPresenter(view);
                 }
                 return _SplashScreenPresenter;
             }
@@ -28,7 +28,7 @@ namespace TestPlugins.Services
                 if (_MainFormPresenter == null)
                 {
                     MainFormView view = new MainFormView();
-                    _MainFormPresenter = new MainFormPresenter(view, Program.Application);
+                    _MainFormPresenter = new MainFormPresenter(view);
                 }
                 return _MainFormPresenter;
             }

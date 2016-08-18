@@ -5,11 +5,11 @@ using System.Text;
 
 namespace Mvp.View.Collections.ObjectModel
 {
-    public class ViewRegionCollection: KeyedCollection<string, IViewRegion>
+    public class RegionContainersCollection: KeyedCollection<string, IRegionContainer>
     {
-        protected override string GetKeyForItem(IViewRegion item)
+        protected override string GetKeyForItem(IRegionContainer item)
         {
-            return item.RegionName;
+            return item.Name;
         }
     }
 }

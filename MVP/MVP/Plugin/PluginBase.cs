@@ -4,10 +4,12 @@ using System.Text;
 
 namespace Mvp.Plugin
 {
-    public abstract class PluginBase: MarshalByRefObject, IPlugin
+    public abstract class PluginBase: MarshalByRefObject
     {
         #region Fields And Properties
-
+        /// <summary>
+        /// Название плагина
+        /// </summary>
         public abstract string Name { get; }
 
         #endregion
@@ -28,7 +30,9 @@ namespace Mvp.Plugin
         #endregion
 
         #region Events
-
+        /// <summary>
+        /// Событие происходит после при удалении плагина
+        /// </summary>
         public event EventHandler PluginRemoving;
 
         #endregion

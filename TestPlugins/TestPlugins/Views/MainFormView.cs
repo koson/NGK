@@ -6,10 +6,11 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using Mvp.View;
+using Mvp.View.Collections.ObjectModel;
 
 namespace TestPlugins.Views
 {
-    public partial class MainFormView : Form, IView
+    public partial class MainFormView : Form, IFormView
     {
         #region Constructors
 
@@ -22,14 +23,16 @@ namespace TestPlugins.Views
 
         #region Fields And Properties
 
+        private RegionContainersCollection _Regions = new RegionContainersCollection();
+
         public ViewType ViewType
         {
             get { return ViewType.Window; }
         }
 
-        public IViewRegion[] ViewRegions
+        public RegionContainersCollection Regions
         {
-            get { return new IViewRegion[0]; }
+            get { return _Regions; }
         }
 
         #endregion

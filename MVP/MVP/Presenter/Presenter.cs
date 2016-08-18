@@ -14,12 +14,12 @@ namespace Mvp.Presenter
     /// (и возможно PresenterModalWindow - ViewType.ModalWindow)
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class Presenter<T> : IPresenter, IDisposable 
+    public abstract class Presenter<T> : IPresenter, IDisposable 
         where T: IView
     {
         #region Constructor
 
-        public Presenter(T view, IApplicationController application)
+        public Presenter(T view)
         {
             if ((view.ViewType != ViewType.Window) && (view.ViewType != ViewType.Dialog))
             {
@@ -30,11 +30,9 @@ namespace Mvp.Presenter
             _Region = null;
             _Commands = new List<ICommand>();
             _View = view;
-            _Application = application;
         }
 
-        public Presenter(T view, IViewRegion region, 
-            IApplicationController application)
+        public Presenter(T view, IRegionView region)
         {
             if (((view.ViewType == ViewType.Window) || 
                 (view.ViewType == ViewType.Dialog)) && (region != null))
@@ -45,15 +43,14 @@ namespace Mvp.Presenter
             _Region = region;
             _Commands = new List<ICommand>();
             _View = view;
-            _Application = application;
         }
 
         #endregion
 
         #region Fields And Properties
 
-        IViewRegion _Region;
-        public IViewRegion ViewRegion 
+        IRegionView _Region;
+        public IRegionView ViewRegion 
         { 
             get { return _Region; }
             set { _Region = value; }
@@ -82,7 +79,7 @@ namespace Mvp.Presenter
             get { return _View; }
         }
 
-        public T SpecialView
+        public T SpecificView
         {
             get { return _View; }
         }
@@ -92,13 +89,6 @@ namespace Mvp.Presenter
         public string Name
         {
             get { return _Name; }
-        }
-
-        protected IApplicationController _Application;
-        
-        public IApplicationController Application
-        {
-            get { return _Application; }
         }
 
         #endregion
@@ -115,7 +105,6 @@ namespace Mvp.Presenter
                 cmd.CanExecute();
             }
         }
-
         /// <summary>
         /// ѕровер€ем в классе (в его наследника) наличие полей с
         /// атрибутоа CommandAttribute и если такой найден, то
@@ -148,14 +137,6 @@ namespace Mvp.Presenter
             }
         }
 
-        public virtual void Dispose() 
-        {
-            if (View != null)
-            {
-                View.Dispose();
-            }
-        }
-
         protected void InitializeCommands()
         {
             List<ICommand> commands = new List<ICommand>();
@@ -176,28 +157,15 @@ namespace Mvp.Presenter
             _Commands = commands;
         }
 
-        public virtual void Show()
+        public virtual void Dispose()
         {
-            switch (View.ViewType)
+            if (View != null)
             {
-                case ViewType.Window:
-                    {
-                        Application.ShowWindow(this); break;
-                    }
-                case ViewType.Dialog:
-                    {
-                        Application.ShowDialog(this); break;
-                    }
-                case ViewType.Region:
-                    {
-                        ViewRegion.Show(View); break;
-                    }
-                default:
-                    {
-                        throw new InvalidOperationException();
-                    }
+                View.Dispose();
             }
         }
+
+        public abstract void Show();
 
         #endregion
     }

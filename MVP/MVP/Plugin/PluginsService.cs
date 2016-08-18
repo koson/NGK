@@ -8,7 +8,14 @@ using System.Reflection;
 
 namespace Mvp.Plugin
 {
-    public class PluginsService: ApplicationServiceBase
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <seealso cref="https://habrahabr.ru/post/242209/"/>
+    [Serializable]
+    public class PluginsService<T>: ApplicationServiceBase
+        where T: PluginBase
     {
         public PluginsService(string pathToPluginsDirectory, 
             bool usingOnlyAppDomain) :
@@ -16,7 +23,7 @@ namespace Mvp.Plugin
         {
             PathToPluginsDirectory = pathToPluginsDirectory;
             UsingOnlyAppDomain = usingOnlyAppDomain;
-            Plugins = new List<IPlugin>().AsReadOnly();
+            Plugins = new List<T>().AsReadOnly();
         }
 
         #region Fields And Properties
@@ -33,11 +40,11 @@ namespace Mvp.Plugin
         /// </summary>
         public readonly bool UsingOnlyAppDomain;
 
-        private ReadOnlyCollection<IPlugin> _Plugins;
+        private ReadOnlyCollection<T> _Plugins;
         /// <summary>
         /// Доступные плагины
         /// </summary>
-        public ReadOnlyCollection<IPlugin> Plugins
+        public ReadOnlyCollection<T> Plugins
         {
             get { return _Plugins; }
             private set { _Plugins = value; }
@@ -54,8 +61,8 @@ namespace Mvp.Plugin
 
         public void LoadPlugins()
         {
-            IPlugin plugin;
-            List<IPlugin> plugins = new List<IPlugin>();
+            T plugin;
+            List<T> plugins = new List<T>();
             
             if (!Directory.Exists(PathToPluginsDirectory))
             {
@@ -63,7 +70,9 @@ namespace Mvp.Plugin
                     "Невозможно загрузить расширения. Путь {0} не существует", 
                     PathToPluginsDirectory));
             }
-            
+
+            AppDomain.CurrentDomain.AppendPrivatePath(PathToPluginsDirectory);
+
             string[] files = Directory.GetFiles(PathToPluginsDirectory, "*.dll");
 
             foreach (string file in files)
@@ -71,11 +80,11 @@ namespace Mvp.Plugin
                 Assembly assembly = Assembly.LoadFrom(file);
                 foreach (Type type in assembly.GetExportedTypes())
                 {
-                    if (type.IsClass && typeof(IPlugin).IsAssignableFrom(type))
+                    if (type.IsClass && typeof(PluginBase).IsAssignableFrom(type))
                     {
                         if (UsingOnlyAppDomain)
                         {
-                            plugin = (IPlugin)AppDomain.CurrentDomain
+                            plugin = (T)AppDomain.CurrentDomain
                                 .CreateInstanceAndUnwrap(assembly.FullName, type.FullName);
                             plugins.Add(plugin);
                         }
@@ -84,13 +93,14 @@ namespace Mvp.Plugin
                             AppDomain domain = AppDomain.CreateDomain(Guid.NewGuid().ToString());
                             domain.UnhandledException += 
                                 new UnhandledExceptionEventHandler(EventHandler_PluginDomain_UnhandledException);
-                            plugin = (IPlugin)domain.CreateInstanceAndUnwrap(assembly.FullName, type.FullName);
+                            plugin = (T)domain.CreateInstanceAndUnwrap(assembly.FullName, type.FullName);
                             throw new NotImplementedException();
                         }
                     }
                 }
             }
-
+            Plugins = plugins.AsReadOnly();
+            AppDomain.CurrentDomain.ClearPrivatePath();
         }
 
         void EventHandler_PluginDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)

@@ -5,18 +5,12 @@ using System.Windows.Forms;
 
 namespace Mvp.View
 {
-    public interface IViewRegion
+    public interface IRegionView: IView
     {
         #region Properties
-        
-        string RegionName { get; }
-        
         #endregion
 
-        #region Methods
-
-        void Show(IView partialView);
-        
+        #region Methods        
         #endregion
     }
 }

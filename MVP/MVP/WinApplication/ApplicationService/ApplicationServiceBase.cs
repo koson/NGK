@@ -5,6 +5,7 @@ using Common.Controlling;
 
 namespace Mvp.WinApplication
 {
+    [Serializable]
     public abstract class ApplicationServiceBase: IApplicationService
     {
         #region Constructors

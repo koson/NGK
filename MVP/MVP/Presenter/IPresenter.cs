@@ -12,7 +12,7 @@ namespace Mvp.Presenter
     {
         IView View { get; }
         String Name { get; }
-        IViewRegion ViewRegion { get; set; }
+        IRegionView ViewRegion { get; set; }
         /// <summary>
         /// Презентер являющийся хостом для данного 
         /// (устанавливается, если данный является регионом)

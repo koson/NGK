@@ -7,13 +7,22 @@ using Mvp.WinApplication;
 
 namespace TestPlugins.Presenters
 {
-    public class MainFormPresenter: Presenter<MainFormView>
+    public class MainFormPresenter: FormPresenter<MainFormView>
     {
         #region Constructors
 
-        public MainFormPresenter(MainFormView view, IApplicationController application)
-            : base(view, application)
-        { 
+        public MainFormPresenter(MainFormView view) : base(view) { }
+        
+        #endregion
+
+        #region Fields And Properties
+        #endregion
+
+        #region Methods
+
+        public override void Show()
+        {
+            View.Show();
         }
 
         #endregion

@@ -16,9 +16,9 @@ namespace Mvp.WinApplication
         
         ApplicationContext AppContext { get; }
         /// <summary>
-        /// Возвращает текущее окно системы
+        /// Возвращает главное окно системы
         /// </summary>
-        IPresenter CurrentPresenter { get; }
+        IFormPresenter MainFormPresenter { get; }
         /// <summary>
         /// Текущая форма
         /// </summary>
@@ -40,13 +40,13 @@ namespace Mvp.WinApplication
         /// Отображает новое окно системы 
         /// </summary>
         /// <param name="presenter"></param>
-        void ShowWindow(IPresenter presenter);
+        //void ShowWindow(FormPresenter presenter);
         /// <summary>
         /// Отображает модальное окно
         /// </summary>
         /// <param name="view"></param>
         /// <returns></returns>
-        DialogResult ShowDialog(IPresenter presenter);
+        //DialogResult ShowDialog(DialogFormPresenter presenter);
         /// <summary>
         /// Регистрирует сервис приложения
         /// </summary>

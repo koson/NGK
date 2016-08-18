@@ -28,6 +28,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
@@ -36,6 +37,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\IPlugin.cs" />
     <Compile Include="Presenters\MainFormPresenter.cs" />
     <Compile Include="Presenters\SplashScreenPresenter.cs" />
     <Compile Include="Program.cs" />
@@ -81,9 +83,17 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\CathodicProtectionSystem\Common\Common.csproj">
+      <Project>{78E073B6-AD50-429C-9261-4DE3438D8EAE}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\MVP\MVP\MVP.csproj">
       <Project>{44DF6B58-4BDD-40D8-993C-7B61AECF0510}</Project>
       <Name>MVP</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PluginsInfrastructure\PluginsInfrastructure.csproj">
+      <Project>{3E59BB61-8D6F-439B-B049-A4EB117F3111}</Project>
+      <Name>PluginsInfrastructure</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

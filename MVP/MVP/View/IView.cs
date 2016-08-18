@@ -14,7 +14,6 @@ namespace Mvp.View
 
         string Name { get; set; }
         ViewType ViewType { get;}
-        IViewRegion[] ViewRegions { get; }
 
         #endregion
 

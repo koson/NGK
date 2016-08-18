@@ -6,12 +6,13 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using Mvp.View;
+using Mvp.View.Collections.ObjectModel;
 
 namespace TestPlugins.Views
 {
-    public interface ISplashScreenView : IView
+    public interface ISplashScreenView : IFormView
     {
-        void WriteLine(string line);
+        void Output(string line);
     }
 
     public partial class SplashScreenView : Form, ISplashScreenView
@@ -27,27 +28,28 @@ namespace TestPlugins.Views
 
         #region Fields And Properties
 
+        private RegionContainersCollection _Regions = new RegionContainersCollection();
+
         public ViewType ViewType
         {
             get { return ViewType.Window; }
         }
 
-        public IViewRegion[] ViewRegions
+        public RegionContainersCollection Regions
         {
-            get { return new IViewRegion[0]; }
+            get { return _Regions; }
         }
 
         #endregion
 
         #region Methods
 
-        public void WriteLine(string line)
+        public void Output(string line)
         {
 
-            //if (_LabelOutput.InvokeRequired)
-            //{ }
-            //_LabelOutput.Invoke(delegate() { _LabelOutput.Text = line; });
-            //else
+            if (_LabelOutput.InvokeRequired)
+                _LabelOutput.Invoke(new MethodInvoker(delegate() { _LabelOutput.Text = line; }));
+            else
                 _LabelOutput.Text = line;
         }
 
