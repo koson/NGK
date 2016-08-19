@@ -17,13 +17,15 @@ namespace TestPlugins.Views
         public MainFormView()
         {
             InitializeComponent();
+
+            _Regions = new RegionContainersCollection();
         }
 
         #endregion
 
         #region Fields And Properties
 
-        private RegionContainersCollection _Regions = new RegionContainersCollection();
+        private readonly RegionContainersCollection _Regions;
 
         public ViewType ViewType
         {
@@ -33,6 +35,17 @@ namespace TestPlugins.Views
         public RegionContainersCollection Regions
         {
             get { return _Regions; }
+        }
+
+        public MenuStrip Menu { get { return _MenuStrip; } }
+
+        #endregion
+
+        #region Event Handlers
+
+        private void EventHandler_MainFormView_Load(object sender, EventArgs e)
+        {
+
         }
 
         #endregion

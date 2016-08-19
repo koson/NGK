@@ -28,7 +28,7 @@ namespace TestPlugins
             Application.Shutdown += new VisualBasic::ShutdownEventHandler(EventHandler_Application_Shutdown);
             Application.UnhandledException += new VisualBasic::UnhandledExceptionEventHandler(Application_UnhandledException);
             Application.ChangeCulture("ru-Ru");
-            Application.MinimumSplashScreenDisplayTime = 5000;
+            Application.MinimumSplashScreenDisplayTime = 1000;
             Application.SplashScreen = (Form)PresentersFactory.CreateForm<SplashScreenPresenter>().View;
             Application.Run(args);
         }
@@ -49,25 +49,13 @@ namespace TestPlugins
 
             splash.Output("Загрузка плагинов...");
 
-            //string path = System.Reflection.Assembly.GetExecutingAssembly().Location;
-            string path = Directory.GetCurrentDirectory() + @"\Plugins\";
-            Debug.WriteLine(path);
-
-            PluginsService<Plugin> pluginsService = new PluginsService<Plugin>(path, true);
-
+            // Инициализирует сервис плагинов приложения. Ищем и загружаем плагины
+            PluginsService<Plugin> pluginsService = 
+                new PluginsService<Plugin>(Directory.GetCurrentDirectory() + @"\Plugins\", true);
             Application.RegisterApplicationService(pluginsService);
             pluginsService.Initialize(null);
             pluginsService.Start();
             pluginsService.LoadPlugins();
-            ReadOnlyCollection<Plugin> plugins = pluginsService.Plugins;
-
-
-
-            for (int i = 0; i < 10; i++)
-            {
-                splash.Output(i.ToString());
-                Thread.Sleep(1000);
-            }
         }
     }
 }

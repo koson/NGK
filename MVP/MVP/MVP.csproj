@@ -36,6 +36,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controls\BindableToolStripMenuItem.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Input\Command.cs" />
     <Compile Include="Input\CommandAttribute.cs" />
     <Compile Include="Input\CommandsControlModeAttribute.cs" />
@@ -65,6 +68,9 @@
     <Compile Include="WinApplication\ApplicationService\IApplicationService.cs" />
     <Compile Include="WinApplication\ApplicationController\WindowsFormsApplication.cs" />
     <Compile Include="View\IView.cs" />
+    <Compile Include="WinApplication\ApplicationService\MessageBoxService.cs" />
+    <Compile Include="WinApplication\Infrastructure\Menu.cs" />
+    <Compile Include="WinApplication\Infrastructure\MenuConverter.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Documents\usefulreference.txt" />

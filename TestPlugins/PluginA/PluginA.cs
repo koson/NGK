@@ -2,6 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using PluginsInfrastructure;
+using Mvp.WinApplication.Infrastructure;
+using Mvp.Input;
+using Mvp.WinApplication.ApplicationService;
 
 namespace PluginA
 {
@@ -9,15 +12,29 @@ namespace PluginA
     {
         #region Constructors
 
-        public PluginA() { }
+        public PluginA() 
+        {
+            base.Name = "Module A";
+
+            _ActionA = new Command(OnActionA);
+
+            Menu root = new Menu("Меню модуля А", null);
+            base._Menu.Add(root);
+
+            root.SubMenuItems.Add(new Menu("Действие А", _ActionA)); 
+        }
 
         #endregion
 
         #region Fields And Properties
+        #endregion
 
-        public override string Name
+        #region Commands
+
+        private Command _ActionA;
+        private void OnActionA()
         {
-            get { return "Module A"; }
+            MessageBoxService.ShowInformation("Это тестовое сообщение", "Тест");
         }
 
         #endregion
