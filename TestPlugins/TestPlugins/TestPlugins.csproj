@@ -104,4 +104,7 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <PropertyGroup>
+    <PostBuildEvent>xcopy "$(SolutionDir)Plugins\*.dll" "$(TargetDir)Plugins\" /s /e /y</PostBuildEvent>
+  </PropertyGroup>
 </Project>

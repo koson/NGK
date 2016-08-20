@@ -12,3 +12,4 @@ obj
 *.suo
 CathodicProtectionSystem/DAL/Data/ngkdb.mdf
 CathodicProtectionSystem/DAL/Data/ngkdb_log.ldf
+TestPlugins/Plugins/PluginA.dll
