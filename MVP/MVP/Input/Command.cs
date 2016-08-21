@@ -8,7 +8,7 @@ namespace Mvp.Input
     public delegate void CommandAction();
     public delegate bool Condition();
 
-    public class Command: ICommand
+    public class Command: ICommand, INotifyPropertyChanged
     {
         #region Constructors
 
@@ -54,7 +54,19 @@ namespace Mvp.Input
             get { return _Name; }
         }
 
-        public bool Status { get { return _CommandStatus; } }
+        public bool Status 
+        { 
+            get { return _CommandStatus; }
+            private set 
+            {
+                if (_CommandStatus != value)
+                {
+                    _CommandStatus = value;
+                    OnPropertyChanged("Status");
+                    OnCanExecuteChanged();
+                }
+            }
+        }
 
         #endregion
 
@@ -69,11 +81,7 @@ namespace Mvp.Input
         {
             if (_OnCanExecute != null)
             {
-                if (_CommandStatus != _OnCanExecute())
-                {
-                    _CommandStatus = !_CommandStatus;
-                    OnCanExecuteChanged();
-                }
+                Status = _OnCanExecute();
                 return _CommandStatus;
             }
             else
@@ -103,7 +111,31 @@ namespace Mvp.Input
                         singleCast(this, new EventArgs());
                     }
                 }
-                CanExecuteChanged(this, new EventArgs());
+                //CanExecuteChanged(this, new EventArgs());
+            }
+        }
+
+        private void OnPropertyChanged(string propertyName)
+        {
+            PropertyChangedEventHandler handler = PropertyChanged;
+
+            if (handler != null)
+            {
+                foreach (PropertyChangedEventHandler singleCast in handler.GetInvocationList())
+                {
+                    ISynchronizeInvoke syncInvoke =
+                        singleCast.Target as ISynchronizeInvoke;
+
+                    if ((syncInvoke != null) && (syncInvoke.InvokeRequired))
+                    {
+                        syncInvoke.Invoke(singleCast,
+                            new object[] { this, new PropertyChangedEventArgs(propertyName) });
+                    }
+                    else
+                    {
+                        singleCast(this, new PropertyChangedEventArgs(propertyName));
+                    }
+                }
             }
         }
 
@@ -112,6 +144,7 @@ namespace Mvp.Input
         #region Events
 
         public event EventHandler CanExecuteChanged;
+        public event PropertyChangedEventHandler PropertyChanged;
 
         #endregion
     }

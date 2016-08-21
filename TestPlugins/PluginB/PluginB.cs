@@ -18,10 +18,10 @@ namespace PluginB
 
             _ActionA = new Command(OnActionA);
 
-            Menu root = new Menu("Меню модуля B", null);
+            NavigationMenuItem root = new NavigationMenuItem("Меню модуля B", null);
             base._Menu.Add(root);
 
-            root.SubMenuItems.Add(new Menu("Действие B", _ActionA)); 
+            root.SubMenuItems.Add(new NavigationMenuItem("Действие B", _ActionA)); 
         }
 
         #endregion

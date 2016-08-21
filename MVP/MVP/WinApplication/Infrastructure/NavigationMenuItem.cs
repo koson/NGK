@@ -9,11 +9,11 @@ namespace Mvp.WinApplication.Infrastructure
     /// 
     /// </summary>
     [Serializable]
-    public class Menu
+    public class NavigationMenuItem
     {
         #region Constructors
 
-        public Menu(string name, Command action)
+        public NavigationMenuItem(string name, Command action)
         {
             _Uid = Guid.NewGuid();
             _Text = name;
@@ -27,7 +27,7 @@ namespace Mvp.WinApplication.Infrastructure
         private Guid _Uid; 
         private string _Text;
         private Command _Command;
-        private List<Menu> _SubMenuItems = new List<Menu>();
+        private List<NavigationMenuItem> _SubMenuItems = new List<NavigationMenuItem>();
 
         public Guid Uid { get { return _Uid; } }
         /// <summary>
@@ -41,7 +41,7 @@ namespace Mvp.WinApplication.Infrastructure
         /// <summary>
         /// Вложенные меню
         /// </summary>
-        public List<Menu> SubMenuItems { get { return _SubMenuItems; } }
+        public List<NavigationMenuItem> SubMenuItems { get { return _SubMenuItems; } }
 
         #endregion
     }

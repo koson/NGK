@@ -23,7 +23,7 @@ namespace Mvp.WinApplication
     {
         #region Constructors
 
-        public WindowsFormsApplication(IFormPresenter mainFormPresenter, bool isSingleInstance)
+        private WindowsFormsApplication(IFormPresenter mainFormPresenter, bool isSingleInstance)
         {
             base.EnableVisualStyles = true;
             base.IsSingleInstance = isSingleInstance;
@@ -39,19 +39,28 @@ namespace Mvp.WinApplication
 
         #region Fields And Properties
 
+        private static volatile WindowsFormsApplication Instance;
         private static object SyncRoot = new object();
+        private IFormPresenter _MainFormPresenter;
+        private Version _Version;
+        private ApplicationServiceCollection _AppServices;
 
-        private readonly IFormPresenter _MainFormPresenter;
+        public static WindowsFormsApplication Application
+        {
+            get 
+            {
+                if (Instance == null)
+                    throw new InvalidOperationException(
+                        "Невозможно получить конроллер приложения. Необходимо вызвать метод Initialize");
+                return Instance;
+            }
+        }
 
         public IFormPresenter MainFormPresenter { get { return _MainFormPresenter; } }
-
-        private Version _Version;
         /// <summary>
         /// Версия ПО
         /// </summary>
         public Version Version { get { return _Version; } }
-
-        private ApplicationServiceCollection _AppServices;
         /// <summary>
         /// Сервисы приложения
         /// </summary>
@@ -92,6 +101,33 @@ namespace Mvp.WinApplication
         #endregion
 
         #region Methods
+        /// <summary>
+        /// Создаёт контроллер приложения. Метод должен вызываться 
+        /// до запуска приложения и только один раз.
+        /// </summary>
+        /// <param name="mainFormPresenter">Контроллер главной формы приложения</param>
+        /// <param name="isSingleInstance">Указывает создать единственный экземляр приложения в системе</param>
+        /// <exception cref="InvalidOperationException">
+        /// Возникает при более чем одном вызове инициализации контроллера приложения
+        /// </exception>
+        public static void Initialize(IFormPresenter mainFormPresenter, bool isSingleInstance)
+        {
+            if (Instance == null)
+            {
+                lock (SyncRoot)
+                {
+                    if (Instance == null)
+                        Instance = new WindowsFormsApplication(mainFormPresenter, isSingleInstance);
+                }
+            }
+            else
+                throw new InvalidOperationException("Попытка создать второй экземляр контроллера приложения");
+        }
+
+        public void ShowWindow(IFormPresenter presenter)
+        {
+            presenter.View.Show();
+        }
 
         //public void ShowWindow(IPresenter presenter)
         //{

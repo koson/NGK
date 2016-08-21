@@ -37,7 +37,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\IPlugin.cs" />
     <Compile Include="Presenters\MainFormPresenter.cs" />
     <Compile Include="Presenters\SplashScreenPresenter.cs" />
     <Compile Include="Program.cs" />
@@ -95,6 +94,9 @@
       <Project>{3E59BB61-8D6F-439B-B049-A4EB117F3111}</Project>
       <Name>PluginsInfrastructure</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Models\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

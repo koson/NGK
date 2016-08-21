@@ -6,9 +6,9 @@ using Mvp.Controls;
 
 namespace Mvp.WinApplication.Infrastructure
 {
-    public static class MenuConverter
+    public static class NavigationMenuItemConverter
     {
-        public static BindableToolStripMenuItem ConvertTo(Menu menu)
+        public static BindableToolStripMenuItem ConvertTo(NavigationMenuItem menu)
         {
             BindableToolStripMenuItem rootItem;
             rootItem = new BindableToolStripMenuItem();
@@ -21,9 +21,9 @@ namespace Mvp.WinApplication.Infrastructure
             }
             else
             {
-                foreach (Menu subMenu in menu.SubMenuItems)
+                foreach (NavigationMenuItem subMenu in menu.SubMenuItems)
                 {
-                    rootItem.DropDownItems.Add(MenuConverter.ConvertTo(subMenu));
+                    rootItem.DropDownItems.Add(NavigationMenuItemConverter.ConvertTo(subMenu));
                 }
             }
 

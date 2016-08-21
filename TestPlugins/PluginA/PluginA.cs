@@ -5,6 +5,8 @@ using PluginsInfrastructure;
 using Mvp.WinApplication.Infrastructure;
 using Mvp.Input;
 using Mvp.WinApplication.ApplicationService;
+using Mvp.WinApplication;
+using PluginA.Presenters;
 
 namespace PluginA
 {
@@ -18,10 +20,10 @@ namespace PluginA
 
             _ActionA = new Command(OnActionA);
 
-            Menu root = new Menu("Меню модуля А", null);
+            NavigationMenuItem root = new NavigationMenuItem("Меню модуля А", null);
             base._Menu.Add(root);
 
-            root.SubMenuItems.Add(new Menu("Действие А", _ActionA)); 
+            root.SubMenuItems.Add(new NavigationMenuItem("Действие А", _ActionA)); 
         }
 
         #endregion
@@ -34,7 +36,7 @@ namespace PluginA
         private Command _ActionA;
         private void OnActionA()
         {
-            MessageBoxService.ShowInformation("Это тестовое сообщение", "Тест");
+            WindowsFormsApplication.Application.ShowWindow(new TestFormPresenter());
         }
 
         #endregion

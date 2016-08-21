@@ -47,6 +47,7 @@ namespace TestPlugins.Views
             this.ClientSize = new System.Drawing.Size(471, 333);
             this.Controls.Add(this._LabelOutput);
             this.Name = "SplashScreenView";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "SplashScreenView";
             this.ResumeLayout(false);
             this.PerformLayout();

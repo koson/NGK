@@ -15,7 +15,7 @@ namespace PluginsInfrastructure
         public Plugin()
         {
             _ApplicationServices = new List<IApplicationService>();
-            _Menu = new List<Menu>();
+            _Menu = new List<NavigationMenuItem>();
         }
 
         #endregion
@@ -23,14 +23,14 @@ namespace PluginsInfrastructure
         #region Fields And Properties
 
         protected readonly List<IApplicationService> _ApplicationServices;
-        protected readonly List<Menu> _Menu;
+        protected readonly List<NavigationMenuItem> _Menu;
 
         public ReadOnlyCollection<IApplicationService> ApplicationServices 
         { 
             get { return _ApplicationServices.AsReadOnly(); } 
         }
 
-        public ReadOnlyCollection<Menu> Menu
+        public ReadOnlyCollection<NavigationMenuItem> Menu
         {
             get { return _Menu.AsReadOnly(); }
         }

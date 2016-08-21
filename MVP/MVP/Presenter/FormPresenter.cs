@@ -15,11 +15,21 @@ namespace Mvp.Presenter
     {
         #region Constructors
 
+        public FormPresenter()
+        {
+            _View = Activator.CreateInstance<T>();
+            _Regions = new RegionsCollections();
+            foreach (IRegionContainer regionContainer in _View.Regions)
+            {
+                _Regions.Add(new Region(regionContainer));
+            }
+        }
+
         public FormPresenter(T view)
         {
             _View = view;
             _Regions = new RegionsCollections();
-            foreach (IRegionContainer regionContainer in view.Regions)
+            foreach (IRegionContainer regionContainer in _View.Regions)
             {
                 _Regions.Add(new Region(regionContainer));
             }

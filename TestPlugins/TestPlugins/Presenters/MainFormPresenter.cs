@@ -8,6 +8,10 @@ using Mvp.WinApplication.Infrastructure;
 using System.ComponentModel;
 using PluginsInfrastructure;
 using Mvp.Plugin;
+using Mvp.WinApplication.ApplicationService;
+using Mvp.Input;
+using System.Windows.Forms;
+using System.Drawing;
 
 namespace TestPlugins.Presenters
 {
@@ -17,17 +21,27 @@ namespace TestPlugins.Presenters
 
         public MainFormPresenter(MainFormView view) : base(view) 
         {
-            Menu = new BindingList<Menu>();
+            _ShowNavigationMenuCommand = new Command(OnShowNavigationMenu, CanShowNavigationMenu);
+
+            Menu = new BindingList<NavigationMenuItem>();
             Menu.ListChanged += new ListChangedEventHandler(EventHandler_Menu_ListChanged);
             View.Shown += new EventHandler(EventHandler_View_Shown);
             View.Load += new EventHandler(EventHadler_View_Load);
+            View.ContextMenuStripChanged += new EventHandler(EventHandler_View_ContextMenuStripChanged);
+            View._ButtonMenu.Click += 
+                delegate(object sender, EventArgs args) { _ShowNavigationMenuCommand.Execute(); };
+
+            View._ButtonMenu.DataBindings.Add(new Binding("Enabled", _ShowNavigationMenuCommand, "Status"));
+
+            base._Commands.Add(_ShowNavigationMenuCommand);
+            base.UpdateStatusCommands();
         }
         
         #endregion
 
         #region Fields And Properties
 
-        public readonly BindingList<Menu> Menu;
+        public readonly BindingList<NavigationMenuItem> Menu;
 
         #endregion
 
@@ -44,8 +58,8 @@ namespace TestPlugins.Presenters
             {
                 case ListChangedType.ItemAdded:
                     {
-                        Menu menu = Menu[e.NewIndex];
-                        View.Menu.Items.Add(MenuConverter.ConvertTo(menu));
+                        NavigationMenuItem menu = Menu[e.NewIndex];
+                        View.Menu.Items.Add(NavigationMenuItemConverter.ConvertTo(menu));
                         break; 
                     }
                 case ListChangedType.ItemDeleted:
@@ -59,20 +73,37 @@ namespace TestPlugins.Presenters
 
         public void EventHadler_View_Load(object sender, EventArgs e)
         {
-            foreach (IApplicationService service in Program.Application.AppServices)
+            View.ContextMenuStrip = new System.Windows.Forms.ContextMenuStrip();
+
+            foreach (NavigationMenuItem menu in NavigationService.Menu)
             {
-                if (service is PluginsService<Plugin>)
-                {
-                    PluginsService<Plugin> plgService = (PluginsService<Plugin>)service;
-                    
-                    foreach (Plugin plugin in plgService.Plugins)
-                    {
-                        foreach (Menu menu in plugin.Menu)
-                            //Menu.Add(menu);
-                            View.Menu.Items.Add(MenuConverter.ConvertTo(menu));
-                    }
-                }
+                View.ContextMenuStrip.Items.Add(NavigationMenuItemConverter.ConvertTo(menu));
+                View.Menu.Items.Add(NavigationMenuItemConverter.ConvertTo(menu));
             }
+        }
+
+        public void EventHandler_View_ContextMenuStripChanged(object sender, EventArgs e)
+        {
+            _ShowNavigationMenuCommand.CanExecute();
+        }
+
+        #endregion
+
+        #region Commands
+
+        private Command _ShowNavigationMenuCommand;
+        private void OnShowNavigationMenu()
+        {
+            // Отображаем меню в центре формы
+            Point point =
+                new Point(View.ClientRectangle.Width / 2 - View.ContextMenuStrip.ClientRectangle.Width / 2,
+                View.ClientRectangle.Height / 2 - View.ContextMenuStrip.ClientRectangle.Height / 2);
+
+            View.ContextMenuStrip.Show(View, point);
+        }
+        private bool CanShowNavigationMenu()
+        {
+            return View.ContextMenuStrip != null;
         }
 
         #endregion

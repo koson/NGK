@@ -34,7 +34,7 @@ namespace Mvp.Presenter
 
         public Presenter(T view, IRegionView region)
         {
-            if (((view.ViewType == ViewType.Window) || 
+            if (((view.ViewType == ViewType.Window) ||
                 (view.ViewType == ViewType.Dialog)) && (region != null))
             {
                 throw new Exception(
