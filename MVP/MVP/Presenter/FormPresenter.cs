@@ -68,7 +68,10 @@ namespace Mvp.Presenter
             foreach (Region region in Regions)
             {
                 if (!region.IsEmpty)
-                    region.RegionPresenter.Close();
+                {
+                    foreach (IRegionPresenter presenter in region.RegionPresenters)
+                        presenter.Close();
+                }
             }
 
             View.Close();

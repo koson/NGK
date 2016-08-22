@@ -7,6 +7,8 @@ using System.Text;
 using System.Windows.Forms;
 using Mvp.View;
 using Mvp.View.Collections.ObjectModel;
+using PluginsInfrastructure;
+using Mvp.WinApplication;
 
 namespace TestPlugins.Views
 {
@@ -19,6 +21,7 @@ namespace TestPlugins.Views
             InitializeComponent();
 
             _Regions = new RegionContainersCollection();
+            _Regions.Add(new RegionContainer<SplitterPanel>("WorkingRegion", _SplitContainer.Panel1));
         }
 
         #endregion
@@ -45,7 +48,16 @@ namespace TestPlugins.Views
 
         private void EventHandler_MainFormView_Load(object sender, EventArgs e)
         {
+            IRegionContainer container = Regions["WorkingRegion"];
 
+            foreach (Plugin plugin in Program.AppPluginsService.Plugins)
+            {
+                foreach (IPartialViewPresenter presenter in plugin.PartialPresenters)
+                {
+                    presenter.Hide();
+                    container.Add(presenter.View);
+                }
+            }
         }
 
         #endregion

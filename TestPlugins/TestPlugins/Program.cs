@@ -20,6 +20,8 @@ namespace TestPlugins
     static class Program
     {
         //public static WindowsFormsApplication Application;
+        public static PluginsService<Plugin> AppPluginsService;
+
 
         [STAThread]
         static void Main(string[] args)
@@ -58,7 +60,9 @@ namespace TestPlugins
             pluginsService.Initialize(null);
             pluginsService.Start();
             pluginsService.LoadPlugins();
-            
+
+            AppPluginsService = pluginsService; 
+
             foreach(Plugin plugin in pluginsService.Plugins)
             {
                 splash.Output(String.Format("Плагин {0} загружен", plugin.Name));

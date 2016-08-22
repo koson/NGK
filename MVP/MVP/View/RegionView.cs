@@ -10,6 +10,11 @@ namespace Mvp.View
     {
         #region Costructors
 
+        public RegionView()
+        {
+            _Control = Activator.CreateInstance<T>();
+        }
+
         public RegionView(Control control)
         {
             _Control = control;
@@ -44,9 +49,14 @@ namespace Mvp.View
             _Control.Show();
         }
 
+        public void Hide()
+        {
+            _Control.Hide();
+        }
+
         public void Close()
         {
-            _Control.Dispose();
+            Dispose();
         }
 
         public void Dispose()

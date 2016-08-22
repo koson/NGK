@@ -10,7 +10,10 @@ namespace Mvp.View
         #region Properties
         #endregion
 
-        #region Methods        
+        #region Methods
+
+        void Hide();
+
         #endregion
     }
 }

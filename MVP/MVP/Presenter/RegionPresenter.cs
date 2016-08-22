@@ -10,6 +10,11 @@ namespace Mvp.Presenter
     {
         #region Constructors
 
+        public RegionPresenter()
+        {
+            _View = Activator.CreateInstance<T>();
+        }
+
         public RegionPresenter(T view)
         {
             _View = view;
@@ -36,6 +41,29 @@ namespace Mvp.Presenter
         {
             View.Dispose();
         }
+
+        public void Hide()
+        {
+            View.Hide();
+        }
+
+        public override void Show()
+        {
+            View.Show();
+            OnShown();
+        }
+
+        private void OnShown()
+        {
+            if (Shown != null)
+                Shown(this, new EventArgs());
+        }
+
+        #endregion
+
+        #region Events
+
+        public event EventHandler Shown;
 
         #endregion
     }
