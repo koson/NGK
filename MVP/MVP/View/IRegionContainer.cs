@@ -16,7 +16,7 @@ namespace Mvp.View
 
         //IRegionView RegionView { get; set; }
 
-        ReadOnlyCollection<IRegionView> Views { get; }
+        ReadOnlyCollection<IPartialView> Views { get; }
 
         #endregion
 
@@ -26,7 +26,7 @@ namespace Mvp.View
         /// Доабавляет в контейнер новое частичное представление
         /// </summary>
         /// <param name="partialView">Частичное предстваление</param>
-        void Add(IRegionView partialView);
+        void Add(IPartialView partialView);
 
         #endregion
     }

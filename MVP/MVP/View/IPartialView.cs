@@ -5,7 +5,7 @@ using System.Windows.Forms;
 
 namespace Mvp.View
 {
-    public interface IRegionView: IView
+    public interface IPartialView: IView
     {
         #region Properties
         #endregion

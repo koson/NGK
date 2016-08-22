@@ -9,7 +9,7 @@ namespace Mvp.Presenter
     {
         #region Properties
 
-        IRegionView View { get; }
+        IPartialView View { get; }
 
         #endregion
         

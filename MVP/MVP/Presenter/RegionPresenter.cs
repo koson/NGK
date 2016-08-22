@@ -6,7 +6,7 @@ using Mvp.View;
 namespace Mvp.Presenter
 {
     public abstract class RegionPresenter<T> : PresenterBase, IRegionPresenter
-        where T: IRegionView
+        where T: IPartialView
     {
         #region Constructors
 
@@ -28,9 +28,9 @@ namespace Mvp.Presenter
 
         public T View { get { return _View; } }
 
-        IRegionView IRegionPresenter.View
+        IPartialView IRegionPresenter.View
         {
-            get { return (IRegionView)_View; }
+            get { return (IPartialView)_View; }
         }
 
         #endregion

@@ -20,6 +20,7 @@ namespace Mvp.View
         #region Methods
 
         void Show();
+        void Hide();
         void Close();
 
         #endregion

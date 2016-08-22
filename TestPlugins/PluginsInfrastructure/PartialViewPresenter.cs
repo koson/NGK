@@ -13,7 +13,7 @@ namespace PluginsInfrastructure
     /// </summary>
     /// <typeparam name="T"></typeparam>
     public abstract class PartialViewPresenter<T>: RegionPresenter<T>, IPartialViewPresenter
-        where T : IRegionView
+        where T : IPartialView
     {
         #region Fields And Properties
 

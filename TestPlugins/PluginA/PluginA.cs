@@ -54,7 +54,13 @@ namespace PluginA
             //IRegionContainer regionContainer = 
             //    WindowsFormsApplication.Application.MainFormPresenter.View.Regions["WorkingRegion"];
             //regionContainer.Add(_TestPartialViewPresenter);
-            _TestPartialViewPresenter.Show();
+
+            int x, y, z;
+            x = 5;
+            z = 0;
+            y = x / z;
+
+            //_TestPartialViewPresenter.Show();
         }
 
         #endregion

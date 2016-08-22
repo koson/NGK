@@ -85,7 +85,7 @@ namespace Mvp.Presenter
         {
             IRegionPresenter presenter = (IRegionPresenter)sender;
             // Когда, отображается один из презенторов контейнера, все другие скрываются
-            foreach (IRegionView view in _RegionContainer.Views)
+            foreach (IPartialView view in _RegionContainer.Views)
             {
                 if (!view.Equals(presenter.View))
                     view.Hide();

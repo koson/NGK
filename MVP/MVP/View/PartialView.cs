@@ -5,17 +5,17 @@ using System.Windows.Forms;
 
 namespace Mvp.View
 {
-    public class RegionView<T>: IRegionView
+    public class PartialView<T>: IPartialView
         where T: Control
     {
         #region Costructors
 
-        public RegionView()
+        public PartialView()
         {
             _Control = Activator.CreateInstance<T>();
         }
 
-        public RegionView(Control control)
+        public PartialView(Control control)
         {
             _Control = control;
         }

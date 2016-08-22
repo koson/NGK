@@ -51,7 +51,6 @@
     <Compile Include="Presenter\IFormPresenter.cs" />
     <Compile Include="Presenter\IPresenter.cs" />
     <Compile Include="Presenter\IRegionPresenter.cs" />
-    <Compile Include="Presenter\Presenter.cs" />
     <Compile Include="Presenter\PresenterBase.cs" />
     <Compile Include="Presenter\RegionPresenter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -59,8 +58,8 @@
     <Compile Include="View\IFormView.cs" />
     <Compile Include="Presenter\Region.cs" />
     <Compile Include="View\IRegionContainer.cs" />
-    <Compile Include="View\IRegionView.cs" />
-    <Compile Include="View\RegionView.cs" />
+    <Compile Include="View\IPartialView.cs" />
+    <Compile Include="View\PartialView.cs" />
     <Compile Include="View\ViewType.cs" />
     <Compile Include="WinApplication\ApplicationController\IApplicationController.cs" />
     <Compile Include="WinApplication\ApplicationServiceCollection.cs" />

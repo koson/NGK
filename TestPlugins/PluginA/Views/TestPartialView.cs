@@ -9,7 +9,7 @@ using Mvp.View;
 
 namespace PluginA.Views
 {
-    public partial class TestPartialView : UserControl, IRegionView
+    public partial class TestPartialView : UserControl, IPartialView
     {
         public TestPartialView()
         {

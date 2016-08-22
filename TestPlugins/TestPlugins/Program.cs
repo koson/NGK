@@ -39,6 +39,7 @@ namespace TestPlugins
 
         static void Application_UnhandledException(object sender, VisualBasic::UnhandledExceptionEventArgs e)
         {
+            MessageBox.Show("It's handled for program");
             return;
         }
 

@@ -35,15 +35,15 @@ namespace PluginsInfrastructure
             get { return _Container; } 
         }
 
-        public ReadOnlyCollection<IRegionView> Views
+        public ReadOnlyCollection<IPartialView> Views
         {
             get 
             {
-                List<IRegionView> list = new List<IRegionView>();
+                List<IPartialView> list = new List<IPartialView>();
                 foreach (Control control in _Container.Controls)
                 {
-                    if (control is IRegionView)
-                        list.Add(control as IRegionView);
+                    if (control is IPartialView)
+                        list.Add(control as IPartialView);
                 }
                 return list.AsReadOnly(); 
             }
@@ -53,7 +53,7 @@ namespace PluginsInfrastructure
 
         #region Methods
 
-        public void Add(IRegionView partialView)
+        public void Add(IPartialView partialView)
         {
             if (partialView is Control)
                 _Container.Controls.Add(partialView as Control);
