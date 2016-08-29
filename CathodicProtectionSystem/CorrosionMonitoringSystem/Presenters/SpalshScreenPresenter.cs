@@ -12,62 +12,23 @@ using NGK.CorrosionMonitoringSystem.Managers;
 
 namespace NGK.CorrosionMonitoringSystem.Presenters
 {
-    public class SplashScreenPresenter: Presenter<ISplashScreenView>
+    public class SplashScreenPresenter: FormPresenter<SplashScreenView>
     {
         #region Constructors
 
-        public SplashScreenPresenter(IApplicationController application,
-            ISplashScreenView view, object model, IManagers managers):
-            base(view, application)
+        public SplashScreenPresenter() { }
+
+        public SplashScreenPresenter(SplashScreenPresenter view): base(view)
         {
             _Name = "SplashScreen";
-            _Managers = managers;
-            _View = view;
-            //_View.ViewShown += 
-            //    new EventHandler(EventHandler_View_ViewShown);
         }
 
         #endregion
 
         #region Fields And Properties
-        
-        BackgroundWorker _Worker;
-        IManagers _Managers;
-
-        public ISplashScreenView ViewConcrete
-        {
-            get { return _View; }
-        }
-
         #endregion
 
         #region EventHandler
-
-        void EventHandler_View_ViewShown(object sender, EventArgs e)
-        {
-            _Worker = new BackgroundWorker();
-            _Worker.WorkerReportsProgress = true;
-            _Worker.WorkerSupportsCancellation = true;
-            _Worker.DoWork += 
-                new DoWorkEventHandler(EventHandler_Worker_DoWork);
-            _Worker.RunWorkerCompleted += 
-                new RunWorkerCompletedEventHandler(EventHandler_Worker_RunWorkerCompleted);
-            _Worker.RunWorkerAsync();
-        }
-
-        void EventHandler_Worker_RunWorkerCompleted(
-            object sender, RunWorkerCompletedEventArgs e)
-        {
-            //IPresenter presenter =
-            //    _Managers.PresentersFactory.CreateMainWindow();
-            //presenter.Show();
-        }
-
-        void EventHandler_Worker_DoWork(object sender, DoWorkEventArgs e)
-        {
-            OnInitSystemRunning();
-        }
-
         #endregion
 
         #region Methods
@@ -78,29 +39,17 @@ namespace NGK.CorrosionMonitoringSystem.Presenters
         /// <param name="text"></param>
         public void WtriteText(string text)
         {
-            _View.WriteLine(text);
+            View.WriteLine(text);
         }
 
-        void OnInitSystemRunning()
+        public override void Show()
         {
-            if (SystemInitializationRunning != null)
-            {
-                SystemInitializationRunning(this, new EventArgs());
-            }
+            View.Show();
         }
 
         #endregion
 
         #region Events
-
-        /// <summary>
-        /// Событие возникает при запуске выполения
-        /// задачи инициализации системы в фоновом потоке.
-        /// В обработчике можно разместить код инициализации
-        /// системы
-        /// </summary>
-        public event EventHandler SystemInitializationRunning;
-
         #endregion
     }
 }

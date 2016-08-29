@@ -34,10 +34,6 @@ namespace NGK.CorrosionMonitoringSystem.Managers
         /// </summary>
         IConfigManager ConfigManager { get; }
         /// <summary>
-        /// Фабрика по созданию окон приложения
-        /// </summary>
-        IPresentersFactory PresentersFactory { get; }
-        /// <summary>
         /// Сервис для работы с CAN-сетями
         /// </summary>
         ICanNetworkService CanNetworkService { get; }

@@ -60,6 +60,7 @@
     <Compile Include="View\IRegionContainer.cs" />
     <Compile Include="View\IPartialView.cs" />
     <Compile Include="View\PartialView.cs" />
+    <Compile Include="View\ViewContext.cs" />
     <Compile Include="View\ViewType.cs" />
     <Compile Include="WinApplication\ApplicationController\IApplicationController.cs" />
     <Compile Include="WinApplication\ApplicationServiceCollection.cs" />

@@ -14,9 +14,7 @@ namespace Mvp.View
         /// </summary>
         string Name { get; }
 
-        //IRegionView RegionView { get; set; }
-
-        ReadOnlyCollection<IPartialView> Views { get; }
+        IEnumerable<IPartialView> Views { get; }
 
         #endregion
 

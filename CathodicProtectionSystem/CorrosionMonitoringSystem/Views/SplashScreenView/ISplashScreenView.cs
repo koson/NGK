@@ -5,9 +5,8 @@ using Mvp.View;
 
 namespace NGK.CorrosionMonitoringSystem.Views
 {
-    public interface ISplashScreenView : IView
+    public interface ISplashScreenView : IFormView
     {
         void WriteLine(string text);
-        event EventHandler ViewShown;
     }
 }

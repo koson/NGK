@@ -4,11 +4,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.50727</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{A136C26A-4D11-4178-8CF2-6E15FA71A220}</ProjectGuid>
+    <ProjectGuid>{B48FF1D3-AED9-40D8-9A61-E26B8B5E8516}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>PluginA</RootNamespace>
-    <AssemblyName>PluginA</AssemblyName>
+    <RootNamespace>Infrastructure.Api</RootNamespace>
+    <AssemblyName>Infrastructure.Api</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -28,59 +28,27 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="PluginA.cs" />
-    <Compile Include="Presenters\TestFormPresenter.cs" />
-    <Compile Include="Presenters\TestPartialView2Presenter.cs" />
-    <Compile Include="Presenters\TestPartialViewPresenter.cs" />
+    <Compile Include="Plugins\IPartialViewPresenter.cs" />
+    <Compile Include="Plugins\PartialViewPresenter.cs" />
+    <Compile Include="Plugins\Plugin.cs" />
+    <Compile Include="Plugins\RegionContainer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Views\Controls\TestControl2.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Views\Controls\TestControl2.Designer.cs">
-      <DependentUpon>TestControl2.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Views\TestFormView.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Views\TestFormView.Designer.cs">
-      <DependentUpon>TestFormView.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Controls\TestControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Views\Controls\TestControl.Designer.cs">
-      <DependentUpon>TestControl.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Views\TestPartialView.cs" />
-    <Compile Include="Views\TestPartialView2.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\MVP\MVP\MVP.csproj">
       <Project>{44DF6B58-4BDD-40D8-993C-7B61AECF0510}</Project>
       <Name>MVP</Name>
     </ProjectReference>
-    <ProjectReference Include="..\PluginsInfrastructure\PluginsInfrastructure.csproj">
-      <Project>{3E59BB61-8D6F-439B-B049-A4EB117F3111}</Project>
-      <Name>PluginsInfrastructure</Name>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{78E073B6-AD50-429C-9261-4DE3438D8EAE}</Project>
+      <Name>Common</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Views\Controls\TestControl.resx">
-      <SubType>Designer</SubType>
-      <DependentUpon>TestControl.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\Controls\TestControl2.resx">
-      <SubType>Designer</SubType>
-      <DependentUpon>TestControl2.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
@@ -90,7 +58,4 @@
   <Target Name="AfterBuild">
   </Target>
   -->
-  <PropertyGroup>
-    <PostBuildEvent>xcopy "$(TargetDir)$(ProjectName).dll" "$(SolutionDir)Plugins\" /S /E /Y</PostBuildEvent>
-  </PropertyGroup>
 </Project>

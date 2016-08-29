@@ -6,11 +6,11 @@ using System.Windows.Forms;
 
 namespace PluginA.Views
 {
-    public class TestPartialView : PartialView<TestControl>
+    public class TestPartialView2 : PartialView<TestControl2>
     {
         #region Constructors
 
-        public TestPartialView()
+        public TestPartialView2()
         {
             base.Control._Button.Click += new EventHandler(EventHandler_Button_Click);
         }

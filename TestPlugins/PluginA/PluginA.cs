@@ -21,23 +21,30 @@ namespace PluginA
 
             _ActionACommand = new Command(OnActionA);
             _ShowTestViewCommand = new Command(OnShowTestView);
+            _ShowTestView2Command = new Command(OnShowTestView2);
 
-            _TestPartialViewPresenter = new TestPartialVIewPresenter();
+            _TestPartialViewPresenter = new TestPartialViewPresenter();
             _TestPartialViewPresenter.View.Dock = System.Windows.Forms.DockStyle.Fill;
             base._PartialPresenters.Add(_TestPartialViewPresenter);
+
+            _TestPartialView2Presenter = new TestPartialView2Presenter();
+            _TestPartialView2Presenter.View.Dock = System.Windows.Forms.DockStyle.Fill;
+            base._PartialPresenters.Add(_TestPartialView2Presenter);
 
             NavigationMenuItem root = new NavigationMenuItem("Меню модуля А", null);
             base._Menu.Add(root);
             root.SubMenuItems.Add(new NavigationMenuItem("Действие А", _ActionACommand));
-            root.SubMenuItems.Add(new NavigationMenuItem("Частичное предстваление 1", _ShowTestViewCommand));
+            root.SubMenuItems.Add(new NavigationMenuItem("Частичное представление 1", _ShowTestViewCommand));
+            root.SubMenuItems.Add(new NavigationMenuItem("Частичное представление 2", _ShowTestView2Command)); 
         }
 
         #endregion
 
         #region Fields And Properties
 
-        TestPartialVIewPresenter _TestPartialViewPresenter;
-
+        private TestPartialViewPresenter _TestPartialViewPresenter;
+        private TestPartialView2Presenter _TestPartialView2Presenter;
+ 
         #endregion
 
         #region Commands
@@ -51,16 +58,13 @@ namespace PluginA
         private Command _ShowTestViewCommand;
         private void OnShowTestView()
         {
-            //IRegionContainer regionContainer = 
-            //    WindowsFormsApplication.Application.MainFormPresenter.View.Regions["WorkingRegion"];
-            //regionContainer.Add(_TestPartialViewPresenter);
+            _TestPartialViewPresenter.Show();
+        }
 
-            int x, y, z;
-            x = 5;
-            z = 0;
-            y = x / z;
-
-            //_TestPartialViewPresenter.Show();
+        private Command _ShowTestView2Command;
+        private void OnShowTestView2()
+        {
+            _TestPartialView2Presenter.Show();
         }
 
         #endregion

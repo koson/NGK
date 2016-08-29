@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Drawing;
 using System.Globalization;
+using VisualBasic = Microsoft.VisualBasic.ApplicationServices;
 using Mvp.WinApplication;
 using Mvp.View;
 using Mvp.Presenter;
@@ -11,101 +12,56 @@ using NGK.CorrosionMonitoringSystem.Views;
 using NGK.CAN.ApplicationLayer.Network.Master;
 using NGK.CorrosionMonitoringSystem.Managers;
 using NGK.CAN.ApplicationLayer.Network.Devices;
+using NGK.CorrosionMonitoringSystem.Managers.Factory;
 using Modbus.OSIModel.DataLinkLayer.Slave.RTU.ComPort;
 using Modbus.OSIModel.ApplicationLayer.Slave;
 using Modbus.OSIModel.ApplicationLayer;
 using Common.Controlling;
 using NGK.CorrosionMonitoringSystem.Services;
 using Infrastructure.LogManager;
+using Mvp.Plugin;
+using Infrastructure.Api.Plugins;
 
 namespace NGK.CorrosionMonitoringSystem
 {
     static class Program
     {
         public static ILogManager _Logger;
-        public static WinFormsApplication _Application;
         public static IManagers Managers;
+        public static PluginsService<Plugin> AppPluginsService;
 
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
-        /// <remarks>
-        /// https://exceptionalcode.wordpress.com/2010/03/25/splash-screen-for-windows-forms-application/
-        /// </remarks>
         [STAThread]
-        static void Main()
+        static void Main(string[] args)
+        {  
+            WindowsFormsApplication.Initialize(PresentersFactory.CreateFormPresenter<MainWindowPresenter>(), true);
+            WindowsFormsApplication.Application.UnhandledException +=
+                new VisualBasic::UnhandledExceptionEventHandler(EventHandler_Application_UnhandledException);
+            WindowsFormsApplication.Application.ChangeCulture("ru-Ru");
+            WindowsFormsApplication.Application.ChangeUICulture("ru-Ru");
+            WindowsFormsApplication.Application.Startup +=
+                new VisualBasic::StartupEventHandler(EventHandler_Application_Startup);
+            WindowsFormsApplication.Application.Shutdown +=
+                new VisualBasic::ShutdownEventHandler(EventHandler_Application_Shutdown);
+#if(DEBUG)
+            WindowsFormsApplication.Application.MinimumSplashScreenDisplayTime = 1000;
+#endif
+            WindowsFormsApplication.Application.SplashScreen = 
+                (Form)PresentersFactory.CreateWindowPresenter<SplashScreenPresenter>().View;
+
+            Managers = new AppManagers(WindowsFormsApplication.Application);
+
+            WindowsFormsApplication.Application.Run(args);            
+        }
+
+        static void  EventHandler_Application_Startup(object sender, VisualBasic::StartupEventArgs e)
         {
-            //_Logger = new NLogManager("CorrosionMonitoringSystemLogger");
+            SplashScreenView splash = (SplashScreenView)sender;
+
             _Logger = NLogManager.Instance;
             _Logger.Info("Запуск приложения");
-
-            //AppDomain.CurrentDomain.UnhandledException +=
-            //    new UnhandledExceptionEventHandler(EventHandler_CurrentDomain_UnhandledException);
-
-            _Application = WinFormsApplication.Application;
-            _Application.CurrentCulture = new CultureInfo("ru-Ru");
-            //_Application.ApplicationStarting += 
-            //    new EventHandler(EventHandler_Application_ApplicationRunning);
-            _Application.ApplicationStarting += 
-                new EventHandler<ApplicationStartingEventArgs>(_Application_ApplicationStarting);
-            _Application.ApplicationClosing += 
-                new EventHandler(EventHandler_Application_ApplicationClosing);
-
-            Managers = new AppManagers(_Application);
-
-            //Создаём presenter splash screen 
-            SplashScreenView splashscreenView = new SplashScreenView();
-            SplashScreenPresenter splashscreenPresenter =
-                new SplashScreenPresenter(_Application, splashscreenView, null, Managers);
-
-            //Создаём presenter основного окна
-            IPresenter mainFormPresenter =
-                Managers.PresentersFactory.CreateMainWindow();
-
-            _Application.Run(mainFormPresenter, splashscreenPresenter);
-        }
-
-        static void _Application_ApplicationStarting(object sender, ApplicationStartingEventArgs e)
-        {
-            SplashScreenPresenter presenter = (SplashScreenPresenter)e.SplashScreen;
-            // Создаём объект для ведения логов приложения
-            presenter.WtriteText("Инициализация системы логирования...");
-
-            //Загружаем конфигурацию сети CAN НГК ЭХЗ
-            presenter.WtriteText("Загрузка конфигурации сети CAN НГК ЭХЗ...");
-            LoadCanNetworkConfig();
-
-            //Загружаем конфигурацию для сети Modbus 
-            presenter.WtriteText("Загрузка конфигурации сети Modbus...");
-            LoadModbusNetworkConfig();
-
-            System.Threading.Thread.Sleep(300);
-            presenter.WtriteText("Загрузка БД...");
-            System.Threading.Thread.Sleep(300);
-            presenter.WtriteText("Загрузка журнала событий...");
-            System.Threading.Thread.Sleep(300);
-
-            presenter.WtriteText("Запуск системы мониторинга...");
-            Managers.CanNetworkService.Start();
-            //TODO: создать запись в журнал
-            presenter.WtriteText("Запуск информационного Modbus-сервиса...");
-            Managers.ModbusSystemInfoNetworkService.Start();
-            //TODO: создать запись в журнал
-
-            _Logger.Info("Приложение запущено");
-            return;
-        }
-
-        /// <summary>
-        /// Инициализация приложения
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        static void EventHandler_Application_ApplicationRunning(object sender, EventArgs e)
-        {
-            WinFormsApplication app = (WinFormsApplication)sender;
-
-            //Managers = new AppManagers(app);
 
             if (Managers.ConfigManager.CursorEnable)
             {
@@ -116,62 +72,70 @@ namespace NGK.CorrosionMonitoringSystem
                 Cursor.Hide();
             }
 
-            ////Создаём presenter splash screen 
-            //SplashScreenView splashscreenView = new SplashScreenView();
-            //SplashScreenPresenter splashscreenPresenter =
-            //    new SplashScreenPresenter(app, splashscreenView, null, Managers);
-            ////Подключем метод для выполнения инициализации приложения
-            //splashscreenPresenter.SystemInitializationRunning += new EventHandler(
-            //    EventHandler_SplashscreenPresenter_SystemInitializationRunning);
-            //app.ShowWindow(splashscreenPresenter);
-        }
-
-        static void EventHandler_Application_ApplicationClosing(
-            object sender, EventArgs e)
-        {
-            if (Managers != null)
-            {
-                if ((Managers.ModbusSystemInfoNetworkService != null) &&
-                    (Managers.ModbusSystemInfoNetworkService.Status == Status.Running))
-                    Managers.ModbusSystemInfoNetworkService.Stop();
-
-                if ((Managers.CanNetworkService != null) &&
-                    (Managers.CanNetworkService.Status == Status.Running))
-                    Managers.CanNetworkService.Stop();
-            }
-            _Logger.Info("Приложение остановлено");
-        }
-
-        static void EventHandler_SplashscreenPresenter_SystemInitializationRunning(
-            object sender, EventArgs e)
-        {
-            SplashScreenPresenter presenter = (SplashScreenPresenter)sender;
-
-            // Создаём объект для ведения логов приложения
-            presenter.WtriteText("Инициализация системы логирования...");
-
             //Загружаем конфигурацию сети CAN НГК ЭХЗ
-            presenter.WtriteText("Загрузка конфигурации сети CAN НГК ЭХЗ...");
+            splash.WriteLine("Загрузка конфигурации сети CAN НГК ЭХЗ...");
             LoadCanNetworkConfig();
 
             //Загружаем конфигурацию для сети Modbus 
-            presenter.WtriteText("Загрузка конфигурации сети Modbus...");
+            splash.WriteLine("Загрузка конфигурации сети Modbus...");
             LoadModbusNetworkConfig();
+            System.Threading.Thread.Sleep(300);
 
+            //TODO: сделать менеджер базы данных. Если база не найдена, предлагает создать её.
+            splash.WriteLine("Загрузка БД...");
             System.Threading.Thread.Sleep(300);
-            presenter.WtriteText("Загрузка БД...");
-            System.Threading.Thread.Sleep(300);
-            presenter.WtriteText("Загрузка журнала событий...");
-            System.Threading.Thread.Sleep(300);
+
             
-            presenter.WtriteText("Запуск системы мониторинга...");
+            splash.WriteLine("Загрузка плагинов...");
+            // Инициализирует сервис плагинов приложения. Ищем и загружаем плагины
+            PluginsService<Plugin> pluginsService =
+                new PluginsService<Plugin>(Directory.GetCurrentDirectory() + @"\Plugins\", true);
+            WindowsFormsApplication.Application.RegisterApplicationService(pluginsService);
+            pluginsService.Initialize(null);
+            pluginsService.Start();
+            pluginsService.LoadPlugins();
+
+            AppPluginsService = pluginsService;
+            
+            foreach (Plugin plugin in pluginsService.Plugins)
+            {
+                splash.Output(String.Format("Плагин {0} загружен", plugin.Name));
+                NavigationService.Menu.AddRange(plugin.Menu);
+                Thread.Sleep(500);
+            }
+
+            splash.WriteLine("Запуск системы мониторинга...");
             Managers.CanNetworkService.Start();
             //TODO: создать запись в журнал
-            presenter.WtriteText("Запуск информационного Modbus-сервиса...");
+            splash.WriteLine("Запуск информационного Modbus-сервиса...");
             Managers.ModbusSystemInfoNetworkService.Start();
             //TODO: создать запись в журнал
 
+            // Запуск всех сервисов приложения
+            foreach (IApplicationService service in WindowsFormsApplication.Application.AppServices)
+            {
+                if (service.Status != Status.Running)
+                {
+                    splash.WriteLine(String.Format("Запуск сервиса {0}...", service.ServiceName));
+                    service.Start();
+                }
+            }
+
             _Logger.Info("Приложение запущено");
+        }
+
+        static void  EventHandler_Application_Shutdown(object sender, EventArgs e)
+        {
+            // Останавливаем все сервисы
+            foreach (IApplicationService service in WindowsFormsApplication.Application.AppServices)
+            {
+                if (service.Status != Status.Stopped)
+                {
+                    service.Stop();
+                }
+            }
+
+            _Logger.Info("Приложение остановлено");
         }
 
         static void LoadCanNetworkConfig()
@@ -234,24 +198,17 @@ namespace NGK.CorrosionMonitoringSystem
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        static void EventHandler_CurrentDomain_UnhandledException(
-            object sender, UnhandledExceptionEventArgs e)
+        static void  EventHandler_Application_UnhandledException(object sender, VisualBasic::UnhandledExceptionEventArgs e)
         {
-            Exception exception = e.ExceptionObject as Exception;
-            _Logger.FatalException("Фатальная ошибка, приложение будет остановлено", exception);
+            _Logger.FatalException("Фатальная ошибка, приложение будет остановлено", e.Exception);
 
-            //if (e.IsTerminating)
-            //{
-            //    // CLR - останавливается
-            //}
-
-            #if(DEBUG)
+#if(DEBUG)
             MessageBox.Show(String.Format("Фатальная ошибка, приложение будет остановлено. Описание: {0} Стек: {1}", 
                 exception.Message, exception.StackTrace), "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            Application.Exit();
-            #else
-            _Application.Exit();
-            #endif
+            e.ExitApplication = true;
+#else
+            e.ExitApplication = true;
+#endif
         }
     }
 }

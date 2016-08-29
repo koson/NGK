@@ -12,7 +12,7 @@ using NGK.CorrosionMonitoringSystem.Views.DeviceDetailView;
 
 namespace NGK.CorrosionMonitoringSystem.Managers.Factory
 {
-    public class PresentersFactory: IPresentersFactory
+    public static class PresentersFactory
     {
         #region Constructors
 
@@ -27,84 +27,33 @@ namespace NGK.CorrosionMonitoringSystem.Managers.Factory
 
         #region Fields And Properties
 
-        IApplicationController _Application;
-        IManagers _Managers;
-
-
+        private static SplashScreenPresenter _SplashScreenPresenter;
+        private static MainWindowPresenter _MainWindowPresenter; 
+        
         #endregion
 
         #region Methods
 
-        public IPresenter CreateMainWindow()
+        public static IFormPresenter CreateWindowPresenter<T>()
+            where T : IFormPresenter
         {
-            MainWindowView mainWindow = new MainWindowView();
-            return new MainWindowPresenter(_Application, mainWindow, 
-                null, _Managers);
-        }
-
-        public IPresenter Create(ViewMode viewMode)
-        {
-            IPresenter presenter;
-
-            switch (viewMode)
+            if (typeof(T) == typeof(SplashScreenPresenter))
             {
-                case ViewMode.NoSelection:
-                    {
-                        presenter = null;
-                        break;
-                    }
-                case ViewMode.PivoteTable:
-                    {
-                        PivotTableView ptView = new PivotTableView();
-
-                        PivoteTablePresenter ptPresenter =
-                            new PivoteTablePresenter(_Application, ptView, null, null, _Managers);
-                        presenter = ptPresenter;
-                        break;
-                    }
-                case ViewMode.DeviceList:
-                    {
-                        DevicesView dlView = new DevicesView();
-
-                        DeviceListPresenter dlPresenter =
-                            new DeviceListPresenter(_Application, dlView, null, null, _Managers);
-                        presenter = dlPresenter;
-                        break;
-                    }
-                case ViewMode.DeviceDetail:
-                    {
-                        DeviceDetailView ddView = new DeviceDetailView();
-
-                        DeviceDetailPresenter ddPresenter =
-                            new DeviceDetailPresenter(_Application, ddView, null, null,
-                            _Managers, null);
-                        presenter = ddPresenter;
-                        break; 
-                    }
-                case ViewMode.LogViewer:
-                    {
-                        LogViewerView lvView = new LogViewerView();
-
-                        LogViewerPresenter lvPresenter =
-                            new LogViewerPresenter(_Application, lvView, null, null, _Managers);
-                        presenter = lvPresenter;
-                        break; 
-                    }
-                default:
-                    {
-                        throw new NotSupportedException();
-                    }
+                if (_SplashScreenPresenter == null)
+                    _SplashScreenPresenter = new SplashScreenPresenter();
+                return _SplashScreenPresenter;
             }
-            return presenter;
-        }
-        
-        public INavigationMenuPresenter CreateNavigationMenu()
-        {
-            NavigationMenuView view = new NavigationMenuView();
-
-            INavigationMenuPresenter presenter =
-                new NavigationMenuPresenter(_Application, view, null, null);
-            return presenter;
+            else if (typeof(T) == typeof(MainWindowPresenter))
+            {
+                if (_MainWindowPresenter == null)
+                    _MainWindowPresenter = new MainWindowPresenter();
+                return _MainWindowPresenter;
+            }
+            else
+            {
+                throw new NotSupportedException(
+                    String.Format("Невозможно создать объект типа {0}", typeof(T)));
+            }
         }
 
         #endregion

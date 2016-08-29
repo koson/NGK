@@ -6,9 +6,9 @@ using PluginA.Views;
 
 namespace PluginA.Presenters
 {
-    public class TestPartialViewPresenter: PartialViewPresenter<TestPartialView>
+    public class TestPartialView2Presenter : PartialViewPresenter<TestPartialView2>
     {
-        public TestPartialViewPresenter(): base()
+        public TestPartialView2Presenter(): base()
         {
             View.ButtonClick += new EventHandler(
                 delegate(object sender, EventArgs args) 

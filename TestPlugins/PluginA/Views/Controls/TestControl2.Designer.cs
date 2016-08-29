@@ -1,6 +1,6 @@
 namespace PluginA.Views
 {
-    partial class TestPartialView
+    partial class TestControl2
     {
         /// <summary> 
         /// Required designer variable.
@@ -28,31 +28,33 @@ namespace PluginA.Views
         /// </summary>
         private void InitializeComponent()
         {
-            this.button1 = new System.Windows.Forms.Button();
+            this._Button = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
-            // button1
+            // _Button
             // 
-            this.button1.Location = new System.Drawing.Point(0, 0);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
+            this._Button.BackColor = System.Drawing.Color.Lime;
+            this._Button.Dock = System.Windows.Forms.DockStyle.Fill;
+            this._Button.Location = new System.Drawing.Point(0, 0);
+            this._Button.Name = "_Button";
+            this._Button.Size = new System.Drawing.Size(150, 150);
+            this._Button.TabIndex = 0;
+            this._Button.Text = "button1";
+            this._Button.UseVisualStyleBackColor = false;
             // 
-            // TestPartialViewPresenter
+            // TestControl2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.button1);
-            this.Name = "TestPartialViewPresenter";
-            this.Size = new System.Drawing.Size(278, 212);
+            this.Controls.Add(this._Button);
+            this.Name = "TestControl2";
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.Button button1;
+        public System.Windows.Forms.Button _Button;
+
     }
 }

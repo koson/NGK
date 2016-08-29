@@ -15,7 +15,7 @@ namespace Mvp.View
             _Control = Activator.CreateInstance<T>();
         }
 
-        public PartialView(Control control)
+        public PartialView(T control)
         {
             _Control = control;
         }
@@ -24,7 +24,11 @@ namespace Mvp.View
 
         #region Fields And Properties
 
-        private readonly Control _Control;
+        private readonly T _Control;
+
+        protected T Control { get { return _Control; } }
+
+        Control IPartialView.Control { get { return _Control; } }
 
         public string Name
         {
@@ -63,6 +67,12 @@ namespace Mvp.View
         {
             _Control.Dispose();
         }
+
+
+        #endregion
+
+        #region Events
+
 
         #endregion
     }

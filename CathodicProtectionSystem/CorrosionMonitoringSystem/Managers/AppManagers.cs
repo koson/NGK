@@ -68,11 +68,6 @@ namespace NGK.CorrosionMonitoringSystem.Managers
             get { return _ConfigManager; }
         }
         
-        public IPresentersFactory PresentersFactory
-        {
-            get { return _WindowsFactory; }
-        }
-
         public ICanNetworkService CanNetworkService
         {
             get 

@@ -65,7 +65,7 @@ namespace NGK.CorrosionMonitoringSystem.Views
 
         #region Fields And Properties
 
-        Content _Content;
+        private Content _Content;
         
         public string Info
         {
@@ -84,29 +84,9 @@ namespace NGK.CorrosionMonitoringSystem.Views
             }
         }
 
-        public ViewType ViewType { get { return ViewType.Window; } }
-
-        IViewRegion[] _ViewRegions = new IViewRegion[0];
-        
-        public IViewRegion[] ViewRegions
-        {
-            get { return _ViewRegions; }
-        }
-
         #endregion
 
         #region EventHandler
-
-        private void EventHandler_SplashScreen_Load(
-            object sender, EventArgs e)
-        {
-        }
-
-        private void BootstrapperView_Shown(object sender, EventArgs e)
-        {
-            OnViewShown();
-        }
-
         #endregion
 
         #region Methods
@@ -118,38 +98,19 @@ namespace NGK.CorrosionMonitoringSystem.Views
         public void WriteLine(string text)
         {
             _Content.WriteLine(text);
-            Info = _Content.ToString();
-        }
 
-        private void OnViewShown()
-        {
-            if (ViewShown != null)
-            {
-                ViewShown(this, new EventArgs());
-            }
+            if (_LabelOutputInfo.InvokeRequired)
+                _LabelOutputInfo.Invoke(new MethodInvoker(delegate() 
+                { 
+                    _LabelOutputInfo.Text = _Content.ToString(); 
+                }));
+            else
+                _LabelOutputInfo.Text = _Content.ToString();
         }
 
         #endregion
 
         #region Events
-
-        public event EventHandler ViewShown;
-
         #endregion
-
-        #region IView Members
-
-        void IView.Show()
-        {
-            this.Show();
-        }
-
-        void IView.Close()
-        {
-            this.Close();
-        }
-
-        #endregion
-
     }
 }

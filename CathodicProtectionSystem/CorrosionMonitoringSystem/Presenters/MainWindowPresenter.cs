@@ -11,14 +11,12 @@ using System.Diagnostics;
 
 namespace NGK.CorrosionMonitoringSystem.Presenters
 {
-    public class MainWindowPresenter : Presenter<IMainWindowView>
+    public class MainWindowPresenter : FormPresenter<MainWindowView>
     {
         #region Constructors
 
-        public MainWindowPresenter(IApplicationController application,
-            IMainWindowView view, object model, IManagers managers)
-            : 
-            base(view, application)
+        public MainWindowPresenter(IManagers managers)
+            : base()
         {
             _Name = String.Empty;
             _Managers = managers;

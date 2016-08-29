@@ -40,8 +40,6 @@ namespace TestPlugins.Views
             get { return _Regions; }
         }
 
-        public MenuStrip Menu { get { return _MenuStrip; } }
-
         #endregion
 
         #region Event Handlers

@@ -1,14 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Mvp.View;
 using System.Windows.Forms;
-using System.Collections.ObjectModel;
+using Mvp.View;
 
-namespace PluginsInfrastructure
+namespace Infrastructure.Api.Plugins
 {
-    public class RegionContainer<T>: IRegionContainer
-        where T: Control
+    public class RegionContainer<T> : IRegionContainer
+        where T : Control
     {
         #region Constructors
 
@@ -30,14 +29,14 @@ namespace PluginsInfrastructure
             get { return _Name; }
         }
 
-        public Control ControlRegionContainer 
-        { 
-            get { return _Container; } 
+        public Control ControlRegionContainer
+        {
+            get { return _Container; }
         }
 
-        public ReadOnlyCollection<IPartialView> Views
+        public IEnumerable<IPartialView> Views
         {
-            get 
+            get
             {
                 List<IPartialView> list = new List<IPartialView>();
                 foreach (Control control in _Container.Controls)
@@ -45,7 +44,7 @@ namespace PluginsInfrastructure
                     if (control is IPartialView)
                         list.Add(control as IPartialView);
                 }
-                return list.AsReadOnly(); 
+                return list;
             }
         }
 

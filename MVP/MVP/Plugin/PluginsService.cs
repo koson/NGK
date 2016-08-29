@@ -94,6 +94,7 @@ namespace Mvp.Plugin
                             domain.UnhandledException += 
                                 new UnhandledExceptionEventHandler(EventHandler_PluginDomain_UnhandledException);
                             plugin = (T)domain.CreateInstanceAndUnwrap(assembly.FullName, type.FullName);
+                            
                             throw new NotImplementedException();
                         }
                     }

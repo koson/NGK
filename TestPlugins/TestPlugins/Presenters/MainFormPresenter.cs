@@ -23,8 +23,8 @@ namespace TestPlugins.Presenters
         {
             _ShowNavigationMenuCommand = new Command(OnShowNavigationMenu, CanShowNavigationMenu);
 
-            Menu = new BindingList<NavigationMenuItem>();
-            Menu.ListChanged += new ListChangedEventHandler(EventHandler_Menu_ListChanged);
+            //Menu = new BindingList<NavigationMenuItem>();
+            //Menu.ListChanged += new ListChangedEventHandler(EventHandler_Menu_ListChanged);
             View.Shown += new EventHandler(EventHandler_View_Shown);
             View.Load += new EventHandler(EventHadler_View_Load);
             View.ContextMenuStripChanged += new EventHandler(EventHandler_View_ContextMenuStripChanged);
@@ -41,7 +41,7 @@ namespace TestPlugins.Presenters
 
         #region Fields And Properties
 
-        public readonly BindingList<NavigationMenuItem> Menu;
+        //public readonly BindingList<NavigationMenuItem> Menu;
 
         #endregion
 
@@ -52,20 +52,20 @@ namespace TestPlugins.Presenters
             View.Show();
         }
 
-        private void EventHandler_Menu_ListChanged(object sender, ListChangedEventArgs e)
-        {
-            switch (e.ListChangedType)
-            {
-                case ListChangedType.ItemAdded:
-                    {
-                        NavigationMenuItem menu = Menu[e.NewIndex];
-                        View.Menu.Items.Add(NavigationMenuItemConverter.ConvertTo(menu));
-                        break; 
-                    }
-                case ListChangedType.ItemDeleted:
-                    { break; }
-            }
-        }
+        //private void EventHandler_Menu_ListChanged(object sender, ListChangedEventArgs e)
+        //{
+        //    switch (e.ListChangedType)
+        //    {
+        //        case ListChangedType.ItemAdded:
+        //            {
+        //                NavigationMenuItem menu = Menu[e.NewIndex];
+        //                View.Menu.Items.Add(NavigationMenuItemConverter.ConvertTo(menu));
+        //                break; 
+        //            }
+        //        case ListChangedType.ItemDeleted:
+        //            { break; }
+        //    }
+        //}
 
         private void EventHandler_View_Shown(object sender, EventArgs e)
         {
@@ -78,7 +78,7 @@ namespace TestPlugins.Presenters
             foreach (NavigationMenuItem menu in NavigationService.Menu)
             {
                 View.ContextMenuStrip.Items.Add(NavigationMenuItemConverter.ConvertTo(menu));
-                View.Menu.Items.Add(NavigationMenuItemConverter.ConvertTo(menu));
+                //View.Menu.Items.Add(NavigationMenuItemConverter.ConvertTo(menu));
             }
         }
 
