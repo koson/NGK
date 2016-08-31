@@ -1,6 +1,6 @@
-namespace NGK.CorrosionMonitoringSystem.Views.DeviceDetailView
+namespace NGK.CorrosionMonitoringSystem.Views
 {
-    partial class DeviceDetailView
+    partial class DeviceDetail
     {
         /// <summary> 
         /// Required designer variable.

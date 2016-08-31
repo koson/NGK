@@ -7,11 +7,11 @@ using Mvp.WinApplication;
 
 namespace TestPlugins.Presenters
 {
-    public class SplashScreenPresenter: FormPresenter<SplashScreenView>
+    public class SplashScreenPresenter: WindowPresenter<SplashScreenView>
     {
         #region Constructors
 
-        public SplashScreenPresenter(SplashScreenView view) : base(view) {}
+        public SplashScreenPresenter() : base() {}
 
         #endregion
 
@@ -19,7 +19,7 @@ namespace TestPlugins.Presenters
         
         public void WriteLine(string output)
         {
-            ((ISplashScreenView)View).Output(output);
+            View.Form.Output(output);
         }
 
         public override void Show()

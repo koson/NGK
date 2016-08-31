@@ -12,15 +12,13 @@ using NGK.CorrosionMonitoringSystem.Managers;
 
 namespace NGK.CorrosionMonitoringSystem.Presenters
 {
-    public class SplashScreenPresenter: FormPresenter<SplashScreenView>
+    public class SplashScreenPresenter: WindowPresenter<SplashScreenView>
     {
         #region Constructors
 
-        public SplashScreenPresenter() { }
-
-        public SplashScreenPresenter(SplashScreenPresenter view): base(view)
+        public SplashScreenPresenter()
         {
-            _Name = "SplashScreen";
+            Name = "SplashScreen";
         }
 
         #endregion

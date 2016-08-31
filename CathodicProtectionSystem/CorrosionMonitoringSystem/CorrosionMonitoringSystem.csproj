@@ -83,13 +83,8 @@
     <Compile Include="Models\CAN\ParametersCollection.cs" />
     <Compile Include="Models\CAN\Parameter.cs" />
     <Compile Include="Models\ParametersPivotTable.cs" />
-    <Compile Include="Presenters\DeviceDetailPresenter.cs" />
-    <Compile Include="Presenters\DeviceListPresenter.cs" />
-    <Compile Include="Presenters\INavigationMenuPresenter.cs" />
     <Compile Include="Presenters\IViewMode.cs" />
-    <Compile Include="Presenters\LogViewerPresenter.cs" />
     <Compile Include="Presenters\SpalshScreenPresenter.cs" />
-    <Compile Include="Presenters\PivoteTablePresenter.cs" />
     <Compile Include="Presenters\MainWindowPresenter.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -98,32 +93,16 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\DeviceDetailView\DeviceDetailView.resx">
-      <SubType>Designer</SubType>
-      <DependentUpon>DeviceDetailView.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Views\DeviceListView\DevicesView.resx">
       <SubType>Designer</SubType>
       <DependentUpon>DevicesView.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\LogViewerView\LogViewerView.resx">
-      <SubType>Designer</SubType>
-      <DependentUpon>LogViewerView.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\MainWindowView\MainWindowView.resx">
-      <DependentUpon>MainWindowView.cs</DependentUpon>
+    <EmbeddedResource Include="Views\MainWindowView\MainWindowForm.resx">
+      <DependentUpon>MainWindowForm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\NavigationMenu\NavigationMenuView.resx">
-      <SubType>Designer</SubType>
-      <DependentUpon>NavigationMenuView.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\PavotTableView\PivotTableView.resx">
-      <SubType>Designer</SubType>
-      <DependentUpon>PivotTableView.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\SplashScreenView\SplashScreenView.resx">
-      <DependentUpon>SplashScreenView.cs</DependentUpon>
+    <EmbeddedResource Include="Views\SplashScreenView\SplashScreenForm.resx">
+      <DependentUpon>SplashScreenForm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <Compile Include="Properties\Resources.Designer.cs">
@@ -131,19 +110,12 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="Presenters\NavigationMenuPresenter.cs" />
     <Compile Include="Services\NavigationService.cs" />
     <Compile Include="Services\NgkCanService\CanNetworkService.cs" />
     <Compile Include="Services\NgkCanService\ICanNetworkService.cs" />
     <Compile Include="Services\ModbusService\ISystemInformationModbusNetworkService.cs" />
     <Compile Include="Services\ModbusService\SystemInformationModbusNetworkService.cs" />
     <Compile Include="Services\ServiceHelper.cs" />
-    <Compile Include="Views\DeviceDetailView\DeviceDetailView.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Views\DeviceDetailView\DeviceDetailView.Designer.cs">
-      <DependentUpon>DeviceDetailView.cs</DependentUpon>
-    </Compile>
     <Compile Include="Views\DeviceListView\DevicesView.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -151,46 +123,27 @@
       <DependentUpon>DevicesView.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\MainWindowView\ISystemMenu.cs" />
+    <Compile Include="Views\MainWindowView\MainWindowView.cs">
+    </Compile>
     <Compile Include="Views\MainWindowView\SystemButtonsPanel\ISystemButtons.cs" />
-    <Compile Include="Views\DeviceDetailView\IDeviceDetailView.cs" />
     <Compile Include="Views\DeviceListView\IDeviceListView.cs" />
     <Compile Include="Views\MainWindowView\IStatusPanel.cs" />
-    <Compile Include="Views\LogViewerView\ILogViewerView.cs" />
-    <Compile Include="Views\LogViewerView\LogViewerView.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Views\LogViewerView\LogViewerView.Designer.cs">
-      <DependentUpon>LogViewerView.cs</DependentUpon>
-    </Compile>
     <Compile Include="Views\MainWindowView\IMainWindowView.cs" />
-    <Compile Include="Views\MainWindowView\MainWindowView.cs">
+    <Compile Include="Views\MainWindowView\MainWindowForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Views\MainWindowView\MainWindowView.Designer.cs">
-      <DependentUpon>MainWindowView.cs</DependentUpon>
+    <Compile Include="Views\MainWindowView\MainWindowForm.Designer.cs">
+      <DependentUpon>MainWindowForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\MainWindowView\SystemButtonsPanel\SystemButtons.cs" />
-    <Compile Include="Views\NavigationMenu\INavigationMenuView.cs" />
-    <Compile Include="Views\NavigationMenu\NavigationMenuView.cs">
+    <Compile Include="Views\SplashScreenView\SplashScreenForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Views\NavigationMenu\NavigationMenuView.Designer.cs">
-      <DependentUpon>NavigationMenuView.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Views\PavotTableView\PivotTableView.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Views\PavotTableView\PivotTableView.Designer.cs">
-      <DependentUpon>PivotTableView.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Views\SplashScreenView\SplashScreenView.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Views\SplashScreenView\SplashScreenView.designer.cs">
-      <DependentUpon>SplashScreenView.cs</DependentUpon>
+    <Compile Include="Views\SplashScreenView\SplashScreenForm.designer.cs">
+      <DependentUpon>SplashScreenForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\SplashScreenView\ISplashScreenView.cs" />
-    <Compile Include="Views\PavotTableView\IPivotTableView.cs" />
+    <Compile Include="Views\SplashScreenView\SplashScreenView.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\MVP\MVP\MVP.csproj">
@@ -246,7 +199,11 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DL\MatchingAddresses\" />
+    <Folder Include="Views\DeviceDetailView\" />
+    <Folder Include="Views\LogViewerView\" />
     <Folder Include="Views\MonitoringHistoryView\" />
+    <Folder Include="Views\NavigationMenu\" />
+    <Folder Include="Views\PavotTableView\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

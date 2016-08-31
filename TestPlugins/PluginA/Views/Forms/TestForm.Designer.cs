@@ -1,6 +1,6 @@
 namespace PluginA.Views
 {
-    partial class TestFormView
+    partial class TestForm
     {
         /// <summary>
         /// Required designer variable.

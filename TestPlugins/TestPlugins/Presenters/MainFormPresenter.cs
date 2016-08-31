@@ -15,23 +15,23 @@ using System.Drawing;
 
 namespace TestPlugins.Presenters
 {
-    public class MainFormPresenter: FormPresenter<MainFormView>
+    public class MainFormPresenter: WindowPresenter<MainWindowView>
     {
         #region Constructors
 
-        public MainFormPresenter(MainFormView view) : base(view) 
+        public MainFormPresenter() 
         {
             _ShowNavigationMenuCommand = new Command(OnShowNavigationMenu, CanShowNavigationMenu);
 
             //Menu = new BindingList<NavigationMenuItem>();
             //Menu.ListChanged += new ListChangedEventHandler(EventHandler_Menu_ListChanged);
-            View.Shown += new EventHandler(EventHandler_View_Shown);
-            View.Load += new EventHandler(EventHadler_View_Load);
-            View.ContextMenuStripChanged += new EventHandler(EventHandler_View_ContextMenuStripChanged);
-            View._ButtonMenu.Click += 
+            View.Form.Shown += new EventHandler(EventHandler_View_Shown);
+            View.Form.Load += new EventHandler(EventHadler_View_Load);
+            View.Form.ContextMenuStripChanged += new EventHandler(EventHandler_View_ContextMenuStripChanged);
+            View.Form._ButtonMenu.Click += 
                 delegate(object sender, EventArgs args) { _ShowNavigationMenuCommand.Execute(); };
 
-            View._ButtonMenu.DataBindings.Add(new Binding("Enabled", _ShowNavigationMenuCommand, "Status"));
+            View.Form._ButtonMenu.DataBindings.Add(new Binding("Enabled", _ShowNavigationMenuCommand, "Status"));
 
             base._Commands.Add(_ShowNavigationMenuCommand);
             base.UpdateStatusCommands();
@@ -73,11 +73,11 @@ namespace TestPlugins.Presenters
 
         public void EventHadler_View_Load(object sender, EventArgs e)
         {
-            View.ContextMenuStrip = new System.Windows.Forms.ContextMenuStrip();
+            View.Form.ContextMenuStrip = new System.Windows.Forms.ContextMenuStrip();
 
             foreach (NavigationMenuItem menu in NavigationService.Menu)
             {
-                View.ContextMenuStrip.Items.Add(NavigationMenuItemConverter.ConvertTo(menu));
+                View.Form.ContextMenuStrip.Items.Add(NavigationMenuItemConverter.ConvertTo(menu));
                 //View.Menu.Items.Add(NavigationMenuItemConverter.ConvertTo(menu));
             }
         }
@@ -96,14 +96,14 @@ namespace TestPlugins.Presenters
         {
             // Отображаем меню в центре формы
             Point point =
-                new Point(View.ClientRectangle.Width / 2 - View.ContextMenuStrip.ClientRectangle.Width / 2,
-                View.ClientRectangle.Height / 2 - View.ContextMenuStrip.ClientRectangle.Height / 2);
+                new Point(View.Form.ClientRectangle.Width / 2 - View.Form.ContextMenuStrip.ClientRectangle.Width / 2,
+                View.Form.ClientRectangle.Height / 2 - View.Form.ContextMenuStrip.ClientRectangle.Height / 2);
 
-            View.ContextMenuStrip.Show(View, point);
+            View.Form.ContextMenuStrip.Show(View.Form, point);
         }
         private bool CanShowNavigationMenu()
         {
-            return View.ContextMenuStrip != null;
+            return View.Form.ContextMenuStrip != null;
         }
 
         #endregion

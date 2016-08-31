@@ -7,22 +7,14 @@ using Mvp.WinApplication;
 using NGK.CorrosionMonitoringSystem.Views;
 using NGK.CorrosionMonitoringSystem.Presenters;
 using Mvp.View;
-using NGK.CorrosionMonitoringSystem.Views.LogViewerView;
-using NGK.CorrosionMonitoringSystem.Views.DeviceDetailView;
+//using NGK.CorrosionMonitoringSystem.Views.LogViewerView;
+//using NGK.CorrosionMonitoringSystem.Views.DeviceDetailView;
 
 namespace NGK.CorrosionMonitoringSystem.Managers.Factory
 {
     public static class PresentersFactory
     {
         #region Constructors
-
-        public PresentersFactory(IApplicationController application, 
-            IManagers managers)
-        {
-            _Application = application;
-            _Managers = managers;
-        }
-
         #endregion
 
         #region Fields And Properties
@@ -34,22 +26,22 @@ namespace NGK.CorrosionMonitoringSystem.Managers.Factory
 
         #region Methods
 
-        public static IFormPresenter CreateWindowPresenter<T>()
-            where T : IFormPresenter
+        public static IWindowPresenter CreateWindowPresenter<T>()
+            where T : IWindowPresenter
         {
-            if (typeof(T) == typeof(SplashScreenPresenter))
-            {
-                if (_SplashScreenPresenter == null)
-                    _SplashScreenPresenter = new SplashScreenPresenter();
-                return _SplashScreenPresenter;
-            }
-            else if (typeof(T) == typeof(MainWindowPresenter))
-            {
-                if (_MainWindowPresenter == null)
-                    _MainWindowPresenter = new MainWindowPresenter();
-                return _MainWindowPresenter;
-            }
-            else
+            //if (typeof(T) == typeof(SplashScreenPresenter))
+            //{
+            //    if (_SplashScreenPresenter == null)
+            //        _SplashScreenPresenter = new SplashScreenPresenter();
+            //    return _SplashScreenPresenter;
+            //}
+            //else if (typeof(T) == typeof(MainWindowPresenter))
+            //{
+            //    if (_MainWindowPresenter == null)
+            //        _MainWindowPresenter = new MainWindowPresenter();
+            //    return _MainWindowPresenter;
+            //}
+            //else
             {
                 throw new NotSupportedException(
                     String.Format("Невозможно создать объект типа {0}", typeof(T)));

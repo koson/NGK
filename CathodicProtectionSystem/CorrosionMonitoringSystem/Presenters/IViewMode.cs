@@ -7,6 +7,6 @@ namespace NGK.CorrosionMonitoringSystem.Presenters
 {
     public interface IViewMode
     {
-        ViewMode ViewMode { get; }
+        //ViewMode ViewMode { get; }
     }
 }

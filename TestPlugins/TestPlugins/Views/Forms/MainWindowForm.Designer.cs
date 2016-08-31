@@ -1,6 +1,6 @@
 namespace TestPlugins.Views
 {
-    partial class MainFormView
+    partial class MainWindowForm
     {
         /// <summary>
         /// Required designer variable.
@@ -110,7 +110,6 @@ namespace TestPlugins.Views
             this.Name = "MainFormView";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "MainFormView";
-            this.Load += new System.EventHandler(this.EventHandler_MainFormView_Load);
             this.PanelTitle.ResumeLayout(false);
             this.PanelTitle.PerformLayout();
             this._SplitContainer.Panel2.ResumeLayout(false);

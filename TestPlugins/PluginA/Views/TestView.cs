@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Text;
 using Mvp.View;
 
-namespace TestPlugins.Views
+namespace PluginA.Views
 {
-    public class SplashScreenView: WindowView<SplashScreenFrom>
+    public class TestView: WindowView<TestForm>
     {
     }
 }

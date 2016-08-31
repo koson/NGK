@@ -31,11 +31,12 @@ namespace Mvp.Presenter
             get { return _Commands.ToArray(); }
         }
 
-        protected string _Name;
+        private string _Name;
 
         public string Name
         {
             get { return _Name; }
+            protected set { _Name = value; }
         }
 
         #endregion

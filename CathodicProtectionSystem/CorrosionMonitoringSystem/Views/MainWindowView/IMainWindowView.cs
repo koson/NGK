@@ -7,14 +7,14 @@ using Mvp.Input;
 
 namespace NGK.CorrosionMonitoringSystem.Views
 {
-    public interface IMainWindowView : IFormView, IStatusPanel
+    public interface IMainWindowView : IWindowView, IStatusPanel
     {
         /// <summary>
         /// Возвращает заголовок окна
         /// </summary>
         String Title { get; set; }
-        IViewRegion WorkingRegion { get; }
-        IViewRegion TitleRegion { get; }
+        //IViewRegion WorkingRegion { get; }
+        //IViewRegion TitleRegion { get; }
         ICommand ShowMenuCommand { set; }
         ICommand[] ButtonCommands { set; }
 

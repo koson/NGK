@@ -24,7 +24,7 @@ namespace NGK.CorrosionMonitoringSystem.Managers
             _ConfigManager = AppConfigManager.ConfigManager.Instance;
             _Logger = Program._Logger;
             _SystemLogger = null; //TODO: Не реализовано
-            _WindowsFactory = new PresentersFactory(application, this);
+            //_WindowsFactory = new PresentersFactory(application, this);
         }
 
         #endregion
@@ -34,7 +34,7 @@ namespace NGK.CorrosionMonitoringSystem.Managers
         ConfigManager _ConfigManager;
         ISysLogManager _SystemLogger;
         ILogManager _Logger;
-        PresentersFactory _WindowsFactory;
+        //PresentersFactory _WindowsFactory;
         SystemInformationModbusNetworkService _ModbusSystemInfoNetworkService;
 
         IApplicationController _Application;

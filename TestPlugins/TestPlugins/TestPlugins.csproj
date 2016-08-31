@@ -46,13 +46,13 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\MainFormView.resx">
+    <EmbeddedResource Include="Views\Forms\MainWindowForm.resx">
       <SubType>Designer</SubType>
-      <DependentUpon>MainFormView.cs</DependentUpon>
+      <DependentUpon>MainWindowForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\SplashScreenView.resx">
+    <EmbeddedResource Include="Views\Forms\SplashScreenFrom.resx">
       <SubType>Designer</SubType>
-      <DependentUpon>SplashScreenView.cs</DependentUpon>
+      <DependentUpon>SplashScreenFrom.cs</DependentUpon>
     </EmbeddedResource>
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -67,19 +67,20 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="Services\PresentersFactory.cs" />
-    <Compile Include="Views\MainFormView.cs">
+    <Compile Include="Views\Forms\MainWindowForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Views\MainFormView.Designer.cs">
-      <DependentUpon>MainFormView.cs</DependentUpon>
+    <Compile Include="Views\Forms\MainWindowForm.Designer.cs">
+      <DependentUpon>MainWindowForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\SplashScreenView.cs">
+    <Compile Include="Views\MainWindowView.cs" />
+    <Compile Include="Views\Forms\SplashScreenFrom.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Views\SplashScreenView.Designer.cs">
-      <DependentUpon>SplashScreenView.cs</DependentUpon>
+    <Compile Include="Views\Forms\SplashScreenFrom.Designer.cs">
+      <DependentUpon>SplashScreenFrom.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\SplashScreenView.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\CathodicProtectionSystem\Common\Common.csproj">
@@ -97,6 +98,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />
+    <Folder Include="Services\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

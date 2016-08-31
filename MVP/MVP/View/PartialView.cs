@@ -5,7 +5,7 @@ using System.Windows.Forms;
 
 namespace Mvp.View
 {
-    public class PartialView<T>: IPartialView
+    public abstract class PartialView<T>: IPartialView
         where T: Control
     {
         #region Costructors
@@ -25,6 +25,7 @@ namespace Mvp.View
         #region Fields And Properties
 
         private readonly T _Control;
+        private PartialViewContext<PartialView<T>> _Context;
 
         protected T Control { get { return _Control; } }
 
@@ -34,6 +35,12 @@ namespace Mvp.View
         {
             get { return _Control.Name; }
             set { _Control.Name = value; }
+        }
+
+        public virtual PartialViewContext<PartialView<T>> Context
+        {
+            get { return _Context; }
+            set { _Context = value; }
         }
 
         /// <summary>
@@ -51,6 +58,7 @@ namespace Mvp.View
         public void Show()
         {
             _Control.Show();
+            OnPartialViewIsShown();
         }
 
         public void Hide()
@@ -68,11 +76,17 @@ namespace Mvp.View
             _Control.Dispose();
         }
 
+        private void OnPartialViewIsShown()
+        {
+            if (PartialViewIsShown != null)
+                PartialViewIsShown(this, new EventArgs());
+        }
 
         #endregion
 
         #region Events
 
+        public event EventHandler PartialViewIsShown;
 
         #endregion
     }

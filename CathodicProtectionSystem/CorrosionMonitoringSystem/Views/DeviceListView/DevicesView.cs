@@ -70,12 +70,12 @@ namespace NGK.CorrosionMonitoringSystem.Views
             }
         }
 
-        IViewRegion[] _ViewRegions = new IViewRegion[0];
+        //IViewRegion[] _ViewRegions = new IViewRegion[0];
 
-        public IViewRegion[] ViewRegions
-        {
-            get { return _ViewRegions; }
-        }
+        //public IViewRegion[] ViewRegions
+        //{
+        //    get { return _ViewRegions; }
+        //}
 
         public ViewType ViewType
         {

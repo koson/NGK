@@ -18,7 +18,7 @@ namespace Mvp.WinApplication
         /// <summary>
         /// Возвращает главное окно системы
         /// </summary>
-        IFormPresenter MainFormPresenter { get; }
+        IWindowPresenter MainFormPresenter { get; }
         /// <summary>
         /// Текущая форма
         /// </summary>

@@ -1,6 +1,6 @@
 namespace NGK.CorrosionMonitoringSystem.Views
 {
-    partial class SplashScreenView
+    partial class SplashScreenForm
     {
         /// <summary>
         /// Required designer variable.
@@ -41,7 +41,7 @@ namespace NGK.CorrosionMonitoringSystem.Views
             this._LabelOutputInfo.Location = new System.Drawing.Point(0, 0);
             this._LabelOutputInfo.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this._LabelOutputInfo.Name = "_LabelOutputInfo";
-            this._LabelOutputInfo.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this._LabelOutputInfo.Padding = new System.Windows.Forms.Padding(4);
             this._LabelOutputInfo.Size = new System.Drawing.Size(89, 25);
             this._LabelOutputInfo.TabIndex = 0;
             this._LabelOutputInfo.Text = "Loading...";
@@ -56,7 +56,7 @@ namespace NGK.CorrosionMonitoringSystem.Views
             this.Controls.Add(this._LabelOutputInfo);
             this.Cursor = System.Windows.Forms.Cursors.AppStarting;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "SplashScreenView";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;

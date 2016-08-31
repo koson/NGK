@@ -23,7 +23,7 @@ namespace Mvp.WinApplication
     {
         #region Constructors
 
-        private WindowsFormsApplication(IFormPresenter mainFormPresenter, bool isSingleInstance)
+        private WindowsFormsApplication(IWindowPresenter mainFormPresenter, bool isSingleInstance)
         {
             base.EnableVisualStyles = true;
             base.IsSingleInstance = isSingleInstance;
@@ -41,7 +41,7 @@ namespace Mvp.WinApplication
 
         private static volatile WindowsFormsApplication Instance;
         private static object SyncRoot = new object();
-        private IFormPresenter _MainFormPresenter;
+        private IWindowPresenter _MainFormPresenter;
         private Version _Version;
         private ApplicationServiceCollection _AppServices;
 
@@ -56,7 +56,7 @@ namespace Mvp.WinApplication
             }
         }
 
-        public IFormPresenter MainFormPresenter { get { return _MainFormPresenter; } }
+        public IWindowPresenter MainFormPresenter { get { return _MainFormPresenter; } }
         /// <summary>
         /// Версия ПО
         /// </summary>
@@ -110,7 +110,7 @@ namespace Mvp.WinApplication
         /// <exception cref="InvalidOperationException">
         /// Возникает при более чем одном вызове инициализации контроллера приложения
         /// </exception>
-        public static void Initialize(IFormPresenter mainFormPresenter, bool isSingleInstance)
+        public static void Initialize(IWindowPresenter mainFormPresenter, bool isSingleInstance)
         {
             if (Instance == null)
             {
@@ -124,7 +124,7 @@ namespace Mvp.WinApplication
                 throw new InvalidOperationException("Попытка создать второй экземляр контроллера приложения");
         }
 
-        public void ShowWindow(IFormPresenter presenter)
+        public void ShowWindow(IWindowPresenter presenter)
         {
             presenter.View.Show();
         }
@@ -165,7 +165,7 @@ namespace Mvp.WinApplication
         protected override void OnCreateMainForm()
         {
             base.OnCreateMainForm();
-            base.MainForm = (Form)_MainFormPresenter.View;
+            base.MainForm = (Form)_MainFormPresenter.View.Form;
         }
 
         /// <summary>
@@ -173,7 +173,8 @@ namespace Mvp.WinApplication
         /// </summary>
         public void Exit()
         {
-            base.MainForm.Close();
+            if (MainForm != null)
+                base.MainForm.Close();
         }
         
         public void RegisterApplicationService(ApplicationServiceBase service)
@@ -191,7 +192,13 @@ namespace Mvp.WinApplication
 
         public SynchronizationContext SyncContext
         {
-            get { throw new Exception("The method or operation is not implemented."); }
+            get 
+            {
+                if (SynchronizationContext.Current == null)
+                    SynchronizationContext.SetSynchronizationContext(new SynchronizationContext());
+
+                return SynchronizationContext.Current; 
+            } 
         }
 
         public ApplicationContext AppContext
@@ -206,7 +213,16 @@ namespace Mvp.WinApplication
 
         IApplicationService[] IApplicationController.AppServices
         {
-            get { throw new Exception("The method or operation is not implemented."); }
+            get 
+            {
+                lock(SyncRoot)
+                {
+                    List<IApplicationService> list = new List<IApplicationService>();
+                    foreach(ApplicationServiceBase service in _AppServices)
+                        list.Add(service);
+                    return list.ToArray();
+                }
+            }
         }
 
         #endregion

@@ -8,33 +8,31 @@ using System.Windows.Forms;
 using Mvp.View;
 using Mvp.View.Collections.ObjectModel;
 
-namespace PluginA.Views
+namespace TestPlugins.Views
 {
-    public partial class TestFormView : Form, IFormView
+    public partial class SplashScreenFrom : Form
     {
         #region Constructors
 
-        public TestFormView()
+        public SplashScreenFrom()
         {
             InitializeComponent();
-
-            _Regions = new RegionContainersCollection();
         }
 
         #endregion
 
         #region Fields And Properties
+        #endregion
 
-        private readonly RegionContainersCollection _Regions;
+        #region Methods
 
-        public RegionContainersCollection Regions
+        public void Output(string line)
         {
-            get { return _Regions; }
-        }
 
-        public ViewType ViewType
-        {
-            get { return ViewType.Window; }
+            if (_LabelOutput.InvokeRequired)
+                _LabelOutput.Invoke(new MethodInvoker(delegate() { _LabelOutput.Text = line; }));
+            else
+                _LabelOutput.Text = line;
         }
 
         #endregion

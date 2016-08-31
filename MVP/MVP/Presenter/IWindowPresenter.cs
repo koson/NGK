@@ -5,8 +5,8 @@ using Mvp.View;
 
 namespace Mvp.Presenter
 {
-    public interface IFormPresenter
+    public interface IWindowPresenter
     {
-        IFormView View { get; }
+        IWindowView View { get; }
     }
 }

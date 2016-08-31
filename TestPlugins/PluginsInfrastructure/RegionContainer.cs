@@ -35,7 +35,7 @@ namespace PluginsInfrastructure
             get { return _Container; } 
         }
 
-        public ReadOnlyCollection<IPartialView> Views
+        public IEnumerable<IPartialView> Views
         {
             get 
             {
@@ -56,6 +56,18 @@ namespace PluginsInfrastructure
         public void Add(IPartialView partialView)
         {
             _Container.Controls.Add(partialView.Control as Control);
+            partialView.PartialViewIsShown += new EventHandler(EventHandler_PartialView_PartialViewIsShown);
+        }
+
+        private void EventHandler_PartialView_PartialViewIsShown(object sender, EventArgs e)
+        {
+            IPartialView view = (IPartialView)sender;
+
+            foreach (Control item in _Container.Controls)
+            {
+                if (!item.Equals(view.Control))
+                    item.Hide();
+            }
         }
 
         #endregion

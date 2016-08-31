@@ -6,7 +6,7 @@ using PluginA.Views;
 
 namespace PluginA.Presenters
 {
-    public class TestFormPresenter: FormPresenter<TestFormView>
+    public class TestFormPresenter: WindowPresenter<TestView>
     {
         #region Constructors
         #endregion

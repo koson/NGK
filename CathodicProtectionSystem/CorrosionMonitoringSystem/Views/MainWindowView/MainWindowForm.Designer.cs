@@ -1,6 +1,6 @@
 namespace NGK.CorrosionMonitoringSystem.Views
 {
-    partial class MainWindowView
+    partial class MainWindowForm
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@ namespace NGK.CorrosionMonitoringSystem.Views
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainWindowView));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainWindowForm));
             this._StatusStripMain = new System.Windows.Forms.StatusStrip();
             this._ToolStripButtonTotalDevices = new System.Windows.Forms.ToolStripButton();
             this._ToolStripButtonFaultyDevices = new System.Windows.Forms.ToolStripButton();

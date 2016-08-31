@@ -21,6 +21,8 @@ using NGK.CorrosionMonitoringSystem.Services;
 using Infrastructure.LogManager;
 using Mvp.Plugin;
 using Infrastructure.Api.Plugins;
+using System.IO;
+using System.Threading;
 
 namespace NGK.CorrosionMonitoringSystem
 {
@@ -36,7 +38,7 @@ namespace NGK.CorrosionMonitoringSystem
         [STAThread]
         static void Main(string[] args)
         {  
-            WindowsFormsApplication.Initialize(PresentersFactory.CreateFormPresenter<MainWindowPresenter>(), true);
+            WindowsFormsApplication.Initialize(new MainWindowPresenter(Managers), true);
             WindowsFormsApplication.Application.UnhandledException +=
                 new VisualBasic::UnhandledExceptionEventHandler(EventHandler_Application_UnhandledException);
             WindowsFormsApplication.Application.ChangeCulture("ru-Ru");
@@ -49,7 +51,7 @@ namespace NGK.CorrosionMonitoringSystem
             WindowsFormsApplication.Application.MinimumSplashScreenDisplayTime = 1000;
 #endif
             WindowsFormsApplication.Application.SplashScreen = 
-                (Form)PresentersFactory.CreateWindowPresenter<SplashScreenPresenter>().View;
+                (Form)new SplashScreenPresenter().View.Form;
 
             Managers = new AppManagers(WindowsFormsApplication.Application);
 
@@ -58,7 +60,8 @@ namespace NGK.CorrosionMonitoringSystem
 
         static void  EventHandler_Application_Startup(object sender, VisualBasic::StartupEventArgs e)
         {
-            SplashScreenView splash = (SplashScreenView)sender;
+            WindowsFormsApplication application = (WindowsFormsApplication)sender;
+            SplashScreenForm splash = (SplashScreenForm)application.SplashScreen;
 
             _Logger = NLogManager.Instance;
             _Logger.Info("Запуск приложения");
@@ -77,9 +80,9 @@ namespace NGK.CorrosionMonitoringSystem
             LoadCanNetworkConfig();
 
             //Загружаем конфигурацию для сети Modbus 
-            splash.WriteLine("Загрузка конфигурации сети Modbus...");
-            LoadModbusNetworkConfig();
-            System.Threading.Thread.Sleep(300);
+            //splash.WriteLine("Загрузка конфигурации сети Modbus...");
+            //LoadModbusNetworkConfig();
+            //System.Threading.Thread.Sleep(300);
 
             //TODO: сделать менеджер базы данных. Если база не найдена, предлагает создать её.
             splash.WriteLine("Загрузка БД...");
@@ -99,7 +102,7 @@ namespace NGK.CorrosionMonitoringSystem
             
             foreach (Plugin plugin in pluginsService.Plugins)
             {
-                splash.Output(String.Format("Плагин {0} загружен", plugin.Name));
+                splash.WriteLine(String.Format("Плагин {0} загружен", plugin.Name));
                 NavigationService.Menu.AddRange(plugin.Menu);
                 Thread.Sleep(500);
             }
@@ -107,8 +110,8 @@ namespace NGK.CorrosionMonitoringSystem
             splash.WriteLine("Запуск системы мониторинга...");
             Managers.CanNetworkService.Start();
             //TODO: создать запись в журнал
-            splash.WriteLine("Запуск информационного Modbus-сервиса...");
-            Managers.ModbusSystemInfoNetworkService.Start();
+            //splash.WriteLine("Запуск информационного Modbus-сервиса...");
+            //Managers.ModbusSystemInfoNetworkService.Start();
             //TODO: создать запись в журнал
 
             // Запуск всех сервисов приложения
@@ -149,7 +152,7 @@ namespace NGK.CorrosionMonitoringSystem
                 CanNetworkService canNetworkService = new CanNetworkService(
                     ServiceHelper.ServiceNames.NgkCanService,
                     NgkCanNetworksManager.Instance, 300, Managers);
-                _Application.RegisterApplicationService(canNetworkService);
+                WindowsFormsApplication.Application.RegisterApplicationService(canNetworkService);
                 canNetworkService.Initialize(null);
             }
             catch
@@ -181,7 +184,7 @@ namespace NGK.CorrosionMonitoringSystem
                 SystemInformationModbusNetworkService modbusSystemInfoNetworkService = 
                     new SystemInformationModbusNetworkService(ServiceHelper.ServiceNames.SystemInformationModbusService, 
                     Managers, modbusNetwork, Managers.ConfigManager.ModbusAddress, 400);
-                _Application.RegisterApplicationService(modbusSystemInfoNetworkService);
+                WindowsFormsApplication.Application.RegisterApplicationService(modbusSystemInfoNetworkService);
                 modbusSystemInfoNetworkService.Initialize(null);
             }
             catch
@@ -189,7 +192,7 @@ namespace NGK.CorrosionMonitoringSystem
                 MessageBox.Show("Ошибка при конфигурировании системы. " +
                     "Приложение будет закрыто",
                     "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                _Application.Exit();
+                throw;
             }
         }
 
@@ -204,7 +207,7 @@ namespace NGK.CorrosionMonitoringSystem
 
 #if(DEBUG)
             MessageBox.Show(String.Format("Фатальная ошибка, приложение будет остановлено. Описание: {0} Стек: {1}", 
-                exception.Message, exception.StackTrace), "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                e.Exception.Message, e.Exception.StackTrace), "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             e.ExitApplication = true;
 #else
             e.ExitApplication = true;

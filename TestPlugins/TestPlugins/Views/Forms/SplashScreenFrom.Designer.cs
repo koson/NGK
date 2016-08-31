@@ -1,6 +1,6 @@
 namespace TestPlugins.Views
 {
-    partial class SplashScreenView
+    partial class SplashScreenFrom
     {
         /// <summary>
         /// Required designer variable.

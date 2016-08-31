@@ -14,12 +14,15 @@ namespace Mvp.View
         #endregion
 
         #region Methods
-
-        void Hide();
-
         #endregion
 
         #region Events
+
+        /// <summary>
+        /// Событие происходит при вызове метода Show();
+        /// </summary>
+        event EventHandler PartialViewIsShown;
+
         #endregion
     }
 }

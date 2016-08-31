@@ -13,7 +13,7 @@ using System.ComponentModel;
 
 namespace NGK.CorrosionMonitoringSystem.Presenters
 {
-    public class DeviceListPresenter : Presenter<IDeviceListView>, IViewMode, 
+    public class DeviceListPresenter : RegionPresenter<IDeviceListView>, IViewMode, 
         ISystemButtons, ISystemMenu
     {
         #region Constructors
