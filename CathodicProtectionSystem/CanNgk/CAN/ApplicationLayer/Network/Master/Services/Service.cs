@@ -7,7 +7,7 @@ using System.Security.Permissions;
 using System.Threading;
 using NGK.CAN.DataLinkLayer.Message;
 using Common.Controlling;
-using Infrastructure.LogManager;
+using NGK.Log;
 
 namespace NGK.CAN.ApplicationLayer.Network.Master.Services
 {

@@ -6,7 +6,7 @@ using NGK.CAN.ApplicationLayer.Transactions;
 using NGK.CAN.DataLinkLayer.Message;
 using NGK.CAN.DataTypes.DateTimeConvertor;
 using Common.Controlling;
-using Infrastructure.LogManager;
+using NGK.Log;
 
 namespace NGK.CAN.ApplicationLayer.Network.Master.Services
 {

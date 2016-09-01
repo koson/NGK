@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Infrastructure.LogManager;
+using NGK.Log;
 
 namespace NGK.CAN.DataTypes
 {

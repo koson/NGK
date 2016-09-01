@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Infrastructure.LogManager
+namespace NGK.Log
 {
     public interface ILogManager
     {

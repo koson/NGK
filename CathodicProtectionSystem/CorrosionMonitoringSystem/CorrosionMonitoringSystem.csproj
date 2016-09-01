@@ -61,28 +61,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\CAN\IDeviceInfo.cs" />
-    <Compile Include="Models\CAN\IDeviceSummaryParameters.cs" />
     <Compile Include="Models\Modbus\RemappingTableKip9811.cs" />
     <Compile Include="Services\ModbusService\ModbusServiceContext.cs" />
     <Compile Include="Models\Modbus\ModbusAddressSpace\KIP9811AddressSpaceHelper.cs" />
     <Compile Include="Models\Modbus\ModbusAddressSpace\KIP00.cs" />
-    <Compile Include="DL\CanNetworkServiceAdapter.cs" />
     <Compile Include="Models\Modbus\ModbusAddressSpace\KCCM.cs" />
-    <Compile Include="DL\ModbusAdapterParameterContext.cs" />
-    <Compile Include="DL\ModbusServiceAdapter.cs" />
     <Compile Include="Models\Modbus\ModbusAddressSpace\ModbusVisitingCard.cs" />
     <Compile Include="DL\Modbus\mKIP9811.cs" />
-    <Compile Include="Managers\ConfigurationManager\ConfigManager.cs" />
-    <Compile Include="Managers\ConfigurationManager\IConfigManager.cs" />
     <Compile Include="Managers\Factory\PresentersFactory.cs" />
-    <Compile Include="Managers\IManagers.cs" />
-    <Compile Include="Managers\AppManagers.cs" />
-    <Compile Include="Managers\SysLogManager\ISysLogManager.cs" />
-    <Compile Include="Models\CAN\NgkCanDevice.cs" />
-    <Compile Include="Models\CAN\ParametersCollection.cs" />
-    <Compile Include="Models\CAN\Parameter.cs" />
-    <Compile Include="Models\ParametersPivotTable.cs" />
     <Compile Include="Presenters\IViewMode.cs" />
     <Compile Include="Presenters\SpalshScreenPresenter.cs" />
     <Compile Include="Presenters\MainWindowPresenter.cs" />
@@ -92,10 +78,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\DeviceListView\DevicesView.resx">
-      <SubType>Designer</SubType>
-      <DependentUpon>DevicesView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\MainWindowView\MainWindowForm.resx">
       <DependentUpon>MainWindowForm.cs</DependentUpon>
@@ -111,22 +93,13 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="Services\NavigationService.cs" />
-    <Compile Include="Services\NgkCanService\CanNetworkService.cs" />
-    <Compile Include="Services\NgkCanService\ICanNetworkService.cs" />
     <Compile Include="Services\ModbusService\ISystemInformationModbusNetworkService.cs" />
     <Compile Include="Services\ModbusService\SystemInformationModbusNetworkService.cs" />
     <Compile Include="Services\ServiceHelper.cs" />
-    <Compile Include="Views\DeviceListView\DevicesView.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Views\DeviceListView\DevicesView.Designer.cs">
-      <DependentUpon>DevicesView.cs</DependentUpon>
-    </Compile>
     <Compile Include="Views\MainWindowView\ISystemMenu.cs" />
     <Compile Include="Views\MainWindowView\MainWindowView.cs">
     </Compile>
     <Compile Include="Views\MainWindowView\SystemButtonsPanel\ISystemButtons.cs" />
-    <Compile Include="Views\DeviceListView\IDeviceListView.cs" />
     <Compile Include="Views\MainWindowView\IStatusPanel.cs" />
     <Compile Include="Views\MainWindowView\IMainWindowView.cs" />
     <Compile Include="Views\MainWindowView\MainWindowForm.cs">
@@ -199,7 +172,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DL\MatchingAddresses\" />
-    <Folder Include="Views\DeviceDetailView\" />
+    <Folder Include="Managers\SysLogManager\" />
+    <Folder Include="Models\CAN\" />
     <Folder Include="Views\LogViewerView\" />
     <Folder Include="Views\MonitoringHistoryView\" />
     <Folder Include="Views\NavigationMenu\" />

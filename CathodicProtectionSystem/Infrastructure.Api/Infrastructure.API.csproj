@@ -28,13 +28,22 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="NLog, Version=2.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL" />
     <Reference Include="System" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Managers\AppManagers.cs" />
+    <Compile Include="Managers\ConfigurationManager\ConfigManager.cs" />
+    <Compile Include="Managers\ConfigurationManager\IConfigManager.cs" />
+    <Compile Include="Managers\IManagers.cs" />
+    <Compile Include="Managers\ISysLogManager.cs" />
     <Compile Include="Plugins\IPartialViewPresenter.cs" />
+    <Compile Include="Plugins\IPlugin.cs" />
     <Compile Include="Plugins\PartialViewPresenter.cs" />
     <Compile Include="Plugins\Plugin.cs" />
     <Compile Include="Plugins\RegionContainer.cs" />
@@ -48,6 +57,10 @@
     <ProjectReference Include="..\Common\Common.csproj">
       <Project>{78E073B6-AD50-429C-9261-4DE3438D8EAE}</Project>
       <Name>Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Log\Log.csproj">
+      <Project>{8ED7A1A3-E261-4395-81A4-F2EC5565A4DF}</Project>
+      <Name>Log</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

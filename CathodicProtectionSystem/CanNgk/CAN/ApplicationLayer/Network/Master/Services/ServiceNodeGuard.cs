@@ -6,7 +6,7 @@ using NGK.CAN.ApplicationLayer.Network.Devices;
 using NGK.CAN.ApplicationLayer.Transactions;
 using Common.Controlling;
 using Common.Collections.ObjectModel;
-using Infrastructure.LogManager;
+using NGK.Log;
 
 namespace NGK.CAN.ApplicationLayer.Network.Master.Services
 {

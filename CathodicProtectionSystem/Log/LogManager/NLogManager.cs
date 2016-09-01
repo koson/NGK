@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using NLog;
 
-namespace Infrastructure.LogManager
+namespace NGK.Log
 {
     public class NLogManager : ILogManager
     {

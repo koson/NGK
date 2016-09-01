@@ -4,17 +4,17 @@ using System.Text;
 using Mvp.Plugin;
 using Mvp.WinApplication;
 using Mvp.WinApplication.Infrastructure;
+using Infrastructure.API.Managers;
 
 namespace Infrastructure.Api.Plugins
 {
-    public abstract class Plugin: PluginBase
+    public abstract class Plugin : PluginBase, IPlugin
     {
         #region Constructors
 
         public Plugin()
         {
             _ApplicationServices = new List<IApplicationService>();
-            _Menu = new List<NavigationMenuItem>();
             _PartialPresenters = new List<IPartialViewPresenter>();
         }
 
@@ -22,32 +22,56 @@ namespace Infrastructure.Api.Plugins
 
         #region Fields And Properties
 
-        protected readonly List<IApplicationService> _ApplicationServices;
-        protected readonly List<NavigationMenuItem> _Menu;
-        protected readonly List<IPartialViewPresenter> _PartialPresenters;
+        private readonly List<IApplicationService> _ApplicationServices;
+        private readonly List<IPartialViewPresenter> _PartialPresenters;
+        private NavigationMenuItem _NavigationMenu;
+        private IManagers _Managers;
 
         /// <summary>
         /// —ервисы приложени€ предоставл€емые плагином
         /// </summary>
-        public IEnumerable<IApplicationService> ApplicationServices
+        protected IList<IApplicationService> ApplicationServices
         {
             get { return _ApplicationServices; }
         }
         /// <summary>
-        /// Ќавигационное меню предоставл€емое плагином
+        ///  орневой элемент навигационного меню предоставл€емого плагином
         /// </summary>
-        public IEnumerable<NavigationMenuItem> Menu
+        public NavigationMenuItem NavigationMenu
         {
-            get { return _Menu; }
+            get { return _NavigationMenu; }
+            protected set { _NavigationMenu = value; }
         }
         /// <summary>
         ///  оллекци€ частиных видов дл€ главной формы приложени€
         /// </summary>
-        public IEnumerable<IPartialViewPresenter> PartialPresenters
+        protected IList<IPartialViewPresenter> PartialPresenters
+        {
+            get { return _PartialPresenters; }
+        }
+
+        public IManagers Managers
+        {
+            get { return _Managers; }
+            set { _Managers = value; }
+        }
+
+        IEnumerable<IApplicationService> IPlugin.ApplicationServices
+        {
+            get { return _ApplicationServices; }
+        }
+
+        IEnumerable<IPartialViewPresenter> IPlugin.PartialPresenters
         {
             get { return _PartialPresenters; }
         }
 
         #endregion
+
+        #region Methods
+
+        public abstract void Initialize(object state);
+
+        #endregion 
     }
 }

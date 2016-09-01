@@ -7,7 +7,7 @@
     <ProjectGuid>{8ED7A1A3-E261-4395-81A4-F2EC5565A4DF}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Log</RootNamespace>
+    <RootNamespace>NGK.Log</RootNamespace>
     <AssemblyName>Log</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">

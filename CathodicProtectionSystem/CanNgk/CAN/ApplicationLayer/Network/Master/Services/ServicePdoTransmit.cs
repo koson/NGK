@@ -5,7 +5,7 @@ using NGK.CAN.DataLinkLayer.Message;
 using NGK.CAN.ApplicationLayer.Network.Devices;
 using NGK.CAN.ApplicationLayer.Network.Devices.Profiles.ObjectDictionary;
 using Common.Controlling;
-using Infrastructure.LogManager;
+using NGK.Log;
 
 namespace NGK.CAN.ApplicationLayer.Network.Master.Services
 {

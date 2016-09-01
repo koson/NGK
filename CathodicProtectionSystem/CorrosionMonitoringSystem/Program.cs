@@ -3,26 +3,26 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Drawing;
 using System.Globalization;
+using System.IO;
+using System.Threading;
 using VisualBasic = Microsoft.VisualBasic.ApplicationServices;
 using Mvp.WinApplication;
 using Mvp.View;
 using Mvp.Presenter;
+using Mvp.Plugin;
 using NGK.CorrosionMonitoringSystem.Presenters;
 using NGK.CorrosionMonitoringSystem.Views;
-using NGK.CAN.ApplicationLayer.Network.Master;
 using NGK.CorrosionMonitoringSystem.Managers;
+using NGK.CAN.ApplicationLayer.Network.Master;
 using NGK.CAN.ApplicationLayer.Network.Devices;
-using NGK.CorrosionMonitoringSystem.Managers.Factory;
 using Modbus.OSIModel.DataLinkLayer.Slave.RTU.ComPort;
 using Modbus.OSIModel.ApplicationLayer.Slave;
 using Modbus.OSIModel.ApplicationLayer;
 using Common.Controlling;
 using NGK.CorrosionMonitoringSystem.Services;
-using Infrastructure.LogManager;
-using Mvp.Plugin;
+using NGK.Log;
+using Infrastructure.API.Managers;
 using Infrastructure.Api.Plugins;
-using System.IO;
-using System.Threading;
 
 namespace NGK.CorrosionMonitoringSystem
 {
@@ -54,6 +54,8 @@ namespace NGK.CorrosionMonitoringSystem
                 (Form)new SplashScreenPresenter().View.Form;
 
             Managers = new AppManagers(WindowsFormsApplication.Application);
+            _Logger = NLogManager.Instance;
+            Managers.Logger = _Logger;
 
             WindowsFormsApplication.Application.Run(args);            
         }
@@ -63,8 +65,8 @@ namespace NGK.CorrosionMonitoringSystem
             WindowsFormsApplication application = (WindowsFormsApplication)sender;
             SplashScreenForm splash = (SplashScreenForm)application.SplashScreen;
 
-            _Logger = NLogManager.Instance;
-            _Logger.Info("Запуск приложения");
+
+            Managers.Logger.Info("Запуск приложения");
 
             if (Managers.ConfigManager.CursorEnable)
             {
@@ -103,7 +105,7 @@ namespace NGK.CorrosionMonitoringSystem
             foreach (Plugin plugin in pluginsService.Plugins)
             {
                 splash.WriteLine(String.Format("Плагин {0} загружен", plugin.Name));
-                NavigationService.Menu.AddRange(plugin.Menu);
+                NavigationService.Menu.AddRange(plugin.NavigationMenu);
                 Thread.Sleep(500);
             }
 

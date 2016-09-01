@@ -175,6 +175,8 @@ namespace Mvp.WinApplication
         {
             if (MainForm != null)
                 base.MainForm.Close();
+            else
+                base.ApplicationContext.ExitThread();
         }
         
         public void RegisterApplicationService(ApplicationServiceBase service)

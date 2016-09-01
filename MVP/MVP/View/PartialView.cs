@@ -27,7 +27,7 @@ namespace Mvp.View
         private readonly T _Control;
         private PartialViewContext<PartialView<T>> _Context;
 
-        protected T Control { get { return _Control; } }
+        public T Control { get { return _Control; } }
 
         Control IPartialView.Control { get { return _Control; } }
 

@@ -11,7 +11,7 @@ using NGK.CAN.ApplicationLayer.Network.Devices.Profiles.ObjectDictionary;
 using NGK.CAN.DataTypes;
 using Common.Controlling;
 using Common.Collections.ObjectModel;
-using Infrastructure.LogManager;
+using NGK.Log;
 
 namespace NGK.CAN.ApplicationLayer.Network.Master.Services
 {
