@@ -36,13 +36,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationServices\NgkCanService\CanNetworkService.cs" />
-    <Compile Include="ApplicationServices\NgkCanService\ICanNetworkService.cs" />
-    <Compile Include="Models\IDeviceInfo.cs" />
-    <Compile Include="Models\IDeviceSummaryParameters.cs" />
-    <Compile Include="Models\NgkCanDevice.cs" />
-    <Compile Include="Models\Parameter.cs" />
-    <Compile Include="Models\ParametersCollection.cs" />
-    <Compile Include="Models\ParametersPivotTable.cs" />
     <Compile Include="NgkCanPlugin.cs" />
     <Compile Include="Presenters\DeviceDetailPresenter.cs" />
     <Compile Include="Presenters\DeviceListPresenter.cs" />
@@ -104,4 +97,7 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <PropertyGroup>
+    <PostBuildEvent>xcopy "$(TargetDir)$(ProjectName).dll" "$(SolutionDir)Plugins\" /S /E /Y</PostBuildEvent>
+  </PropertyGroup>
 </Project>

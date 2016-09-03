@@ -92,7 +92,6 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="Services\NavigationService.cs" />
     <Compile Include="Services\ModbusService\ISystemInformationModbusNetworkService.cs" />
     <Compile Include="Services\ModbusService\SystemInformationModbusNetworkService.cs" />
     <Compile Include="Services\ServiceHelper.cs" />
@@ -187,4 +186,7 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <PropertyGroup>
+    <PreBuildEvent>xcopy "$(SolutionDir)Plugins\*.dll" "$(TargetDir)Plugins\" /s /e /y</PreBuildEvent>
+  </PropertyGroup>
 </Project>

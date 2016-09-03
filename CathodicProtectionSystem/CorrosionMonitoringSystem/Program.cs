@@ -23,6 +23,7 @@ using NGK.CorrosionMonitoringSystem.Services;
 using NGK.Log;
 using Infrastructure.API.Managers;
 using Infrastructure.Api.Plugins;
+using Mvp.WinApplication.ApplicationService;
 
 namespace NGK.CorrosionMonitoringSystem
 {
@@ -31,14 +32,15 @@ namespace NGK.CorrosionMonitoringSystem
         public static ILogManager _Logger;
         public static IManagers Managers;
         public static PluginsService<Plugin> AppPluginsService;
-
+        public static MainWindowPresenter MainWindowPresenter;
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
         static void Main(string[] args)
-        {  
-            WindowsFormsApplication.Initialize(new MainWindowPresenter(Managers), true);
+        {
+            MainWindowPresenter = new MainWindowPresenter();
+            WindowsFormsApplication.Initialize(MainWindowPresenter, true);
             WindowsFormsApplication.Application.UnhandledException +=
                 new VisualBasic::UnhandledExceptionEventHandler(EventHandler_Application_UnhandledException);
             WindowsFormsApplication.Application.ChangeCulture("ru-Ru");
@@ -79,7 +81,7 @@ namespace NGK.CorrosionMonitoringSystem
 
             //Загружаем конфигурацию сети CAN НГК ЭХЗ
             splash.WriteLine("Загрузка конфигурации сети CAN НГК ЭХЗ...");
-            LoadCanNetworkConfig();
+            //LoadCanNetworkConfig();
 
             //Загружаем конфигурацию для сети Modbus 
             //splash.WriteLine("Загрузка конфигурации сети Modbus...");
@@ -105,12 +107,14 @@ namespace NGK.CorrosionMonitoringSystem
             foreach (Plugin plugin in pluginsService.Plugins)
             {
                 splash.WriteLine(String.Format("Плагин {0} загружен", plugin.Name));
-                NavigationService.Menu.AddRange(plugin.NavigationMenu);
+                NavigationService.Menu.Add(plugin.NavigationMenu);
+                plugin.Initialize(MainWindowPresenter, null);
+
                 Thread.Sleep(500);
             }
 
             splash.WriteLine("Запуск системы мониторинга...");
-            Managers.CanNetworkService.Start();
+            //Managers.CanNetworkService.Start();
             //TODO: создать запись в журнал
             //splash.WriteLine("Запуск информационного Modbus-сервиса...");
             //Managers.ModbusSystemInfoNetworkService.Start();
@@ -143,60 +147,60 @@ namespace NGK.CorrosionMonitoringSystem
             _Logger.Info("Приложение остановлено");
         }
 
-        static void LoadCanNetworkConfig()
-        {
-            try
-            {
-                NgkCanNetworksManager.Instance.LoadConfig(Application.StartupPath +
-                    @"\newtorkconfig.bin.nwc");
+        //static void LoadCanNetworkConfig()
+        //{
+        //    try
+        //    {
+        //        NgkCanNetworksManager.Instance.LoadConfig(Application.StartupPath +
+        //            @"\newtorkconfig.bin.nwc");
 
-                //Создаём сетевой сервис и регистрируем его
-                CanNetworkService canNetworkService = new CanNetworkService(
-                    ServiceHelper.ServiceNames.NgkCanService,
-                    NgkCanNetworksManager.Instance, 300, Managers);
-                WindowsFormsApplication.Application.RegisterApplicationService(canNetworkService);
-                canNetworkService.Initialize(null);
-            }
-            catch
-            {
-                MessageBox.Show("Ошибка при конфигурировании системы. " +
-                    "Приложение будет закрыто",
-                    "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                //_Application.Exit();
-                throw;
-            }
-        }
+        //        //Создаём сетевой сервис и регистрируем его
+        //        CanNetworkService canNetworkService = new CanNetworkService(
+        //            ServiceHelper.ServiceNames.NgkCanService,
+        //            NgkCanNetworksManager.Instance, 300, Managers);
+        //        WindowsFormsApplication.Application.RegisterApplicationService(canNetworkService);
+        //        canNetworkService.Initialize(null);
+        //    }
+        //    catch
+        //    {
+        //        MessageBox.Show("Ошибка при конфигурировании системы. " +
+        //            "Приложение будет закрыто",
+        //            "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        //        //_Application.Exit();
+        //        throw;
+        //    }
+        //}
 
-        static void LoadModbusNetworkConfig()
-        {
-            try
-            {
-                ComPortSlaveMode serialPort = new ComPortSlaveMode(
-                    Managers.ConfigManager.SerialPortName,
-                    Managers.ConfigManager.SerialPortBaudRate,
-                    Managers.ConfigManager.SerialPortParity,
-                    Managers.ConfigManager.SerialPortDataBits,
-                    Managers.ConfigManager.SerialPortStopBits);
+        //static void LoadModbusNetworkConfig()
+        //{
+        //    try
+        //    {
+        //        ComPortSlaveMode serialPort = new ComPortSlaveMode(
+        //            Managers.ConfigManager.SerialPortName,
+        //            Managers.ConfigManager.SerialPortBaudRate,
+        //            Managers.ConfigManager.SerialPortParity,
+        //            Managers.ConfigManager.SerialPortDataBits,
+        //            Managers.ConfigManager.SerialPortStopBits);
 
-                ModbusNetworkControllerSlave modbusNetwork = new ModbusNetworkControllerSlave(
-                    Managers.ConfigManager.ModbusSystemInfoNetworkName, serialPort);
-                ModbusNetworksManager.Instance.Networks.Add(modbusNetwork);
+        //        ModbusNetworkControllerSlave modbusNetwork = new ModbusNetworkControllerSlave(
+        //            Managers.ConfigManager.ModbusSystemInfoNetworkName, serialPort);
+        //        ModbusNetworksManager.Instance.Networks.Add(modbusNetwork);
 
-                // Создаём сервис приложения
-                SystemInformationModbusNetworkService modbusSystemInfoNetworkService = 
-                    new SystemInformationModbusNetworkService(ServiceHelper.ServiceNames.SystemInformationModbusService, 
-                    Managers, modbusNetwork, Managers.ConfigManager.ModbusAddress, 400);
-                WindowsFormsApplication.Application.RegisterApplicationService(modbusSystemInfoNetworkService);
-                modbusSystemInfoNetworkService.Initialize(null);
-            }
-            catch
-            {
-                MessageBox.Show("Ошибка при конфигурировании системы. " +
-                    "Приложение будет закрыто",
-                    "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                throw;
-            }
-        }
+        //        // Создаём сервис приложения
+        //        SystemInformationModbusNetworkService modbusSystemInfoNetworkService = 
+        //            new SystemInformationModbusNetworkService(ServiceHelper.ServiceNames.SystemInformationModbusService, 
+        //            Managers, modbusNetwork, Managers.ConfigManager.ModbusAddress, 400);
+        //        WindowsFormsApplication.Application.RegisterApplicationService(modbusSystemInfoNetworkService);
+        //        modbusSystemInfoNetworkService.Initialize(null);
+        //    }
+        //    catch
+        //    {
+        //        MessageBox.Show("Ошибка при конфигурировании системы. " +
+        //            "Приложение будет закрыто",
+        //            "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        //        throw;
+        //    }
+        //}
 
         /// <summary>
         /// Обработчик события возникновения необработанного исключеия

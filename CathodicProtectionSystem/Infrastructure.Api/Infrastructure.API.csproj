@@ -37,6 +37,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\CAN\IDeviceInfo.cs" />
+    <Compile Include="Models\CAN\IDeviceSummaryParameters.cs" />
+    <Compile Include="Models\CAN\NgkCanDevice.cs" />
+    <Compile Include="Models\CAN\Parameter.cs" />
+    <Compile Include="Models\CAN\ParametersCollection.cs" />
+    <Compile Include="Models\CAN\ParametersPivotTable.cs" />
+    <Compile Include="Plugins\IHostWindow.cs" />
+    <Compile Include="Services\ICanNetworkService.cs" />
     <Compile Include="Managers\AppManagers.cs" />
     <Compile Include="Managers\ConfigurationManager\ConfigManager.cs" />
     <Compile Include="Managers\ConfigurationManager\IConfigManager.cs" />
@@ -53,6 +61,10 @@
     <ProjectReference Include="..\..\MVP\MVP\MVP.csproj">
       <Project>{44DF6B58-4BDD-40D8-993C-7B61AECF0510}</Project>
       <Name>MVP</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CanNgk\CanNgk.csproj">
+      <Project>{95234605-221A-41A5-A9BA-ED933C75C30E}</Project>
+      <Name>CanNgk</Name>
     </ProjectReference>
     <ProjectReference Include="..\Common\Common.csproj">
       <Project>{78E073B6-AD50-429C-9261-4DE3438D8EAE}</Project>

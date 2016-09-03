@@ -2,17 +2,16 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.ComponentModel;
-using NGK.CAN.ApplicationLayer.Network.Devices;
-using NGK.CAN.ApplicationLayer.Network.Devices.Profiles.ObjectDictionary;
 using Common.ComponentModel;
-using NGK.CAN.ApplicationLayer.Network.Devices.ObjectDictionary;
-using NGK.CAN.ApplicationLayer.Network.Devices.Profiles;
 using System.Diagnostics;
 using System.Globalization;
-using NGK.CAN.DataTypes;
 using WinForms = System.Windows.Forms;
+using NGK.CAN.ApplicationLayer.Network.Devices;
+using NGK.CAN.ApplicationLayer.Network.Devices.Profiles.ObjectDictionary;
+using NGK.CAN.ApplicationLayer.Network.Devices.ObjectDictionary;
+using NGK.CAN.ApplicationLayer.Network.Devices.Profiles;
 
-namespace NGK.Plugins.Models
+namespace Infrastructure.API.Models.CAN
 {
     [Serializable]
     public sealed class NgkCanDevice : INotifyPropertyChanged, IDeviceSummaryParameters, IDeviceInfo

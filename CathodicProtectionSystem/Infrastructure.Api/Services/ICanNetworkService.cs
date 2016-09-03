@@ -5,10 +5,9 @@ using System.ComponentModel;
 using System.Text;
 using System.Data;
 using Common.Controlling;
-using NGK.Plugins.Models;
-using NGK.CAN.ApplicationLayer.Network.Devices;
+using Infrastructure.API.Models.CAN;
 
-namespace NGK.Plugins.Services
+namespace Infrastructure.API.Services
 {
     public interface ICanNetworkService: IManageable
     {

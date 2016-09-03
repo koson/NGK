@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Mvp.WinApplication;
 using NGK.Log;
+using Infrastructure.API.Services;
 
 namespace Infrastructure.API.Managers
 {
@@ -59,19 +60,24 @@ namespace Infrastructure.API.Managers
         {
             get { return _ConfigManager; }
         }
-        
-        //public ICanNetworkService CanNetworkService
-        //{
-        //    get 
-        //    { 
-        //        foreach(ApplicationServiceBase service in _Application.AppServices)
-        //        {
-        //            if (service.ServiceName == ServiceHelper.ServiceNames.NgkCanService)
-        //                return service as ICanNetworkService;
-        //        }
-        //        return null; 
-        //    }
-        //}
+
+        private ICanNetworkService _CanNetworkService;
+
+        public ICanNetworkService CanNetworkService
+        {
+            get 
+            {
+                if (_CanNetworkService == null)
+                {
+                    foreach (ApplicationServiceBase service in _Application.AppServices)
+                    {
+                        if (service is ICanNetworkService)
+                            _CanNetworkService = service as ICanNetworkService;
+                    }
+                }
+                return _CanNetworkService; 
+            }
+        }
 
         //public ISystemInformationModbusNetworkService ModbusSystemInfoNetworkService
         //{

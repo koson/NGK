@@ -8,22 +8,28 @@ using Mvp.Presenter;
 using Mvp.View;
 using Mvp.Input;
 using System.Diagnostics;
+using System.Windows.Forms;
+using Infrastructure.Api.Plugins;
+using Mvp.WinApplication.Infrastructure;
+using Mvp.WinApplication.ApplicationService;
+using System.Drawing;
 
 namespace NGK.CorrosionMonitoringSystem.Presenters
 {
-    public class MainWindowPresenter : WindowPresenter<MainWindowView>
+    public class MainWindowPresenter : WindowPresenter<MainWindowView>, IHostWindow
     {
         #region Constructors
 
-        public MainWindowPresenter(IManagers managers)
+        public MainWindowPresenter()
             : base()
         {
             Name = "Monitoring System Of Cathodic Protection";
-            _Managers = managers;
+            View.Form.Text = "Система коррозионного мониторинга";
+            View.Form.Title = "";
             //ViewConcrete.Title = String.Empty;
 
-            //_ShowMenuCommand = new Command(OnShowMenu, CanShowMenu);
-            //_Commands.Add(_ShowMenuCommand);
+            _ShowNavigationMenuCommand = new Command(OnShowNavigationMenu, CanShowNavigationMenu);
+            _Commands.Add(_ShowNavigationMenuCommand);
             //_ShowDeviceListCommand = new Command("Устройства", OnShowDeviceList, CanShowDeviceList);
             //_Commands.Add(_ShowDeviceListCommand);
             //_ShowPivoteTableCommand = new Command("Параметры ЭХЗ", OnShowPivoteTable, CanShowPivoteTable);
@@ -57,14 +63,17 @@ namespace NGK.CorrosionMonitoringSystem.Presenters
             //    _Managers.PresentersFactory.Create(ViewMode.PivoteTable);
             //WorkingRegionPresenter = presenter;
 
+            View.Form.Shown += new EventHandler(EventHandler_Form_Shown);
+            View.Form.ContextMenuStripChanged += new EventHandler(EventHandler_Form_ContextMenuStripChanged);
+
+            View.Form.ShowMenuCommand = _ShowNavigationMenuCommand;
+
             base.UpdateStatusCommands();
         }
 
         #endregion
 
         #region Fields And Properties
-
-        IManagers _Managers;
 
         //public IMainWindowView ViewConcrete
         //{
@@ -163,9 +172,33 @@ namespace NGK.CorrosionMonitoringSystem.Presenters
             //base.Show();
         }
 
+        public void Show(IPartialViewPresenter presenter)
+        {            
+            View.WorkingRegion.Controls.Clear();
+            View.WorkingRegion.Controls.Add(presenter.View.Control);
+            View.Title = presenter.Title;
+        }
+
         #endregion
 
         #region Event Handlers
+
+        private void EventHandler_Form_Shown(object sender, EventArgs e)
+        {
+            // Создаём навигационное меню приложения
+            View.Form.ContextMenuStrip = new ContextMenuStrip();
+
+            foreach (NavigationMenuItem menu in NavigationService.Menu)
+            {
+                View.Form.ContextMenuStrip.Items.Add(
+                    NavigationMenuItemConverter.ConvertTo(menu));
+            }
+        }
+
+        public void EventHandler_Form_ContextMenuStripChanged(object sender, EventArgs e)
+        {
+            _ShowNavigationMenuCommand.CanExecute();
+        }
 
         void EventHandler_CanNetworkService_StatusWasChanged(object sender, EventArgs e)
         {
@@ -189,39 +222,23 @@ namespace NGK.CorrosionMonitoringSystem.Presenters
 
         #region Commands
 
-        //Command _ShowMenuCommand;
+        private Command _ShowNavigationMenuCommand;
         /// <summary>
         /// Отображаем меню приложения
         /// </summary>
-        //void OnShowMenu()
-        //{
-        //    INavigationMenuPresenter navigationMenuPresenter;
+        private void OnShowNavigationMenu()
+        {
+            // Отображаем меню в центре формы
+            Point point =
+                new Point(View.Form.ClientRectangle.Width / 2 - View.Form.ContextMenuStrip.ClientRectangle.Width / 2,
+                View.Form.ClientRectangle.Height / 2 - View.Form.ContextMenuStrip.ClientRectangle.Height / 2);
 
-        //    navigationMenuPresenter =
-        //        _Managers.PresentersFactory.CreateNavigationMenu();
-
-        //    List<ICommand> menuItems = new List<ICommand>();
-        //    menuItems.Add(_ShowPivoteTableCommand);
-        //    menuItems.Add(_ShowDeviceListCommand);
-        //    menuItems.Add(_ShowLogViewerCommand);
-        //    menuItems.Add(_RunCorrosionMonitoringSystemCommand);
-        //    menuItems.Add(_StopCorrosionMonitoringSystemCommand);
-
-        //    if (_WorkingRegionPresenter is ISystemMenu)
-        //    {
-        //        ISystemMenu mnu = _WorkingRegionPresenter as ISystemMenu;
-        //        if (mnu.MenuItems != null)
-        //            menuItems.AddRange(mnu.MenuItems);
-        //    }
-
-        //    navigationMenuPresenter.MenuItems = menuItems.ToArray();
-        //    base.UpdateStatusCommands();
-        //    navigationMenuPresenter.Show();
-        //}
-        //bool CanShowMenu()
-        //{
-        //    return WorkingRegionPresenter != null;
-        //}
+            View.Form.ContextMenuStrip.Show(View.Form, point);
+        }
+        private bool CanShowNavigationMenu()
+        {
+            return View.Form.ContextMenuStrip != null;
+        }
 
         //Command _ShowPivoteTableCommand;
         //void OnShowPivoteTable()

@@ -5,12 +5,13 @@ using System.Text;
 using Mvp.View;
 using System.Windows.Forms;
 using Mvp.Input;
-using NGK.Plugins.Models;
+using Infrastructure.API.Models.CAN;
 
 namespace NGK.Plugins.Views
 {
-    public interface IDeviceListView : IView
+    public interface IDeviceListView : IPartialView
     {
+        DockStyle Dock { get; set; }
         BindingList<IDeviceInfo> Devices { set; }
         NgkCanDevice SelectedDevice { get; }
         event EventHandler SelectedDeviceChanged;

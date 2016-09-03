@@ -10,11 +10,6 @@ namespace Mvp.WinApplication.ApplicationService
     /// </summary>
     public static class NavigationService
     {
-        static NavigationService()
-        {
-            Menu = new List<NavigationMenuItem>();
-        }
-
-        public static List<NavigationMenuItem> Menu;
+        public static List<NavigationMenuItem> Menu = new List<NavigationMenuItem>();
     }
 }

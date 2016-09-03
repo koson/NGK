@@ -4,7 +4,7 @@ using System.Collections.ObjectModel;
 
 using System.Text;
 
-namespace NGK.Plugins.Models
+namespace Infrastructure.API.Models.CAN
 {
     public class ParametersCollection: KeyedCollection<string, Parameter>
     {

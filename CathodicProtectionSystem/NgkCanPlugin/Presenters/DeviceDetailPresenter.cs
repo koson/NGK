@@ -8,8 +8,8 @@ using Mvp.WinApplication;
 using System.Windows.Forms;
 using Mvp.View;
 using NGK.Plugins.Views;
-using NGK.Plugins.Models;
 using Infrastructure.Api.Plugins;
+using Infrastructure.API.Models.CAN;
 
 namespace NGK.Plugins.Presenters
 {

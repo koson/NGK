@@ -8,11 +8,11 @@ namespace Infrastructure.API.Managers
     {
         string PathToAppDirectory { get; }
 
-        //bool CursorEnable { get; }
-        //bool FormBorderEnable { get; }
-        //bool ShowInTaskbar { get; }
-        //bool FullScreen { get; }
-        //bool IsDebug { get; }
+        bool CursorEnable { get; }
+        bool FormBorderEnable { get; }
+        bool ShowInTaskbar { get; }
+        bool FullScreen { get; }
+        bool IsDebug { get; }
 
         //ushort[] HiddenIndexesKip9810 { get; }
         //ushort[] HiddenIndexesKip9811 { get; }

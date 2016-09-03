@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.ComponentModel;
 
-namespace NGK.Plugins.Models
+namespace Infrastructure.API.Models.CAN
 {
     public interface IDeviceSummaryParameters: INotifyPropertyChanged
     {

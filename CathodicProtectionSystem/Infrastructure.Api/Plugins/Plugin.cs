@@ -70,8 +70,8 @@ namespace Infrastructure.Api.Plugins
 
         #region Methods
 
-        public abstract void Initialize(object state);
+        public abstract void Initialize(IHostWindow host, object state);
 
-        #endregion 
+        #endregion     
     }
 }

@@ -4,16 +4,18 @@ using System.Text;
 using Mvp.View;
 using System.Windows.Forms;
 using NGK.Plugins.Presenters;
+using System.ComponentModel;
+using Infrastructure.API.Models.CAN;
 
 namespace NGK.Plugins.Views
 {
-    public class DevicesListView: PartialView<DevicesList>
+    public class DevicesListView: PartialView<DevicesList>, IDeviceListView
     {
         #region Constructors
 
         public DevicesListView()
         {
-            Control.DataBindings.Add(new Binding("SelectedDevice", (DevicesListPresenter)Context.Presenter, "SelectedDevice"));
+            //Control.DataBindings.Add(new Binding("SelectedDevice", Context.Presenter, "SelectedDevice"));
         }
 
         #endregion
@@ -26,20 +28,22 @@ namespace NGK.Plugins.Views
             set { base.Control.Dock = value; }
         }
 
-        public override PartialViewContext<PartialView<DevicesList>> Context
+        #endregion
+
+        #region IDeviceListView Members
+
+        public BindingList<IDeviceInfo> Devices
         {
-            get { return base.Context; }
-            set
-            {
-                base.Context = value;
-                Control.Devices = null;
-                if (value != null)
-                {
-                    Control.Devices = ((DevicesListPresenter)value.Presenter).Devices;
-                }
-            }
+            set { Control.Devices = value; }
         }
 
-        #endregion 
+        public NgkCanDevice SelectedDevice
+        {
+            get { return Control.SelectedDevice; }
+        }
+
+        public event EventHandler SelectedDeviceChanged;
+
+        #endregion
     }
 }

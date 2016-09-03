@@ -11,7 +11,7 @@ namespace Mvp.View
     public class PartialViewContext<T> where T : IPartialView
     {
         #region Fields And Properties
-        
+
         private RegionPresenter<T> _Presenter;
 
         public RegionPresenter<T> Presenter

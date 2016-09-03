@@ -7,7 +7,7 @@ using System.Text;
 using System.Windows.Forms;
 using Mvp.View;
 using NGK.CAN.ApplicationLayer.Network.Devices;
-using NGK.Plugins.Models;
+using Infrastructure.API.Models.CAN;
 
 namespace NGK.Plugins.Views
 {

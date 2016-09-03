@@ -13,7 +13,22 @@ namespace NGK.CorrosionMonitoringSystem.Views
 
         public MainWindowView()
         {
-            Regions.Add(new RegionContainer<Panel>("WorkingRegion", Form.WorkingRegionControl));
+            //Regions.Add(new RegionContainer<Panel>("WorkingRegion", Form.WorkingRegionControl));
+        }
+
+        #endregion
+
+        #region Fields And Properties
+
+        public string Title
+        {
+            get { return Form.Title; }
+            set { Form.Title = value; }
+        }
+
+        public Panel WorkingRegion
+        {
+            get { return Form.WorkingRegionControl; }
         }
 
         #endregion

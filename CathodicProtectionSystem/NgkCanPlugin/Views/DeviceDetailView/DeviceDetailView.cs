@@ -17,20 +17,6 @@ namespace NGK.Plugins.Views
             set { base.Control.Dock = value; }
         }
 
-        public override PartialViewContext<PartialView<DeviceDetail>> Context
-        {
-            get { return base.Context; }
-            set
-            {
-                base.Context = value;
-                Control.Parameters = null;
-                if (value != null)
-                {
-                    Control.Parameters = ((DeviceDetailPresenter)value.Presenter).Parameters;
-                }
-            }
-        }
-
         #endregion 
     }
 }

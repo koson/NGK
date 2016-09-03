@@ -214,7 +214,7 @@ namespace NGK.CorrosionMonitoringSystem.Views
         void EventHandler_Button_Click(object sender, EventArgs e)
         {
             Button btn = (Button)sender;
-            
+
             if (btn.Equals(_ButtonF6))
             {
                 // Скрывает или отображаем панель конопок
@@ -341,12 +341,11 @@ namespace NGK.CorrosionMonitoringSystem.Views
         {
             get
             {
-                return Text;
+                return _LabelTilte.Text;
             }
             set
             {
-                Text = value;
-                _LabelTilte.Text = Text;
+                _LabelTilte.Text = value;
             }
         }
 

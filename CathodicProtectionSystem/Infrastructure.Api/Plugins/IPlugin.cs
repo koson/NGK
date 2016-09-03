@@ -33,7 +33,7 @@ namespace Infrastructure.Api.Plugins
         /// Инициализирует сервисы и презентеры плагина.
         /// Вызывается после создания плагина
         /// </summary>
-        void Initialize(object state);
+        void Initialize(IHostWindow host, object state);
 
         #endregion
     }

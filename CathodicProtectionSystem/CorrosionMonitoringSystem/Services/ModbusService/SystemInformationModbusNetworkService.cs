@@ -18,6 +18,7 @@ using NGK.CorrosionMonitoringSystem.Models;
 using NGK.CAN.ApplicationLayer.Network.Devices.Profiles;
 using NGK.CAN.ApplicationLayer.Network.Devices;
 using NGK.CAN.ApplicationLayer.Network.Master;
+using Infrastructure.API.Managers;
 
 
 namespace NGK.CorrosionMonitoringSystem.Services
@@ -32,8 +33,8 @@ namespace NGK.CorrosionMonitoringSystem.Services
         /// <param name="application"></param>
         /// <param name="pollingInterval">Интервал обновления Modbus-устройства, мсек</param>
         public SystemInformationModbusNetworkService(string serviceName,
-            IManagers managers, IModbusNetworkControllerSlave network, 
-            byte networkAddress,  double pollingInterval):
+            IModbusNetworkControllerSlave network, 
+            byte networkAddress,  double pollingInterval, IManagers managers):
             base(serviceName)
         {
             _Managers = managers;
@@ -50,15 +51,15 @@ namespace NGK.CorrosionMonitoringSystem.Services
 
         #region Fields And Properties
 
-        IManagers _Managers;
+        private IManagers _Managers; 
         /// <summary>
         /// Контроллер modbus сеть в режиме slave
         /// </summary>
-        IModbusNetworkControllerSlave _Network;
+        private IModbusNetworkControllerSlave _Network;
         /// <summary>
         /// Устройство modbus блока КССМУ
         /// </summary>
-        ModbusSlaveDevice _DeviceKCCM;
+        private ModbusSlaveDevice _DeviceKCCM;
         /// <summary>
         /// Устанавливаем время в регистре
         /// </summary>

@@ -9,7 +9,7 @@ using Mvp.View;
 using System.ComponentModel;
 using NGK.Plugins.Views;
 using Infrastructure.Api.Plugins;
-using NGK.Plugins.Models;
+using Infrastructure.API.Models.CAN;
 
 namespace NGK.Plugins.Presenters
 {
@@ -23,7 +23,7 @@ namespace NGK.Plugins.Presenters
                 new CommandAction(OnDeviceDetail), new Condition(CanDeviceDetail));
             _Commands.Add(_DeviceDetailCommand);
 
-            Devices = new BindingList<IDeviceInfo>();
+            _Devices = new BindingList<IDeviceInfo>();
 
             if (NgkCanPlugin.CanNetworkService != null)
             {
@@ -32,32 +32,29 @@ namespace NGK.Plugins.Presenters
                     Devices.Add(device);
                 }
             }
-            
-            //view.SelectedDeviceChanged += 
-            //    new EventHandler(EventHandler_view_SelectedDeviceChanged);
+
+            View.Devices = Devices;
         }
 
         #endregion
 
         #region Fields And Properties
 
-        private NgkCanDevice _SelectedDevice;
-        private BindingList<IDeviceInfo> _Devices;
+        private readonly BindingList<IDeviceInfo> _Devices;
+
+        public override string Title
+        {
+            get { return "Устройства"; }
+        }
 
         public BindingList<IDeviceInfo> Devices
         {
             get { return _Devices; }
-            private set { _Devices = value; }
         }
 
         public NgkCanDevice SelectedDevice
         {
-            get { return _Devices ; }
-            set 
-            { 
-                _Devices = value;
-                _DeviceDetailCommand.CanExecute(); 
-            }
+            get { return View.SelectedDevice; }
         }
 
         public Command[] ButtonCommands
@@ -78,13 +75,13 @@ namespace NGK.Plugins.Presenters
 
         void OnDeviceDetail()
         {
-            DeviceDetailPresenter presenter = 
-                (DeviceDetailPresenter)_Managers.PresentersFactory.Create(
-                ViewMode.DeviceDetail);
-            presenter.Device = SelectedDevice;
-            ((MainWindowPresenter)_Application.CurrentPresenter)
-                .WorkingRegionPresenter = presenter;
-            presenter.Show();
+            //DeviceDetailPresenter presenter = 
+            //    (DeviceDetailPresenter)_Managers.PresentersFactory.Create(
+            //    ViewMode.DeviceDetail);
+            //presenter.Device = SelectedDevice;
+            //((MainWindowPresenter)_Application.CurrentPresenter)
+            //    .WorkingRegionPresenter = presenter;
+            //presenter.Show();
         }
 
         bool CanDeviceDetail()
@@ -98,8 +95,13 @@ namespace NGK.Plugins.Presenters
 
         public override void Show()
         {
+            NgkCanPlugin.HostWindow.Show(this);
             base.Show();
-            HostWindowPresenter.Title = @"Устройства";
+        }
+
+        public override void Close()
+        {
+            View.Close();
         }
 
         #endregion
