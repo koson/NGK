@@ -4,6 +4,7 @@ using System.Text;
 using Mvp.WinApplication;
 using Mvp.WinApplication.Infrastructure;
 using Infrastructure.API.Managers;
+using System.Windows.Forms;
 
 namespace Infrastructure.Api.Plugins
 {
@@ -23,7 +24,14 @@ namespace Infrastructure.Api.Plugins
         ///  оллекци€ частиных видов дл€ главной формы приложени€
         /// </summary>
         IEnumerable<IPartialViewPresenter> PartialPresenters { get; }
-        IManagers Managers { get; set; }
+        /// <summary>
+        /// Ёлементы статусной строки предоставл€емые плагином
+        /// </summary>
+        IEnumerable<ToolStripItem> StatusBarItems { get; }
+        /// <summary>
+        ///  онтейнер дл€ менеджеров различных ресурсов приложени€
+        /// </summary>
+        IManagers Managers { get; }
         
         #endregion
 
@@ -33,7 +41,7 @@ namespace Infrastructure.Api.Plugins
         /// »нициализирует сервисы и презентеры плагина.
         /// ¬ызываетс€ после создани€ плагина
         /// </summary>
-        void Initialize(IHostWindow host, object state);
+        void Initialize(IHostWindow host, IManagers managers, object state);
 
         #endregion
     }

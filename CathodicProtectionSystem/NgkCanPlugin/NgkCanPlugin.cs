@@ -8,6 +8,10 @@ using NGK.CAN.ApplicationLayer.Network.Master;
 using Mvp.WinApplication.ApplicationService;
 using Mvp.Input;
 using NGK.Plugins.Presenters;
+using Infrastructure.API.Managers;
+using System.Windows.Forms;
+using Mvp.Controls;
+using Infrastructure.API.Models.CAN;
 
 namespace NGK.Plugins
 {
@@ -17,76 +21,136 @@ namespace NGK.Plugins
 
         public NgkCanPlugin()
         {
-            Name = @"CAN НГК ЭХЗ";
+            Name = @"Plugin CAN НГК ЭХЗ";
 
-            _ShowDevicesList = new Command(OnShowDevicesList, CanShowDevicesList);
+            _ShowDevicesListCommand = new Command(OnShowDevicesList, CanShowDevicesList);
+            _UpdateTotalDevicesCommand = new Command(OnUpdateTotalDevices, CanUpdateTotalDevices);
+            _UpdateFaultyDevicesCommand = new Command(OnUpdateFaultyDevices, CanUpdateFaultyDevices);
 
             NavigationMenu = new NavigationMenuItem(Name, null);
-            NavigationMenu.SubMenuItems.Add(new NavigationMenuItem("Устройства", _ShowDevicesList));
+            NavigationMenu.SubMenuItems.Add(new NavigationMenuItem("Устройства", _ShowDevicesListCommand));
+
+            _BindableToolStripButtonTotalDevices = new BindableToolStripButton();
+            _BindableToolStripButtonTotalDevices.Name = "_ToolStripButtonTotalDevices";
+            _BindableToolStripButtonTotalDevices.Text = "Всего устройств: ";
+            _BindableToolStripButtonTotalDevices.ToolTipText = "Всего устройств в системе";
+            _BindableToolStripButtonTotalDevices.DisplayStyle = ToolStripItemDisplayStyle.Text;
+            _BindableToolStripButtonTotalDevices.Action = _ShowDevicesListCommand;
+            StatusBarItems.Add(_BindableToolStripButtonTotalDevices);
+
+            BindableToolStripButton _BindableToolStripButtonFaultyDevices = 
+                new BindableToolStripButton();
+            _BindableToolStripButtonFaultyDevices = new BindableToolStripButton();
+            _BindableToolStripButtonFaultyDevices.Name = "_ToolStripButtonFaultyDevices";
+            _BindableToolStripButtonFaultyDevices.Text = "Неисправных устройств: ";
+            _BindableToolStripButtonFaultyDevices.ToolTipText = "Неисправных устройств в системе";
+            _BindableToolStripButtonFaultyDevices.DisplayStyle = ToolStripItemDisplayStyle.Text;
+            _BindableToolStripButtonFaultyDevices.DataBindings.Add(
+                new Binding("Enabled", _UpdateFaultyDevicesCommand, "Status"));
+            StatusBarItems.Add(_BindableToolStripButtonFaultyDevices);
+
+            CanNetworkService = null;
         }
 
         #endregion
 
         #region Fields And Properties
 
-        private static CanNetworkService _CanNetworkService;
-        internal static CanNetworkService CanNetworkService
+        private CanNetworkService _CanNetworkService;
+        private readonly BindableToolStripButton _BindableToolStripButtonTotalDevices;
+        private readonly BindableToolStripButton _BindableToolStripButtonFaultyDevices;
+
+        private ToolStripButton ToolStripButtonTotalDevices
+        {
+            get { return _BindableToolStripButtonTotalDevices; }
+        }
+
+        internal CanNetworkService CanNetworkService
         {
             get { return _CanNetworkService; }
             set 
             { 
                 _CanNetworkService = value;
-                _ShowDevicesList.CanExecute();
+                _ShowDevicesListCommand.CanExecute();
+
+                if (_UpdateTotalDevicesCommand.CanExecute())
+                    _UpdateTotalDevicesCommand.Execute();
+
+                _UpdateFaultyDevicesCommand.CanExecute();
             }
         }
-
-        private static IHostWindow _HostWindow;
-        internal static IHostWindow HostWindow 
-        { 
-            get { return _HostWindow; } 
-        }
-
+        
         #endregion 
 
         #region Methods
 
-        public override void Initialize(IHostWindow hostWindow, object state)
+        public override void Initialize(IHostWindow hostWindow, IManagers managers, object state)
         {
-            _HostWindow = hostWindow;
+            Managers = managers;
+            HostWindow = hostWindow;
 
             // Создаём сервисы приложения
-            //try
-            //{
-            //    // Загружаем конфигурацию из файла
-            //    NgkCanNetworksManager.Instance.LoadConfig(Managers.ConfigManager.PathToAppDirectory +
-            //        @"\newtorkconfig.bin.nwc");
+            try
+            {
+                // Загружаем конфигурацию из файла
+                NgkCanNetworksManager.Instance.LoadConfig(Managers.ConfigManager.PathToAppDirectory +
+                    @"\newtorkconfig.bin.nwc");
 
-            //    //Создаём сетевой сервис и регистрируем его
-            //    CanNetworkService canNetworkService = new CanNetworkService(
-            //        "NgkCanService", NgkCanNetworksManager.Instance, 300, Managers);
-            //    base.ApplicationServices.Add(canNetworkService);
+                //Создаём сетевой сервис и регистрируем его
+                CanNetworkService = new CanNetworkService(
+                    "NgkCanService", NgkCanNetworksManager.Instance, 300, Managers);
+                CanNetworkService.Initialize(null);
+                base.ApplicationServices.Add(CanNetworkService);
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException(
+                    String.Format("Ошибка при инициализации плагина {0}", Name), ex);
+            }
+        }
 
-            //    //WindowsFormsApplication.Application.RegisterApplicationService(canNetworkService);
-            //    //canNetworkService.Initialize(null);
-            //}
-            //catch (Exception ex)
-            //{
-            //    throw new InvalidOperationException(
-            //        String.Format("Ошибка при инициализации плагина {0}", Name), ex);
-            //}
+        public override void OnHostWindowSelectedPartivalViewPresenterChanged()
+        {
+            _ShowDevicesListCommand.CanExecute();
         }
 
         #endregion 
 
         #region Commands
 
-        private static Command _ShowDevicesList;
-        private static void OnShowDevicesList()
+        private Command _ShowDevicesListCommand;
+        private void OnShowDevicesList()
         {
-            DevicesListPresenter presenter = new DevicesListPresenter();
+            DevicesListPresenter presenter = new DevicesListPresenter(this);
             presenter.Show();
         }
-        private static bool CanShowDevicesList()
+        private bool CanShowDevicesList()
+        {
+            return (CanNetworkService != null &&
+                HostWindow.SelectedPartivalViewPresenter == null) ||
+                (CanNetworkService != null &&
+                HostWindow.SelectedPartivalViewPresenter != null &&
+                !(HostWindow.SelectedPartivalViewPresenter is DevicesListPresenter));
+        }
+
+        private Command _UpdateTotalDevicesCommand;
+        private void OnUpdateTotalDevices()
+        {
+            _BindableToolStripButtonTotalDevices.Text = 
+                String.Format("Всего устройств: {0}", CanNetworkService.Devices.Count);
+        }
+        private bool CanUpdateTotalDevices()
+        {
+            return CanNetworkService != null;
+        }
+
+        private Command _UpdateFaultyDevicesCommand;
+        private void OnUpdateFaultyDevices()
+        {
+            _BindableToolStripButtonFaultyDevices.Text =
+                String.Format("Неисправных устройств: {0}", CanNetworkService.Devices.Count);
+        }
+        private bool CanUpdateFaultyDevices()
         {
             return CanNetworkService != null;
         }

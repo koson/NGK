@@ -18,11 +18,13 @@ namespace NGK.CorrosionMonitoringSystem.Views
         public MainWindowForm()
         {
             InitializeComponent();
-
-            //_ViewRegionCollection = new ViewRegionCollection();
-            //_ViewRegionCollection.Add(new ViewRegion(_PanelWorkingRegion));
-            //_ViewRegionCollection.Add(new ViewRegion(_PanelTitleRegion));
             _PanelSystemButtonsRegion.Hide();
+            _ButtonF3.Dispose();
+            _ButtonF3 = null;
+            _ButtonF4.Dispose();
+            _ButtonF4 = null;
+            _ButtonF5.Dispose();
+            _ButtonF5 = null;
         }
 
         #endregion
@@ -31,38 +33,6 @@ namespace NGK.CorrosionMonitoringSystem.Views
 
         protected static object SyncRoot = new object();
         Timer _Timer;
-
-        /// <summary>
-        /// Всего устройств в системе
-        /// </summary>
-        public Int32 TotalDevices 
-        { 
-            set 
-            {
-                _ToolStripButtonTotalDevices.Text = 
-                    String.Format("Всего устройств: {0}", value);
-            }
-        }
-
-        /// <summary>
-        /// Неисправных устройств в системе
-        /// </summary>
-        public Int32 FaultyDevices
-        {
-            set
-            {
-                _ToolStripButtonFaultyDevices.Text =
-                    String.Format("Неисправных устройств: {0}", value);
-                if (value > 0)
-                {
-                    _ToolStripButtonFaultyDevices.BackColor = Color.Red;
-                }
-                else
-                {
-                    _ToolStripButtonFaultyDevices.BackColor = Control.DefaultBackColor;
-                }
-            }
-        }
 
         /// <summary>
         /// Устанавливает время в строке состояния
@@ -84,20 +54,6 @@ namespace NGK.CorrosionMonitoringSystem.Views
 
         public ViewType ViewType { get { return ViewType.Window; } }
 
-        //public IViewRegion[] ViewRegions
-        //{
-        //    get
-        //    {
-        //        IViewRegion[] regions;
-        //        lock (SyncRoot)
-        //        {
-        //            regions = new IViewRegion[_ViewRegionCollection.Count];
-        //            _ViewRegionCollection.CopyTo(regions, 0);
-        //        }
-        //        return regions;
-        //    }
-        //}
-
         public ICommand ShowMenuCommand
         {
             set 
@@ -106,34 +62,6 @@ namespace NGK.CorrosionMonitoringSystem.Views
                 _ButtonF2.Tag = value;
                 _ButtonF2.DataBindings.Add(
                     new Binding("Enabled", _ButtonF2.Tag, "Status")); 
-            }
-        }
-
-        public ICommand[] ButtonCommands
-        {
-            set
-            {
-                Button[] btns = new Button[] { _ButtonF3, _ButtonF4, _ButtonF5 };
-
-                foreach (Button btn in btns)
-                {
-                    btn.Text = String.Empty;
-                    btn.Enabled = false;
-                    btn.Visible = false;
-                    btn.Tag = null;
-                    btn.DataBindings.Clear();
-                }
-
-                if (value == null)
-                    return;
-
-                for (int i = 0; i < value.Length; i++)
-                {
-                    btns[i].Text = value[i].Name;
-                    btns[i].Visible = true;
-                    btns[i].Tag = value[i];
-                    btns[i].DataBindings.Add(new Binding("Enabled", btns[i].Tag, "Status")); 
-                }
             }
         }
 
@@ -182,6 +110,12 @@ namespace NGK.CorrosionMonitoringSystem.Views
             get { return _PanelWorkingRegion; }
         }
 
+        public string Title
+        {
+            get { return _LabelTilte.Text; }
+            set { _LabelTilte.Text = value; }
+        }
+
         #endregion
 
         #region Event Handlers
@@ -194,9 +128,9 @@ namespace NGK.CorrosionMonitoringSystem.Views
             _Timer.Start();
 
             _ButtonF2.Click += new EventHandler(EventHandler_Button_Click);
-            _ButtonF3.Click += new EventHandler(EventHandler_Button_Click);
-            _ButtonF4.Click += new EventHandler(EventHandler_Button_Click);
-            _ButtonF5.Click += new EventHandler(EventHandler_Button_Click);
+            //_ButtonF3.Click += new EventHandler(EventHandler_Button_Click);
+            //_ButtonF4.Click += new EventHandler(EventHandler_Button_Click);
+            //_ButtonF5.Click += new EventHandler(EventHandler_Button_Click);
             _ButtonF6.Click += new EventHandler(EventHandler_Button_Click);
 
             _PanelSystemButtonsRegion.VisibleChanged +=
@@ -278,86 +212,32 @@ namespace NGK.CorrosionMonitoringSystem.Views
             {
                 switch (keyData)
                 {
-//                    case Keys.F1:
-//                        {
-//#if DEBUG
-//                            // Показываем окно управления сетями
-//                            FormNetworkControl frm = FormNetworkControl.Instance;
-//                            frm.TopMost = true;
-//                            frm.Show();
-//                            return false;
-//#else
-//                            return true;
-//#endif
-
-//                        }
+                    //case Keys.F1:
                     case Keys.F2:
-                        {
-                            // По нажатию F2 исполняем программный клик по кнопке F2
-                            _ButtonF2.PerformClick();
-                            return false;
-                        }
                     case Keys.F3:
-                        {
-                            _ButtonF3.PerformClick();
-                            return false;
-                        }
                     case Keys.F4:
-                        {
-                            _ButtonF4.PerformClick();
-                            return false;
-                        }
                     case Keys.F5:
-                        {
-                            _ButtonF5.PerformClick();
-                            return false;
-                        }
                     case Keys.F6:
                         {
-                            if (_ButtonF6.Visible)
-                            {
-                                _ButtonF6.PerformClick();
-                            }
-                            else
-                            {
-                                // Скрывает или отображаем панель конопок
-                                _PanelSystemButtonsRegion.Visible = !_PanelSystemButtonsRegion.Visible;
-                            }
+                            OnFunctionalButtonClick(keyData);
                             return false;
-                        }
+                        }                        
                 }
             }
             return base.ProcessCmdKey(ref msg, keyData);
         }
 
-        #endregion
-
-        #region Events        
-        #endregion
-
-        #region IMainWindowView Members
-
-        public string Title
+        private void OnFunctionalButtonClick(Keys button)
         {
-            get
-            {
-                return _LabelTilte.Text;
-            }
-            set
-            {
-                _LabelTilte.Text = value;
-            }
+            if (FunctionalButtonClick != null)
+                FunctionalButtonClick(this, new EventArgsFunctionalButtonClick(button));
         }
 
-        //public IViewRegion WorkingRegion
-        //{
-        //    get { return _ViewRegionCollection[_PanelWorkingRegion.Name]; }
-        //}
+        #endregion
 
-        //public IViewRegion TitleRegion
-        //{
-        //    get { return _ViewRegionCollection[_PanelTitleRegion.Name]; }
-        //}
+        #region Events
+
+        public event EventHandler<EventArgsFunctionalButtonClick> FunctionalButtonClick; 
 
         #endregion
     }

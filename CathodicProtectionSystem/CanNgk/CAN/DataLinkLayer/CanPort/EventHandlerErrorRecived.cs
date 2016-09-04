@@ -3,43 +3,21 @@ using System.Collections.Generic;
 using System.Text;
 using NGK.CAN.DataLinkLayer.Message;
 
-//========================================================================================
 namespace NGK.CAN.DataLinkLayer.CanPort
 {
-    //====================================================================================
     /// <summary>
     /// Для создания события возникновения ошибки при рабте CAN-порта
     /// </summary>
     /// <param name="sender">Отправитель события</param>
     /// <param name="error">Ошибка</param>
     public delegate void EventHandlerErrorRecived(Object sender, EventArgsLineErrorRecived error);
-    //====================================================================================
     /// <summary>
     /// Класс для передачи аргументов события EventHandlerPortChangesStatus
     /// </summary>
     public class EventArgsLineErrorRecived : EventArgs
     {
-        //--------------------------------------------------------------------------------
-        #region Fields And Properties
-        //--------------------------------------------------------------------------------
-        /// <summary>
-        /// Ошибка при работе CAN-порта
-        /// </summary>
-        ERROR _Error;
-        //--------------------------------------------------------------------------------
-        /// <summary>
-        /// Ошибка при работе CAN-порта
-        /// </summary>
-        public ERROR Error
-        {
-            get { return _Error; }
-            set { _Error = value; }
-        }
-        //--------------------------------------------------------------------------------
-        #endregion
-        //--------------------------------------------------------------------------------
         #region Constructors
-        //--------------------------------------------------------------------------------
+        
         /// <summary>
         /// Конструктор
         /// </summary>
@@ -47,7 +25,7 @@ namespace NGK.CAN.DataLinkLayer.CanPort
         {
             _Error = Message.ERROR.Other;
         }
-        //--------------------------------------------------------------------------------
+
         /// <summary>
         /// Конструктор
         /// </summary>
@@ -56,11 +34,25 @@ namespace NGK.CAN.DataLinkLayer.CanPort
         {
             _Error = error;
         }
-        //--------------------------------------------------------------------------------
+
         #endregion
-        //--------------------------------------------------------------------------------
+
+        #region Fields And Properties
+
+        /// <summary>
+        /// Ошибка при работе CAN-порта
+        /// </summary>
+        ERROR _Error;
+
+        /// <summary>
+        /// Ошибка при работе CAN-порта
+        /// </summary>
+        public ERROR Error
+        {
+            get { return _Error; }
+            set { _Error = value; }
+        }
+
+        #endregion
     }
-    //====================================================================================
 }
-//========================================================================================
-// End Of File

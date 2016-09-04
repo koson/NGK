@@ -37,7 +37,7 @@ namespace NGK.Plugins.Services
                 EventHandler_NetworkManager_NetworkChangedStatus);
 
             _Devices = new BindingList<NgkCanDevice>();
-
+            
             _Timer = new Timer();
             _Timer.AutoReset = true;
             _Timer.Interval = pollingInterval;
@@ -48,12 +48,12 @@ namespace NGK.Plugins.Services
 
         #region Fields And Properties
 
-        readonly IManagers _Managers;
-        INgkCanNetworksManager _NetworkManager;
-        Timer _Timer;
-        ParametersPivotTable _ParatemersPivotTable;
+        private readonly IManagers _Managers;
+        private INgkCanNetworksManager _NetworkManager;
+        private Timer _Timer;
+        private ParametersPivotTable _ParatemersPivotTable;
 
-        BindingList<NgkCanDevice> _Devices;
+        private readonly BindingList<NgkCanDevice> _Devices;
         /// <summary>
         /// Список устройств в системе
         /// </summary>

@@ -7,16 +7,12 @@ using Mvp.Input;
 
 namespace NGK.CorrosionMonitoringSystem.Views
 {
-    public interface IMainWindowView : IWindowView, IStatusPanel
+    public interface IMainWindowView : IWindowView
     {
         /// <summary>
         /// Возвращает заголовок окна
         /// </summary>
         String Title { get; set; }
-        //IViewRegion WorkingRegion { get; }
-        //IViewRegion TitleRegion { get; }
-        ICommand ShowMenuCommand { set; }
-        ICommand[] ButtonCommands { set; }
 
         bool CursorEnabled { get; set; }
         bool ShowInTaskbar { get; set; }

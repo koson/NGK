@@ -95,11 +95,10 @@
     <Compile Include="Services\ModbusService\ISystemInformationModbusNetworkService.cs" />
     <Compile Include="Services\ModbusService\SystemInformationModbusNetworkService.cs" />
     <Compile Include="Services\ServiceHelper.cs" />
-    <Compile Include="Views\MainWindowView\ISystemMenu.cs" />
+    <Compile Include="Views\MainWindowView\EventHandlerFunctionalButtonClick.cs" />
     <Compile Include="Views\MainWindowView\MainWindowView.cs">
     </Compile>
     <Compile Include="Views\MainWindowView\SystemButtonsPanel\ISystemButtons.cs" />
-    <Compile Include="Views\MainWindowView\IStatusPanel.cs" />
     <Compile Include="Views\MainWindowView\IMainWindowView.cs" />
     <Compile Include="Views\MainWindowView\MainWindowForm.cs">
       <SubType>Form</SubType>

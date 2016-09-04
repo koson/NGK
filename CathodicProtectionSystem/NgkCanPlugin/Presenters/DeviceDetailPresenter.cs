@@ -17,9 +17,9 @@ namespace NGK.Plugins.Presenters
     {
         #region Constructors
 
-        public DeviceDetailPresenter()
+        public DeviceDetailPresenter(NgkCanPlugin plugin)
         {
-
+            _Plugin = plugin;
             _Parameters = new BindingList<Parameter>();
         }
 
@@ -27,6 +27,7 @@ namespace NGK.Plugins.Presenters
 
         #region Fields And Properties
 
+        private readonly NgkCanPlugin _Plugin;
         private NgkCanDevice _Device;
         private BindingList<Parameter> _Parameters;
         
@@ -50,13 +51,20 @@ namespace NGK.Plugins.Presenters
                 }
             }
         }
+        
         public BindingList<Parameter> Parameters
         {
             get { return _Parameters; }
         }
+        
         public override string Title
         {
             get { return @"Информация об устройстве"; }
+        }
+
+        private NgkCanPlugin Plugin
+        {
+            get { return _Plugin; }
         }
 
         #endregion

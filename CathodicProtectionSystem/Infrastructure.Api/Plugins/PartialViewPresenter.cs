@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Mvp.Presenter;
 using Mvp.View;
+using System.Windows.Forms;
 
 namespace Infrastructure.Api.Plugins
 {
@@ -15,13 +16,36 @@ namespace Infrastructure.Api.Plugins
     public abstract class PartialViewPresenter<T> : RegionPresenter<T>, IPartialViewPresenter
         where T : IPartialView
     {
+        #region Constructors
+
+        public PartialViewPresenter()
+        {
+            _FunctionalButtons = new List<Button>();
+        }
+        
+        #endregion
+
         #region Fields And Properties
+
+        private readonly List<Button> _FunctionalButtons;
 
         /// <summary>
         /// Заголовок (устанавливается в TitleRegion главной формы)
         /// </summary>
         public abstract string Title { get; }
+        /// <summary>
+        /// Функциональные кнопки. Расположены на всплывающей
+        /// панели справа. В данном случае их должно быть не более 3 (F3, F4, F5)
+        /// </summary>
+        IEnumerable<Button> IPartialViewPresenter.FunctionalButtons
+        {
+            get { return _FunctionalButtons; }
+        }
 
+        protected IList<Button> FunctionalButtons
+        {
+            get { return _FunctionalButtons; }
+        }
 
         #endregion
     }

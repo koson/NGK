@@ -30,6 +30,9 @@ namespace NGK.CorrosionMonitoringSystem.Presenters
 
             _ShowNavigationMenuCommand = new Command(OnShowNavigationMenu, CanShowNavigationMenu);
             _Commands.Add(_ShowNavigationMenuCommand);
+            _HideShowFunctionalButtonsPanelCommand = new Command(OnHideShowFunctionalButtonsPanel);
+            _Commands.Add(_HideShowFunctionalButtonsPanelCommand);
+
             //_ShowDeviceListCommand = new Command("Устройства", OnShowDeviceList, CanShowDeviceList);
             //_Commands.Add(_ShowDeviceListCommand);
             //_ShowPivoteTableCommand = new Command("Параметры ЭХЗ", OnShowPivoteTable, CanShowPivoteTable);
@@ -64,7 +67,10 @@ namespace NGK.CorrosionMonitoringSystem.Presenters
             //WorkingRegionPresenter = presenter;
 
             View.Form.Shown += new EventHandler(EventHandler_Form_Shown);
-            View.Form.ContextMenuStripChanged += new EventHandler(EventHandler_Form_ContextMenuStripChanged);
+            View.Form.ContextMenuStripChanged += 
+                new EventHandler(EventHandler_Form_ContextMenuStripChanged);
+            View.Form.FunctionalButtonClick += 
+                new EventHandler<EventArgsFunctionalButtonClick>(EventHandler_Form_FunctionalButtonClick);
 
             View.Form.ShowMenuCommand = _ShowNavigationMenuCommand;
 
@@ -143,15 +149,27 @@ namespace NGK.CorrosionMonitoringSystem.Presenters
         //    }
         //}
 
+        private IPartialViewPresenter _SelectedPartivalViewPresenter;
+        public IPartialViewPresenter SelectedPartivalViewPresenter
+        {
+            get { return _SelectedPartivalViewPresenter; }
+            private set 
+            { 
+                _SelectedPartivalViewPresenter = value;
+                OnSelectedPartivalViewPresenterChanged();
+            }
+        }
+
+
         #endregion
 
         #region Methods
 
-        void OnWorkingRegionChanged()
+        void OnSelectedPartivalViewPresenterChanged()
         {
-            if (WorkingRegionChanged != null)
+            if (SelectedPartivalViewPresenterChanged != null)
             {
-                WorkingRegionChanged(this, new EventArgs());
+                SelectedPartivalViewPresenterChanged(this, new EventArgs());
             }
         }
 
@@ -177,6 +195,36 @@ namespace NGK.CorrosionMonitoringSystem.Presenters
             View.WorkingRegion.Controls.Clear();
             View.WorkingRegion.Controls.Add(presenter.View.Control);
             View.Title = presenter.Title;
+            
+            View.ResetFunctionalButtons();
+            List<Button> buttons = new List<Button>(presenter.FunctionalButtons);
+
+            switch(buttons.Count)
+            {
+                case 0: break;
+                case 1:
+                    {
+                        View.ButtonF3 = buttons[0];
+                        View.ButtonF3.Dock = DockStyle.Fill;
+                        View.ButtonF3.Show();
+                        break;
+                    }
+                case 2:
+                    {
+                        View.ButtonF3 = buttons[0];
+                        View.ButtonF4 = buttons[1];
+                        break;
+                    }
+                default: // >=3
+                    {
+                        View.ButtonF3 = buttons[0];
+                        View.ButtonF4 = buttons[1];
+                        View.ButtonF5 = buttons[3];
+                        break; 
+                    }
+            }
+
+            SelectedPartivalViewPresenter = presenter;
         }
 
         #endregion
@@ -193,39 +241,78 @@ namespace NGK.CorrosionMonitoringSystem.Presenters
                 View.Form.ContextMenuStrip.Items.Add(
                     NavigationMenuItemConverter.ConvertTo(menu));
             }
+
+            // Создаём статусную панель формы
+            foreach (IPlugin plugin in Program.AppPluginsService.Plugins)
+            {
+                foreach (ToolStripItem item in plugin.StatusBarItems)
+                    View.StatusBar.Items.Add(item);
+            }
         }
 
-        public void EventHandler_Form_ContextMenuStripChanged(object sender, EventArgs e)
+        private void EventHandler_Form_ContextMenuStripChanged(object sender, EventArgs e)
         {
             _ShowNavigationMenuCommand.CanExecute();
         }
 
-        void EventHandler_CanNetworkService_StatusWasChanged(object sender, EventArgs e)
+        private void EventHandler_CanNetworkService_StatusWasChanged(object sender, EventArgs e)
         {
             UpdateStatusCommands();
         }
 
-        void EventHandler_CanNetworkService_FaultyDevicesChanged(
+        private void EventHandler_CanNetworkService_FaultyDevicesChanged(
             object sender, EventArgs e)
         {
             //ViewConcrete.FaultyDevices = 
             //    _Managers.CanNetworkService.FaultyDevices;
         }
 
+        private void EventHandler_Form_FunctionalButtonClick(object sender, 
+            EventArgsFunctionalButtonClick e)
+        {
+            switch (e.Button)
+            {
+                case Keys.F1:
+                    {
+                        //#if DEBUG
+                        //// Показываем окно управления сетями
+                        //FormNetworkControl frm = FormNetworkControl.Instance;
+                        //frm.TopMost = true;
+                        //frm.Show();
+                        //return false;
+                        //#else
+                        break; 
+                    }
+                case Keys.F2:
+                    { break; }
+                case Keys.F3:
+                    { break; }
+                case Keys.F4:
+                    { break; }
+                case Keys.F5:
+                    { break; }
+                case Keys.F6:
+                    {
+                        _HideShowFunctionalButtonsPanelCommand.Execute();
+                        break; 
+                    }
+            }
+        }
+
         #endregion
 
         #region Event
 
-        public event EventHandler WorkingRegionChanged;
-        
+        public event EventHandler SelectedPartivalViewPresenterChanged;
+
         #endregion
 
         #region Commands
 
-        private Command _ShowNavigationMenuCommand;
         /// <summary>
-        /// Отображаем меню приложения
+        /// Отображат меню приложения
         /// </summary>
+        private Command _ShowNavigationMenuCommand;
         private void OnShowNavigationMenu()
         {
             // Отображаем меню в центре формы
@@ -238,6 +325,12 @@ namespace NGK.CorrosionMonitoringSystem.Presenters
         private bool CanShowNavigationMenu()
         {
             return View.Form.ContextMenuStrip != null;
+        }
+
+        private Command _HideShowFunctionalButtonsPanelCommand;
+        private void OnHideShowFunctionalButtonsPanel()
+        {
+            View.FunctionalButtonsPanelVisible = !View.FunctionalButtonsPanelVisible;
         }
 
         //Command _ShowPivoteTableCommand;

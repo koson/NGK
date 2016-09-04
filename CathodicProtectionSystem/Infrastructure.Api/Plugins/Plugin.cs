@@ -5,6 +5,7 @@ using Mvp.Plugin;
 using Mvp.WinApplication;
 using Mvp.WinApplication.Infrastructure;
 using Infrastructure.API.Managers;
+using System.Windows.Forms;
 
 namespace Infrastructure.Api.Plugins
 {
@@ -16,6 +17,7 @@ namespace Infrastructure.Api.Plugins
         {
             _ApplicationServices = new List<IApplicationService>();
             _PartialPresenters = new List<IPartialViewPresenter>();
+            _StatusBarItems = new List<ToolStripItem>();
         }
 
         #endregion
@@ -24,8 +26,10 @@ namespace Infrastructure.Api.Plugins
 
         private readonly List<IApplicationService> _ApplicationServices;
         private readonly List<IPartialViewPresenter> _PartialPresenters;
+        private readonly List<ToolStripItem> _StatusBarItems;
         private NavigationMenuItem _NavigationMenu;
         private IManagers _Managers;
+        private IHostWindow _HostWindow;
 
         /// <summary>
         /// —ервисы приложени€ предоставл€емые плагином
@@ -50,10 +54,15 @@ namespace Infrastructure.Api.Plugins
             get { return _PartialPresenters; }
         }
 
+        protected IList<ToolStripItem> StatusBarItems
+        {
+            get { return _StatusBarItems; }
+        }
+
         public IManagers Managers
         {
             get { return _Managers; }
-            set { _Managers = value; }
+            protected set { _Managers = value; }
         }
 
         IEnumerable<IApplicationService> IPlugin.ApplicationServices
@@ -66,12 +75,36 @@ namespace Infrastructure.Api.Plugins
             get { return _PartialPresenters; }
         }
 
+        IEnumerable<ToolStripItem> IPlugin.StatusBarItems
+        {
+            get { return _StatusBarItems; }
+        }
+
+        public IHostWindow HostWindow
+        {
+            get { return _HostWindow; }
+            protected set 
+            { 
+                _HostWindow = value;
+                if (value != null)
+                    _HostWindow.SelectedPartivalViewPresenterChanged += 
+                        new EventHandler(EventHandler_HostWindow_SelectedPartivalViewPresenterChanged);
+            }
+        }
+
         #endregion
 
         #region Methods
 
-        public abstract void Initialize(IHostWindow host, object state);
+        public abstract void Initialize(IHostWindow host, IManagers managers, object state);
 
-        #endregion     
+        private void EventHandler_HostWindow_SelectedPartivalViewPresenterChanged(object sender, EventArgs e)
+        {
+            OnHostWindowSelectedPartivalViewPresenterChanged();
+        }
+
+        public virtual void OnHostWindowSelectedPartivalViewPresenterChanged(){}
+
+        #endregion         
     }
 }

@@ -2,12 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows.Forms;
-using System.ComponentModel;
 using Mvp.Input;
+using System.ComponentModel;
 
 namespace Mvp.Controls
 {
-    public class BindableToolStripMenuItem: ToolStripMenuItem, IBindableComponent
+    public class BindableToolStripButton : ToolStripButton, IBindableComponent
     {
         #region Constructors
         #endregion
@@ -16,28 +16,18 @@ namespace Mvp.Controls
 
         private ICommand _Action;
 
-        public ICommand Action 
-        { 
+        public ICommand Action
+        {
             get { return _Action; }
-            set 
+            set
             {
+                if (_Action != null)
+                    _Action.CanExecuteChanged -= EventHandler_Action_CanExecuteChanged;
+
                 _Action = value;
 
-                Binding binding = null;
-
-                foreach(Binding item in DataBindings)
-                {
-                    if (item.PropertyName == "Enabled")
-                        binding = item;
-                }
-
-                if (binding != null)
-                    DataBindings.Remove(binding);
-
                 if (_Action != null)
-                    DataBindings.Add(new Binding("Enabled", _Action, "Status"));
-
-
+                    _Action.CanExecuteChanged += EventHandler_Action_CanExecuteChanged;
             }
         }
 
@@ -67,7 +57,7 @@ namespace Mvp.Controls
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
         public ControlBindingsCollection DataBindings
         {
-            get 
+            get
             {
                 if (_DataBindings == null)
                     _DataBindings = new ControlBindingsCollection(this);
@@ -80,12 +70,17 @@ namespace Mvp.Controls
 
         #region Methods
 
-        protected override void  OnClick(EventArgs e)
+        protected override void OnClick(EventArgs e)
         {
             if (_Action != null)
                 _Action.Execute();
 
             base.OnClick(e);
+        }
+
+        private void EventHandler_Action_CanExecuteChanged(object sender, EventArgs e)
+        {
+            Enabled = _Action.Status;
         }
 
         #endregion
