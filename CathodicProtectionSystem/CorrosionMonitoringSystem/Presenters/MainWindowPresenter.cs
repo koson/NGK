@@ -13,6 +13,7 @@ using Infrastructure.Api.Plugins;
 using Mvp.WinApplication.Infrastructure;
 using Mvp.WinApplication.ApplicationService;
 using System.Drawing;
+using Infrastructure.Api.Controls;
 
 namespace NGK.CorrosionMonitoringSystem.Presenters
 {
@@ -28,10 +29,23 @@ namespace NGK.CorrosionMonitoringSystem.Presenters
             View.Form.Title = "";
             //ViewConcrete.Title = String.Empty;
 
-            _ShowNavigationMenuCommand = new Command(OnShowNavigationMenu, CanShowNavigationMenu);
+            _ShowNavigationMenuCommand = 
+                new Command(OnShowNavigationMenu, CanShowNavigationMenu);
             _Commands.Add(_ShowNavigationMenuCommand);
-            _HideShowFunctionalButtonsPanelCommand = new Command(OnHideShowFunctionalButtonsPanel);
+            _HideShowFunctionalButtonsPanelCommand = 
+                new Command(OnHideShowFunctionalButtonsPanel);
             _Commands.Add(_HideShowFunctionalButtonsPanelCommand);
+
+            _FunctionalButtonPanelVisibility = 
+                new FunctionalButton(_HideShowFunctionalButtonsPanelCommand, Keys.F2);
+            _FunctionalButtonPanelVisibility.Text = "Скрыть";
+            View.AddFunctionalButton(_FunctionalButtonPanelVisibility);
+
+            _FunctionalButtonNavigationMenu = 
+                new FunctionalButton(_ShowNavigationMenuCommand, Keys.F3);
+            _FunctionalButtonNavigationMenu.Text = "Меню";
+            View.AddFunctionalButton(_FunctionalButtonNavigationMenu);
+
 
             //_ShowDeviceListCommand = new Command("Устройства", OnShowDeviceList, CanShowDeviceList);
             //_Commands.Add(_ShowDeviceListCommand);
@@ -72,7 +86,7 @@ namespace NGK.CorrosionMonitoringSystem.Presenters
             View.Form.FunctionalButtonClick += 
                 new EventHandler<EventArgsFunctionalButtonClick>(EventHandler_Form_FunctionalButtonClick);
 
-            View.Form.ShowMenuCommand = _ShowNavigationMenuCommand;
+            //View.Form.ShowMenuCommand = _ShowNavigationMenuCommand;
 
             base.UpdateStatusCommands();
         }
@@ -81,75 +95,10 @@ namespace NGK.CorrosionMonitoringSystem.Presenters
 
         #region Fields And Properties
 
-        //public IMainWindowView ViewConcrete
-        //{
-        //    get { return (IMainWindowView)base.View; }
-        //}
-
-        //IPresenter _WorkingRegionPresenter;
-
-        //public IPresenter WorkingRegionPresenter 
-        //{
-        //    get { return _WorkingRegionPresenter; }
-        //    set
-        //    {
-        //        if (value.View.ViewType != ViewType.Region)
-        //        {
-        //            throw new ArgumentException(
-        //                "Попытка установить значение недопустимого типа", 
-        //                "WorkingRegionPresenter");
-        //        }
-        //        _WorkingRegionPresenter = value;
-        //        _WorkingRegionPresenter.ViewRegion = ViewConcrete.WorkingRegion;
-        //        _WorkingRegionPresenter.HostPresenter = this;
-
-        //        if (_WorkingRegionPresenter is ISystemButtons)
-        //        {
-        //            ISystemButtons buttons = _WorkingRegionPresenter as ISystemButtons;
-
-        //            if (buttons.ButtonCommands != null)
-        //            {
-        //                if (buttons.ButtonCommands.Length > 3)
-        //                {
-        //                    throw new Exception("Попытка установить недопустимое значение количества " +
-        //                        "команд присоединяемых к системным кнопкам");
-        //                }
-        //                else
-        //                {
-        //                    ViewConcrete.ButtonCommands = buttons.ButtonCommands;
-        //                }
-        //            }
-        //            else
-        //            {
-        //                ViewConcrete.ButtonCommands = null; 
-        //            }
-        //        }
-
-        //        _WorkingRegionPresenter.Show();
-        //        OnWorkingRegionChanged();
-        //    }
-        //}
-
-        //public string Title
-        //{
-        //    get { return ViewConcrete.Title; }
-        //    set { ViewConcrete.Title = value; }
-        //}
-
-        //ViewMode CurrentViewMode
-        //{
-        //    get
-        //    {
-        //        if (WorkingRegionPresenter != null)
-        //        {
-        //            if (WorkingRegionPresenter is IViewMode)
-        //                return (_WorkingRegionPresenter as IViewMode).ViewMode;
-        //        }
-        //        return ViewMode.NoSelection;
-        //    }
-        //}
-
+        private FunctionalButton _FunctionalButtonPanelVisibility;
+        private FunctionalButton _FunctionalButtonNavigationMenu;
         private IPartialViewPresenter _SelectedPartivalViewPresenter;
+
         public IPartialViewPresenter SelectedPartivalViewPresenter
         {
             get { return _SelectedPartivalViewPresenter; }
@@ -159,7 +108,6 @@ namespace NGK.CorrosionMonitoringSystem.Presenters
                 OnSelectedPartivalViewPresenterChanged();
             }
         }
-
 
         #endregion
 
@@ -191,38 +139,14 @@ namespace NGK.CorrosionMonitoringSystem.Presenters
         }
 
         public void Show(IPartialViewPresenter presenter)
-        {            
-            View.WorkingRegion.Controls.Clear();
+        {
+            if (SelectedPartivalViewPresenter != null)
+                SelectedPartivalViewPresenter.Close();
+
+            //View.WorkingRegion.Controls.Clear();
             View.WorkingRegion.Controls.Add(presenter.View.Control);
             View.Title = presenter.Title;
-            
-            View.ResetFunctionalButtons();
-            List<Button> buttons = new List<Button>(presenter.FunctionalButtons);
-
-            switch(buttons.Count)
-            {
-                case 0: break;
-                case 1:
-                    {
-                        View.ButtonF3 = buttons[0];
-                        View.ButtonF3.Dock = DockStyle.Fill;
-                        View.ButtonF3.Show();
-                        break;
-                    }
-                case 2:
-                    {
-                        View.ButtonF3 = buttons[0];
-                        View.ButtonF4 = buttons[1];
-                        break;
-                    }
-                default: // >=3
-                    {
-                        View.ButtonF3 = buttons[0];
-                        View.ButtonF4 = buttons[1];
-                        View.ButtonF5 = buttons[3];
-                        break; 
-                    }
-            }
+            View.AddRangeFunctionalButtons(presenter.FunctionalButtons);
 
             SelectedPartivalViewPresenter = presenter;
         }
@@ -283,19 +207,15 @@ namespace NGK.CorrosionMonitoringSystem.Presenters
                         //#else
                         break; 
                     }
-                case Keys.F2:
-                    { break; }
-                case Keys.F3:
-                    { break; }
-                case Keys.F4:
-                    { break; }
-                case Keys.F5:
-                    { break; }
-                case Keys.F6:
+                case Keys.F2: // Скрыть/отобразить пнель
                     {
                         _HideShowFunctionalButtonsPanelCommand.Execute();
                         break; 
                     }
+                case Keys.F3: break; // Отобарзить навигационное меню.
+                case Keys.F4: break;
+                case Keys.F5: break;
+                case Keys.F6: break; 
             }
         }
 

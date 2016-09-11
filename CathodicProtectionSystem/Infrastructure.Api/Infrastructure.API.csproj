@@ -37,6 +37,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controls\FunctionalButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Models\CAN\IDeviceInfo.cs" />
     <Compile Include="Models\CAN\IDeviceSummaryParameters.cs" />
     <Compile Include="Models\CAN\NgkCanDevice.cs" />

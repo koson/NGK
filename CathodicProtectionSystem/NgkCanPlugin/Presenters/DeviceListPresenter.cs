@@ -10,6 +10,7 @@ using System.ComponentModel;
 using NGK.Plugins.Views;
 using Infrastructure.Api.Plugins;
 using Infrastructure.API.Models.CAN;
+using Infrastructure.Api.Controls;
 
 namespace NGK.Plugins.Presenters
 {
@@ -21,9 +22,9 @@ namespace NGK.Plugins.Presenters
         {
             _Plugin = plugin;
 
-            _DeviceDetailCommand = new Command("Подробно", 
-                new CommandAction(OnDeviceDetail), new Condition(CanDeviceDetail));
-            _Commands.Add(_DeviceDetailCommand);
+            _ShowDeviceDetailCommand = new Command("Подробно", 
+                new CommandAction(OnShowDeviceDetail), new Condition(CanShowDeviceDetail));
+            _Commands.Add(_ShowDeviceDetailCommand);
 
             _Devices = new BindingList<IDeviceInfo>();
 
@@ -37,11 +38,10 @@ namespace NGK.Plugins.Presenters
 
             View.Devices = Devices;
 
-            _ButtonDeviceDetail = new Button();
-            _ButtonDeviceDetail.Name = "_ButtonDeviceDetail";
+            _ButtonDeviceDetail = new FunctionalButton(_ShowDeviceDetailCommand, Keys.F4);
+            _ButtonDeviceDetail.Name = "_FunctionalButtonDeviceDetail";
             _ButtonDeviceDetail.Text = "Подробно";
-            _ButtonDeviceDetail.Click += 
-                new EventHandler(EventHandler_ButtonDeviceDetail_Click);
+
             FunctionalButtons.Add(_ButtonDeviceDetail);
         }
 
@@ -51,7 +51,7 @@ namespace NGK.Plugins.Presenters
 
         private readonly BindingList<IDeviceInfo> _Devices;
         private readonly NgkCanPlugin _Plugin;
-        private readonly Button _ButtonDeviceDetail;
+        private readonly FunctionalButton _ButtonDeviceDetail;
 
         public override string Title
         {
@@ -77,21 +77,15 @@ namespace NGK.Plugins.Presenters
 
         #region Commands
 
-        Command _DeviceDetailCommand;
+        Command _ShowDeviceDetailCommand;
 
-        void OnDeviceDetail()
+        void OnShowDeviceDetail()
         {
-            //DeviceDetailPresenter presenter = 
-            //    (DeviceDetailPresenter)_Managers.PresentersFactory.Create(
-            //    ViewMode.DeviceDetail);
-            //presenter.Device = SelectedDevice;
-            //((MainWindowPresenter)_Application.CurrentPresenter)
-            //    .WorkingRegionPresenter = presenter;
-            //presenter.Show();
-            MessageBox.Show("", "");
+            DeviceDetailPresenter presenter = new DeviceDetailPresenter(Plugin);
+            Plugin.HostWindow.Show(presenter);
         }
 
-        bool CanDeviceDetail()
+        bool CanShowDeviceDetail()
         {
             return SelectedDevice != null;
         }
@@ -109,11 +103,12 @@ namespace NGK.Plugins.Presenters
         public override void Close()
         {
             View.Close();
+            base.Close();
         }
 
         private void EventHandler_ButtonDeviceDetail_Click(object sender, EventArgs e)
         {
-            _DeviceDetailCommand.Execute();
+            _ShowDeviceDetailCommand.Execute();
         }
 
         #endregion

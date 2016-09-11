@@ -4,6 +4,7 @@ using System.Text;
 using Mvp.Presenter;
 using Mvp.View;
 using System.Windows.Forms;
+using Infrastructure.Api.Controls;
 
 namespace Infrastructure.Api.Plugins
 {
@@ -20,14 +21,14 @@ namespace Infrastructure.Api.Plugins
 
         public PartialViewPresenter()
         {
-            _FunctionalButtons = new List<Button>();
+            _FunctionalButtons = new List<FunctionalButton>();
         }
         
         #endregion
 
         #region Fields And Properties
 
-        private readonly List<Button> _FunctionalButtons;
+        private readonly List<FunctionalButton> _FunctionalButtons;
 
         /// <summary>
         /// Заголовок (устанавливается в TitleRegion главной формы)
@@ -37,14 +38,27 @@ namespace Infrastructure.Api.Plugins
         /// Функциональные кнопки. Расположены на всплывающей
         /// панели справа. В данном случае их должно быть не более 3 (F3, F4, F5)
         /// </summary>
-        IEnumerable<Button> IPartialViewPresenter.FunctionalButtons
+        IEnumerable<FunctionalButton> IPartialViewPresenter.FunctionalButtons
         {
             get { return _FunctionalButtons; }
         }
 
-        protected IList<Button> FunctionalButtons
+        protected IList<FunctionalButton> FunctionalButtons
         {
             get { return _FunctionalButtons; }
+        }
+
+        #endregion
+
+        #region Methods
+
+        public override void Close()
+        {
+            foreach (FunctionalButton button in FunctionalButtons)
+            {
+                button.Hide();
+                button.Dispose();
+            }
         }
 
         #endregion

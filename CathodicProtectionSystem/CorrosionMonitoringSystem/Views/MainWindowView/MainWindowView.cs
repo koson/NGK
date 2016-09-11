@@ -4,6 +4,7 @@ using System.Text;
 using Mvp.View;
 using Infrastructure.Api.Plugins;
 using System.Windows.Forms;
+using Infrastructure.Api.Controls;
 
 namespace NGK.CorrosionMonitoringSystem.Views
 {
@@ -28,7 +29,7 @@ namespace NGK.CorrosionMonitoringSystem.Views
 
         public Panel WorkingRegion
         {
-            get { return Form.WorkingRegionControl; }
+            get { return Form.WorkingRegionPanel; }
         }
 
         public StatusStrip StatusBar
@@ -36,63 +37,24 @@ namespace NGK.CorrosionMonitoringSystem.Views
             get { return Form._StatusStripMain; }
         }
 
-        public Button ButtonF2
-        {
-            get { return Form._ButtonF2; }
-        }
-
-        public Button ButtonF3
-        {
-            get { return Form._ButtonF3; }
-            set { Form._ButtonF3 = value; }
-        }
-
-        public Button ButtonF4
-        {
-            get { return Form._ButtonF4; }
-            set { Form._ButtonF4 = value; }
-        }
-
-        public Button ButtonF5
-        {
-            get { return Form._ButtonF5; }
-            set { Form._ButtonF5 = value; }
-        }
-
-        public Button ButtonF6
-        {
-            get { return Form._ButtonF6; }
-        }
-
         public bool FunctionalButtonsPanelVisible
         {
-            get { return Form._PanelSystemButtonsRegion.Visible; }
-            set { Form._PanelSystemButtonsRegion.Visible = value; }
+            get { return Form.FunctionalButtonsPanel.Visible; }
+            set { Form.FunctionalButtonsPanel.Visible = value; }
         }
 
         #endregion
 
         #region Methods
-
-        public void ResetFunctionalButtons()
+        
+        public void AddRangeFunctionalButtons(IEnumerable<FunctionalButton> buttons)
         {
-            if (ButtonF3 != null)
-            {
-                ButtonF3.Dispose();
-                ButtonF3 = null;
-            }
+            Form.AddRangeFunctionalButtons(buttons);
+        }
 
-            if (ButtonF4 != null)
-            {
-                ButtonF4.Dispose();
-                ButtonF4 = null;
-            }
-
-            if (ButtonF5 != null)
-            {
-                ButtonF5.Dispose();
-                ButtonF5 = null;
-            }
+        public void AddFunctionalButton(FunctionalButton button)
+        {
+            Form.AddFunctionalButton(button);
         }
 
         #endregion

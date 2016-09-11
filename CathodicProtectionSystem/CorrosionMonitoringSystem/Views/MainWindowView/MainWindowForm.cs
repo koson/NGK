@@ -8,6 +8,7 @@ using System.Windows.Forms;
 using Mvp.View;
 using Mvp.View.Collections.ObjectModel;
 using Mvp.Input;
+using Infrastructure.Api.Controls;
 
 namespace NGK.CorrosionMonitoringSystem.Views
 {
@@ -18,13 +19,7 @@ namespace NGK.CorrosionMonitoringSystem.Views
         public MainWindowForm()
         {
             InitializeComponent();
-            _PanelSystemButtonsRegion.Hide();
-            _ButtonF3.Dispose();
-            _ButtonF3 = null;
-            _ButtonF4.Dispose();
-            _ButtonF4 = null;
-            _ButtonF5.Dispose();
-            _ButtonF5 = null;
+            _PanelFunctionalButtonsPanel.Hide();
         }
 
         #endregion
@@ -48,22 +43,11 @@ namespace NGK.CorrosionMonitoringSystem.Views
 
         public Boolean ButtonsPanelCollapsed
         {
-            get { return _PanelSystemButtonsRegion.Visible; }
-            set { _PanelSystemButtonsRegion.Visible = value; }
+            get { return _PanelFunctionalButtonsPanel.Visible; }
+            set { _PanelFunctionalButtonsPanel.Visible = value; }
         }
 
         public ViewType ViewType { get { return ViewType.Window; } }
-
-        public ICommand ShowMenuCommand
-        {
-            set 
-            { 
-                _ButtonF2.DataBindings.Clear();
-                _ButtonF2.Tag = value;
-                _ButtonF2.DataBindings.Add(
-                    new Binding("Enabled", _ButtonF2.Tag, "Status")); 
-            }
-        }
 
         public bool FormBorderEnable 
         { 
@@ -105,9 +89,14 @@ namespace NGK.CorrosionMonitoringSystem.Views
             }
         }
 
-        public Panel WorkingRegionControl
+        public Panel WorkingRegionPanel
         {
             get { return _PanelWorkingRegion; }
+        }
+
+        public Panel FunctionalButtonsPanel
+        {
+            get { return _PanelFunctionalButtonsPanel; }
         }
 
         public string Title
@@ -120,51 +109,43 @@ namespace NGK.CorrosionMonitoringSystem.Views
 
         #region Event Handlers
 
-        void EventHandler_MainWindowView_Load(object sender, EventArgs e)
+        private void EventHandler_MainWindowView_Load(
+            object sender, EventArgs e)
         {
             _Timer = new Timer();
             _Timer.Interval = 1000;
             _Timer.Tick += new EventHandler(EventHandler_Timer_Tick);
             _Timer.Start();
 
-            _ButtonF2.Click += new EventHandler(EventHandler_Button_Click);
-            //_ButtonF3.Click += new EventHandler(EventHandler_Button_Click);
-            //_ButtonF4.Click += new EventHandler(EventHandler_Button_Click);
-            //_ButtonF5.Click += new EventHandler(EventHandler_Button_Click);
-            _ButtonF6.Click += new EventHandler(EventHandler_Button_Click);
-
-            _PanelSystemButtonsRegion.VisibleChanged +=
-                new EventHandler(EventHandler_PanelSystemButtonsRegion_VisibleChanged);
+            _PanelFunctionalButtonsPanel.VisibleChanged +=
+                new EventHandler(EventHandler_PanelFunctionalButtonsPanel_VisibleChanged);
             _PanelWorkingRegion.GotFocus += 
                 new EventHandler(EventHandler_PanelWorkingRegion_GotFocus);
         }
 
-        void EventHandler_Timer_Tick(object sender, EventArgs e)
+        private void EventHandler_Timer_Tick(
+            object sender, EventArgs e)
         {
             _ToolStripStatusLabelDateTime.Text = 
                 DateTime.Now.ToString(new System.Globalization.CultureInfo("ru-RU", false));
         }
 
-        void EventHandler_Button_Click(object sender, EventArgs e)
-        {
-            Button btn = (Button)sender;
+        //private void EventHandler_Button_Click(
+        //    object sender, EventArgs e)
+        //{
+        //    Button btn = (Button)sender;
 
-            if (btn.Equals(_ButtonF6))
-            {
-                // Скрывает или отображаем панель конопок
-                _PanelSystemButtonsRegion.Visible = !_PanelSystemButtonsRegion.Visible;
-            }
-            else
-                ((ICommand)btn.Tag).Execute();
-        }
+        //    if (btn.Equals(_ButtonF6))
+        //    {
+        //        // Скрывает или отображаем панель конопок
+        //        _PanelFunctionalButtonsPanel.Visible = !_PanelFunctionalButtonsPanel.Visible;
+        //    }
+        //    else
+        //        ((ICommand)btn.Tag).Execute();
+        //}
 
-        void EventHandler_ShowMenuCommand_CanExecuteChanged(object sender, EventArgs e)
-        {
-            ICommand cmd = (ICommand)sender;
-            _ButtonF2.Enabled = cmd.Status;
-        }
-
-        void EventHandler_PanelSystemButtonsRegion_VisibleChanged(object sender, EventArgs e)
+        private void EventHandler_PanelFunctionalButtonsPanel_VisibleChanged(
+            object sender, EventArgs e)
         {
             Panel control = (Panel)sender;
 
@@ -176,12 +157,14 @@ namespace NGK.CorrosionMonitoringSystem.Views
             }
             else
             {
-                if (!_ButtonF6.Focused)
-                    _ButtonF6.Focus();
+                if (control.Controls.Count > 0)
+                    if (!control.Controls[0].Focused)
+                        control.Controls[0].Focus();
             }
         }
 
-        void EventHandler_PanelWorkingRegion_GotFocus(object sender, EventArgs e)
+        private void EventHandler_PanelWorkingRegion_GotFocus(
+            object sender, EventArgs e)
         {
             Panel control = (Panel)sender;
 
@@ -191,9 +174,32 @@ namespace NGK.CorrosionMonitoringSystem.Views
             }
         }
 
+        private void EventHandler_PanelFunctionalButtonsPanel_ControlAdded(
+            object sender, ControlEventArgs e)
+        {
+            RedrawFunctionalButtonsPanel();
+        }
+
+        private void EventHandler_PanelFunctionalButtonsPanel_Resize(
+            object sender, EventArgs e)
+        {
+            RedrawFunctionalButtonsPanel();
+        }
+
         #endregion
 
         #region Methods
+
+        public void AddRangeFunctionalButtons(IEnumerable<FunctionalButton> buttons)
+        {
+            List<FunctionalButton> list = new List<FunctionalButton>(buttons);
+            _PanelFunctionalButtonsPanel.Controls.AddRange(list.ToArray());
+        }
+
+        public void AddFunctionalButton(FunctionalButton button)
+        {
+            _PanelFunctionalButtonsPanel.Controls.Add(button);
+        }
 
         /// <summary>
         /// Перехватчик сообщений посылаемых системой форме
@@ -225,6 +231,52 @@ namespace NGK.CorrosionMonitoringSystem.Views
                 }
             }
             return base.ProcessCmdKey(ref msg, keyData);
+        }
+
+        private void RedrawFunctionalButtonsPanel()
+        {
+            const int MAX_CONTROLS = 5;
+            const int MARGIN = 3;
+
+            Size size = _PanelFunctionalButtonsPanel.Size;
+
+            int height = (size.Height - (MAX_CONTROLS + 1) * MARGIN) / MAX_CONTROLS;
+            int width = size.Width - MARGIN * 2;
+
+            foreach (Control control in _PanelFunctionalButtonsPanel.Controls)
+            {
+                control.Height = height;
+                control.Width = width;
+
+                switch (((FunctionalButton)control).Key)
+                {
+                    case Keys.F2:
+                        {
+                            control.Location = new Point(MARGIN, MARGIN); 
+                            break;
+                        }
+                    case Keys.F3:
+                        {
+                            control.Location = new Point(MARGIN, MARGIN * 2 + height);
+                            break;
+                        }
+                    case Keys.F4:
+                        {
+                            control.Location = new Point(MARGIN, MARGIN * 3 + height * 2);
+                            break;
+                        }
+                    case Keys.F5:
+                        {
+                            control.Location = new Point(MARGIN, MARGIN * 4 + height * 3);
+                            break;
+                        }
+                    case Keys.F6:
+                        {
+                            control.Location = new Point(MARGIN, MARGIN * 5 + height * 4);
+                            break;
+                        }
+                }
+            }
         }
 
         private void OnFunctionalButtonClick(Keys button)
