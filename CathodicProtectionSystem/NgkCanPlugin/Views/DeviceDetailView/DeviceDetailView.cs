@@ -4,6 +4,8 @@ using System.Text;
 using Mvp.View;
 using System.Windows.Forms;
 using NGK.Plugins.Presenters;
+using Infrastructure.API.Models.CAN;
+using System.ComponentModel;
 
 namespace NGK.Plugins.Views
 {
@@ -15,6 +17,11 @@ namespace NGK.Plugins.Views
         {
             get { return base.Control.Dock; }
             set { base.Control.Dock = value; }
+        }
+
+        public BindingList<Parameter> Parameters
+        {
+            set { Control.Parameters = value; }
         }
 
         #endregion 

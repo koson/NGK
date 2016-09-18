@@ -10,6 +10,7 @@ using Mvp.View;
 using NGK.Plugins.Views;
 using Infrastructure.Api.Plugins;
 using Infrastructure.API.Models.CAN;
+using Infrastructure.Api.Controls;
 
 namespace NGK.Plugins.Presenters
 {
@@ -19,8 +20,18 @@ namespace NGK.Plugins.Presenters
 
         public DeviceDetailPresenter(NgkCanPlugin plugin)
         {
+            _ShowDevicesListCommand = new Command(OnShowDevicesList);
+            base._Commands.Add(_ShowDevicesListCommand);
+
             _Plugin = plugin;
             _Parameters = new BindingList<Parameter>();
+            View.Parameters = _Parameters;
+
+            _ButtonDevicesList = new FunctionalButton(_ShowDevicesListCommand, Keys.F4);
+            _ButtonDevicesList.Name = "_FunctionalButtonDevicesList";
+            _ButtonDevicesList.Text = "Устройства";
+
+            FunctionalButtons.Add(_ButtonDevicesList);
         }
 
         #endregion
@@ -30,6 +41,7 @@ namespace NGK.Plugins.Presenters
         private readonly NgkCanPlugin _Plugin;
         private NgkCanDevice _Device;
         private BindingList<Parameter> _Parameters;
+        private readonly FunctionalButton _ButtonDevicesList;
         
         public NgkCanDevice Device
         {
@@ -74,6 +86,7 @@ namespace NGK.Plugins.Presenters
         public override void Close()
         {
             View.Close();
+            base.Close();
         }
 
         #endregion
@@ -83,6 +96,15 @@ namespace NGK.Plugins.Presenters
         #endregion
 
         #region Commands
+
+        private Command _ShowDevicesListCommand;
+
+        private void OnShowDevicesList()
+        {
+            DevicesListPresenter presenter = new DevicesListPresenter(Plugin);
+            Plugin.HostWindow.Show(presenter);
+        }
+
         #endregion
     }
 }

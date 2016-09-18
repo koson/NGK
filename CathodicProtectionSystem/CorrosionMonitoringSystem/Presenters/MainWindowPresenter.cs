@@ -14,6 +14,7 @@ using Mvp.WinApplication.Infrastructure;
 using Mvp.WinApplication.ApplicationService;
 using System.Drawing;
 using Infrastructure.Api.Controls;
+using Mvp.Controls;
 
 namespace NGK.CorrosionMonitoringSystem.Presenters
 {
@@ -171,6 +172,16 @@ namespace NGK.CorrosionMonitoringSystem.Presenters
             {
                 foreach (ToolStripItem item in plugin.StatusBarItems)
                     View.StatusBar.Items.Add(item);
+            }
+
+            // Устанавливаем вид по умолчанию
+            foreach(BindableToolStripMenuItem item in View.Form.ContextMenuStrip.Items)
+            {
+                foreach(BindableToolStripMenuItem dropDownItem in item.DropDownItems)
+                {
+                    if (dropDownItem.Action != null && dropDownItem.Action.Status)
+                        dropDownItem.Action.Execute();
+                }   
             }
         }
 

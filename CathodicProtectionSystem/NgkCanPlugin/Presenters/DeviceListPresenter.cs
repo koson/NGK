@@ -77,15 +77,16 @@ namespace NGK.Plugins.Presenters
 
         #region Commands
 
-        Command _ShowDeviceDetailCommand;
+        private Command _ShowDeviceDetailCommand;
 
-        void OnShowDeviceDetail()
+        private void OnShowDeviceDetail()
         {
             DeviceDetailPresenter presenter = new DeviceDetailPresenter(Plugin);
+            presenter.Device = SelectedDevice;
             Plugin.HostWindow.Show(presenter);
         }
 
-        bool CanShowDeviceDetail()
+        private bool CanShowDeviceDetail()
         {
             return SelectedDevice != null;
         }
