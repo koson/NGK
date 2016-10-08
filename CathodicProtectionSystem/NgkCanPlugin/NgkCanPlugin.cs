@@ -26,9 +26,11 @@ namespace NGK.Plugins
             _ShowDevicesListCommand = new Command(OnShowDevicesList, CanShowDevicesList);
             _UpdateTotalDevicesCommand = new Command(OnUpdateTotalDevices, CanUpdateTotalDevices);
             _UpdateFaultyDevicesCommand = new Command(OnUpdateFaultyDevices, CanUpdateFaultyDevices);
+            _ShowPivotTableCommand = new Command(OnShowPivotTable, CanShowPivotTable);
 
             NavigationMenu = new NavigationMenuItem(Name, null);
             NavigationMenu.SubMenuItems.Add(new NavigationMenuItem("Устройства", _ShowDevicesListCommand));
+            NavigationMenu.SubMenuItems.Add(new NavigationMenuItem("Таблица параметров", _ShowPivotTableCommand));
 
             _BindableToolStripButtonTotalDevices = new BindableToolStripButton();
             _BindableToolStripButtonTotalDevices.Name = "_ToolStripButtonTotalDevices";
@@ -153,6 +155,21 @@ namespace NGK.Plugins
         private bool CanUpdateFaultyDevices()
         {
             return CanNetworkService != null;
+        }
+
+        private Command _ShowPivotTableCommand;
+        private void OnShowPivotTable()
+        {
+            PivoteTablePresenter presenter = new PivoteTablePresenter(this);
+            presenter.Show();
+        }
+        private bool CanShowPivotTable()
+        {
+            return (CanNetworkService != null &&
+                  HostWindow.SelectedPartivalViewPresenter == null) ||
+                  (CanNetworkService != null &&
+                  HostWindow.SelectedPartivalViewPresenter != null &&
+                  !(HostWindow.SelectedPartivalViewPresenter is PivoteTablePresenter));
         }
 
         #endregion

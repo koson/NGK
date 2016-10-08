@@ -30,15 +30,15 @@ namespace Infrastructure.API.Managers
         //int PivotTableProtectionCurrent_200BColumnWidth { get; set; }
         //int PivotTableProtectionPotential_2009ColumnWidth { get; set; }
 
-        //bool PivotTableNodeIdColumnVisble { get; }
-        //bool PivotTableLocationColumnVisble { get; }
-        //bool PivotTablePolarisationPotentialColumnVisble { get; }
-        //bool PivotTableProtectionPotentialColumnVisble { get; }
-        //bool PivotTableProtectionCurrentColumnVisble { get; }
-        //bool PivotTablePolarisationCurrentColumnVisble { get; }
-        //bool PivotTableCorrosionDepthColumnVisble { get; }
-        //bool PivotTableCorrosionSpeedColumnVisble { get; }
-        //bool PivotTableTamperColumnVisble { get; }
+        bool PivotTableNodeIdColumnVisble { get; }
+        bool PivotTableLocationColumnVisble { get; }
+        bool PivotTablePolarisationPotentialColumnVisble { get; }
+        bool PivotTableProtectionPotentialColumnVisble { get; }
+        bool PivotTableProtectionCurrentColumnVisble { get; }
+        bool PivotTablePolarisationCurrentColumnVisble { get; }
+        bool PivotTableCorrosionDepthColumnVisble { get; }
+        bool PivotTableCorrosionSpeedColumnVisble { get; }
+        bool PivotTableTamperColumnVisble { get; }
 
         //Color CommunicationErrorRowColor { get; }
         //Color ConfigurationErrorRowColor { get; }
