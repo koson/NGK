@@ -108,7 +108,7 @@ namespace NGK.CorrosionMonitoringSystem
             {
                 splash.WriteLine(String.Format("Плагин {0} загружен", plugin.Name));
                 NavigationService.Menu.Add(plugin.NavigationMenu);
-                plugin.Initialize(MainWindowPresenter, Managers, null);
+                plugin.Initialize(Managers, null);
 
                 Thread.Sleep(500);
             }

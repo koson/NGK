@@ -5,6 +5,6 @@ namespace Infrastructure.Api.Services
 {
     public interface IPartialVIewService
     {
-        void Show(IPartialViewPresenter presenter);
+        IHostWindow Host { get; }
     }
 }

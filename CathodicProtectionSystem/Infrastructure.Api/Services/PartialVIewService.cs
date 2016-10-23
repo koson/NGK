@@ -10,34 +10,26 @@ namespace Infrastructure.Api.Services
     /// Сервис для отображения частичного предстваления на главной
     /// форме приложения
     /// </summary>
-    public class PartialVIewService : Infrastructure.Api.Services.IPartialVIewService
+    public class PartialVIewService : IPartialVIewService
     {
         #region Constructors
 
         public PartialVIewService(IApplicationController application)
         {
-            _Application = application;
+            if (application.MainFormPresenter is IHostWindow)
+                _HostWindow = (IHostWindow)application.MainFormPresenter;
         }
 
         #endregion
 
         #region Fields And Properties
 
-        private readonly IApplicationController _Application;
+        private readonly IHostWindow _HostWindow;
+        public IHostWindow Host { get { return _HostWindow; } }
 
         #endregion
 
         #region Methods
-
-        public void Show(IPartialViewPresenter presenter)
-        {
-            if (_Application.MainFormPresenter != null && 
-                _Application.MainFormPresenter is IHostWindow)
-            {
-                ((IHostWindow)_Application.MainFormPresenter).Show(presenter);
-            }
-        }
-
         #endregion
     }
 }

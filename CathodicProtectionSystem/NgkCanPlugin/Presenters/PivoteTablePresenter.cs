@@ -75,7 +75,7 @@ namespace NGK.Plugins.Presenters
 
         public override void Show()
         {
-            _Plugin.HostWindow.Show(this);
+            _Plugin.Managers.PartialViewService.Host.Show(this);
             base.Show();
         }
 

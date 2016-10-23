@@ -102,7 +102,7 @@ namespace NGK.Plugins.Presenters
         private void OnShowDevicesList()
         {
             DevicesListPresenter presenter = new DevicesListPresenter(Plugin);
-            Plugin.HostWindow.Show(presenter);
+            Plugin.Managers.PartialViewService.Host.Show(presenter);
         }
 
         #endregion

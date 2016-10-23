@@ -86,10 +86,9 @@ namespace NGK.Plugins
 
         #region Methods
 
-        public override void Initialize(IHostWindow hostWindow, IManagers managers, object state)
+        public override void Initialize(IManagers managers, object state)
         {
-            Managers = managers;
-            HostWindow = hostWindow;
+            base.Initialize(managers, state);
 
             // Создаём сервисы приложения
             try
@@ -129,10 +128,10 @@ namespace NGK.Plugins
         private bool CanShowDevicesList()
         {
             return (CanNetworkService != null &&
-                HostWindow.SelectedPartivalViewPresenter == null) ||
+                Managers.PartialViewService.Host.SelectedPartivalViewPresenter == null) ||
                 (CanNetworkService != null &&
-                HostWindow.SelectedPartivalViewPresenter != null &&
-                !(HostWindow.SelectedPartivalViewPresenter is DevicesListPresenter));
+                Managers.PartialViewService.Host.SelectedPartivalViewPresenter != null &&
+                !(Managers.PartialViewService.Host.SelectedPartivalViewPresenter is DevicesListPresenter));
         }
 
         private Command _UpdateTotalDevicesCommand;
@@ -166,10 +165,10 @@ namespace NGK.Plugins
         private bool CanShowPivotTable()
         {
             return (CanNetworkService != null &&
-                  HostWindow.SelectedPartivalViewPresenter == null) ||
+                  Managers.PartialViewService.Host.SelectedPartivalViewPresenter == null) ||
                   (CanNetworkService != null &&
-                  HostWindow.SelectedPartivalViewPresenter != null &&
-                  !(HostWindow.SelectedPartivalViewPresenter is PivoteTablePresenter));
+                  Managers.PartialViewService.Host.SelectedPartivalViewPresenter != null &&
+                  !(Managers.PartialViewService.Host.SelectedPartivalViewPresenter is PivoteTablePresenter));
         }
 
         #endregion

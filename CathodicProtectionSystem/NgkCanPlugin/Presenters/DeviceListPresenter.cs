@@ -83,7 +83,7 @@ namespace NGK.Plugins.Presenters
         {
             DeviceDetailPresenter presenter = new DeviceDetailPresenter(Plugin);
             presenter.Device = SelectedDevice;
-            Plugin.HostWindow.Show(presenter);
+            Plugin.Managers.PartialViewService.Host.Show(presenter);
         }
 
         private bool CanShowDeviceDetail()
@@ -97,7 +97,7 @@ namespace NGK.Plugins.Presenters
 
         public override void Show()
         {
-            Plugin.HostWindow.Show(this);
+            Plugin.Managers.PartialViewService.Host.Show(this);
             base.Show();
         }
 

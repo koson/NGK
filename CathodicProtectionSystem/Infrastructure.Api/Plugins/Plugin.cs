@@ -29,7 +29,6 @@ namespace Infrastructure.Api.Plugins
         private readonly List<ToolStripItem> _StatusBarItems;
         private NavigationMenuItem _NavigationMenu;
         private IManagers _Managers;
-        private IHostWindow _HostWindow;
 
         /// <summary>
         /// —ервисы приложени€ предоставл€емые плагином
@@ -80,23 +79,16 @@ namespace Infrastructure.Api.Plugins
             get { return _StatusBarItems; }
         }
 
-        public IHostWindow HostWindow
-        {
-            get { return _HostWindow; }
-            protected set 
-            { 
-                _HostWindow = value;
-                if (value != null)
-                    _HostWindow.SelectedPartivalViewPresenterChanged += 
-                        new EventHandler(EventHandler_HostWindow_SelectedPartivalViewPresenterChanged);
-            }
-        }
-
         #endregion
 
         #region Methods
 
-        public abstract void Initialize(IHostWindow host, IManagers managers, object state);
+        public virtual void Initialize(IManagers managers, object state)
+        {
+            _Managers = managers;
+            _Managers.PartialViewService.Host.SelectedPartivalViewPresenterChanged +=
+                new EventHandler(EventHandler_HostWindow_SelectedPartivalViewPresenterChanged);
+        }
 
         private void EventHandler_HostWindow_SelectedPartivalViewPresenterChanged(object sender, EventArgs e)
         {
