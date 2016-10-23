@@ -13,7 +13,7 @@
     <ManifestCertificateThumbprint>C4178D43B1CABD6C1A9622FAE4E5795E3D670F8E</ManifestCertificateThumbprint>
     <ManifestKeyFile>CorrosionMonitoringSystem_TemporaryKey.pfx</ManifestKeyFile>
     <GenerateManifests>true</GenerateManifests>
-    <SignManifests>true</SignManifests>
+    <SignManifests>false</SignManifests>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>

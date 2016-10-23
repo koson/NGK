@@ -154,6 +154,11 @@ namespace NGK.CAN.DataTypes
             //return base.Equals(obj);
         }
 
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+
         #endregion
 
         #region IEquatable<NgkProductVersion> Members

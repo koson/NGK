@@ -16,9 +16,6 @@ namespace Mvp.View
         #endregion
 
         #region Methods
-
-        void Hide();
-
         #endregion
 
         #region Events

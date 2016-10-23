@@ -23,7 +23,7 @@ namespace NGK.CAN.Design
         /// Массив хранит типы всех сетевых устройств являющихся наследниками 
         /// абстрактного класса NGK.CAN.OSIModel.ApplicationLayer.DeviceProxy.Device
         /// </summary>
-        private Type[] _ReturnedTypes;
+        //private Type[] _ReturnedTypes;
         #endregion
 
         #region Constructors
@@ -131,12 +131,12 @@ namespace NGK.CAN.Design
             ITypeDescriptorContext context, 
             IServiceProvider provider, object value)
         {
-            if (_ReturnedTypes == null)
-            {
+            //if (_ReturnedTypes == null)
+            //{
                 // Находим все типы наследующие абстрактный класс
                 // NGK.CAN.OSIModel.ApplicationLayer.DeviceProxy.Device
                 //this._ReturnedTypes = this.GetReturnedTypes(provider);
-            }
+            //}
 
             return base.EditValue(context, provider, value);
         }

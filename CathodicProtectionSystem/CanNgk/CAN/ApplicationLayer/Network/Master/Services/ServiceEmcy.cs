@@ -361,8 +361,6 @@ namespace NGK.CAN.ApplicationLayer.Network.Master.Services
             String msg;
             IncomingMessageStuctureEmcy msghelper;
             DeviceBase device;
-            UInt16 index;
-
 
             if (Status != Status.Running)
             {

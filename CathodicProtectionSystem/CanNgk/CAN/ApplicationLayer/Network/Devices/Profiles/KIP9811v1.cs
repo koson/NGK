@@ -4,7 +4,6 @@ using NGK.CAN.DataTypes;
 using NGK.CAN.ApplicationLayer.Network.Devices.Profiles.ObjectDictionary;
 using NGK.CAN.ApplicationLayer.Network.Devices.Profiles.ObjectDictionary.Collections;
 using NGK.CAN.ApplicationLayer.Network.Devices.Profiles.ObjectDictionary.ComplexParameterConverters;
-using NGK.CAN.DataTypes;
 using NGK.CAN.DataTypes.Helper;
 using NGK.CAN.DataTypes.TypeConverters;
 

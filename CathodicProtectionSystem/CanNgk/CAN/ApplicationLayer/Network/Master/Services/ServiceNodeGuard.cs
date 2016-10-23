@@ -244,7 +244,6 @@ namespace NGK.CAN.ApplicationLayer.Network.Master.Services
         {
             String msg;
             IncomingMessageStuctureNodeGuard msghelper;
-            DeviceBase device;
 
             if (Status != Status.Running)
             {
