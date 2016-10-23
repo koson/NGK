@@ -57,14 +57,14 @@
     </Compile>
     <Compile Include="Views\DeviceListView\DevicesListView.cs" />
     <Compile Include="Views\DeviceListView\IDeviceListView.cs" />
-    <Compile Include="Views\PivaoteTablePresenter\IPivotTableView.cs" />
-    <Compile Include="Views\PivaoteTablePresenter\PivotTable.cs">
+    <Compile Include="Views\PivaoteTableView\IPivotTableView.cs" />
+    <Compile Include="Views\PivaoteTableView\PivotTable.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Views\PivaoteTablePresenter\PivotTable.designer.cs">
+    <Compile Include="Views\PivaoteTableView\PivotTable.designer.cs">
       <DependentUpon>PivotTable.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\PivaoteTablePresenter\PivotTableView.cs" />
+    <Compile Include="Views\PivaoteTableView\PivotTableView.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\MVP\MVP\MVP.csproj">
@@ -97,7 +97,7 @@
       <DependentUpon>DevicesList.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\PivaoteTablePresenter\PivotTable.resx">
+    <EmbeddedResource Include="Views\PivaoteTableView\PivotTable.resx">
       <DependentUpon>PivotTable.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>

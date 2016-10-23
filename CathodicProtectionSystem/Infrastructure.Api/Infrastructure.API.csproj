@@ -46,6 +46,7 @@
     <Compile Include="Models\CAN\Parameter.cs" />
     <Compile Include="Models\CAN\ParametersCollection.cs" />
     <Compile Include="Models\CAN\ParametersPivotTable.cs" />
+    <Compile Include="Models\SystemEvent.cs" />
     <Compile Include="Plugins\IHostWindow.cs" />
     <Compile Include="Services\ICanNetworkService.cs" />
     <Compile Include="Managers\AppManagers.cs" />

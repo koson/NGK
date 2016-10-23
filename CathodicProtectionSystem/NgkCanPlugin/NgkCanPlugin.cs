@@ -21,7 +21,7 @@ namespace NGK.Plugins
 
         public NgkCanPlugin()
         {
-            Name = @"Plugin CAN Õ√  ›’«";
+            Name = @"CAN Õ√  ›’«";
 
             _ShowDevicesListCommand = new Command(OnShowDevicesList, CanShowDevicesList);
             _UpdateTotalDevicesCommand = new Command(OnUpdateTotalDevices, CanUpdateTotalDevices);
