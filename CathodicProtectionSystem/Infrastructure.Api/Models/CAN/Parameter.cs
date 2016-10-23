@@ -9,7 +9,7 @@ using Common.ComponentModel;
 using NGK.CAN.ApplicationLayer.Network.Devices;
 using NGK.CAN.ApplicationLayer.Network.Devices.Profiles;
 
-namespace Infrastructure.API.Models.CAN
+namespace Infrastructure.Api.Models.CAN
 {
     public class Parameter : INotifyPropertyChanged
     {

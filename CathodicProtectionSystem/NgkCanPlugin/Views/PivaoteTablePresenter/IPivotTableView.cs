@@ -4,7 +4,7 @@ using System.Text;
 using Mvp.View;
 using System.Data;
 using System.ComponentModel;
-using Infrastructure.API.Models.CAN;
+using Infrastructure.Api.Models.CAN;
 
 namespace NGK.Plugins.Views
 {

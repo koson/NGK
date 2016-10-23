@@ -4,7 +4,7 @@ using System.Text;
 using System.ComponentModel;
 using NGK.CAN.ApplicationLayer.Network.Devices;
 
-namespace Infrastructure.API.Models.CAN
+namespace Infrastructure.Api.Models.CAN
 {
     public interface IDeviceInfo
     {

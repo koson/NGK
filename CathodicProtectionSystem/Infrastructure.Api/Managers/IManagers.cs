@@ -2,9 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using NGK.Log;
-using Infrastructure.API.Services;
+using Infrastructure.Api.Services;
 
-namespace Infrastructure.API.Managers
+namespace Infrastructure.Api.Managers
 {
     public interface IManagers
     {
@@ -30,6 +30,11 @@ namespace Infrastructure.API.Managers
         /// приложения
         /// </summary>
         IConfigManager ConfigManager { get; }
+        /// <summary>
+        /// Сервис для отображения частичного предстваления
+        /// на главной форме приложения
+        /// </summary>
+        IPartialVIewService PartialViewService { get; }
         /// <summary>
         /// Сервис для работы с CAN-сетями
         /// </summary>

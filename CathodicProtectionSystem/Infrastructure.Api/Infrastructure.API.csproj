@@ -59,6 +59,8 @@
     <Compile Include="Plugins\Plugin.cs" />
     <Compile Include="Plugins\RegionContainer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\IPartialVIewService.cs" />
+    <Compile Include="Services\PartialVIewService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\MVP\MVP\MVP.csproj">

@@ -5,9 +5,9 @@ using System.ComponentModel;
 using System.Text;
 using System.Data;
 using Common.Controlling;
-using Infrastructure.API.Models.CAN;
+using Infrastructure.Api.Models.CAN;
 
-namespace Infrastructure.API.Services
+namespace Infrastructure.Api.Services
 {
     public interface ICanNetworkService: IManageable
     {

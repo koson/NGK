@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.ComponentModel;
 
-namespace Infrastructure.API.Models.CAN
+namespace Infrastructure.Api.Models.CAN
 {
     public interface IDeviceSummaryParameters: INotifyPropertyChanged
     {

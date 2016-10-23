@@ -8,10 +8,10 @@ using NGK.CAN.ApplicationLayer.Network.Master;
 using Mvp.WinApplication.ApplicationService;
 using Mvp.Input;
 using NGK.Plugins.Presenters;
-using Infrastructure.API.Managers;
+using Infrastructure.Api.Managers;
 using System.Windows.Forms;
 using Mvp.Controls;
-using Infrastructure.API.Models.CAN;
+using Infrastructure.Api.Models.CAN;
 
 namespace NGK.Plugins
 {

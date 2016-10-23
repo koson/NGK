@@ -9,7 +9,7 @@ using System.Windows.Forms;
 using Mvp.View;
 using NGK.Plugins.Views;
 using Infrastructure.Api.Plugins;
-using Infrastructure.API.Models.CAN;
+using Infrastructure.Api.Models.CAN;
 using Infrastructure.Api.Controls;
 
 namespace NGK.Plugins.Presenters

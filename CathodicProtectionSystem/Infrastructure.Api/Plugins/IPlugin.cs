@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Mvp.WinApplication;
 using Mvp.WinApplication.Infrastructure;
-using Infrastructure.API.Managers;
+using Infrastructure.Api.Managers;
 using System.Windows.Forms;
 
 namespace Infrastructure.Api.Plugins

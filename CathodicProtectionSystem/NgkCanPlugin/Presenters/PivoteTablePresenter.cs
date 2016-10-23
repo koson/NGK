@@ -9,7 +9,7 @@ using Mvp.WinApplication;
 using Infrastructure.Api.Plugins;
 using NGK.CorrosionMonitoringSystem.Views;
 using Infrastructure.Api.Controls;
-using Infrastructure.API.Models.CAN;
+using Infrastructure.Api.Models.CAN;
 using System.ComponentModel;
 using NGK.Plugins.Views;
 

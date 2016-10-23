@@ -9,7 +9,7 @@ using NGK.CAN.ApplicationLayer.Network.Devices;
 using NGK.CAN.ApplicationLayer.Network.Devices.ObjectDictionary;
 using System.ComponentModel;
 
-namespace Infrastructure.API.Models.CAN
+namespace Infrastructure.Api.Models.CAN
 {
     /// <summary>
     /// Класс формирует сводную таблицу значений объектов словаря каждого устройства сети

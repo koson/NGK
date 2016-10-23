@@ -5,7 +5,7 @@ using System.Text;
 using Mvp.View;
 using System.Windows.Forms;
 using Mvp.Input;
-using Infrastructure.API.Models.CAN;
+using Infrastructure.Api.Models.CAN;
 
 namespace NGK.Plugins.Views
 {

@@ -9,9 +9,9 @@ using Mvp.WinApplication;
 using Common.Controlling;
 using System.Data;
 using System.Diagnostics;
-using Infrastructure.API.Managers;
-using Infrastructure.API.Services;
-using Infrastructure.API.Models.CAN;
+using Infrastructure.Api.Managers;
+using Infrastructure.Api.Services;
+using Infrastructure.Api.Models.CAN;
 
 namespace NGK.Plugins.Services
 {

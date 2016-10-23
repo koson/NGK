@@ -4,7 +4,7 @@ using System.Text;
 using Mvp.View;
 using System.Windows.Forms;
 using NGK.Plugins.Presenters;
-using Infrastructure.API.Models.CAN;
+using Infrastructure.Api.Models.CAN;
 using System.ComponentModel;
 
 namespace NGK.Plugins.Views

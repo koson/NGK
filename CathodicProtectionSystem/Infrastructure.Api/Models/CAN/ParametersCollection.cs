@@ -4,7 +4,7 @@ using System.Collections.ObjectModel;
 
 using System.Text;
 
-namespace Infrastructure.API.Models.CAN
+namespace Infrastructure.Api.Models.CAN
 {
     public class ParametersCollection: KeyedCollection<string, Parameter>
     {

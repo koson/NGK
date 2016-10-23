@@ -21,7 +21,7 @@ using Modbus.OSIModel.ApplicationLayer;
 using Common.Controlling;
 using NGK.CorrosionMonitoringSystem.Services;
 using NGK.Log;
-using Infrastructure.API.Managers;
+using Infrastructure.Api.Managers;
 using Infrastructure.Api.Plugins;
 using Mvp.WinApplication.ApplicationService;
 

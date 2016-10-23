@@ -7,7 +7,7 @@ using System.Text;
 using System.Windows.Forms;
 using Mvp.View;
 using NGK.CAN.DataTypes;
-using Infrastructure.API.Models.CAN;
+using Infrastructure.Api.Models.CAN;
 
 namespace NGK.Plugins
 {

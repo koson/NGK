@@ -18,7 +18,7 @@ using NGK.CorrosionMonitoringSystem.Models;
 using NGK.CAN.ApplicationLayer.Network.Devices.Profiles;
 using NGK.CAN.ApplicationLayer.Network.Devices;
 using NGK.CAN.ApplicationLayer.Network.Master;
-using Infrastructure.API.Managers;
+using Infrastructure.Api.Managers;
 
 
 namespace NGK.CorrosionMonitoringSystem.Services

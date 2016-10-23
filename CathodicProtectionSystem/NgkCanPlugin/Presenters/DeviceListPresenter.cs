@@ -9,7 +9,7 @@ using Mvp.View;
 using System.ComponentModel;
 using NGK.Plugins.Views;
 using Infrastructure.Api.Plugins;
-using Infrastructure.API.Models.CAN;
+using Infrastructure.Api.Models.CAN;
 using Infrastructure.Api.Controls;
 
 namespace NGK.Plugins.Presenters

@@ -8,7 +8,7 @@ using System.Globalization;
 using System.IO.Ports;
 using Mvp.WinApplication;
 
-namespace Infrastructure.API.Managers
+namespace Infrastructure.Api.Managers
 {
     public class ConfigManager: IConfigManager
     {

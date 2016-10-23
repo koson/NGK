@@ -2,7 +2,7 @@
 using System.Drawing;
 using System.IO.Ports;
 
-namespace Infrastructure.API.Managers
+namespace Infrastructure.Api.Managers
 {
     public interface IConfigManager
     {

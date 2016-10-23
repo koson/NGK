@@ -11,7 +11,7 @@ using NGK.CAN.ApplicationLayer.Network.Devices.Profiles.ObjectDictionary;
 using NGK.CAN.ApplicationLayer.Network.Devices.ObjectDictionary;
 using NGK.CAN.ApplicationLayer.Network.Devices.Profiles;
 
-namespace Infrastructure.API.Models.CAN
+namespace Infrastructure.Api.Models.CAN
 {
     [Serializable]
     public sealed class NgkCanDevice : INotifyPropertyChanged, IDeviceSummaryParameters, IDeviceInfo

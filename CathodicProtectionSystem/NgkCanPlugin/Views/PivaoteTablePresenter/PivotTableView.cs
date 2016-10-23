@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Mvp.View;
 using NGK.CorrosionMonitoringSystem.Views;
-using Infrastructure.API.Models.CAN;
+using Infrastructure.Api.Models.CAN;
 using System.ComponentModel;
 using System.Windows.Forms;
 

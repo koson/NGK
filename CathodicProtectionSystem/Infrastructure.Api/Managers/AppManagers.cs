@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Text;
 using Mvp.WinApplication;
 using NGK.Log;
-using Infrastructure.API.Services;
+using Infrastructure.Api.Services;
 
-namespace Infrastructure.API.Managers
+namespace Infrastructure.Api.Managers
 {
     public class AppManagers: IManagers
     {
@@ -14,7 +14,8 @@ namespace Infrastructure.API.Managers
         public AppManagers(IApplicationController application)
         {
             _Application = application;
-            _ConfigManager = Infrastructure.API.Managers.ConfigManager.Instance;
+            _ConfigManager = Infrastructure.Api.Managers.ConfigManager.Instance;
+            _PartialVIewService = new PartialVIewService(application);
             //_SystemLogger = null; //TODO: Не реализовано
             //_WindowsFactory = new PresentersFactory(application, this);
         }
@@ -25,6 +26,7 @@ namespace Infrastructure.API.Managers
 
         ILogManager _Logger;
         ConfigManager _ConfigManager;
+        PartialVIewService _PartialVIewService;
         //ISysLogManager _SystemLogger;
         ////PresentersFactory _WindowsFactory;
         //SystemInformationModbusNetworkService _ModbusSystemInfoNetworkService;
@@ -78,6 +80,12 @@ namespace Infrastructure.API.Managers
                 return _CanNetworkService; 
             }
         }
+
+        public IPartialVIewService PartialViewService
+        {
+            get { return _PartialVIewService; }
+        }
+
 
         //public ISystemInformationModbusNetworkService ModbusSystemInfoNetworkService
         //{
