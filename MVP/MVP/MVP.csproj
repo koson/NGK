@@ -84,7 +84,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\CathodicProtectionSystem\Common\Common.csproj">
       <Project>{78E073B6-AD50-429C-9261-4DE3438D8EAE}</Project>
-      <Name>Common</Name>
+      <Name>Common %28Common\Common%29</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

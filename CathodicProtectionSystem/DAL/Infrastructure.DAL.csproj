@@ -33,8 +33,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DbModels\Category.cs" />
-    <Compile Include="DbModels\Message.cs" />
+    <Compile Include="DbEntity\Category.cs" />
+    <Compile Include="DbEntity\Message.cs" />
+    <Compile Include="ISystemEventsRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
