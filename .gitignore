@@ -16,3 +16,4 @@ TestPlugins/Plugins/PluginA.dll
 TestPlugins/Plugins/PluginB.dll
 CathodicProtectionSystem/Plugins/*.*
 CathodicProtectionSystem/Plugins/NgkCanPlugin.dll
+CathodicProtectionSystem/DAL/*.*

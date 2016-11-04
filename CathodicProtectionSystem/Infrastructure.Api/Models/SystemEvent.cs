@@ -11,7 +11,7 @@ namespace Infrastructure.Api.Models
     /// </summary>
     public class SystemEvent
     {
-        public enum Category : int
+        public enum Category : byte
         {
             Undefined = 0,
             CriticalError = 1,
@@ -34,7 +34,7 @@ namespace Infrastructure.Api.Models
         {
             _Uid = null;
             _EventCode = SystemEventCodes.Undefined;
-            _Description = String.Empty;
+            _Message = String.Empty;
             _EventDateTime = DateTime.Now;
         }
 
@@ -44,7 +44,7 @@ namespace Infrastructure.Api.Models
             _Uid = null;
             _EventCode = eventCode;
             _Category = category;
-            _Description = description;
+            _Message = description;
             _EventDateTime = dateTime;
         }
 
@@ -55,7 +55,7 @@ namespace Infrastructure.Api.Models
         private int? _Uid;
         private SystemEventCodes _EventCode;
         private Category _Category;
-        private string _Description;
+        private string _Message;
         private DateTime _EventDateTime;
 
         /// <summary>
@@ -105,10 +105,10 @@ namespace Infrastructure.Api.Models
         //[Component::Category("Параметр")]
         [DisplayName("Описание")]
         [Description("Описание системного события")]
-        public string Description
+        public string Message
         {
-            get { return _Description; }
-            set { _Description = value; }
+            get { return _Message; }
+            set { _Message = value; }
         }
         /// <summary>
         /// Дата и время наступления события
@@ -118,7 +118,7 @@ namespace Infrastructure.Api.Models
         //[Component::Category("Параметр")]
         [DisplayName("Дата и время")]
         [Description("Дата и время наступления системного события")]
-        public DateTime EventDateTime 
+        public DateTime Created 
         {
             get { return _EventDateTime; }
             set { _EventDateTime = value; }

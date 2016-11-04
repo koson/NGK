@@ -6,6 +6,6 @@ namespace NGK.DAL
 {
     public interface ISystemEventsRepository
     {
-
+        void AddEvent();
     }
 }
