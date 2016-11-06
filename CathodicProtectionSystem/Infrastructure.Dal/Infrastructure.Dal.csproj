@@ -7,7 +7,7 @@
     <ProjectGuid>{3B3C9818-D909-45E4-8587-873E4989DA8A}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>NGK.DAL</RootNamespace>
+    <RootNamespace>Infrastructure.Dal</RootNamespace>
     <AssemblyName>ngkdal</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -33,18 +33,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DbContext\DbContextSystemEventsLog.cs" />
+    <Compile Include="DbContext\DbContext.cs" />
     <Compile Include="DbContext\NgkDbDataSet.cs">
       <DependentUpon>NgkDbDataSet.xsd</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="DbEntity\Category.cs" />
-    <Compile Include="DbEntity\Message.cs" />
-    <Compile Include="ISystemEventsRepository.cs" />
     <Compile Include="DbContext\NgkDbDataSet.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>NgkDbDataSet.xsd</DependentUpon>
     </Compile>
+    <Compile Include="DbEntity\Category.cs" />
+    <Compile Include="DbEntity\IDataRepository.cs" />
+    <Compile Include="DbEntity\ISystemEventMessage.cs" />
+    <Compile Include="DbEntity\ISystemEventsRepository.cs" />
+    <Compile Include="DbEntity\SystemEventCodes.cs" />
+    <Compile Include="DbEntity\SystemEventMessage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -70,6 +75,8 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <None Include="SqlScripts\CreateDataBase.sql" />
+    <None Include="SqlScripts\CreateTables.sql" />
+    <None Include="SqlScripts\InitTableSystemEventCodes.sql" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Data\" />

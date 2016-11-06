@@ -5,6 +5,7 @@ using Mvp.View;
 using System.ComponentModel;
 using Infrastructure.Api.Models;
 using System.Windows.Forms;
+using System.Data;
 
 namespace NGK.Plugins.Views
 {
@@ -18,7 +19,7 @@ namespace NGK.Plugins.Views
             set { base.Control.Dock = value; }
         }
 
-        public BindingList<SystemEvent> SystemEvents
+        public DataTable SystemEvents
         {
             set { Control.SystemEvents = value; }
         }

@@ -2,13 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace NGK.DAL.DbModels
+namespace Infrastructure.Dal.DbEntity
 {
-    public class LogRecord
+    public class SystemEventMessage : ISystemEventMessage
     {
         #region Constructors
 
-        public LogRecord()
+        public SystemEventMessage()
         {
             _MessageId = 0;
             _Message = String.Empty;
@@ -21,7 +21,12 @@ namespace NGK.DAL.DbModels
 
         #region Fields And Properties
 
-        int _MessageId;
+        private int _MessageId;
+        private SystemEventCodes _SystemEventCode;
+        private string _Message;
+        private DateTime _Created;
+        private Category _Category;
+        private Boolean _HasRead;
 
         public int MessageId
         {
@@ -29,15 +34,17 @@ namespace NGK.DAL.DbModels
             set { _MessageId = value; }
         }
 
-        string _Message;
-
         public string Message
         {
             get { return _Message; }
             set { _Message = value; }
         }
 
-        DateTime _Created;
+        public SystemEventCodes SystemEventCode
+        {
+            get { return _SystemEventCode; }
+            set { _SystemEventCode = value; }
+        }
 
         public DateTime Created
         {
@@ -45,16 +52,12 @@ namespace NGK.DAL.DbModels
             set { _Created = value; }
         }
         
-        Category _Category;
-
         public Category Category
         {
             get { return _Category; }
             set { _Category = value; }
         }
         
-        Boolean _HasRead;
-
         public Boolean HasRead
         {
             get { return _HasRead; }

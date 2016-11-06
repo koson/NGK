@@ -55,6 +55,10 @@
       <Project>{B48FF1D3-AED9-40D8-9A61-E26B8B5E8516}</Project>
       <Name>Infrastructure.API</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Infrastructure.Dal\Infrastructure.Dal.csproj">
+      <Project>{3B3C9818-D909-45E4-8587-873E4989DA8A}</Project>
+      <Name>Infrastructure.Dal</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\SystemEnventsLogView\SystemEventsLog.resx">

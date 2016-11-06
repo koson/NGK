@@ -6,6 +6,8 @@ using NGK.Plugins.Views;
 using Infrastructure.Api.Managers;
 using Infrastructure.Api.Models;
 using System.ComponentModel;
+using Infrastructure.Dal.DbEntity;
+using Infrastructure.Dal.DbContext;
 
 namespace NGK.Plugins.Presenters
 {
@@ -17,13 +19,15 @@ namespace NGK.Plugins.Presenters
         {
             _Managers = managers;
 
-            BindingList<SystemEvent> log = new BindingList<SystemEvent>();
-            log.Add(new SystemEvent(SystemEvent.SystemEventCodes.CommunicationError,
-                SystemEvent.Category.Error, @"Ошибка 1", DateTime.Now));
-            log.Add(new SystemEvent(SystemEvent.SystemEventCodes.ConfigurationError,
-                SystemEvent.Category.Warring, @"Ошибка 2", DateTime.Now));
+            //BindingList<SystemEvent> log = new BindingList<SystemEvent>();
+            //log.Add(new SystemEvent(SystemEvent.SystemEventCodes.CommunicationError,
+            //    SystemEvent.Category.Error, @"Ошибка 1", DateTime.Now));
+            //log.Add(new SystemEvent(SystemEvent.SystemEventCodes.ConfigurationError,
+            //    SystemEvent.Category.Warring, @"Ошибка 2", DateTime.Now));
+            
+            _Repository = DbContext.Create().SystemEventRepository;
 
-            View.SystemEvents = log;
+            View.SystemEvents = _Repository.SystemEventsCashTable;
         }
 
         #endregion
@@ -31,6 +35,7 @@ namespace NGK.Plugins.Presenters
         #region Fields And Properties
 
         private readonly IManagers _Managers;
+        private readonly ISystemEventsRepository _Repository;
 
         public override string Title
         {

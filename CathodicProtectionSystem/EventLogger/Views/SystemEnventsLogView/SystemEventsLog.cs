@@ -59,7 +59,7 @@ namespace NGK.Plugins.Views
 
         private BindingSource _BindingSourceSystemEvents;
 
-        public BindingList<SystemEvent> SystemEvents
+        public DataTable SystemEvents
         {
             set
             {

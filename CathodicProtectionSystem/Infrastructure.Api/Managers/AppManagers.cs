@@ -24,9 +24,9 @@ namespace Infrastructure.Api.Managers
 
         #region Fields And Properties
 
-        ILogManager _Logger;
-        ConfigManager _ConfigManager;
-        PartialVIewService _PartialVIewService;
+        private ILogManager _Logger;
+        private ConfigManager _ConfigManager;
+        private PartialVIewService _PartialVIewService;
         //ISysLogManager _SystemLogger;
         ////PresentersFactory _WindowsFactory;
         //SystemInformationModbusNetworkService _ModbusSystemInfoNetworkService;
@@ -86,7 +86,6 @@ namespace Infrastructure.Api.Managers
             get { return _PartialVIewService; }
         }
 
-
         //public ISystemInformationModbusNetworkService ModbusSystemInfoNetworkService
         //{
         //    get 
@@ -99,7 +98,6 @@ namespace Infrastructure.Api.Managers
         //        return null;
         //    }
         //}
-
         #endregion
     }
 }
