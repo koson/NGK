@@ -25,11 +25,7 @@ namespace Infrastructure.Dal.DbContext {
     [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.DataSet")]
     public partial class NgkDbDataSet : global::System.Data.DataSet {
         
-        private SystemEnentsLogDataTable tableSystemEnentsLog;
-        
-        private SystemEventCodesDataTable tableSystemEventCodes;
-        
-        private global::System.Data.DataRelation relationFK_SystemEnentsLog_SystemEventCodes;
+        private SystemEventsLogDataTable tableSystemEventsLog;
         
         private global::System.Data.SchemaSerializationMode _schemaSerializationMode = global::System.Data.SchemaSerializationMode.IncludeSchema;
         
@@ -57,11 +53,8 @@ namespace Infrastructure.Dal.DbContext {
             if ((this.DetermineSchemaSerializationMode(info, context) == global::System.Data.SchemaSerializationMode.IncludeSchema)) {
                 global::System.Data.DataSet ds = new global::System.Data.DataSet();
                 ds.ReadXmlSchema(new global::System.Xml.XmlTextReader(new global::System.IO.StringReader(strSchema)));
-                if ((ds.Tables["SystemEnentsLog"] != null)) {
-                    base.Tables.Add(new SystemEnentsLogDataTable(ds.Tables["SystemEnentsLog"]));
-                }
-                if ((ds.Tables["SystemEventCodes"] != null)) {
-                    base.Tables.Add(new SystemEventCodesDataTable(ds.Tables["SystemEventCodes"]));
+                if ((ds.Tables["SystemEventsLog"] != null)) {
+                    base.Tables.Add(new SystemEventsLogDataTable(ds.Tables["SystemEventsLog"]));
                 }
                 this.DataSetName = ds.DataSetName;
                 this.Prefix = ds.Prefix;
@@ -84,18 +77,9 @@ namespace Infrastructure.Dal.DbContext {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.ComponentModel.Browsable(false)]
         [global::System.ComponentModel.DesignerSerializationVisibility(global::System.ComponentModel.DesignerSerializationVisibility.Content)]
-        public SystemEnentsLogDataTable SystemEnentsLog {
+        public SystemEventsLogDataTable SystemEventsLog {
             get {
-                return this.tableSystemEnentsLog;
-            }
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.ComponentModel.Browsable(false)]
-        [global::System.ComponentModel.DesignerSerializationVisibility(global::System.ComponentModel.DesignerSerializationVisibility.Content)]
-        public SystemEventCodesDataTable SystemEventCodes {
-            get {
-                return this.tableSystemEventCodes;
+                return this.tableSystemEventsLog;
             }
         }
         
@@ -158,11 +142,8 @@ namespace Infrastructure.Dal.DbContext {
                 this.Reset();
                 global::System.Data.DataSet ds = new global::System.Data.DataSet();
                 ds.ReadXml(reader);
-                if ((ds.Tables["SystemEnentsLog"] != null)) {
-                    base.Tables.Add(new SystemEnentsLogDataTable(ds.Tables["SystemEnentsLog"]));
-                }
-                if ((ds.Tables["SystemEventCodes"] != null)) {
-                    base.Tables.Add(new SystemEventCodesDataTable(ds.Tables["SystemEventCodes"]));
+                if ((ds.Tables["SystemEventsLog"] != null)) {
+                    base.Tables.Add(new SystemEventsLogDataTable(ds.Tables["SystemEventsLog"]));
                 }
                 this.DataSetName = ds.DataSetName;
                 this.Prefix = ds.Prefix;
@@ -194,19 +175,12 @@ namespace Infrastructure.Dal.DbContext {
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         internal void InitVars(bool initTable) {
-            this.tableSystemEnentsLog = ((SystemEnentsLogDataTable)(base.Tables["SystemEnentsLog"]));
+            this.tableSystemEventsLog = ((SystemEventsLogDataTable)(base.Tables["SystemEventsLog"]));
             if ((initTable == true)) {
-                if ((this.tableSystemEnentsLog != null)) {
-                    this.tableSystemEnentsLog.InitVars();
+                if ((this.tableSystemEventsLog != null)) {
+                    this.tableSystemEventsLog.InitVars();
                 }
             }
-            this.tableSystemEventCodes = ((SystemEventCodesDataTable)(base.Tables["SystemEventCodes"]));
-            if ((initTable == true)) {
-                if ((this.tableSystemEventCodes != null)) {
-                    this.tableSystemEventCodes.InitVars();
-                }
-            }
-            this.relationFK_SystemEnentsLog_SystemEventCodes = this.Relations["FK_SystemEnentsLog_SystemEventCodes"];
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -216,23 +190,12 @@ namespace Infrastructure.Dal.DbContext {
             this.Namespace = "http://tempuri.org/NgkDbDataSet.xsd";
             this.EnforceConstraints = true;
             this.SchemaSerializationMode = global::System.Data.SchemaSerializationMode.IncludeSchema;
-            this.tableSystemEnentsLog = new SystemEnentsLogDataTable();
-            base.Tables.Add(this.tableSystemEnentsLog);
-            this.tableSystemEventCodes = new SystemEventCodesDataTable();
-            base.Tables.Add(this.tableSystemEventCodes);
-            this.relationFK_SystemEnentsLog_SystemEventCodes = new global::System.Data.DataRelation("FK_SystemEnentsLog_SystemEventCodes", new global::System.Data.DataColumn[] {
-                        this.tableSystemEventCodes.SystemEventCodeColumn}, new global::System.Data.DataColumn[] {
-                        this.tableSystemEnentsLog.SystemEventCodeColumn}, false);
-            this.Relations.Add(this.relationFK_SystemEnentsLog_SystemEventCodes);
+            this.tableSystemEventsLog = new SystemEventsLogDataTable();
+            base.Tables.Add(this.tableSystemEventsLog);
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        private bool ShouldSerializeSystemEnentsLog() {
-            return false;
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        private bool ShouldSerializeSystemEventCodes() {
+        private bool ShouldSerializeSystemEventsLog() {
             return false;
         }
         
@@ -289,9 +252,7 @@ namespace Infrastructure.Dal.DbContext {
             return type;
         }
         
-        public delegate void SystemEnentsLogRowChangeEventHandler(object sender, SystemEnentsLogRowChangeEvent e);
-        
-        public delegate void SystemEventCodesRowChangeEventHandler(object sender, SystemEventCodesRowChangeEvent e);
+        public delegate void SystemEventsLogRowChangeEventHandler(object sender, SystemEventsLogRowChangeEvent e);
         
         /// <summary>
         ///Represents the strongly named DataTable class.
@@ -299,7 +260,7 @@ namespace Infrastructure.Dal.DbContext {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "2.0.0.0")]
         [global::System.Serializable()]
         [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
-        public partial class SystemEnentsLogDataTable : global::System.Data.DataTable, global::System.Collections.IEnumerable {
+        public partial class SystemEventsLogDataTable : global::System.Data.DataTable, global::System.Collections.IEnumerable {
             
             private global::System.Data.DataColumn columnMessageId;
             
@@ -314,15 +275,15 @@ namespace Infrastructure.Dal.DbContext {
             private global::System.Data.DataColumn columnHasRead;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            public SystemEnentsLogDataTable() {
-                this.TableName = "SystemEnentsLog";
+            public SystemEventsLogDataTable() {
+                this.TableName = "SystemEventsLog";
                 this.BeginInit();
                 this.InitClass();
                 this.EndInit();
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            internal SystemEnentsLogDataTable(global::System.Data.DataTable table) {
+            internal SystemEventsLogDataTable(global::System.Data.DataTable table) {
                 this.TableName = table.TableName;
                 if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
                     this.CaseSensitive = table.CaseSensitive;
@@ -338,7 +299,7 @@ namespace Infrastructure.Dal.DbContext {
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            protected SystemEnentsLogDataTable(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
+            protected SystemEventsLogDataTable(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
                     base(info, context) {
                 this.InitVars();
             }
@@ -394,46 +355,43 @@ namespace Infrastructure.Dal.DbContext {
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            public SystemEnentsLogRow this[int index] {
+            public SystemEventsLogRow this[int index] {
                 get {
-                    return ((SystemEnentsLogRow)(this.Rows[index]));
+                    return ((SystemEventsLogRow)(this.Rows[index]));
                 }
             }
             
-            public event SystemEnentsLogRowChangeEventHandler SystemEnentsLogRowChanging;
+            public event SystemEventsLogRowChangeEventHandler SystemEventsLogRowChanging;
             
-            public event SystemEnentsLogRowChangeEventHandler SystemEnentsLogRowChanged;
+            public event SystemEventsLogRowChangeEventHandler SystemEventsLogRowChanged;
             
-            public event SystemEnentsLogRowChangeEventHandler SystemEnentsLogRowDeleting;
+            public event SystemEventsLogRowChangeEventHandler SystemEventsLogRowDeleting;
             
-            public event SystemEnentsLogRowChangeEventHandler SystemEnentsLogRowDeleted;
+            public event SystemEventsLogRowChangeEventHandler SystemEventsLogRowDeleted;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            public void AddSystemEnentsLogRow(SystemEnentsLogRow row) {
+            public void AddSystemEventsLogRow(SystemEventsLogRow row) {
                 this.Rows.Add(row);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            public SystemEnentsLogRow AddSystemEnentsLogRow(SystemEventCodesRow parentSystemEventCodesRowByFK_SystemEnentsLog_SystemEventCodes, string Message, System.DateTime Created, byte Category, bool HasRead) {
-                SystemEnentsLogRow rowSystemEnentsLogRow = ((SystemEnentsLogRow)(this.NewRow()));
+            public SystemEventsLogRow AddSystemEventsLogRow(int SystemEventCode, string Message, System.DateTime Created, byte Category, bool HasRead) {
+                SystemEventsLogRow rowSystemEventsLogRow = ((SystemEventsLogRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         null,
-                        null,
+                        SystemEventCode,
                         Message,
                         Created,
                         Category,
                         HasRead};
-                if ((parentSystemEventCodesRowByFK_SystemEnentsLog_SystemEventCodes != null)) {
-                    columnValuesArray[1] = parentSystemEventCodesRowByFK_SystemEnentsLog_SystemEventCodes[0];
-                }
-                rowSystemEnentsLogRow.ItemArray = columnValuesArray;
-                this.Rows.Add(rowSystemEnentsLogRow);
-                return rowSystemEnentsLogRow;
+                rowSystemEventsLogRow.ItemArray = columnValuesArray;
+                this.Rows.Add(rowSystemEventsLogRow);
+                return rowSystemEventsLogRow;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            public SystemEnentsLogRow FindByMessageId(int MessageId) {
-                return ((SystemEnentsLogRow)(this.Rows.Find(new object[] {
+            public SystemEventsLogRow FindByMessageId(int MessageId) {
+                return ((SystemEventsLogRow)(this.Rows.Find(new object[] {
                             MessageId})));
             }
             
@@ -444,14 +402,14 @@ namespace Infrastructure.Dal.DbContext {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             public override global::System.Data.DataTable Clone() {
-                SystemEnentsLogDataTable cln = ((SystemEnentsLogDataTable)(base.Clone()));
+                SystemEventsLogDataTable cln = ((SystemEventsLogDataTable)(base.Clone()));
                 cln.InitVars();
                 return cln;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             protected override global::System.Data.DataTable CreateInstance() {
-                return new SystemEnentsLogDataTable();
+                return new SystemEventsLogDataTable();
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -490,54 +448,54 @@ namespace Infrastructure.Dal.DbContext {
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            public SystemEnentsLogRow NewSystemEnentsLogRow() {
-                return ((SystemEnentsLogRow)(this.NewRow()));
+            public SystemEventsLogRow NewSystemEventsLogRow() {
+                return ((SystemEventsLogRow)(this.NewRow()));
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             protected override global::System.Data.DataRow NewRowFromBuilder(global::System.Data.DataRowBuilder builder) {
-                return new SystemEnentsLogRow(builder);
+                return new SystemEventsLogRow(builder);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             protected override global::System.Type GetRowType() {
-                return typeof(SystemEnentsLogRow);
+                return typeof(SystemEventsLogRow);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             protected override void OnRowChanged(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowChanged(e);
-                if ((this.SystemEnentsLogRowChanged != null)) {
-                    this.SystemEnentsLogRowChanged(this, new SystemEnentsLogRowChangeEvent(((SystemEnentsLogRow)(e.Row)), e.Action));
+                if ((this.SystemEventsLogRowChanged != null)) {
+                    this.SystemEventsLogRowChanged(this, new SystemEventsLogRowChangeEvent(((SystemEventsLogRow)(e.Row)), e.Action));
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             protected override void OnRowChanging(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowChanging(e);
-                if ((this.SystemEnentsLogRowChanging != null)) {
-                    this.SystemEnentsLogRowChanging(this, new SystemEnentsLogRowChangeEvent(((SystemEnentsLogRow)(e.Row)), e.Action));
+                if ((this.SystemEventsLogRowChanging != null)) {
+                    this.SystemEventsLogRowChanging(this, new SystemEventsLogRowChangeEvent(((SystemEventsLogRow)(e.Row)), e.Action));
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             protected override void OnRowDeleted(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowDeleted(e);
-                if ((this.SystemEnentsLogRowDeleted != null)) {
-                    this.SystemEnentsLogRowDeleted(this, new SystemEnentsLogRowChangeEvent(((SystemEnentsLogRow)(e.Row)), e.Action));
+                if ((this.SystemEventsLogRowDeleted != null)) {
+                    this.SystemEventsLogRowDeleted(this, new SystemEventsLogRowChangeEvent(((SystemEventsLogRow)(e.Row)), e.Action));
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             protected override void OnRowDeleting(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowDeleting(e);
-                if ((this.SystemEnentsLogRowDeleting != null)) {
-                    this.SystemEnentsLogRowDeleting(this, new SystemEnentsLogRowChangeEvent(((SystemEnentsLogRow)(e.Row)), e.Action));
+                if ((this.SystemEventsLogRowDeleting != null)) {
+                    this.SystemEventsLogRowDeleting(this, new SystemEventsLogRowChangeEvent(((SystemEventsLogRow)(e.Row)), e.Action));
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            public void RemoveSystemEnentsLogRow(SystemEnentsLogRow row) {
+            public void RemoveSystemEventsLogRow(SystemEventsLogRow row) {
                 this.Rows.Remove(row);
             }
             
@@ -563,274 +521,7 @@ namespace Infrastructure.Dal.DbContext {
                 type.Attributes.Add(attribute1);
                 global::System.Xml.Schema.XmlSchemaAttribute attribute2 = new global::System.Xml.Schema.XmlSchemaAttribute();
                 attribute2.Name = "tableTypeName";
-                attribute2.FixedValue = "SystemEnentsLogDataTable";
-                type.Attributes.Add(attribute2);
-                type.Particle = sequence;
-                global::System.Xml.Schema.XmlSchema dsSchema = ds.GetSchemaSerializable();
-                if (xs.Contains(dsSchema.TargetNamespace)) {
-                    global::System.IO.MemoryStream s1 = new global::System.IO.MemoryStream();
-                    global::System.IO.MemoryStream s2 = new global::System.IO.MemoryStream();
-                    try {
-                        global::System.Xml.Schema.XmlSchema schema = null;
-                        dsSchema.Write(s1);
-                        for (global::System.Collections.IEnumerator schemas = xs.Schemas(dsSchema.TargetNamespace).GetEnumerator(); schemas.MoveNext(); ) {
-                            schema = ((global::System.Xml.Schema.XmlSchema)(schemas.Current));
-                            s2.SetLength(0);
-                            schema.Write(s2);
-                            if ((s1.Length == s2.Length)) {
-                                s1.Position = 0;
-                                s2.Position = 0;
-                                for (; ((s1.Position != s1.Length) 
-                                            && (s1.ReadByte() == s2.ReadByte())); ) {
-                                    ;
-                                }
-                                if ((s1.Position == s1.Length)) {
-                                    return type;
-                                }
-                            }
-                        }
-                    }
-                    finally {
-                        if ((s1 != null)) {
-                            s1.Close();
-                        }
-                        if ((s2 != null)) {
-                            s2.Close();
-                        }
-                    }
-                }
-                xs.Add(dsSchema);
-                return type;
-            }
-        }
-        
-        /// <summary>
-        ///Represents the strongly named DataTable class.
-        ///</summary>
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "2.0.0.0")]
-        [global::System.Serializable()]
-        [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
-        public partial class SystemEventCodesDataTable : global::System.Data.DataTable, global::System.Collections.IEnumerable {
-            
-            private global::System.Data.DataColumn columnSystemEventCode;
-            
-            private global::System.Data.DataColumn columnEventName;
-            
-            private global::System.Data.DataColumn columnDescription;
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            public SystemEventCodesDataTable() {
-                this.TableName = "SystemEventCodes";
-                this.BeginInit();
-                this.InitClass();
-                this.EndInit();
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            internal SystemEventCodesDataTable(global::System.Data.DataTable table) {
-                this.TableName = table.TableName;
-                if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
-                    this.CaseSensitive = table.CaseSensitive;
-                }
-                if ((table.Locale.ToString() != table.DataSet.Locale.ToString())) {
-                    this.Locale = table.Locale;
-                }
-                if ((table.Namespace != table.DataSet.Namespace)) {
-                    this.Namespace = table.Namespace;
-                }
-                this.Prefix = table.Prefix;
-                this.MinimumCapacity = table.MinimumCapacity;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            protected SystemEventCodesDataTable(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
-                    base(info, context) {
-                this.InitVars();
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            public global::System.Data.DataColumn SystemEventCodeColumn {
-                get {
-                    return this.columnSystemEventCode;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            public global::System.Data.DataColumn EventNameColumn {
-                get {
-                    return this.columnEventName;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            public global::System.Data.DataColumn DescriptionColumn {
-                get {
-                    return this.columnDescription;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.ComponentModel.Browsable(false)]
-            public int Count {
-                get {
-                    return this.Rows.Count;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            public SystemEventCodesRow this[int index] {
-                get {
-                    return ((SystemEventCodesRow)(this.Rows[index]));
-                }
-            }
-            
-            public event SystemEventCodesRowChangeEventHandler SystemEventCodesRowChanging;
-            
-            public event SystemEventCodesRowChangeEventHandler SystemEventCodesRowChanged;
-            
-            public event SystemEventCodesRowChangeEventHandler SystemEventCodesRowDeleting;
-            
-            public event SystemEventCodesRowChangeEventHandler SystemEventCodesRowDeleted;
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            public void AddSystemEventCodesRow(SystemEventCodesRow row) {
-                this.Rows.Add(row);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            public SystemEventCodesRow AddSystemEventCodesRow(int SystemEventCode, string EventName, string Description) {
-                SystemEventCodesRow rowSystemEventCodesRow = ((SystemEventCodesRow)(this.NewRow()));
-                object[] columnValuesArray = new object[] {
-                        SystemEventCode,
-                        EventName,
-                        Description};
-                rowSystemEventCodesRow.ItemArray = columnValuesArray;
-                this.Rows.Add(rowSystemEventCodesRow);
-                return rowSystemEventCodesRow;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            public SystemEventCodesRow FindBySystemEventCode(int SystemEventCode) {
-                return ((SystemEventCodesRow)(this.Rows.Find(new object[] {
-                            SystemEventCode})));
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            public virtual global::System.Collections.IEnumerator GetEnumerator() {
-                return this.Rows.GetEnumerator();
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            public override global::System.Data.DataTable Clone() {
-                SystemEventCodesDataTable cln = ((SystemEventCodesDataTable)(base.Clone()));
-                cln.InitVars();
-                return cln;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            protected override global::System.Data.DataTable CreateInstance() {
-                return new SystemEventCodesDataTable();
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            internal void InitVars() {
-                this.columnSystemEventCode = base.Columns["SystemEventCode"];
-                this.columnEventName = base.Columns["EventName"];
-                this.columnDescription = base.Columns["Description"];
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            private void InitClass() {
-                this.columnSystemEventCode = new global::System.Data.DataColumn("SystemEventCode", typeof(int), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnSystemEventCode);
-                this.columnEventName = new global::System.Data.DataColumn("EventName", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnEventName);
-                this.columnDescription = new global::System.Data.DataColumn("Description", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnDescription);
-                this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
-                                this.columnSystemEventCode}, true));
-                this.columnSystemEventCode.AllowDBNull = false;
-                this.columnSystemEventCode.Unique = true;
-                this.columnEventName.AllowDBNull = false;
-                this.columnEventName.MaxLength = 50;
-                this.columnDescription.MaxLength = 150;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            public SystemEventCodesRow NewSystemEventCodesRow() {
-                return ((SystemEventCodesRow)(this.NewRow()));
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            protected override global::System.Data.DataRow NewRowFromBuilder(global::System.Data.DataRowBuilder builder) {
-                return new SystemEventCodesRow(builder);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            protected override global::System.Type GetRowType() {
-                return typeof(SystemEventCodesRow);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            protected override void OnRowChanged(global::System.Data.DataRowChangeEventArgs e) {
-                base.OnRowChanged(e);
-                if ((this.SystemEventCodesRowChanged != null)) {
-                    this.SystemEventCodesRowChanged(this, new SystemEventCodesRowChangeEvent(((SystemEventCodesRow)(e.Row)), e.Action));
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            protected override void OnRowChanging(global::System.Data.DataRowChangeEventArgs e) {
-                base.OnRowChanging(e);
-                if ((this.SystemEventCodesRowChanging != null)) {
-                    this.SystemEventCodesRowChanging(this, new SystemEventCodesRowChangeEvent(((SystemEventCodesRow)(e.Row)), e.Action));
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            protected override void OnRowDeleted(global::System.Data.DataRowChangeEventArgs e) {
-                base.OnRowDeleted(e);
-                if ((this.SystemEventCodesRowDeleted != null)) {
-                    this.SystemEventCodesRowDeleted(this, new SystemEventCodesRowChangeEvent(((SystemEventCodesRow)(e.Row)), e.Action));
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            protected override void OnRowDeleting(global::System.Data.DataRowChangeEventArgs e) {
-                base.OnRowDeleting(e);
-                if ((this.SystemEventCodesRowDeleting != null)) {
-                    this.SystemEventCodesRowDeleting(this, new SystemEventCodesRowChangeEvent(((SystemEventCodesRow)(e.Row)), e.Action));
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            public void RemoveSystemEventCodesRow(SystemEventCodesRow row) {
-                this.Rows.Remove(row);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            public static global::System.Xml.Schema.XmlSchemaComplexType GetTypedTableSchema(global::System.Xml.Schema.XmlSchemaSet xs) {
-                global::System.Xml.Schema.XmlSchemaComplexType type = new global::System.Xml.Schema.XmlSchemaComplexType();
-                global::System.Xml.Schema.XmlSchemaSequence sequence = new global::System.Xml.Schema.XmlSchemaSequence();
-                NgkDbDataSet ds = new NgkDbDataSet();
-                global::System.Xml.Schema.XmlSchemaAny any1 = new global::System.Xml.Schema.XmlSchemaAny();
-                any1.Namespace = "http://www.w3.org/2001/XMLSchema";
-                any1.MinOccurs = new decimal(0);
-                any1.MaxOccurs = decimal.MaxValue;
-                any1.ProcessContents = global::System.Xml.Schema.XmlSchemaContentProcessing.Lax;
-                sequence.Items.Add(any1);
-                global::System.Xml.Schema.XmlSchemaAny any2 = new global::System.Xml.Schema.XmlSchemaAny();
-                any2.Namespace = "urn:schemas-microsoft-com:xml-diffgram-v1";
-                any2.MinOccurs = new decimal(1);
-                any2.ProcessContents = global::System.Xml.Schema.XmlSchemaContentProcessing.Lax;
-                sequence.Items.Add(any2);
-                global::System.Xml.Schema.XmlSchemaAttribute attribute1 = new global::System.Xml.Schema.XmlSchemaAttribute();
-                attribute1.Name = "namespace";
-                attribute1.FixedValue = ds.Namespace;
-                type.Attributes.Add(attribute1);
-                global::System.Xml.Schema.XmlSchemaAttribute attribute2 = new global::System.Xml.Schema.XmlSchemaAttribute();
-                attribute2.Name = "tableTypeName";
-                attribute2.FixedValue = "SystemEventCodesDataTable";
+                attribute2.FixedValue = "SystemEventsLogDataTable";
                 type.Attributes.Add(attribute2);
                 type.Particle = sequence;
                 global::System.Xml.Schema.XmlSchema dsSchema = ds.GetSchemaSerializable();
@@ -875,33 +566,33 @@ namespace Infrastructure.Dal.DbContext {
         ///Represents strongly named DataRow class.
         ///</summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "2.0.0.0")]
-        public partial class SystemEnentsLogRow : global::System.Data.DataRow {
+        public partial class SystemEventsLogRow : global::System.Data.DataRow {
             
-            private SystemEnentsLogDataTable tableSystemEnentsLog;
+            private SystemEventsLogDataTable tableSystemEventsLog;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            internal SystemEnentsLogRow(global::System.Data.DataRowBuilder rb) : 
+            internal SystemEventsLogRow(global::System.Data.DataRowBuilder rb) : 
                     base(rb) {
-                this.tableSystemEnentsLog = ((SystemEnentsLogDataTable)(this.Table));
+                this.tableSystemEventsLog = ((SystemEventsLogDataTable)(this.Table));
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             public int MessageId {
                 get {
-                    return ((int)(this[this.tableSystemEnentsLog.MessageIdColumn]));
+                    return ((int)(this[this.tableSystemEventsLog.MessageIdColumn]));
                 }
                 set {
-                    this[this.tableSystemEnentsLog.MessageIdColumn] = value;
+                    this[this.tableSystemEventsLog.MessageIdColumn] = value;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             public int SystemEventCode {
                 get {
-                    return ((int)(this[this.tableSystemEnentsLog.SystemEventCodeColumn]));
+                    return ((int)(this[this.tableSystemEventsLog.SystemEventCodeColumn]));
                 }
                 set {
-                    this[this.tableSystemEnentsLog.SystemEventCodeColumn] = value;
+                    this[this.tableSystemEventsLog.SystemEventCodeColumn] = value;
                 }
             }
             
@@ -909,14 +600,14 @@ namespace Infrastructure.Dal.DbContext {
             public string Message {
                 get {
                     try {
-                        return ((string)(this[this.tableSystemEnentsLog.MessageColumn]));
+                        return ((string)(this[this.tableSystemEventsLog.MessageColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'Message\' in table \'SystemEnentsLog\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'Message\' in table \'SystemEventsLog\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tableSystemEnentsLog.MessageColumn] = value;
+                    this[this.tableSystemEventsLog.MessageColumn] = value;
                 }
             }
             
@@ -924,24 +615,24 @@ namespace Infrastructure.Dal.DbContext {
             public System.DateTime Created {
                 get {
                     try {
-                        return ((global::System.DateTime)(this[this.tableSystemEnentsLog.CreatedColumn]));
+                        return ((global::System.DateTime)(this[this.tableSystemEventsLog.CreatedColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'Created\' in table \'SystemEnentsLog\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'Created\' in table \'SystemEventsLog\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tableSystemEnentsLog.CreatedColumn] = value;
+                    this[this.tableSystemEventsLog.CreatedColumn] = value;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             public byte Category {
                 get {
-                    return ((byte)(this[this.tableSystemEnentsLog.CategoryColumn]));
+                    return ((byte)(this[this.tableSystemEventsLog.CategoryColumn]));
                 }
                 set {
-                    this[this.tableSystemEnentsLog.CategoryColumn] = value;
+                    this[this.tableSystemEventsLog.CategoryColumn] = value;
                 }
             }
             
@@ -949,125 +640,45 @@ namespace Infrastructure.Dal.DbContext {
             public bool HasRead {
                 get {
                     try {
-                        return ((bool)(this[this.tableSystemEnentsLog.HasReadColumn]));
+                        return ((bool)(this[this.tableSystemEventsLog.HasReadColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'HasRead\' in table \'SystemEnentsLog\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'HasRead\' in table \'SystemEventsLog\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tableSystemEnentsLog.HasReadColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            public SystemEventCodesRow SystemEventCodesRow {
-                get {
-                    return ((SystemEventCodesRow)(this.GetParentRow(this.Table.ParentRelations["FK_SystemEnentsLog_SystemEventCodes"])));
-                }
-                set {
-                    this.SetParentRow(value, this.Table.ParentRelations["FK_SystemEnentsLog_SystemEventCodes"]);
+                    this[this.tableSystemEventsLog.HasReadColumn] = value;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             public bool IsMessageNull() {
-                return this.IsNull(this.tableSystemEnentsLog.MessageColumn);
+                return this.IsNull(this.tableSystemEventsLog.MessageColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             public void SetMessageNull() {
-                this[this.tableSystemEnentsLog.MessageColumn] = global::System.Convert.DBNull;
+                this[this.tableSystemEventsLog.MessageColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             public bool IsCreatedNull() {
-                return this.IsNull(this.tableSystemEnentsLog.CreatedColumn);
+                return this.IsNull(this.tableSystemEventsLog.CreatedColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             public void SetCreatedNull() {
-                this[this.tableSystemEnentsLog.CreatedColumn] = global::System.Convert.DBNull;
+                this[this.tableSystemEventsLog.CreatedColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             public bool IsHasReadNull() {
-                return this.IsNull(this.tableSystemEnentsLog.HasReadColumn);
+                return this.IsNull(this.tableSystemEventsLog.HasReadColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             public void SetHasReadNull() {
-                this[this.tableSystemEnentsLog.HasReadColumn] = global::System.Convert.DBNull;
-            }
-        }
-        
-        /// <summary>
-        ///Represents strongly named DataRow class.
-        ///</summary>
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "2.0.0.0")]
-        public partial class SystemEventCodesRow : global::System.Data.DataRow {
-            
-            private SystemEventCodesDataTable tableSystemEventCodes;
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            internal SystemEventCodesRow(global::System.Data.DataRowBuilder rb) : 
-                    base(rb) {
-                this.tableSystemEventCodes = ((SystemEventCodesDataTable)(this.Table));
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            public int SystemEventCode {
-                get {
-                    return ((int)(this[this.tableSystemEventCodes.SystemEventCodeColumn]));
-                }
-                set {
-                    this[this.tableSystemEventCodes.SystemEventCodeColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            public string EventName {
-                get {
-                    return ((string)(this[this.tableSystemEventCodes.EventNameColumn]));
-                }
-                set {
-                    this[this.tableSystemEventCodes.EventNameColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            public string Description {
-                get {
-                    try {
-                        return ((string)(this[this.tableSystemEventCodes.DescriptionColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'Description\' in table \'SystemEventCodes\' is DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableSystemEventCodes.DescriptionColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            public bool IsDescriptionNull() {
-                return this.IsNull(this.tableSystemEventCodes.DescriptionColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            public void SetDescriptionNull() {
-                this[this.tableSystemEventCodes.DescriptionColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            public SystemEnentsLogRow[] GetSystemEnentsLogRows() {
-                if ((this.Table.ChildRelations["FK_SystemEnentsLog_SystemEventCodes"] == null)) {
-                    return new SystemEnentsLogRow[0];
-                }
-                else {
-                    return ((SystemEnentsLogRow[])(base.GetChildRows(this.Table.ChildRelations["FK_SystemEnentsLog_SystemEventCodes"])));
-                }
+                this[this.tableSystemEventsLog.HasReadColumn] = global::System.Convert.DBNull;
             }
         }
         
@@ -1075,51 +686,20 @@ namespace Infrastructure.Dal.DbContext {
         ///Row event argument class
         ///</summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "2.0.0.0")]
-        public class SystemEnentsLogRowChangeEvent : global::System.EventArgs {
+        public class SystemEventsLogRowChangeEvent : global::System.EventArgs {
             
-            private SystemEnentsLogRow eventRow;
+            private SystemEventsLogRow eventRow;
             
             private global::System.Data.DataRowAction eventAction;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            public SystemEnentsLogRowChangeEvent(SystemEnentsLogRow row, global::System.Data.DataRowAction action) {
+            public SystemEventsLogRowChangeEvent(SystemEventsLogRow row, global::System.Data.DataRowAction action) {
                 this.eventRow = row;
                 this.eventAction = action;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            public SystemEnentsLogRow Row {
-                get {
-                    return this.eventRow;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            public global::System.Data.DataRowAction Action {
-                get {
-                    return this.eventAction;
-                }
-            }
-        }
-        
-        /// <summary>
-        ///Row event argument class
-        ///</summary>
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "2.0.0.0")]
-        public class SystemEventCodesRowChangeEvent : global::System.EventArgs {
-            
-            private SystemEventCodesRow eventRow;
-            
-            private global::System.Data.DataRowAction eventAction;
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            public SystemEventCodesRowChangeEvent(SystemEventCodesRow row, global::System.Data.DataRowAction action) {
-                this.eventRow = row;
-                this.eventAction = action;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            public SystemEventCodesRow Row {
+            public SystemEventsLogRow Row {
                 get {
                     return this.eventRow;
                 }
@@ -1147,7 +727,7 @@ namespace Infrastructure.Dal.DbContext.NgkDbDataSetTableAdapters {
     [global::System.ComponentModel.DesignerAttribute("Microsoft.VSDesigner.DataSource.Design.TableAdapterDesigner, Microsoft.VSDesigner" +
         ", Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
     [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-    public partial class SystemEnentsLogTableAdapter : global::System.ComponentModel.Component {
+    public partial class SystemEventsLogTableAdapter : global::System.ComponentModel.Component {
         
         private global::System.Data.SqlClient.SqlDataAdapter _adapter;
         
@@ -1158,7 +738,7 @@ namespace Infrastructure.Dal.DbContext.NgkDbDataSetTableAdapters {
         private bool _clearBeforeFill;
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        public SystemEnentsLogTableAdapter() {
+        public SystemEventsLogTableAdapter() {
             this.ClearBeforeFill = true;
         }
         
@@ -1224,7 +804,7 @@ namespace Infrastructure.Dal.DbContext.NgkDbDataSetTableAdapters {
             this._adapter = new global::System.Data.SqlClient.SqlDataAdapter();
             global::System.Data.Common.DataTableMapping tableMapping = new global::System.Data.Common.DataTableMapping();
             tableMapping.SourceTable = "Table";
-            tableMapping.DataSetTable = "SystemEnentsLog";
+            tableMapping.DataSetTable = "SystemEventsLog";
             tableMapping.ColumnMappings.Add("MessageId", "MessageId");
             tableMapping.ColumnMappings.Add("SystemEventCode", "SystemEventCode");
             tableMapping.ColumnMappings.Add("Message", "Message");
@@ -1234,7 +814,7 @@ namespace Infrastructure.Dal.DbContext.NgkDbDataSetTableAdapters {
             this._adapter.TableMappings.Add(tableMapping);
             this._adapter.DeleteCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.DeleteCommand.Connection = this.Connection;
-            this._adapter.DeleteCommand.CommandText = @"DELETE FROM [dbo].[SystemEnentsLog] WHERE (([MessageId] = @Original_MessageId) AND ([SystemEventCode] = @Original_SystemEventCode) AND ((@IsNull_Message = 1 AND [Message] IS NULL) OR ([Message] = @Original_Message)) AND ((@IsNull_Created = 1 AND [Created] IS NULL) OR ([Created] = @Original_Created)) AND ([Category] = @Original_Category) AND ((@IsNull_HasRead = 1 AND [HasRead] IS NULL) OR ([HasRead] = @Original_HasRead)))";
+            this._adapter.DeleteCommand.CommandText = @"DELETE FROM [dbo].[SystemEventsLog] WHERE (([MessageId] = @Original_MessageId) AND ([SystemEventCode] = @Original_SystemEventCode) AND ((@IsNull_Message = 1 AND [Message] IS NULL) OR ([Message] = @Original_Message)) AND ((@IsNull_Created = 1 AND [Created] IS NULL) OR ([Created] = @Original_Created)) AND ([Category] = @Original_Category) AND ((@IsNull_HasRead = 1 AND [HasRead] IS NULL) OR ([HasRead] = @Original_HasRead)))";
             this._adapter.DeleteCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_MessageId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "MessageId", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_SystemEventCode", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "SystemEventCode", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
@@ -1247,8 +827,8 @@ namespace Infrastructure.Dal.DbContext.NgkDbDataSetTableAdapters {
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_HasRead", global::System.Data.SqlDbType.Bit, 0, global::System.Data.ParameterDirection.Input, 0, 0, "HasRead", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.InsertCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.InsertCommand.Connection = this.Connection;
-            this._adapter.InsertCommand.CommandText = @"INSERT INTO [dbo].[SystemEnentsLog] ([SystemEventCode], [Message], [Created], [Category], [HasRead]) VALUES (@SystemEventCode, @Message, @Created, @Category, @HasRead);
-SELECT MessageId, SystemEventCode, Message, Created, Category, HasRead FROM SystemEnentsLog WHERE (MessageId = SCOPE_IDENTITY())";
+            this._adapter.InsertCommand.CommandText = @"INSERT INTO [dbo].[SystemEventsLog] ([SystemEventCode], [Message], [Created], [Category], [HasRead]) VALUES (@SystemEventCode, @Message, @Created, @Category, @HasRead);
+SELECT MessageId, SystemEventCode, Message, Created, Category, HasRead FROM SystemEventsLog WHERE (MessageId = SCOPE_IDENTITY())";
             this._adapter.InsertCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@SystemEventCode", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "SystemEventCode", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Message", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Message", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
@@ -1257,8 +837,8 @@ SELECT MessageId, SystemEventCode, Message, Created, Category, HasRead FROM Syst
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@HasRead", global::System.Data.SqlDbType.Bit, 0, global::System.Data.ParameterDirection.Input, 0, 0, "HasRead", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.UpdateCommand.Connection = this.Connection;
-            this._adapter.UpdateCommand.CommandText = @"UPDATE [dbo].[SystemEnentsLog] SET [SystemEventCode] = @SystemEventCode, [Message] = @Message, [Created] = @Created, [Category] = @Category, [HasRead] = @HasRead WHERE (([MessageId] = @Original_MessageId) AND ([SystemEventCode] = @Original_SystemEventCode) AND ((@IsNull_Message = 1 AND [Message] IS NULL) OR ([Message] = @Original_Message)) AND ((@IsNull_Created = 1 AND [Created] IS NULL) OR ([Created] = @Original_Created)) AND ([Category] = @Original_Category) AND ((@IsNull_HasRead = 1 AND [HasRead] IS NULL) OR ([HasRead] = @Original_HasRead)));
-SELECT MessageId, SystemEventCode, Message, Created, Category, HasRead FROM SystemEnentsLog WHERE (MessageId = @MessageId)";
+            this._adapter.UpdateCommand.CommandText = @"UPDATE [dbo].[SystemEventsLog] SET [SystemEventCode] = @SystemEventCode, [Message] = @Message, [Created] = @Created, [Category] = @Category, [HasRead] = @HasRead WHERE (([MessageId] = @Original_MessageId) AND ([SystemEventCode] = @Original_SystemEventCode) AND ((@IsNull_Message = 1 AND [Message] IS NULL) OR ([Message] = @Original_Message)) AND ((@IsNull_Created = 1 AND [Created] IS NULL) OR ([Created] = @Original_Created)) AND ([Category] = @Original_Category) AND ((@IsNull_HasRead = 1 AND [HasRead] IS NULL) OR ([HasRead] = @Original_HasRead)));
+SELECT MessageId, SystemEventCode, Message, Created, Category, HasRead FROM SystemEventsLog WHERE (MessageId = @MessageId)";
             this._adapter.UpdateCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@SystemEventCode", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "SystemEventCode", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Message", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Message", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
@@ -1289,14 +869,14 @@ SELECT MessageId, SystemEventCode, Message, Created, Category, HasRead FROM Syst
             this._commandCollection[0] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[0].Connection = this.Connection;
             this._commandCollection[0].CommandText = "SELECT MessageId, SystemEventCode, Message, Created, Category, HasRead FROM dbo.S" +
-                "ystemEnentsLog";
+                "ystemEventsLog";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, true)]
-        public virtual int Fill(NgkDbDataSet.SystemEnentsLogDataTable dataTable) {
+        public virtual int Fill(NgkDbDataSet.SystemEventsLogDataTable dataTable) {
             this.Adapter.SelectCommand = this.CommandCollection[0];
             if ((this.ClearBeforeFill == true)) {
                 dataTable.Clear();
@@ -1308,23 +888,23 @@ SELECT MessageId, SystemEventCode, Message, Created, Category, HasRead FROM Syst
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, true)]
-        public virtual NgkDbDataSet.SystemEnentsLogDataTable GetData() {
+        public virtual NgkDbDataSet.SystemEventsLogDataTable GetData() {
             this.Adapter.SelectCommand = this.CommandCollection[0];
-            NgkDbDataSet.SystemEnentsLogDataTable dataTable = new NgkDbDataSet.SystemEnentsLogDataTable();
+            NgkDbDataSet.SystemEventsLogDataTable dataTable = new NgkDbDataSet.SystemEventsLogDataTable();
             this.Adapter.Fill(dataTable);
             return dataTable;
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        public virtual int Update(NgkDbDataSet.SystemEnentsLogDataTable dataTable) {
+        public virtual int Update(NgkDbDataSet.SystemEventsLogDataTable dataTable) {
             return this.Adapter.Update(dataTable);
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         public virtual int Update(NgkDbDataSet dataSet) {
-            return this.Adapter.Update(dataSet, "SystemEnentsLog");
+            return this.Adapter.Update(dataSet, "SystemEventsLog");
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1500,318 +1080,6 @@ SELECT MessageId, SystemEventCode, Message, Created, Category, HasRead FROM Syst
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
         public virtual int Update(int SystemEventCode, string Message, global::System.Nullable<global::System.DateTime> Created, byte Category, global::System.Nullable<bool> HasRead, int Original_MessageId, int Original_SystemEventCode, string Original_Message, global::System.Nullable<global::System.DateTime> Original_Created, byte Original_Category, global::System.Nullable<bool> Original_HasRead) {
             return this.Update(SystemEventCode, Message, Created, Category, HasRead, Original_MessageId, Original_SystemEventCode, Original_Message, Original_Created, Original_Category, Original_HasRead, Original_MessageId);
-        }
-    }
-    
-    /// <summary>
-    ///Represents the connection and commands used to retrieve and save data.
-    ///</summary>
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "2.0.0.0")]
-    [global::System.ComponentModel.DesignerCategoryAttribute("code")]
-    [global::System.ComponentModel.ToolboxItem(true)]
-    [global::System.ComponentModel.DataObjectAttribute(true)]
-    [global::System.ComponentModel.DesignerAttribute("Microsoft.VSDesigner.DataSource.Design.TableAdapterDesigner, Microsoft.VSDesigner" +
-        ", Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
-    [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-    public partial class SystemEventCodesTableAdapter : global::System.ComponentModel.Component {
-        
-        private global::System.Data.SqlClient.SqlDataAdapter _adapter;
-        
-        private global::System.Data.SqlClient.SqlConnection _connection;
-        
-        private global::System.Data.SqlClient.SqlCommand[] _commandCollection;
-        
-        private bool _clearBeforeFill;
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        public SystemEventCodesTableAdapter() {
-            this.ClearBeforeFill = true;
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        private global::System.Data.SqlClient.SqlDataAdapter Adapter {
-            get {
-                if ((this._adapter == null)) {
-                    this.InitAdapter();
-                }
-                return this._adapter;
-            }
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        internal global::System.Data.SqlClient.SqlConnection Connection {
-            get {
-                if ((this._connection == null)) {
-                    this.InitConnection();
-                }
-                return this._connection;
-            }
-            set {
-                this._connection = value;
-                if ((this.Adapter.InsertCommand != null)) {
-                    this.Adapter.InsertCommand.Connection = value;
-                }
-                if ((this.Adapter.DeleteCommand != null)) {
-                    this.Adapter.DeleteCommand.Connection = value;
-                }
-                if ((this.Adapter.UpdateCommand != null)) {
-                    this.Adapter.UpdateCommand.Connection = value;
-                }
-                for (int i = 0; (i < this.CommandCollection.Length); i = (i + 1)) {
-                    if ((this.CommandCollection[i] != null)) {
-                        ((global::System.Data.SqlClient.SqlCommand)(this.CommandCollection[i])).Connection = value;
-                    }
-                }
-            }
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        protected global::System.Data.SqlClient.SqlCommand[] CommandCollection {
-            get {
-                if ((this._commandCollection == null)) {
-                    this.InitCommandCollection();
-                }
-                return this._commandCollection;
-            }
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        public bool ClearBeforeFill {
-            get {
-                return this._clearBeforeFill;
-            }
-            set {
-                this._clearBeforeFill = value;
-            }
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        private void InitAdapter() {
-            this._adapter = new global::System.Data.SqlClient.SqlDataAdapter();
-            global::System.Data.Common.DataTableMapping tableMapping = new global::System.Data.Common.DataTableMapping();
-            tableMapping.SourceTable = "Table";
-            tableMapping.DataSetTable = "SystemEventCodes";
-            tableMapping.ColumnMappings.Add("SystemEventCode", "SystemEventCode");
-            tableMapping.ColumnMappings.Add("EventName", "EventName");
-            tableMapping.ColumnMappings.Add("Description", "Description");
-            this._adapter.TableMappings.Add(tableMapping);
-            this._adapter.DeleteCommand = new global::System.Data.SqlClient.SqlCommand();
-            this._adapter.DeleteCommand.Connection = this.Connection;
-            this._adapter.DeleteCommand.CommandText = "DELETE FROM [dbo].[SystemEventCodes] WHERE (([SystemEventCode] = @Original_System" +
-                "EventCode) AND ([EventName] = @Original_EventName) AND ((@IsNull_Description = 1" +
-                " AND [Description] IS NULL) OR ([Description] = @Original_Description)))";
-            this._adapter.DeleteCommand.CommandType = global::System.Data.CommandType.Text;
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_SystemEventCode", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "SystemEventCode", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_EventName", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "EventName", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_Description", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Description", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Description", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Description", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
-            this._adapter.InsertCommand = new global::System.Data.SqlClient.SqlCommand();
-            this._adapter.InsertCommand.Connection = this.Connection;
-            this._adapter.InsertCommand.CommandText = "INSERT INTO [dbo].[SystemEventCodes] ([SystemEventCode], [EventName], [Descriptio" +
-                "n]) VALUES (@SystemEventCode, @EventName, @Description);\r\nSELECT SystemEventCode" +
-                ", EventName, Description FROM SystemEventCodes WHERE (SystemEventCode = @SystemE" +
-                "ventCode)";
-            this._adapter.InsertCommand.CommandType = global::System.Data.CommandType.Text;
-            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@SystemEventCode", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "SystemEventCode", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@EventName", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "EventName", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Description", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Description", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.UpdateCommand = new global::System.Data.SqlClient.SqlCommand();
-            this._adapter.UpdateCommand.Connection = this.Connection;
-            this._adapter.UpdateCommand.CommandText = @"UPDATE [dbo].[SystemEventCodes] SET [SystemEventCode] = @SystemEventCode, [EventName] = @EventName, [Description] = @Description WHERE (([SystemEventCode] = @Original_SystemEventCode) AND ([EventName] = @Original_EventName) AND ((@IsNull_Description = 1 AND [Description] IS NULL) OR ([Description] = @Original_Description)));
-SELECT SystemEventCode, EventName, Description FROM SystemEventCodes WHERE (SystemEventCode = @SystemEventCode)";
-            this._adapter.UpdateCommand.CommandType = global::System.Data.CommandType.Text;
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@SystemEventCode", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "SystemEventCode", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@EventName", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "EventName", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Description", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Description", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_SystemEventCode", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "SystemEventCode", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_EventName", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "EventName", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_Description", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Description", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Description", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Description", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        private void InitConnection() {
-            this._connection = new global::System.Data.SqlClient.SqlConnection();
-            this._connection.ConnectionString = global::Infrastructure.Dal.Properties.Settings.Default.NgkDbConnectionString;
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        private void InitCommandCollection() {
-            this._commandCollection = new global::System.Data.SqlClient.SqlCommand[1];
-            this._commandCollection[0] = new global::System.Data.SqlClient.SqlCommand();
-            this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = "SELECT SystemEventCode, EventName, Description FROM dbo.SystemEventCodes";
-            this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, true)]
-        public virtual int Fill(NgkDbDataSet.SystemEventCodesDataTable dataTable) {
-            this.Adapter.SelectCommand = this.CommandCollection[0];
-            if ((this.ClearBeforeFill == true)) {
-                dataTable.Clear();
-            }
-            int returnValue = this.Adapter.Fill(dataTable);
-            return returnValue;
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, true)]
-        public virtual NgkDbDataSet.SystemEventCodesDataTable GetData() {
-            this.Adapter.SelectCommand = this.CommandCollection[0];
-            NgkDbDataSet.SystemEventCodesDataTable dataTable = new NgkDbDataSet.SystemEventCodesDataTable();
-            this.Adapter.Fill(dataTable);
-            return dataTable;
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        public virtual int Update(NgkDbDataSet.SystemEventCodesDataTable dataTable) {
-            return this.Adapter.Update(dataTable);
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        public virtual int Update(NgkDbDataSet dataSet) {
-            return this.Adapter.Update(dataSet, "SystemEventCodes");
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        public virtual int Update(global::System.Data.DataRow dataRow) {
-            return this.Adapter.Update(new global::System.Data.DataRow[] {
-                        dataRow});
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        public virtual int Update(global::System.Data.DataRow[] dataRows) {
-            return this.Adapter.Update(dataRows);
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Delete, true)]
-        public virtual int Delete(int Original_SystemEventCode, string Original_EventName, string Original_Description) {
-            this.Adapter.DeleteCommand.Parameters[0].Value = ((int)(Original_SystemEventCode));
-            if ((Original_EventName == null)) {
-                throw new global::System.ArgumentNullException("Original_EventName");
-            }
-            else {
-                this.Adapter.DeleteCommand.Parameters[1].Value = ((string)(Original_EventName));
-            }
-            if ((Original_Description == null)) {
-                this.Adapter.DeleteCommand.Parameters[2].Value = ((object)(1));
-                this.Adapter.DeleteCommand.Parameters[3].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.DeleteCommand.Parameters[2].Value = ((object)(0));
-                this.Adapter.DeleteCommand.Parameters[3].Value = ((string)(Original_Description));
-            }
-            global::System.Data.ConnectionState previousConnectionState = this.Adapter.DeleteCommand.Connection.State;
-            if (((this.Adapter.DeleteCommand.Connection.State & global::System.Data.ConnectionState.Open) 
-                        != global::System.Data.ConnectionState.Open)) {
-                this.Adapter.DeleteCommand.Connection.Open();
-            }
-            try {
-                int returnValue = this.Adapter.DeleteCommand.ExecuteNonQuery();
-                return returnValue;
-            }
-            finally {
-                if ((previousConnectionState == global::System.Data.ConnectionState.Closed)) {
-                    this.Adapter.DeleteCommand.Connection.Close();
-                }
-            }
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Insert, true)]
-        public virtual int Insert(int SystemEventCode, string EventName, string Description) {
-            this.Adapter.InsertCommand.Parameters[0].Value = ((int)(SystemEventCode));
-            if ((EventName == null)) {
-                throw new global::System.ArgumentNullException("EventName");
-            }
-            else {
-                this.Adapter.InsertCommand.Parameters[1].Value = ((string)(EventName));
-            }
-            if ((Description == null)) {
-                this.Adapter.InsertCommand.Parameters[2].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.InsertCommand.Parameters[2].Value = ((string)(Description));
-            }
-            global::System.Data.ConnectionState previousConnectionState = this.Adapter.InsertCommand.Connection.State;
-            if (((this.Adapter.InsertCommand.Connection.State & global::System.Data.ConnectionState.Open) 
-                        != global::System.Data.ConnectionState.Open)) {
-                this.Adapter.InsertCommand.Connection.Open();
-            }
-            try {
-                int returnValue = this.Adapter.InsertCommand.ExecuteNonQuery();
-                return returnValue;
-            }
-            finally {
-                if ((previousConnectionState == global::System.Data.ConnectionState.Closed)) {
-                    this.Adapter.InsertCommand.Connection.Close();
-                }
-            }
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
-        public virtual int Update(int SystemEventCode, string EventName, string Description, int Original_SystemEventCode, string Original_EventName, string Original_Description) {
-            this.Adapter.UpdateCommand.Parameters[0].Value = ((int)(SystemEventCode));
-            if ((EventName == null)) {
-                throw new global::System.ArgumentNullException("EventName");
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[1].Value = ((string)(EventName));
-            }
-            if ((Description == null)) {
-                this.Adapter.UpdateCommand.Parameters[2].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[2].Value = ((string)(Description));
-            }
-            this.Adapter.UpdateCommand.Parameters[3].Value = ((int)(Original_SystemEventCode));
-            if ((Original_EventName == null)) {
-                throw new global::System.ArgumentNullException("Original_EventName");
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[4].Value = ((string)(Original_EventName));
-            }
-            if ((Original_Description == null)) {
-                this.Adapter.UpdateCommand.Parameters[5].Value = ((object)(1));
-                this.Adapter.UpdateCommand.Parameters[6].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[5].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[6].Value = ((string)(Original_Description));
-            }
-            global::System.Data.ConnectionState previousConnectionState = this.Adapter.UpdateCommand.Connection.State;
-            if (((this.Adapter.UpdateCommand.Connection.State & global::System.Data.ConnectionState.Open) 
-                        != global::System.Data.ConnectionState.Open)) {
-                this.Adapter.UpdateCommand.Connection.Open();
-            }
-            try {
-                int returnValue = this.Adapter.UpdateCommand.ExecuteNonQuery();
-                return returnValue;
-            }
-            finally {
-                if ((previousConnectionState == global::System.Data.ConnectionState.Closed)) {
-                    this.Adapter.UpdateCommand.Connection.Close();
-                }
-            }
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
-        public virtual int Update(string EventName, string Description, int Original_SystemEventCode, string Original_EventName, string Original_Description) {
-            return this.Update(Original_SystemEventCode, EventName, Description, Original_SystemEventCode, Original_EventName, Original_Description);
         }
     }
 }

@@ -6,6 +6,7 @@ using System.ComponentModel;
 using Infrastructure.Api.Models;
 using System.Windows.Forms;
 using System.Data;
+using Infrastructure.Dal.DbEntity;
 
 namespace NGK.Plugins.Views
 {
@@ -19,7 +20,7 @@ namespace NGK.Plugins.Views
             set { base.Control.Dock = value; }
         }
 
-        public DataTable SystemEvents
+        public BindingList<ISystemEventMessage> SystemEvents
         {
             set { Control.SystemEvents = value; }
         }

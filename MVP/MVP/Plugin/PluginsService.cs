@@ -77,27 +77,34 @@ namespace Mvp.Plugin
 
             foreach (string file in files)
             {
-                Assembly assembly = Assembly.LoadFrom(file);
-                foreach (Type type in assembly.GetExportedTypes())
+                try
                 {
-                    if (type.IsClass && typeof(PluginBase).IsAssignableFrom(type))
+                    Assembly assembly = Assembly.LoadFrom(file);
+                    foreach (Type type in assembly.GetExportedTypes())
                     {
-                        if (UsingOnlyAppDomain)
+                        if (type.IsClass && typeof(PluginBase).IsAssignableFrom(type))
                         {
-                            plugin = (T)AppDomain.CurrentDomain
-                                .CreateInstanceAndUnwrap(assembly.FullName, type.FullName);
-                            plugins.Add(plugin);
-                        }
-                        else
-                        {
-                            AppDomain domain = AppDomain.CreateDomain(Guid.NewGuid().ToString());
-                            domain.UnhandledException += 
-                                new UnhandledExceptionEventHandler(EventHandler_PluginDomain_UnhandledException);
-                            plugin = (T)domain.CreateInstanceAndUnwrap(assembly.FullName, type.FullName);
-                            
-                            throw new NotImplementedException();
+                            if (UsingOnlyAppDomain)
+                            {
+                                plugin = (T)AppDomain.CurrentDomain
+                                    .CreateInstanceAndUnwrap(assembly.FullName, type.FullName);
+                                plugins.Add(plugin);
+                            }
+                            else
+                            {
+                                AppDomain domain = AppDomain.CreateDomain(Guid.NewGuid().ToString());
+                                domain.UnhandledException +=
+                                    new UnhandledExceptionEventHandler(EventHandler_PluginDomain_UnhandledException);
+                                plugin = (T)domain.CreateInstanceAndUnwrap(assembly.FullName, type.FullName);
+
+                                throw new NotImplementedException();
+                            }
                         }
                     }
+                }
+                catch (BadImageFormatException ex)
+                {
+                    // Если найдена нативная dll
                 }
             }
             Plugins = plugins.AsReadOnly();

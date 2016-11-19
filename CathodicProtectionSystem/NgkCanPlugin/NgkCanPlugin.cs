@@ -98,8 +98,7 @@ namespace NGK.Plugins
                     @"\newtorkconfig.bin.nwc");
 
                 //Создаём сетевой сервис и регистрируем его
-                CanNetworkService = new CanNetworkService(
-                    "NgkCanService", NgkCanNetworksManager.Instance, 300, Managers);
+                CanNetworkService = new CanNetworkService(NgkCanNetworksManager.Instance, 300, Managers);
                 CanNetworkService.Initialize(null);
                 base.ApplicationServices.Add(CanNetworkService);
             }

@@ -6,6 +6,7 @@ using System.Data;
 using System.Text;
 using System.Windows.Forms;
 using Infrastructure.Api.Models;
+using Infrastructure.Dal.DbEntity;
 
 namespace NGK.Plugins.Views
 {
@@ -59,7 +60,7 @@ namespace NGK.Plugins.Views
 
         private BindingSource _BindingSourceSystemEvents;
 
-        public DataTable SystemEvents
+        public BindingList<ISystemEventMessage> SystemEvents
         {
             set
             {

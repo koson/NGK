@@ -133,6 +133,10 @@
       <Project>{B48FF1D3-AED9-40D8-9A61-E26B8B5E8516}</Project>
       <Name>Infrastructure.API</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Infrastructure.Dal\Infrastructure.Dal.csproj">
+      <Project>{3B3C9818-D909-45E4-8587-873E4989DA8A}</Project>
+      <Name>Infrastructure.Dal</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Log\Log.csproj">
       <Project>{8ED7A1A3-E261-4395-81A4-F2EC5565A4DF}</Project>
       <Name>Log</Name>

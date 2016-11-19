@@ -25,9 +25,8 @@ namespace NGK.Plugins.Presenters
             //log.Add(new SystemEvent(SystemEvent.SystemEventCodes.ConfigurationError,
             //    SystemEvent.Category.Warring, @"Ошибка 2", DateTime.Now));
             
-            _Repository = DbContext.Create().SystemEventRepository;
 
-            View.SystemEvents = _Repository.SystemEventsCashTable;
+            //View.SystemEvents = _Managers.SystemEventLogService
         }
 
         #endregion
@@ -35,7 +34,7 @@ namespace NGK.Plugins.Presenters
         #region Fields And Properties
 
         private readonly IManagers _Managers;
-        private readonly ISystemEventsRepository _Repository;
+        
 
         public override string Title
         {

@@ -44,12 +44,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>NgkDbDataSet.xsd</DependentUpon>
     </Compile>
-    <Compile Include="DbEntity\Category.cs" />
     <Compile Include="DbEntity\IDataRepository.cs" />
-    <Compile Include="DbEntity\ISystemEventMessage.cs" />
     <Compile Include="DbEntity\ISystemEventsRepository.cs" />
-    <Compile Include="DbEntity\SystemEventCodes.cs" />
-    <Compile Include="DbEntity\SystemEventMessage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -77,6 +73,12 @@
     <None Include="SqlScripts\CreateDataBase.sql" />
     <None Include="SqlScripts\CreateTables.sql" />
     <None Include="SqlScripts\InitTableSystemEventCodes.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Infrastructure.Api\Infrastructure.API.csproj">
+      <Project>{B48FF1D3-AED9-40D8-9A61-E26B8B5E8516}</Project>
+      <Name>Infrastructure.API</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Data\" />

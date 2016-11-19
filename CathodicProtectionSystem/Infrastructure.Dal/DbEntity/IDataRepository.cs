@@ -7,7 +7,7 @@ namespace Infrastructure.Dal.DbEntity
     /// <summary>
     /// Глобальный репозиторий данных хранящийся в БД приложения
     /// </summary>
-    public interface IDataRepository
+    public interface IDataRepository: IDisposable
     {
         #region Properties
 

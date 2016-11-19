@@ -25,9 +25,9 @@ namespace NGK.Plugins.Services
         /// <param name="application"></param>
         /// <param name="networkManager"></param>
         /// <param name="pollingInterval">Интервал обновления CAN-устройства, мсек</param>
-        public CanNetworkService(string serviceName, 
-            INgkCanNetworksManager networkManager, double pollingInterval, IManagers managers):
-            base(serviceName)
+        public CanNetworkService(INgkCanNetworksManager networkManager, 
+            double pollingInterval, IManagers managers):
+            base("NgkCanService")
         {
             _Managers = managers;
 
@@ -139,7 +139,7 @@ namespace NGK.Plugins.Services
             throw new NotSupportedException();
         }
 
-        void StartCanNetwork()
+        private void StartCanNetwork()
         {
             foreach (ICanNetworkController network in NgkCanNetworksManager.Instance.Networks)
             {
@@ -154,7 +154,7 @@ namespace NGK.Plugins.Services
             }
         }
 
-        void StopCanNetwork()
+        private void StopCanNetwork()
         {
             foreach (ICanNetworkController network in NgkCanNetworksManager.Instance.Networks)
             {
@@ -168,7 +168,7 @@ namespace NGK.Plugins.Services
                 _Timer.Dispose();
         }
 
-        void OnFaultyDevicesChanged()
+        private void OnFaultyDevicesChanged()
         {
             if (FaultyDevicesChanged != null)
                 FaultyDevicesChanged(this, new EventArgs());

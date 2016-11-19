@@ -35,6 +35,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApplicationServices\SystemEventLogService.cs" />
     <Compile Include="EventLoggerPlugin.cs" />
     <Compile Include="Presenters\SystemEventsLogPresenter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -51,6 +52,10 @@
       <Project>{44DF6B58-4BDD-40D8-993C-7B61AECF0510}</Project>
       <Name>MVP</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{78E073B6-AD50-429C-9261-4DE3438D8EAE}</Project>
+      <Name>Common %28Common\Common%29</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Infrastructure.Api\Infrastructure.API.csproj">
       <Project>{B48FF1D3-AED9-40D8-9A61-E26B8B5E8516}</Project>
       <Name>Infrastructure.API</Name>
@@ -65,9 +70,6 @@
       <SubType>Designer</SubType>
       <DependentUpon>SystemEventsLog.cs</DependentUpon>
     </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="ApplicationServices\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

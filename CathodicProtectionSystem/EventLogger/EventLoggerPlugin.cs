@@ -5,6 +5,8 @@ using Infrastructure.Api.Plugins;
 using Mvp.WinApplication.Infrastructure;
 using Mvp.Input;
 using NGK.Plugins.Presenters;
+using Infrastructure.Api.Managers;
+using NGK.Plugins.ApplicationServices;
 
 namespace NGK.Plugins
 {
@@ -24,6 +26,34 @@ namespace NGK.Plugins
                 new NavigationMenuItem("Журнал событий", _ShowSystemEventsLogCommand));
             NavigationMenu.SubMenuItems.Add(
                 new NavigationMenuItem("Регистратор параметров", null));
+        }
+
+        #endregion
+
+        #region Fields And Properties
+        
+        private SystemEventLogService _SystemEventLogService;
+
+        #endregion
+
+        #region Methods
+
+        public override void Initialize(IManagers managers, object state)
+        {
+            base.Initialize(managers, state);
+            
+            // Создаём сервисы приложения и регистрируем их
+            try
+            {
+                _SystemEventLogService = new SystemEventLogService(Managers);
+                _SystemEventLogService.Initialize(null);  
+                base.ApplicationServices.Add(_SystemEventLogService);
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException(
+                    String.Format("Ошибка при инициализации плагина {0}", Name), ex);
+            }
         }
 
         #endregion

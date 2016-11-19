@@ -24,6 +24,7 @@ using NGK.Log;
 using Infrastructure.Api.Managers;
 using Infrastructure.Api.Plugins;
 using Mvp.WinApplication.ApplicationService;
+using Infrastructure.Dal.DbEntity;
 
 namespace NGK.CorrosionMonitoringSystem
 {
@@ -110,7 +111,12 @@ namespace NGK.CorrosionMonitoringSystem
                 NavigationService.Menu.Add(plugin.NavigationMenu);
                 plugin.Initialize(Managers, null);
 
-                Thread.Sleep(500);
+                // !!! Only for Debug
+                if (plugin.Name != @"CAN НГК ЭХЗ")
+                {
+                    foreach (ApplicationServiceBase service in ((IPlugin)plugin).ApplicationServices)
+                        WindowsFormsApplication.Application.RegisterApplicationService(service);
+                }
             }
 
             splash.WriteLine("Запуск системы мониторинга...");
@@ -131,6 +137,8 @@ namespace NGK.CorrosionMonitoringSystem
             }
 
             _Logger.Info("Приложение запущено");
+            Managers.SystemEventLogService.AddEvent(SystemEventCodes.SystemWasStarted, 
+                Category.Information, "Запуск приложения", DateTime.Now);
         }
 
         static void  EventHandler_Application_Shutdown(object sender, EventArgs e)

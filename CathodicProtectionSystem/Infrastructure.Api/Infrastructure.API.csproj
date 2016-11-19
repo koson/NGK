@@ -47,6 +47,10 @@
     <Compile Include="Models\CAN\ParametersCollection.cs" />
     <Compile Include="Models\CAN\ParametersPivotTable.cs" />
     <Compile Include="Models\SystemEvent.cs" />
+    <Compile Include="Models\SystemEventLog\Category.cs" />
+    <Compile Include="Models\SystemEventLog\ISystemEventMessage.cs" />
+    <Compile Include="Models\SystemEventLog\SystemEventCodes.cs" />
+    <Compile Include="Models\SystemEventLog\SystemEventMessage.cs" />
     <Compile Include="Plugins\IHostWindow.cs" />
     <Compile Include="Services\ICanNetworkService.cs" />
     <Compile Include="Managers\AppManagers.cs" />
@@ -61,6 +65,7 @@
     <Compile Include="Plugins\RegionContainer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\IPartialVIewService.cs" />
+    <Compile Include="Services\ISystemEventLogService.cs" />
     <Compile Include="Services\PartialVIewService.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -4,6 +4,7 @@ using System.Text;
 using System.Data;
 using Infrastructure.Dal.DbEntity;
 using Infrastructure.Dal.DbContext.NgkDbDataSetTableAdapters;
+using System.ComponentModel;
 
 namespace Infrastructure.Dal.DbContext
 {
@@ -11,36 +12,47 @@ namespace Infrastructure.Dal.DbContext
     {
         #region Constructors
 
-        public DbContextSystemEventsLog(NgkDbDataSet.SystemEnentsLogDataTable table)
+        public DbContextSystemEventsLog()
         {
-            _SystemEnentsLogDataTable = table;
-            _SystemEventsLogCashTableAdapter = new SystemEnentsLogTableAdapter();
+            _DbContext = new NgkDbDataSet();
+            _SystemEnentsLog = new BindingList<ISystemEventMessage>();
+            _SystemEventsLogCashTableAdapter = new SystemEventsLogTableAdapter();
         }
 
         #endregion
 
         #region Fields And Properties
+        private NgkDbDataSet _DbContext;
+        private SystemEventsLogTableAdapter _SystemEventsLogCashTableAdapter;
+        private readonly BindingList<ISystemEventMessage>  _SystemEnentsLog;
 
-        private readonly NgkDbDataSet.SystemEnentsLogDataTable _SystemEnentsLogDataTable;
-        private SystemEnentsLogTableAdapter _SystemEventsLogCashTableAdapter;
-
-        public DataTable SystemEventsCashTable
+        public BindingList<ISystemEventMessage> SystemEnentsLog
         {
-            get { return _SystemEnentsLogDataTable; }
+            get { return _SystemEnentsLog; }
         }
-
         #endregion
 
         #region Methods
 
         public void AddEvent(ISystemEventMessage eventMessage)
         {
-            throw new Exception("The method or operation is not implemented.");
+            _SystemEnentsLog.Add(eventMessage);
+            _SystemEventsLogCashTableAdapter.Insert((int)eventMessage.SystemEventCode,
+                eventMessage.Message, eventMessage.Created, (byte)eventMessage.Category, false);
+            //throw new Exception("The method or operation is not implemented.");
         }
 
-        public void UdateCash()
+        //public void UdateCash()
+        //{
+        //    _SystemEventsLogCashTableAdapter.Fill(_SystemEnentsLogDataTable);
+        //}
+        
+        public void Dispose()
         {
-            _SystemEventsLogCashTableAdapter.Fill(_SystemEnentsLogDataTable);
+            _DbContext.Dispose();
+            _SystemEventsLogCashTableAdapter.Dispose();
+            _DbContext = null;
+            _SystemEventsLogCashTableAdapter = null;
         }
 
         #endregion

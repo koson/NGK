@@ -27,6 +27,8 @@ namespace Infrastructure.Api.Managers
         private ILogManager _Logger;
         private ConfigManager _ConfigManager;
         private PartialVIewService _PartialVIewService;
+        private ICanNetworkService _CanNetworkService;
+        private ISystemEventLogService _SystemEventLogService;
         //ISysLogManager _SystemLogger;
         ////PresentersFactory _WindowsFactory;
         //SystemInformationModbusNetworkService _ModbusSystemInfoNetworkService;
@@ -63,8 +65,6 @@ namespace Infrastructure.Api.Managers
             get { return _ConfigManager; }
         }
 
-        private ICanNetworkService _CanNetworkService;
-
         public ICanNetworkService CanNetworkService
         {
             get 
@@ -84,6 +84,24 @@ namespace Infrastructure.Api.Managers
         public IPartialVIewService PartialViewService
         {
             get { return _PartialVIewService; }
+        }
+
+        public ISystemEventLogService SystemEventLogService
+        {
+            get 
+            {
+                if (_SystemEventLogService == null)
+                {
+                    foreach (ApplicationServiceBase service in _Application.AppServices)
+                    {
+                        if (service is ISystemEventLogService)
+                        {
+                            _SystemEventLogService = service as ISystemEventLogService;
+                        }
+                    }
+                }
+                return _SystemEventLogService;
+            }
         }
 
         //public ISystemInformationModbusNetworkService ModbusSystemInfoNetworkService

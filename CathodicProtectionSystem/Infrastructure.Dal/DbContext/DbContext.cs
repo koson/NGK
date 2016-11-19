@@ -13,9 +13,8 @@ namespace Infrastructure.Dal.DbContext
 
         private DbContext()
         {
-            _DbContext = new NgkDbDataSet();
             _SystemEventsRepository = 
-                new DbContextSystemEventsLog(_DbContext.SystemEnentsLog);
+                new DbContextSystemEventsLog();
         }
 
         #endregion
@@ -24,7 +23,6 @@ namespace Infrastructure.Dal.DbContext
         private static volatile DbContext _Instance;
         private static object SyncRoot = new object();
 
-        private readonly NgkDbDataSet _DbContext;
         private readonly ISystemEventsRepository _SystemEventsRepository;
 
         public ISystemEventsRepository SystemEventRepository
@@ -50,6 +48,12 @@ namespace Infrastructure.Dal.DbContext
             }
 
             return _Instance;
+        }
+
+        public void Dispose()
+        {
+            _Instance.Dispose();
+            _Instance = null;
         }
 
         #endregion

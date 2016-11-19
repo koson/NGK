@@ -40,6 +40,10 @@ namespace Infrastructure.Api.Managers
         /// </summary>
         ICanNetworkService CanNetworkService { get; }
         /// <summary>
+        /// Сервис для записи в БД системных событий приложения
+        /// </summary>
+        ISystemEventLogService SystemEventLogService { get; }
+        /// <summary>
         /// Сервис для работы с Modbus-сетью 
         /// (режим Slave: для поддержики систем верхнего уровня )
         /// </summary>

@@ -9,7 +9,7 @@ using Infrastructure.Api.Models.CAN;
 
 namespace Infrastructure.Api.Services
 {
-    public interface ICanNetworkService: IManageable
+    public interface ICanNetworkService
     {
         #region Properties
         /// <summary>
