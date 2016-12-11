@@ -1,4 +1,6 @@
-INSERT INTO [ngkdb].[dbo].[SystemEnentsLog]
+use ngkdb
+
+INSERT INTO [ngkdb].[dbo].[SystemEventsLog]
            ([SystemEventCode]
            ,[Message]
            ,[Created]
@@ -6,7 +8,7 @@ INSERT INTO [ngkdb].[dbo].[SystemEnentsLog]
            ,[HasRead])
      VALUES
            (1, N'Система запущена', '2016-02-10 21:02:09', 0, 0),
-           (1, N'Система Остановлена', '2016-02-10 22:02:09', 0, 0)
+           (2, N'Система Остановлена', '2016-02-10 22:02:09', 0, 0)
 GO
 
 

@@ -97,6 +97,7 @@ namespace Infrastructure.Api.Managers
                         if (service is ISystemEventLogService)
                         {
                             _SystemEventLogService = service as ISystemEventLogService;
+                            break;
                         }
                     }
                 }

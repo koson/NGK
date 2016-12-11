@@ -111,12 +111,8 @@ namespace NGK.CorrosionMonitoringSystem
                 NavigationService.Menu.Add(plugin.NavigationMenu);
                 plugin.Initialize(Managers, null);
 
-                // !!! Only for Debug
-                if (plugin.Name != @"CAN НГК ЭХЗ")
-                {
-                    foreach (ApplicationServiceBase service in ((IPlugin)plugin).ApplicationServices)
-                        WindowsFormsApplication.Application.RegisterApplicationService(service);
-                }
+                foreach (ApplicationServiceBase service in ((IPlugin)plugin).ApplicationServices)
+                    WindowsFormsApplication.Application.RegisterApplicationService(service);
             }
 
             splash.WriteLine("Запуск системы мониторинга...");
@@ -143,6 +139,9 @@ namespace NGK.CorrosionMonitoringSystem
 
         static void  EventHandler_Application_Shutdown(object sender, EventArgs e)
         {
+            Managers.SystemEventLogService.AddEvent(SystemEventCodes.SystemWasStopped,
+                Category.Information, "Остановка приложения", DateTime.Now);
+
             // Останавливаем все сервисы
             foreach (IApplicationService service in WindowsFormsApplication.Application.AppServices)
             {

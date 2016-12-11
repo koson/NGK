@@ -18,15 +18,7 @@ namespace NGK.Plugins.Presenters
         public SystemEventsLogPresenter(IManagers managers)
         {
             _Managers = managers;
-
-            //BindingList<SystemEvent> log = new BindingList<SystemEvent>();
-            //log.Add(new SystemEvent(SystemEvent.SystemEventCodes.CommunicationError,
-            //    SystemEvent.Category.Error, @"Ошибка 1", DateTime.Now));
-            //log.Add(new SystemEvent(SystemEvent.SystemEventCodes.ConfigurationError,
-            //    SystemEvent.Category.Warring, @"Ошибка 2", DateTime.Now));
-            
-
-            //View.SystemEvents = _Managers.SystemEventLogService
+            View.SystemEvents = _Managers.SystemEventLogService.SystemEvents;
         }
 
         #endregion

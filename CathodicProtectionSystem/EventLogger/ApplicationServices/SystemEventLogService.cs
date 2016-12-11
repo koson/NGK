@@ -6,6 +6,7 @@ using Infrastructure.Api.Managers;
 using Infrastructure.Api.Services;
 using Infrastructure.Dal.DbEntity;
 using Infrastructure.Dal.DbContext;
+using System.ComponentModel;
 
 namespace NGK.Plugins.ApplicationServices
 {
@@ -31,6 +32,11 @@ namespace NGK.Plugins.ApplicationServices
 
         private readonly IManagers _Managers;
         private ISystemEventsRepository _Repository;
+
+        public BindingList<ISystemEventMessage> SystemEvents
+        {
+            get { return _Repository.SystemEnentsLog; }
+        }
 
         #endregion
 
@@ -60,10 +66,6 @@ namespace NGK.Plugins.ApplicationServices
             _Repository = null;
             base.Dispose();
         }
-        #endregion
-
-        #region ISystemEventLogService Members
-
         #endregion
     }
 }
