@@ -46,7 +46,8 @@ namespace NGK.Plugins
             try
             {
                 _SystemEventLogService = new SystemEventLogService(Managers);
-                _SystemEventLogService.Initialize(null);  
+                _SystemEventLogService.Initialize(null);
+                _SystemEventLogService.PageSize = 5;
                 base.ApplicationServices.Add(_SystemEventLogService);
             }
             catch (Exception ex)

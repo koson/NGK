@@ -65,5 +65,19 @@ namespace Infrastructure.Dal.DbEntity
         }
 
         #endregion
+
+        #region Methods
+
+        public static SystemEventCodes ToSystemEventCodes(int value)
+        {
+            return (SystemEventCodes)value;
+        }
+
+        public static Category ToCategory(int value)
+        {
+            return (Category)value;
+        }
+
+        #endregion
     }
 }

@@ -71,6 +71,9 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <None Include="SqlScripts\CreateDataBase.sql" />
+    <None Include="SqlScripts\CreateProcedureAddSystemEvent.sql" />
+    <None Include="SqlScripts\CreateProcedureGetSystemEventsCount.sql" />
+    <None Include="SqlScripts\CreateProcedureGetSystemEventsPage.sql" />
     <None Include="SqlScripts\CreateTables.sql" />
     <None Include="SqlScripts\InitTableSystemEventCodes.sql" />
   </ItemGroup>

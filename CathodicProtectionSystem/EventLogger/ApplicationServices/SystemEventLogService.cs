@@ -7,6 +7,7 @@ using Infrastructure.Api.Services;
 using Infrastructure.Dal.DbEntity;
 using Infrastructure.Dal.DbContext;
 using System.ComponentModel;
+using System.Data;
 
 namespace NGK.Plugins.ApplicationServices
 {
@@ -38,6 +39,12 @@ namespace NGK.Plugins.ApplicationServices
             get { return _Repository.SystemEnentsLog; }
         }
 
+        public byte PageSize
+        {
+            get { return _Repository.PageSize; }
+            set { _Repository.PageSize = value; }
+        }
+
         #endregion
 
         #region Methods
@@ -60,12 +67,23 @@ namespace NGK.Plugins.ApplicationServices
             AddEvent(evt);
         }
 
+        public int GetTotalPages()
+        {
+            return _Repository.GetTotalPages();
+        }
+
+        public IEnumerable<ISystemEventMessage> GetPage(int pageNumber)
+        {
+            return _Repository.GetPage(pageNumber);
+        }
+
         public override void Dispose()
         {
             _Repository.Dispose();
             _Repository = null;
             base.Dispose();
         }
+
         #endregion
     }
 }
