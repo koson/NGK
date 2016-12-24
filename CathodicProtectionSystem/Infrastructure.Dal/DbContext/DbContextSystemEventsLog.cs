@@ -80,7 +80,11 @@ namespace Infrastructure.Dal.DbContext
                 int? count = 0;
                 int result;
                 result = adapter.GetSystemEventsCount(ref count);
-                return count.Value > PageSize ? (count.Value / PageSize) + 1 : 1;
+                return count.Value > PageSize ? 
+                    count.Value % PageSize == 0 ? 
+                        (count.Value / PageSize) : 
+                        (count.Value / PageSize) + 1 : 
+                    1;
             }
         }
 

@@ -18,12 +18,16 @@ namespace NGK.Plugins
         {
             Name = @"Системный регистратор";
 
-            _ShowSystemEventsLogCommand = new Command(OnShowSystemEventsLog, CanShowSystemEventsLog);
-
+            _ShowSystemEventsLogCommand = 
+                new Command(OnShowSystemEventsLog, CanShowSystemEventsLog);
+            _ShowSystemEventsLogArchiveCommand = 
+                new Command(OnShowSystemEventsLogArchive, CanShowSystemEventsLogArchiveCommand);
 
             NavigationMenu = new NavigationMenuItem(Name, null);
             NavigationMenu.SubMenuItems.Add(
-                new NavigationMenuItem("Журнал событий", _ShowSystemEventsLogCommand));
+                new NavigationMenuItem("Журнал событий: Текущий сеанс", _ShowSystemEventsLogCommand));
+            NavigationMenu.SubMenuItems.Add(
+                new NavigationMenuItem("Журнал событий: Архив", _ShowSystemEventsLogArchiveCommand));
             NavigationMenu.SubMenuItems.Add(
                 new NavigationMenuItem("Регистратор параметров", null));
         }
@@ -47,7 +51,7 @@ namespace NGK.Plugins
             {
                 _SystemEventLogService = new SystemEventLogService(Managers);
                 _SystemEventLogService.Initialize(null);
-                _SystemEventLogService.PageSize = 5;
+                _SystemEventLogService.PageSize = 20;
                 base.ApplicationServices.Add(_SystemEventLogService);
             }
             catch (Exception ex)
@@ -68,6 +72,17 @@ namespace NGK.Plugins
             presenter.Show();
         }
         private bool CanShowSystemEventsLog()
+        {
+            return true;
+        }
+
+        private Command _ShowSystemEventsLogArchiveCommand;
+        private void OnShowSystemEventsLogArchive()
+        {
+            SystemEventsLogArchivePresenter presenter = new SystemEventsLogArchivePresenter(Managers);
+            presenter.Show();
+        }
+        private bool CanShowSystemEventsLogArchiveCommand()
         {
             return true;
         }

@@ -20,30 +20,8 @@ namespace NGK.Plugins.Presenters
 
         public SystemEventsLogPresenter(IManagers managers)
         {
-            _Managers = managers;
-            
-            _ShowCurrentSessionLogCommand = new Command("События сеанса", OnShowCurrentSessionLog);
-            _Commands.Add(_ShowCurrentSessionLogCommand);
-            _ShowNextPageCommand = new Command("Вперёд", OnShowNextPage, CanShowNextPage);
-            _Commands.Add(_ShowNextPageCommand);
-            _ShowPreviousPageCommand = new Command("Назад", OnShowPreviousPage, CanShowPreviousPage);
-            _Commands.Add(_ShowPreviousPageCommand);
-            
+            _Managers = managers;            
             View.SystemEvents = _Managers.SystemEventLogService.SystemEvents;
-
-            _ButtonShowCurrentSessionLog = new FunctionalButton(_ShowCurrentSessionLogCommand, Keys.F4);
-            _ButtonShowCurrentSessionLog.Name = "_FunctionalButtonCurrentSessionLog";
-            _ButtonShowCurrentSessionLog.Text = "Текущий сеанс";
-            FunctionalButtons.Add(_ButtonShowCurrentSessionLog);
-            _ButtonShowNextPage = new FunctionalButton(_ShowNextPageCommand, Keys.F5);
-            _ButtonShowNextPage.Name = "_FunctionalButtonNextPage";
-            _ButtonShowNextPage.Text = "Вперед";
-            FunctionalButtons.Add(_ButtonShowNextPage);
-            _ButtonShowPreviousPage = new FunctionalButton(_ShowPreviousPageCommand, Keys.F6);
-            _ButtonShowPreviousPage.Name = "_FunctionalButtonShowPreviousPage";
-            _ButtonShowPreviousPage.Text = "Назад";
-            FunctionalButtons.Add(_ButtonShowPreviousPage);
-
             UpdateStatusCommands();
         }
 
@@ -52,28 +30,11 @@ namespace NGK.Plugins.Presenters
         #region Fields And Properties
 
         private readonly IManagers _Managers;
-        private int _CurrentPageNumber = 0;
-
-        private int CurrentPageNumber
-        {
-            get { return _CurrentPageNumber; }
-            set 
-            {
-                if (value < 0)
-                    throw new ArgumentOutOfRangeException(
-                        "CurrentPageNumber", "Недопустимое значение");
-                _CurrentPageNumber = value; 
-            }
-        }
 
         public override string Title
         {
-            get { return @"Журнал событий системы"; }
+            get { return @"Журнал событий системы: Текущий сеанс"; }
         }
-
-        private readonly FunctionalButton _ButtonShowCurrentSessionLog;
-        private readonly FunctionalButton _ButtonShowNextPage;
-        private readonly FunctionalButton _ButtonShowPreviousPage;
 
         #endregion
 
@@ -94,61 +55,6 @@ namespace NGK.Plugins.Presenters
         #endregion
 
         #region Commands
-
-        /// <summary>
-        /// Отобразить журнал событий текущего сеанса работы приложения
-        /// </summary>
-        private Command _ShowCurrentSessionLogCommand;
-        private void OnShowCurrentSessionLog() 
-        {
-            View.SystemEvents = _Managers.SystemEventLogService.SystemEvents;
-            UpdateStatusCommands();
-        }
-        /// <summary>
-        /// Показать следующую страницу журнала событий
-        /// </summary>
-        private Command _ShowNextPageCommand;
-        private void OnShowNextPage()
-        {
-            CurrentPageNumber++;
-
-            IEnumerable<ISystemEventMessage> page = 
-                _Managers.SystemEventLogService.GetPage(CurrentPageNumber);
-            BindingList<ISystemEventMessage> list = new BindingList<ISystemEventMessage>();
-            foreach (ISystemEventMessage msg in page)
-            {
-                list.Add(msg);
-            }
-            View.SystemEvents = list; 
-            UpdateStatusCommands();
-        }
-        private bool CanShowNextPage()
-        {
-            return _Managers.SystemEventLogService.GetTotalPages() > CurrentPageNumber;
-        }
-        /// <summary>
-        /// Показать предыдущую страницу журнала событий
-        /// </summary>
-        private Command _ShowPreviousPageCommand;
-        private void OnShowPreviousPage()
-        {
-            CurrentPageNumber--;
-            IEnumerable<ISystemEventMessage> page =
-                _Managers.SystemEventLogService.GetPage(CurrentPageNumber);
-            BindingList<ISystemEventMessage> list = new BindingList<ISystemEventMessage>();
-            foreach (ISystemEventMessage msg in page)
-            {
-                list.Add(msg);
-            }
-            View.SystemEvents = list; 
-            UpdateStatusCommands();
-        }
-        private bool CanShowPreviousPage()
-        {
-            int pages = _Managers.SystemEventLogService.GetTotalPages();
-            return pages > 0 && CurrentPageNumber > 0;
-        }
-
         #endregion
     }
 }
