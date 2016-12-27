@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DEFECTS>
+<OACRDEFECTCOUNT>3</OACRDEFECTCOUNT>
+<OACRERRORCOUNT>0</OACRERRORCOUNT>
+<DEFECT _seq="1"><SFA><LINE>28</LINE><COLUMN>5</COLUMN><FILENAME>canisr.c</FILENAME><FILEPATH>c:\sergeybromirskiy\work\nim351\can\src\can\xp\</FILEPATH></SFA><DEFECTCODE>28170</DEFECTCODE><DESCRIPTION>The function 'CanPutRx' has been declared to be in a paged segment, but neither PAGED_CODE nor PAGED_CODE_LOCKED was found.</DESCRIPTION><FUNCTION>CanPutRx</FUNCTION><FUNCLINE>28</FUNCLINE><PATH/></DEFECT>
+<DEFECT _seq="2"><SFA><LINE>397</LINE><COLUMN>47</COLUMN><FILENAME>canisr.c</FILENAME><FILEPATH>c:\sergeybromirskiy\work\nim351\can\src\can\xp\</FILEPATH></SFA><DEFECTCODE>28155</DEFECTCODE><DESCRIPTION>The function being assigned or passed should be a KSYNCHRONIZE_ROUTINE function:  Add the declaration 'KSYNCHRONIZE_ROUTINE CanRestart;' before the current first declaration of CanRestart.</DESCRIPTION><FUNCTION>CanInvokeRestartController</FUNCTION><FUNCLINE>389</FUNCLINE><PATH/></DEFECT>
+<DEFECT _seq="3"><SFA><LINE>448</LINE><COLUMN>51</COLUMN><FILENAME>canisr.c</FILENAME><FILEPATH>c:\sergeybromirskiy\work\nim351\can\src\can\xp\</FILEPATH></SFA><DEFECTCODE>28155</DEFECTCODE><DESCRIPTION>The function being assigned or passed should be a KSYNCHRONIZE_ROUTINE function:  Add the declaration 'KSYNCHRONIZE_ROUTINE CanDecrementRestartCounter;' before the current first declaration of CanDecrementRestartCounter.</DESCRIPTION><FUNCTION>CanRecover</FUNCTION><FUNCLINE>421</FUNCLINE><PATH/></DEFECT>
+</DEFECTS>

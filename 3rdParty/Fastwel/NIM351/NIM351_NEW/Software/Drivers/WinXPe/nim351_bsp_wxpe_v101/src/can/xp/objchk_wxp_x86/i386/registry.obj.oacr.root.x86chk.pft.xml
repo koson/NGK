@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DEFECTS>
+<OACRDEFECTCOUNT>2</OACRDEFECTCOUNT>
+<OACRERRORCOUNT>0</OACRERRORCOUNT>
+<DEFECT _seq="1"><SFA><LINE>55</LINE><COLUMN>23</COLUMN><FILENAME>registry.c</FILENAME><FILEPATH>c:\sergeybromirskiy\work\nim351\can\src\can\xp\</FILEPATH></SFA><DEFECTCODE>28159</DEFECTCODE><DESCRIPTION>Consider using 'ExAllocatePoolWithTag' instead of 'ExAllocatePool'. Reason: No tag interferes with debugging..</DESCRIPTION><FUNCTION>CanGetConfigDefaults</FUNCTION><FUNCLINE>34</FUNCLINE><PATH/></DEFECT>
+<DEFECT _seq="2"><SFA><LINE>170</LINE><COLUMN>27</COLUMN><FILENAME>registry.c</FILENAME><FILEPATH>c:\sergeybromirskiy\work\nim351\can\src\can\xp\</FILEPATH></SFA><DEFECTCODE>28159</DEFECTCODE><DESCRIPTION>Consider using 'ExAllocatePoolWithTag' instead of 'ExAllocatePool'. Reason: No tag interferes with debugging..</DESCRIPTION><FUNCTION>CanGetRegistryKeyValue</FUNCTION><FUNCLINE>157</FUNCLINE><PATH/></DEFECT>
+</DEFECTS>

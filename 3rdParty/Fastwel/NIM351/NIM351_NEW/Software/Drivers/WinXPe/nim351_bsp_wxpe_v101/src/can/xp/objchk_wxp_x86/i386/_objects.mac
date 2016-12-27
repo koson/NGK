@@ -1,0 +1,25 @@
+
+
+386_OBJECTS=\
+ $(OBJ_PATH)\$O\candrv.obj \
+ $(OBJ_PATH)\$O\canioctl.obj \
+ $(OBJ_PATH)\$O\canisr.obj \
+ $(OBJ_PATH)\$O\canopcls.obj \
+ $(OBJ_PATH)\$O\canpnp.obj \
+ $(OBJ_PATH)\$O\canread.obj \
+ $(OBJ_PATH)\$O\canutils.obj \
+ $(OBJ_PATH)\$O\canwrite.obj \
+ $(OBJ_PATH)\$O\registry.obj \
+ $(OBJ_PATH)\$O\sja1000.obj \
+
+
+
+
+
+# lowercased
+BASEDIR=c:\winddk\7600.16385.1
+OBJECT_ROOT=c:\winddk\7600.16385.1
+MAKEDIR_LOWERCASE=c:\sergeybromirskiy\work\nim351\can\src\can\xp
+OBJ_PATH=c:\sergeybromirskiy\work\nim351\can\src\can\xp
+CONCURRENT_MIDL=0
+CONCURRENT_MANIFEST_BUILD=0

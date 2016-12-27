@@ -1,0 +1,98 @@
+[Version]
+Signature=$CHICAGO$
+Class=FWCANBOARDS
+ClassGuid={DF06FCF6-4F8D-4f67-8D3E-828AA409C36D}
+Provider=%MFGNAME%
+DriverVer=03/02/2010,1.00.0.2
+
+; Install class "Analog IO boards"
+;----------------------------------------------------------
+[ClassInstall]
+AddReg=FwCANClass.AddReg
+
+[FwCANClass.AddReg]
+HKR,,,,%ClassName%
+
+[ClassInstall32.NT]
+AddReg=FwCANClass.NT.AddReg
+
+[FwCANClass.NT.AddReg]
+HKR,,,,%ClassName%
+HKR,,Icon,,"-15"
+
+[Manufacturer]
+%MFGNAME%=DeviceList
+
+[DestinationDirs]
+DefaultDestDir=10,System32\Drivers\fwcan
+
+[SourceDisksFiles]
+nim351.sys=1
+
+[SourceDisksNames]
+1=%INSTDISK%,,,
+
+[DeviceList]
+%Device.DeviceDesc%=Device,*nim351
+
+;------------------------------------------------------------------------------
+;  Windows 2000 Sections
+;------------------------------------------------------------------------------
+
+; TODO Add a LogConfig command to the following install section if this is a legacy device
+
+[Device.NT]
+CopyFiles=DriverCopyFiles
+LogConfig = c1, c2
+
+[DriverCopyFiles]
+nim351.sys,,,2
+
+[Device.NT.Services]
+AddService=nim351,2,DriverService,DriverEventLog
+
+[DriverService]
+DisplayName = %Service.DispName%
+ServiceType=1
+StartType=3
+ErrorControl=1
+ServiceBinary=%10%\system32\drivers\fwcan\nim351.sys
+
+[DriverEventLog]
+AddReg = DriverEventLogAddReg
+
+[DriverEventLogAddReg]
+HKR,,EventMessageFile,0x00020000,"%%SystemRoot%%\System32\IoLogMsg.dll;%%SystemRoot%%\System32\Drivers\fwcan\nim351.sys"
+HKR,,TypesSupported,0x00010001,7
+
+[Device.nt.hw]
+AddReg=DriverHwAddReg
+
+[DriverHwAddReg]
+HKR,,FriendlyName,,%FRIENDLYNAME%
+
+;;;;;;;
+
+[c1]
+ConfigPriority=HARDRECONFIG
+MemConfig=DF000-DF07F,DE000-DE07F,CF000-CF07F,CE000-CE07F
+;IOConfig=500-500(3FF::),510-510(3FF::),520-520(3FF::),530-530(3FF::)
+IRQConfig=S:5,6,7,10,11
+
+[c2]
+ConfigPriority=HARDRECONFIG
+MemConfig=DF200-DF27F,DE200-DE27F,CF200-CF27F,CE200-CE27F
+;IOConfig=500-500(3FF::),510-510(3FF::),520-520(3FF::),530-530(3FF::)
+IRQConfig=S:5,6,7,10,11
+
+;------------------------------------------------------------------------------
+;  String Definitions
+;------------------------------------------------------------------------------
+
+[Strings]
+MFGNAME="Fastwel, Inc."
+INSTDISK="Fastwel, Inc. Installation Disc"
+Device.DeviceDesc="NIM351 CAN Interface"
+FRIENDLYNAME="NIM351 CAN Interface"
+ClassName="Fastwel CAN Interfaces"
+Service.DispName="NIM351 CAN Interface"

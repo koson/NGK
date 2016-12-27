@@ -1,0 +1,15 @@
+warnings in directory c:\sergeybromirskiy\work\nim351\can\src\can\xp
+sja1000.c does not exist
+1>warnings in directory c:\sergeybromirskiy\work\nim351\can\src\can\xp
+1>c:\sergeybromirskiy\work\nim351\can\src\can\xp\candrv.c(110) : warning C4996: 'ExAllocatePool': was declared deprecated
+1>c:\sergeybromirskiy\work\nim351\can\src\can\xp\candrv.c(502) : warning C4996: 'ExAllocatePool': was declared deprecated
+1>c:\sergeybromirskiy\work\nim351\can\src\can\xp\canopcls.c(158) : warning C4996: 'ExAllocatePool': was declared deprecated
+1>c:\sergeybromirskiy\work\nim351\can\src\can\xp\canopcls.c(164) : warning C4996: 'ExAllocatePool': was declared deprecated
+1>c:\sergeybromirskiy\work\nim351\can\src\can\xp\canopcls.c(170) : warning C4996: 'ExAllocatePool': was declared deprecated
+1>c:\sergeybromirskiy\work\nim351\can\src\can\xp\canpnp.c(58) : warning C4996: 'ExAllocatePool': was declared deprecated
+1>c:\sergeybromirskiy\work\nim351\can\src\can\xp\canpnp.c(93) : warning C4996: 'ExAllocatePool': was declared deprecated
+1>c:\sergeybromirskiy\work\nim351\can\src\can\xp\canpnp.c(103) : warning C4996: 'ExAllocatePool': was declared deprecated
+1>c:\sergeybromirskiy\work\nim351\can\src\can\xp\canpnp.c(1073) : warning C4996: 'ExAllocatePool': was declared deprecated
+1>c:\sergeybromirskiy\work\nim351\can\src\can\xp\canpnp.c(1108) : warning C4996: 'ExAllocatePool': was declared deprecated
+1>c:\sergeybromirskiy\work\nim351\can\src\can\xp\registry.c(55) : warning C4996: 'ExAllocatePool': was declared deprecated
+1>c:\sergeybromirskiy\work\nim351\can\src\can\xp\registry.c(170) : warning C4996: 'ExAllocatePool': was declared deprecated
