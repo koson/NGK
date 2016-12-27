@@ -1,0 +1,160 @@
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Angular JS:
+1. AngularJs Batarang - extension for chrome
+ https://chrome.google.com/webstore/detail/angularjs-batarang/ighdmehidhipcmcojjgiloacoafjmpfk
+2. AngularJs Inspector - extension for chrome
+ https://chrome.google.com/webstore/detail/angularjs-inspector/gjhmfjbfdbeeekiijofbikifokdkfhcc
+3.
+http://www.youtube.com/watch?v=o350qwb6fzU&index=2&list=PL0-adUVInelwzYjNXBUGC-oR-vrCcfHvW
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+JavaScript:
+1. JQuery - http://www.youtube.com/watch?v=64KxMxZtbxY
+2. Делегирование событий в JS - http://www.youtube.com/watch?v=LIdCfwBanE8
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+HTML CSS:
+
+https://www.youtube.com/watch?v=JgmLZsTQgEs
+https://habrahabr.ru/post/273795/
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Болид АРМ "Ресурс"
+урок 1 http://www.youtube.com/watch?v=9uKYz5vRCzM
+урок 2 http://www.youtube.com/watch?v=l7sOxtaZHL0
+урок 3 http://www.youtube.com/watch?v=a5Onsq9xX-Y
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+unit-test 
+https://github.com/Moq/moq4/wiki/Quickstart
+установка NUint https://msdn.microsoft.com/ru-ru/dn275833.aspx
+http://sergeyteplyakov.blogspot.ru/2014/01/microsoft-fakes-state-verification.html
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+WCF:
+https://www.youtube.com/watch?v=KY1w9nwRL5I
+https://www.youtube.com/watch?v=erjm4shd-80&index=5&list=PL-ss7IpVOiB7zD2KpSoaKev4Yb4NByuk-
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+MVVM:
+1. http://www.youtube.com/watch?v=w5fjub6j3Io
+2. http://megadarja.blogspot.ru/2010/04/mvvm-wpf.html
+3. https://msdn.microsoft.com/ru-ru/magazine/dd419663.aspx
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Prism:
+http://habrahabr.ru/post/176851/
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+GIT:
+http://habrahabr.ru/post/125799/
+https://www.youtube.com/watch?v=K8i5Is0lGU8
+http://webhamster.ru/site/page/index/articles/comp/216 - Как перенести локальный репозиторий на GitHub
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Wix:
+http://habrahabr.ru/post/68616/
+http://habrahabr.ru/post/69129/
+http://habrahabr.ru/post/70616/
+
+http://lomomike.blogspot.ru/2014/07/wix-2.html
+https://github.com/lomomike/WixInstallerExample
+http://www.codeproject.com/Articles/828914/A-Multiple-and-Selective-Configuration-Installer-f
+http://neilsleightholm.blogspot.ru/2012/05/wix-burn-tipstricks.html
+http://www.peshkov.biz/
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Win embedded compact7
+http://www.youtube.com/watch?v=5jQw-zls_Bg
+http://www.youtube.com/watch?v=ZTy4jTWFhdU
+
+Win CE 6.0
+http://www.youtube.com/watch?v=OlXyQtGj2sA
+http://www.quarta-embedded.ru/resources/kb/embcomp/
+http://www.youtube.com/watch?t=4&v=Cib4Mh9NNps
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+установка android на virtualbox
+http://www.youtube.com/watch?v=vprgOQPFO3s
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+PowerShell:
+http://howtowpf.ru/spravochnik-powershell/
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+OPC:
+http://habrahabr.ru/post/132780/
+http://www.codeproject.com/Articles/1135/OPC-and-NET-with-COM-Interoperability
+http://gray-box.net/opc_simulator.php?lang=ru
+http://www.cyberforum.ru/csharp-net/thread1257614.html
+http://www.cyberforum.ru/csharp-net/thread155368.html
+http://www.cyberforum.ru/csharp-net/thread1198872.html
+http://iprog.pp.ru/forum/read.php?f=1&i=63611&t=63611
+http://www.kassl.de/opc/download.shtml
+http://stackoverflow.com/questions/3727321/c-sharp-opc-client-net-api
+Настройка удалённого достпупа к OPC
+http://www.aggsoft.ru/asdl-dcom-opc-config-5.htm
+http://forum.cta.ru/forum_posts.asp?TID=3483
+https://habrahabr.ru/post/132780/
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Android:
+http://metanit.com/java/android/
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Apache
+http://www.postroika.ru/programming/apachephpwindows.html
+http://metanit.com/web/php/1.3.php
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+MEF и создание plug-in-ов
+https://www.youtube.com/watch?v=sp9Ez-J4MKs
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Lua:
+
+https://blogs.msdn.microsoft.com/rucoding4fun/2012/01/20/lua-net-1085/
+https://ttuxen.wordpress.com/2009/11/03/embedding-lua-in-dotnet/
+http://nlua.org/
+http://www.lua.ru/doc/
+http://rlab.org.ua/?p=36
+https://visualstudiogallery.msdn.microsoft.com/46e33dfd-c2bd-4903-99b3-94ab0f6847e9
+https://visualstudiogallery.msdn.microsoft.com/7af51f37-07ad-4d6b-9c2b-00672bb051ad
+
+редакторы:
+https://github.com/icsharpcode/SharpDevelop/wiki/AvalonEdit
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+XML:
+
+Сериализация Dictionary C# - http://ropox.ru/tag/ixmlserializable/
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Apache Cordova:
+https://msdn.microsoft.com/ru-ru/library/dn757057.aspx
+http://taco.visualstudio.com/en-us/docs/tutorial-typescript/
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+https://www.youtube.com/watch?v=tAazzvLUXBo
+Cntr + . для класса добавляет пространство имён.
+
+https://dev.windows.com/ru-ru/downloads/windows-8-1-sdk
+
+// Многототочность SynchronizationContex, Async Away
+https://www.youtube.com/watch?v=a4wEaFAA5XQ
+
+sfc /scannow
+
+http://muzon.in/
+http://www.youtube.com/watch?v=IvUU8joBb1Q
+
+Мульты
+http://www.youtube.com/watch?v=3kQJGRLdI6I
+
+Интернет трафик
+http://172.16.7.219/sams/
+
+
+https://www.youtube.com/watch?v=JXSibCy2-gA
+https://ru.wikipedia.org/wiki/%D0%A2%D0%B0%D0%BB%D0%B0%D0%BD%D1%82_(%D1%84%D0%B8%D0%BB%D1%8C%D0%BC)
+
+Группы:
+Pixies
