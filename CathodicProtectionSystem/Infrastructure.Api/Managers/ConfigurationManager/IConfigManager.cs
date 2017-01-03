@@ -47,12 +47,31 @@ namespace Infrastructure.Api.Managers
         //Color PreoperationalModeRowColor { get; }
 
         //int StatusColumnWidth { get; set; }
-        //string ModbusSystemInfoNetworkName { get; } 
-        //string SerialPortName { get; set; }
-        //int SerialPortBaudRate { get; set; }
-        //Parity SerialPortParity { get; set; }
-        //int SerialPortDataBits { get; set; }
-        //StopBits SerialPortStopBits { get; set; }
-        //byte ModbusAddress { get; set; }
+        //string ModbusSystemInfoNetworkName { get; }
+
+        /// <summary>
+        /// Адрес Modbus для Modbus-сервиса
+        /// </summary>
+        byte ModbusAddress { get; set; }
+        /// <summary>
+        /// Наименование COM-порта для Modbus-сервиса
+        /// </summary>
+        string SerialPortName { get; set; }
+        /// <summary>
+        /// Скорость передачи данных для Modbus-сервиса
+        /// </summary>
+        int SerialPortBaudRate { get; set; }
+        /// <summary>
+        /// Паритет для Modbus-сервиса
+        /// </summary>
+        Parity SerialPortParity { get; set; }
+        /// <summary>
+        /// Кол-во бит данных фрейма для Modbus-сервиса
+        /// </summary>
+        int SerialPortDataBits { get; set; }
+        /// <summary>
+        /// Кол-во стоп-бит фрейма для Modbus-сервиса
+        /// </summary>
+        StopBits SerialPortStopBits { get; set; }
     }
 }

@@ -54,6 +54,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure.Dal", "Infra
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventLoggerPlugin", "EventLogger\EventLoggerPlugin.csproj", "{182DF646-77B8-4EA4-9D5B-D0A27C108D5B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModbusPlugin", "ModbusPlugin\ModbusPlugin.csproj", "{837364FB-F07B-44EC-B4BA-FD9B9C171975}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -130,6 +132,10 @@ Global
 		{182DF646-77B8-4EA4-9D5B-D0A27C108D5B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{182DF646-77B8-4EA4-9D5B-D0A27C108D5B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{182DF646-77B8-4EA4-9D5B-D0A27C108D5B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{837364FB-F07B-44EC-B4BA-FD9B9C171975}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{837364FB-F07B-44EC-B4BA-FD9B9C171975}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{837364FB-F07B-44EC-B4BA-FD9B9C171975}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{837364FB-F07B-44EC-B4BA-FD9B9C171975}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -147,5 +153,6 @@ Global
 		{3B3C9818-D909-45E4-8587-873E4989DA8A} = {6F0515F7-4758-4244-A9D6-D6688B0BF1AE}
 		{C0110405-BA52-41EA-99F2-24FAB0DF356B} = {4F0634D7-88C1-40C6-B23B-360347603B32}
 		{182DF646-77B8-4EA4-9D5B-D0A27C108D5B} = {4F0634D7-88C1-40C6-B23B-360347603B32}
+		{837364FB-F07B-44EC-B4BA-FD9B9C171975} = {4F0634D7-88C1-40C6-B23B-360347603B32}
 	EndGlobalSection
 EndGlobal

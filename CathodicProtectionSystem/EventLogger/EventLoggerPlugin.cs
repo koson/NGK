@@ -16,7 +16,7 @@ namespace NGK.Plugins
 
         public EventLoggerPlugin() 
         {
-            Name = @"Системный регистратор";
+            Name = @"Журнал событий";
 
             _ShowSystemEventsLogCommand = 
                 new Command(OnShowSystemEventsLog, CanShowSystemEventsLog);

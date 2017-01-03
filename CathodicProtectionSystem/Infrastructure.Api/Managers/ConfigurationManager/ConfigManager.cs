@@ -321,14 +321,6 @@ namespace Infrastructure.Api.Managers
         #endregion
 
         #region Настройки COM-порта для работы Modbus (Slave)
-        /// <summary>
-        /// Название сети Modbus (Slave) для организации обмена данными
-        /// КССМУ с системами верхнего уровня.
-        /// </summary>
-        public string ModbusSystemInfoNetworkName
-        {
-            get { return "ModbusSystemInfoNetwork"; }
-        }
 
         public byte ModbusAddress
         {
@@ -471,6 +463,85 @@ namespace Infrastructure.Api.Managers
             {
                 throw new Exception("Некорректный формат значения параметра конфигурации");
             }
+        }
+
+        #endregion
+
+        #region IConfigManager Members
+
+        string IConfigManager.PathToAppDirectory
+        {
+            get { throw new Exception("The method or operation is not implemented."); }
+        }
+
+        bool IConfigManager.CursorEnable
+        {
+            get { throw new Exception("The method or operation is not implemented."); }
+        }
+
+        bool IConfigManager.FormBorderEnable
+        {
+            get { throw new Exception("The method or operation is not implemented."); }
+        }
+
+        bool IConfigManager.ShowInTaskbar
+        {
+            get { throw new Exception("The method or operation is not implemented."); }
+        }
+
+        bool IConfigManager.FullScreen
+        {
+            get { throw new Exception("The method or operation is not implemented."); }
+        }
+
+        bool IConfigManager.IsDebug
+        {
+            get { throw new Exception("The method or operation is not implemented."); }
+        }
+
+        bool IConfigManager.PivotTableNodeIdColumnVisble
+        {
+            get { throw new Exception("The method or operation is not implemented."); }
+        }
+
+        bool IConfigManager.PivotTableLocationColumnVisble
+        {
+            get { throw new Exception("The method or operation is not implemented."); }
+        }
+
+        bool IConfigManager.PivotTablePolarisationPotentialColumnVisble
+        {
+            get { throw new Exception("The method or operation is not implemented."); }
+        }
+
+        bool IConfigManager.PivotTableProtectionPotentialColumnVisble
+        {
+            get { throw new Exception("The method or operation is not implemented."); }
+        }
+
+        bool IConfigManager.PivotTableProtectionCurrentColumnVisble
+        {
+            get { throw new Exception("The method or operation is not implemented."); }
+        }
+
+        bool IConfigManager.PivotTablePolarisationCurrentColumnVisble
+        {
+            get { throw new Exception("The method or operation is not implemented."); }
+        }
+
+        bool IConfigManager.PivotTableCorrosionDepthColumnVisble
+        {
+            get { throw new Exception("The method or operation is not implemented."); }
+        }
+
+        bool IConfigManager.PivotTableCorrosionSpeedColumnVisble
+        {
+            get { throw new Exception("The method or operation is not implemented."); }
+        }
+
+        bool IConfigManager.PivotTableTamperColumnVisble
+        {
+            get { throw new Exception("The method or operation is not implemented."); }
         }
 
         #endregion
