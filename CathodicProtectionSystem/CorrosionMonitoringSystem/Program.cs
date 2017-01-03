@@ -133,15 +133,21 @@ namespace NGK.CorrosionMonitoringSystem
             }
 
             _Logger.Info("Приложение запущено");
-            Managers.SystemEventLogService.AddEvent(SystemEventCodes.SystemWasStarted, 
-                Category.Information, "Запуск приложения", DateTime.Now);
+            
+            if (Managers.SystemEventLogService != null)
+            {
+                Managers.SystemEventLogService.AddEvent(SystemEventCodes.SystemWasStarted,
+                    Category.Information, "Запуск приложения", DateTime.Now);
+            }
         }
 
         static void  EventHandler_Application_Shutdown(object sender, EventArgs e)
         {
-            Managers.SystemEventLogService.AddEvent(SystemEventCodes.SystemWasStopped,
-                Category.Information, "Остановка приложения", DateTime.Now);
-
+            if (Managers.SystemEventLogService != null)
+            {
+                Managers.SystemEventLogService.AddEvent(SystemEventCodes.SystemWasStopped,
+                    Category.Information, "Остановка приложения", DateTime.Now);
+            }
             // Останавливаем все сервисы
             foreach (IApplicationService service in WindowsFormsApplication.Application.AppServices)
             {

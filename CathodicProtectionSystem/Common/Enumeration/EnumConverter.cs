@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Reflection;
 
 namespace Common.Enumeration
 {
@@ -17,9 +18,9 @@ namespace Common.Enumeration
             if (!EnumType.IsEnum)
                 throw new ArgumentException("ѕараметр-тип <TEnum> EnumConverter не €вл€етс€ перечислимым типом");
 
-            var field = EnumType.GetField("value__");
+            FieldInfo field = EnumType.GetField("value__");
 
-            var valueType = typeof(TValue);
+            Type valueType = typeof(TValue);
 
             if (field.FieldType != valueType)
                 throw new ArgumentException("ѕараметр-тип <TValue> не соответствует типу значений перечислени€");
@@ -60,7 +61,7 @@ namespace Common.Enumeration
         {
             List<TValue> result = new List<TValue>();
 
-            var array = Enum.GetValues(EnumType);
+            Array array = Enum.GetValues(EnumType);
 
             foreach (object item in array)
                 result.Add((TValue)item);

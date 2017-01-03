@@ -46,13 +46,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NgkCanPlugin", "NgkCanPlugi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Log", "Log\Log.csproj", "{8ED7A1A3-E261-4395-81A4-F2EC5565A4DF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventLoggerPlugin", "EventLogger\EventLoggerPlugin.csproj", "{182DF646-77B8-4EA4-9D5B-D0A27C108D5B}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{6F0515F7-4758-4244-A9D6-D6688B0BF1AE}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Installation And Deploy", "Installation And Deploy", "{3F1BE72C-23A4-47C4-BEB8-44EF3E48DD76}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure.Dal", "Infrastructure.Dal\Infrastructure.Dal.csproj", "{3B3C9818-D909-45E4-8587-873E4989DA8A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventLoggerPlugin", "EventLogger\EventLoggerPlugin.csproj", "{182DF646-77B8-4EA4-9D5B-D0A27C108D5B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -122,14 +122,14 @@ Global
 		{8ED7A1A3-E261-4395-81A4-F2EC5565A4DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8ED7A1A3-E261-4395-81A4-F2EC5565A4DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8ED7A1A3-E261-4395-81A4-F2EC5565A4DF}.Release|Any CPU.Build.0 = Release|Any CPU
-		{182DF646-77B8-4EA4-9D5B-D0A27C108D5B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{182DF646-77B8-4EA4-9D5B-D0A27C108D5B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{182DF646-77B8-4EA4-9D5B-D0A27C108D5B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{182DF646-77B8-4EA4-9D5B-D0A27C108D5B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{3B3C9818-D909-45E4-8587-873E4989DA8A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{3B3C9818-D909-45E4-8587-873E4989DA8A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3B3C9818-D909-45E4-8587-873E4989DA8A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3B3C9818-D909-45E4-8587-873E4989DA8A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{182DF646-77B8-4EA4-9D5B-D0A27C108D5B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{182DF646-77B8-4EA4-9D5B-D0A27C108D5B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{182DF646-77B8-4EA4-9D5B-D0A27C108D5B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{182DF646-77B8-4EA4-9D5B-D0A27C108D5B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
