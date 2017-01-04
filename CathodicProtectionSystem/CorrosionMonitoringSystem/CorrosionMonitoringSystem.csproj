@@ -62,7 +62,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Models\Modbus\RemappingTableKip9811.cs" />
-    <Compile Include="Services\ModbusService\ModbusServiceContext.cs" />
     <Compile Include="Models\Modbus\ModbusAddressSpace\KIP9811AddressSpaceHelper.cs" />
     <Compile Include="Models\Modbus\ModbusAddressSpace\KIP00.cs" />
     <Compile Include="Models\Modbus\ModbusAddressSpace\KCCM.cs" />
@@ -92,9 +91,6 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="Services\ModbusService\ISystemInformationModbusNetworkService.cs" />
-    <Compile Include="Services\ModbusService\SystemInformationModbusNetworkService.cs" />
-    <Compile Include="Services\ServiceHelper.cs" />
     <Compile Include="Views\MainWindowView\EventHandlerFunctionalButtonClick.cs" />
     <Compile Include="Views\MainWindowView\MainWindowView.cs">
     </Compile>

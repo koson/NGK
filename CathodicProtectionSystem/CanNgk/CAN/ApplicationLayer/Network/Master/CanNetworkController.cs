@@ -26,6 +26,137 @@ namespace NGK.CAN.ApplicationLayer.Network.Master
     [Serializable]
     public sealed class CanNetworkController : ICanNetworkController, ISerializable
     {
+        #region Constructors And Destructor
+        /// <summary>
+        /// Конструктор по умолчанию
+        /// </summary>
+        public CanNetworkController()
+        {
+            _Status = Status.Stopped;
+            // По умолчанию физического уровня нет.
+            _CanPort = null;
+
+            // Ищем уникальное имя и когда находим его, присваиваем сети
+            lock (_SyncRoot)
+            {
+                _NetworkId = CreateNetwrokId();
+            }
+
+            _NetworkName = String.Format("CanNetworkController{0}", _NetworkId);
+
+            DeviceChangedData =
+                new EventHandler(EventHandlerDeviceChangedValue);
+            DeviceChangedStatus =
+                new EventHandler(EventHandlerDeviceChangedStatus);
+
+            // Инициализируем спусок устройств в сети
+            _DevicesList = new DevicesCollection(this);
+            _DevicesList.CollectionWasChanged +=
+                new EventHandler<KeyedCollectionWasChangedEventArgs<DeviceBase>>
+                (EventHandler_DevicesListWasChanged);
+
+            // Инициализируем список сетевых сервисов
+            this.InitNetworkServices();
+        }
+        /// <summary>
+        /// Конструктор
+        /// </summary>
+        /// <param name="port">CAN-порт</param>
+        /// <param name="NetworkId">Наименование сети</param>
+        public CanNetworkController(ICanPort port, UInt32 networkId)
+        {
+            _Status = Status.Stopped;
+            NetworkId = networkId;
+            _NetworkName = String.Format("CanNetworkController{0}", NetworkId);
+
+            this._CanPort = port;
+
+            if (this._CanPort != null)
+            {
+                if (this._CanPort.IsOpen)
+                {
+                    this._CanPort.Close();
+                }
+            }
+
+            DeviceChangedData =
+                new EventHandler(EventHandlerDeviceChangedValue);
+            DeviceChangedStatus =
+                new EventHandler(EventHandlerDeviceChangedStatus);
+
+            // Инициализируем спусок устройств в сети
+            _DevicesList = new DevicesCollection(this);
+            _DevicesList.CollectionWasChanged +=
+                new EventHandler<KeyedCollectionWasChangedEventArgs<DeviceBase>>
+                (EventHandler_DevicesListWasChanged);
+
+            // Инициализируем список сетевых сервисов
+            InitNetworkServices();
+
+            _CanPort.MessageReceived +=
+                new EventHandler(EventHandler_CanPort_MessageReceived);
+            //_CanPort.PortChangedStatus +=
+            //    new EventHandlerPortChangesStatus(EventHandler_CanPort_PortChangesStatus);
+            //_CanPort.ErrorReceived += 
+            //    new EventHandlerErrorRecived(EventHandler_CanPort_ErrorReceived);
+        }
+
+        /// <summary>
+        /// Конструктор для десериализации
+        /// </summary>
+        /// <param name="info"></param>
+        /// <param name="context"></param>
+        private CanNetworkController(SerializationInfo info, StreamingContext context)
+        {
+            DeviceBase device;
+
+            // Восстанавливаем сохранённые параметры
+            _NetworkId = info.GetUInt32("NetworkId");
+            _NetworkName = info.GetString("NetworkName");
+            _CanPort = (ICanPort)info.GetValue("CanPort", typeof(ICanPort));
+            if (_CanPort != null)
+            {
+                _CanPort.Stop();
+                _CanPort.MessageReceived +=
+                    new EventHandler(EventHandler_CanPort_MessageReceived);
+                //_CanPort.PortChangedStatus +=
+                //    new EventHandlerPortChangesStatus(EventHandler_CanPort_PortChangesStatus);
+                //_CanPort.ErrorReceived +=
+                //    new EventHandlerErrorRecived(EventHandler_CanPort_ErrorReceived);
+            }
+            _TotalAttempts = info.GetInt32("TotalAttempts");
+
+            // Восстанавливаем список устройств
+            _DevicesList = new DevicesCollection(this);
+
+            List<string> list =
+                (List<string>)info.GetValue("Devices", typeof(List<string>));
+
+            foreach (string str in list)
+            {
+                device = DeviceBase.Create(str);
+                _DevicesList.Add(device);
+            }
+            // Запускаем сетевые сервисы
+            InitNetworkServices();
+
+            // Настройки сетевых сервисов
+            ((ServicePdoReceive)_NetworkServices[ServiceType.PdoReceive]).Interval =
+                info.GetInt32("PdoReceiveInterval");
+            ((ServiceSync)_NetworkServices[ServiceType.Sync]).PeriodSync =
+                info.GetDouble("SyncPeriodSync");
+            foreach (Service service in _NetworkServices)
+            {
+                service.TotalAttempts = _TotalAttempts;
+            }
+
+            DeviceChangedData =
+                new EventHandler(EventHandlerDeviceChangedValue);
+            DeviceChangedStatus =
+                new EventHandler(EventHandlerDeviceChangedStatus);
+        }
+        #endregion
+
         #region Fields And Properties
         //private static Logger _Logger = NLog.LogManager.GetLogger("NetworkLogger");
         /// <summary>
@@ -91,7 +222,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Master
             set 
             {
                 _NetworkName = String.IsNullOrEmpty(value) ?
-                    String.Empty : value;
+                    String.Format("CAN Network {0}", _NetworkId) : value;
             }
         }
         /// <summary>
@@ -268,144 +399,6 @@ namespace NGK.CAN.ApplicationLayer.Network.Master
         private EventHandler DeviceChangedData;
         [NonSerialized]
         private EventHandler DeviceChangedStatus; 
-        #endregion
-
-        #region Constructors And Destructor
-        /// <summary>
-        /// Конструктор по умолчанию
-        /// </summary>
-        public CanNetworkController()
-        {
-            _Status = Status.Stopped;
-            // По умолчанию физического уровня нет.
-            _CanPort = null;
-            
-            // Ищем уникальное имя и когда находим его, присваиваем сети
-            lock (_SyncRoot)
-            {
-                _NetworkId = CreateNetwrokId();
-            }
-
-            _NetworkName = String.Format("CanNetworkController{0}", _NetworkId);
-
-            DeviceChangedData = 
-                new EventHandler(EventHandlerDeviceChangedValue);
-            DeviceChangedStatus = 
-                new EventHandler(EventHandlerDeviceChangedStatus);
-
-            // Инициализируем спусок устройств в сети
-            _DevicesList = new DevicesCollection(this);
-            _DevicesList.CollectionWasChanged +=
-                new EventHandler<KeyedCollectionWasChangedEventArgs<DeviceBase>>
-                (EventHandler_DevicesListWasChanged);
-
-            // Инициализируем список сетевых сервисов
-            this.InitNetworkServices();
-        }
-        /// <summary>
-        /// Конструктор
-        /// </summary>
-        /// <param name="port">CAN-порт</param>
-        /// <param name="NetworkId">Наименование сети</param>
-        public CanNetworkController(ICanPort port, UInt32 networkId)
-        {
-            _Status = Status.Stopped;
-            NetworkId = networkId;
-            _NetworkName = String.Format("CanNetworkController{0}", NetworkId);
-            
-            this._CanPort = port;
-
-            if (this._CanPort != null)
-            {
-                if (this._CanPort.IsOpen)
-                {
-                    this._CanPort.Close();
-                }
-            }
-            
-            DeviceChangedData =
-                new EventHandler(EventHandlerDeviceChangedValue);
-            DeviceChangedStatus =
-                new EventHandler(EventHandlerDeviceChangedStatus);
-
-            // Инициализируем спусок устройств в сети
-            _DevicesList = new DevicesCollection(this);
-            _DevicesList.CollectionWasChanged +=
-                new EventHandler<KeyedCollectionWasChangedEventArgs<DeviceBase>>
-                (EventHandler_DevicesListWasChanged);
-
-            // Инициализируем список сетевых сервисов
-            InitNetworkServices();
-
-            _CanPort.MessageReceived += 
-                new EventHandler(EventHandler_CanPort_MessageReceived);
-            //_CanPort.PortChangedStatus +=
-            //    new EventHandlerPortChangesStatus(EventHandler_CanPort_PortChangesStatus);
-            //_CanPort.ErrorReceived += 
-            //    new EventHandlerErrorRecived(EventHandler_CanPort_ErrorReceived);
-        }
-
-        /// <summary>
-        /// Конструктор для десериализации
-        /// </summary>
-        /// <param name="info"></param>
-        /// <param name="context"></param>
-        private CanNetworkController(SerializationInfo info, StreamingContext context)
-        {
-            DeviceBase device;
-
-            // Восстанавливаем сохранённые параметры
-            _NetworkId = info.GetUInt32("NetworkId");
-            _NetworkName = info.GetString("NetworkName");
-            _CanPort = (ICanPort)info.GetValue("CanPort", typeof(ICanPort));
-            if (_CanPort != null)
-            {
-                _CanPort.Stop();
-                _CanPort.MessageReceived +=
-                    new EventHandler(EventHandler_CanPort_MessageReceived);
-                //_CanPort.PortChangedStatus +=
-                //    new EventHandlerPortChangesStatus(EventHandler_CanPort_PortChangesStatus);
-                //_CanPort.ErrorReceived +=
-                //    new EventHandlerErrorRecived(EventHandler_CanPort_ErrorReceived);
-            }
-            _TotalAttempts = info.GetInt32("TotalAttempts");
-            
-            // Восстанавливаем список устройств
-            _DevicesList = new DevicesCollection(this);
-
-            List<string> list =
-                (List<string>)info.GetValue("Devices", typeof(List<string>));
-
-            foreach (string str in list)
-            {
-                device = DeviceBase.Create(str);
-                _DevicesList.Add(device);
-            }
-            // Запускаем сетевые сервисы
-            InitNetworkServices();
-
-            // Настройки сетевых сервисов
-            ((ServicePdoReceive)_NetworkServices[ServiceType.PdoReceive]).Interval =
-                info.GetInt32("PdoReceiveInterval");
-            ((ServiceSync)_NetworkServices[ServiceType.Sync]).PeriodSync =
-                info.GetDouble("SyncPeriodSync");
-            foreach (Service service in _NetworkServices)
-            {
-                service.TotalAttempts = _TotalAttempts;
-            }
-
-            DeviceChangedData =
-                new EventHandler(EventHandlerDeviceChangedValue);
-            DeviceChangedStatus =
-                new EventHandler(EventHandlerDeviceChangedStatus);            
-        }
-        /// <summary>
-        /// Деструктор класса.
-        /// </summary>
-        ~CanNetworkController()
-        {
-            Dispose();
-        }
         #endregion
 
         #region Methods

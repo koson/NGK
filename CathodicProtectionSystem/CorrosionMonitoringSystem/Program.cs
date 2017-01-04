@@ -19,7 +19,6 @@ using Modbus.OSIModel.DataLinkLayer.Slave.RTU.ComPort;
 using Modbus.OSIModel.ApplicationLayer.Slave;
 using Modbus.OSIModel.ApplicationLayer;
 using Common.Controlling;
-using NGK.CorrosionMonitoringSystem.Services;
 using NGK.Log;
 using Infrastructure.Api.Managers;
 using Infrastructure.Api.Plugins;

@@ -11,7 +11,7 @@ using System.Data;
 
 namespace NGK.Plugins.ApplicationServices
 {
-    public class SystemEventLogService : ApplicationServiceBase, ISystemEventLogService, IDisposable
+    public class SystemEventLogService : ApplicationServiceBase, ISystemEventLogService
     {
         #region Constructors
         /// <summary>
