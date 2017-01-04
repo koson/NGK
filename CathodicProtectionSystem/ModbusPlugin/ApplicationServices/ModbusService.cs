@@ -14,6 +14,7 @@ using NGK.CAN.ApplicationLayer.Network.Master;
 using Modbus.OSIModel.ApplicationLayer.Slave.DataModel.DataTypes;
 using NGK.CAN.DataTypes.DateTimeConvertor;
 using NGK.CAN.DataTypes;
+using NGK.CAN.ApplicationLayer.Network.Devices.Profiles;
 
 namespace NGK.Plugins.ApplicationServices
 {
@@ -41,7 +42,7 @@ namespace NGK.Plugins.ApplicationServices
         /// <summary>
         /// Контроллер modbus сеть в режиме slave
         /// </summary>
-        private readonly ModbusNetworkControllerSlave _Network;
+        private ModbusNetworkControllerSlave _Network;
         /// <summary>
         /// ComPort
         /// </summary>
@@ -88,6 +89,7 @@ namespace NGK.Plugins.ApplicationServices
             // Создаём единственную сеть Modbus для работы
             // сверхним уровнем
             _Connection = new ComPortSlaveMode(
+                _Managers.ConfigManager.SerialPortName,
                 _Managers.ConfigManager.SerialPortBaudRate,
                 _Managers.ConfigManager.SerialPortParity,
                 _Managers.ConfigManager.SerialPortDataBits,
@@ -109,11 +111,14 @@ namespace NGK.Plugins.ApplicationServices
 
         public override void Start()
         {
+            _Network.Start();
+            _DeviceKCCM.Start();
             base.Start();
         }
 
         public override void Stop()
         {
+            _Network.Stop();
             base.Stop();
         }
 
@@ -167,22 +172,22 @@ namespace NGK.Plugins.ApplicationServices
                             mDevice = CreateKIP01(); // Создаём пустое устройство нужного типа
                             // Инициализируем его 
                             mDevice.Number = i++;
-                            mDevice.Records[KIP9811Address.VisitingCard.HardwareVersion].Value =
+                            mDevice.Records[AdderssHelper.KIP9811Address.VisitingCard.HardwareVersion].Value =
                                 ((NgkProductVersion)device.GetObject(KIP9811v1.Indexes.hw_version)).TotalVersion;
-                            mDevice.Records[KIP9811Address.VisitingCard.SoftwareVersion].Value =
+                            mDevice.Records[AdderssHelper.KIP9811Address.VisitingCard.SoftwareVersion].Value =
                                 ((NgkProductVersion)device.GetObject(KIP9811v1.Indexes.fw_version)).TotalVersion;
-                            mDevice.Records[KIP9811Address.VisitingCard.SerialNumberHigh].Value =
-                                System.Convert.ToUInt16(device.GetObject(KIP9811v1.Indexes.serial_number1));
-                            mDevice.Records[KIP9811Address.VisitingCard.SerialNumberMiddle].Value =
-                                System.Convert.ToUInt16(device.GetObject(KIP9811v1.Indexes.serial_number2));
-                            mDevice.Records[KIP9811Address.VisitingCard.SerialNumberLow].Value =
-                                System.Convert.ToUInt16(device.GetObject(KIP9811v1.Indexes.serial_number3));
-                            mDevice.Records[KIP9811Address.VisitingCard.CRC16].Value = 0; //TODO (сделать рассчёт CRC16)
-                            mDevice.Records[KIP9811Address.ServiceInformation.NetworkNumber].Value =
-                                System.Convert.ToUInt16(_CanNetworksTable[device.Network.Description]);
-                            mDevice.Records[KIP9811Address.ServiceInformation.NetwrokAddress].Value =
-                                System.Convert.ToUInt16(device.NodeId);
-                            mDevice.Records[KIP9811Address.ServiceInformation.ConectionStatus].Value = 0; // 0-норма 1-ошибка
+                            mDevice.Records[AdderssHelper.KIP9811Address.VisitingCard.SerialNumberHigh].Value =
+                                Convert.ToUInt16(device.GetObject(KIP9811v1.Indexes.serial_number1));
+                            mDevice.Records[AdderssHelper.KIP9811Address.VisitingCard.SerialNumberMiddle].Value =
+                                Convert.ToUInt16(device.GetObject(KIP9811v1.Indexes.serial_number2));
+                            mDevice.Records[AdderssHelper.KIP9811Address.VisitingCard.SerialNumberLow].Value =
+                                Convert.ToUInt16(device.GetObject(KIP9811v1.Indexes.serial_number3));
+                            mDevice.Records[AdderssHelper.KIP9811Address.VisitingCard.CRC16].Value = 0; //TODO (сделать рассчёт CRC16)
+                            mDevice.Records[AdderssHelper.KIP9811Address.ServiceInformation.NetworkNumber].Value =
+                                Convert.ToUInt16(device.Network.NetworkId);
+                            mDevice.Records[AdderssHelper.KIP9811Address.ServiceInformation.NetwrokAddress].Value =
+                                Convert.ToUInt16(device.NodeId);
+                            mDevice.Records[AdderssHelper.KIP9811Address.ServiceInformation.ConectionStatus].Value = 0; // 0-норма 1-ошибка
                             break;
                         }
                     case NGK.CAN.ApplicationLayer.Network.Devices.DeviceType.KIP_MAIN_POWERED_v1:
@@ -197,7 +202,7 @@ namespace NGK.Plugins.ApplicationServices
                 // Добавляем устройство
                 _DeviceKCCM.Files.Add(mDevice);
                 // Создаём для него контекст для данного устройства
-                _Context.Add(new ModbusAdapterContext(device, mDevice));
+                _Context.Add(new ModbusServiceContext(device, mDevice));
             }
         }
 
@@ -215,10 +220,10 @@ namespace NGK.Plugins.ApplicationServices
             // Инициализируем данные устройства
             device.InputRegisters.Add(new InputRegister(0x0000, 0x2620, "Тип устройства"));
             device.InputRegisters.Add(new InputRegister(0x0001,
-                (new ProductVersion(new Version(1, 0))).TotalVersion,
+                (new NgkProductVersion(new Version(1, 0))).TotalVersion,
                 "Версия ПО"));
             device.InputRegisters.Add(new InputRegister(0x0002,
-                (new ProductVersion(new Version(1, 0))).TotalVersion,
+                (new NgkProductVersion(new Version(1, 0))).TotalVersion,
                 "Версия аппаратной части"));
             device.InputRegisters.Add(new InputRegister(0x0003, 0, "Серийный номер: High"));
             device.InputRegisters.Add(new InputRegister(0x0004, 0, "Серийный номер: Middle"));
@@ -391,6 +396,45 @@ namespace NGK.Plugins.ApplicationServices
             file.Records.Add(new Record(0x0037, 0, "Текущее время устройства: Low"));
 
             return file;
+        }
+        /// <summary>
+        /// Обновляет данные modbus-файла на основе переданного CAN-устройства
+        /// </summary>
+        /// <param name="modbusDevice"></param>
+        /// <param name="canDevice"></param>
+        private static void UdateDevice(
+            File modbusDevice, DeviceBase canDevice)
+        {
+            DeviceType type =
+                (DeviceType)modbusDevice.Records[AdderssHelper.ModbusVisitingCard.VisitingCard.DeviceType].Value;
+            switch (type)
+            {
+                case DeviceType.KIP_BATTERY_POWER_v1:
+                    {
+                        AdderssHelper.RemappingTableKip9811.Copy(modbusDevice, canDevice);
+                        break;
+                    }
+                default: { throw new NotSupportedException(); }
+            }
+        }
+        private void EventHandler_Timer_Elapsed(object sender, ElapsedEventArgs e)
+        {
+            DeviceBase device;
+            File modbusDevice;
+            NgkCanNetworksManager manager = NgkCanNetworksManager.Instance;
+
+            // Обновляем все устройства
+            foreach (ModbusServiceContext context in _Context)
+            {
+                // Получаем CAN-устройство
+                //UInt32 x = context.CanDevice.NetworkId;
+                //Byte y = context.CanDevice.NodeId;
+                //device = manager.Networks[x].Devices[y];
+                device = manager.Networks[context.CanDevice.NetworkId]
+                    .Devices[context.CanDevice.NodeId];
+                modbusDevice = _DeviceKCCM.Files[context.ModbusDevice.FileNumber];
+                UdateDevice(modbusDevice, device);
+            }
         }
 
         #endregion
