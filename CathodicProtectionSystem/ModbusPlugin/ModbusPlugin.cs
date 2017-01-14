@@ -6,6 +6,7 @@ using Mvp.WinApplication.Infrastructure;
 using Mvp.Input;
 using Infrastructure.Api.Managers;
 using NGK.Plugins.ApplicationServices;
+using NGK.Plugins.Presenters;
 
 namespace NGK.Plugins
 {
@@ -16,6 +17,13 @@ namespace NGK.Plugins
         public ModbusPlugin() 
         {
             Name = @"Modbus";
+
+            _ShowModbusServiceSettingsCommand =
+                new Command(OnShowModbusServiceSettings, CanShowModbusServiceSettings);
+            
+            NavigationMenu = new NavigationMenuItem(Name, null);
+            NavigationMenu.SubMenuItems.Add(
+                new NavigationMenuItem("Настройки", _ShowModbusServiceSettingsCommand));
         }
 
         #endregion
@@ -49,6 +57,21 @@ namespace NGK.Plugins
         #endregion
 
         #region Commands
+        
+        private Command _ShowModbusServiceSettingsCommand;
+
+        private void OnShowModbusServiceSettings()
+        {
+            ModbusServiceSettingsPresenter presenter = 
+                new ModbusServiceSettingsPresenter(Managers);
+            presenter.Show();
+        }
+
+        private bool CanShowModbusServiceSettings()
+        {
+            return _ModbusService != null;
+        }
+
         #endregion
     }
 }

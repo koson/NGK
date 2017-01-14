@@ -18,7 +18,7 @@ using NGK.CAN.ApplicationLayer.Network.Devices.Profiles;
 
 namespace NGK.Plugins.ApplicationServices
 {
-    public class ModbusService: ApplicationServiceBase, IDisposable
+    public class ModbusService : ApplicationServiceBase, IModbusServiceInfo
     {
         #region Constructors
         /// <summary>
@@ -78,6 +78,45 @@ namespace NGK.Plugins.ApplicationServices
         private Dictionary<string, int> _CanNetworksTable;
         private List<ModbusServiceContext> _Context;
         private Timer _Timer;
+
+        #region IModbusServiceInfo Members
+
+        public string NetworkName
+        {
+            get { return _Network != null ? _Network.NetworkName : null; }
+        }
+
+        public WorkMode? Mode
+        {
+            get { return _Network != null ? _Network.Mode : null; }
+        }
+
+        public string SerialPortName
+        {
+            get { return _Connection != null ? _Connection.PortName : null; }
+        }
+
+        public int SerialPortBaudRate
+        {
+            get { return _Connection != null && _Connection.SerialPort != null ? _Connection.SerialPort.BaudRate : null; }
+        }
+
+        public int SerialPortDataBits
+        {
+            get { return _Connection != null && _Connection.SerialPort != null ? _Connection.SerialPort.DataBits : null; }
+        }
+
+        public System.IO.Ports.Parity SerialPortParity
+        {
+            get { return _Connection != null && _Connection.SerialPort != null ? _Connection.SerialPort.Parity : null; }
+        }
+
+        public System.IO.Ports.StopBits SerialPortStopBits
+        {
+            get { return _Connection != null && _Connection.SerialPort != null ? _Connection.SerialPort.StopBits : null; }
+        }
+
+        #endregion
 
         #endregion
 

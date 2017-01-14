@@ -163,8 +163,9 @@ namespace NGK.CorrosionMonitoringSystem.Presenters
 
             foreach (NavigationMenuItem menu in NavigationService.Menu)
             {
-                View.Form.ContextMenuStrip.Items.Add(
-                    NavigationMenuItemConverter.ConvertTo(menu));
+                if (menu != null)
+                    View.Form.ContextMenuStrip.Items.Add(
+                        NavigationMenuItemConverter.ConvertTo(menu));
             }
 
             // Создаём статусную панель формы
