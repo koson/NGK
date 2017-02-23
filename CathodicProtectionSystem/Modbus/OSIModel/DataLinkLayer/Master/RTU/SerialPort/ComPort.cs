@@ -130,8 +130,8 @@ namespace Modbus.OSIModel.DataLinkLayer.Master.RTU.SerialPort
         [Category("Протокол Modbus")]
         [Browsable(true)]
         [ReadOnly(false)]
-        [Description("Таймаут ответа на запрос, мсек")]
-        [DisplayName("Таймаут ответа, мсек")]
+        [Description("Таймаут ответа на запрос, мс")]
+        [DisplayName("Таймаут ответа, мс")]
         public int TimeOut
         {
             get { return _ValueTimeOut; }
@@ -151,8 +151,8 @@ namespace Modbus.OSIModel.DataLinkLayer.Master.RTU.SerialPort
         [Category("Протокол Modbus")]
         [Browsable(true)]
         [ReadOnly(false)]
-        [Description("Временная задержка при широковещательной команде, мсек")]
-        [DisplayName("Временная задержка, мсек")]
+        [Description("Временная задержка при широковещательной команде, мс")]
+        [DisplayName("Временная задержка, мc")]
         public int ValueTurnAroundDelay
         {
             get { return _ValueTurnAroundDelay; }

@@ -72,7 +72,7 @@
             // 
             this.splitContainerMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitContainerMain.Location = new System.Drawing.Point(0, 49);
-            this.splitContainerMain.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.splitContainerMain.Margin = new System.Windows.Forms.Padding(2);
             this.splitContainerMain.Name = "splitContainerMain";
             // 
             // splitContainerMain.Panel1
@@ -93,13 +93,13 @@
             this.treeViewMain.ImageIndex = 0;
             this.treeViewMain.ImageList = this.imageListTreeView;
             this.treeViewMain.Location = new System.Drawing.Point(0, 0);
-            this.treeViewMain.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.treeViewMain.Margin = new System.Windows.Forms.Padding(2);
             this.treeViewMain.Name = "treeViewMain";
             treeNode1.ImageIndex = 2;
             treeNode1.Name = "NodeConnection";
             treeNode1.SelectedImageIndex = 2;
             treeNode1.Text = "Подключение";
-            treeNode1.ToolTipText = "Настройки подключения к устройству БИ";
+            treeNode1.ToolTipText = "Настройки подключения к устройству НГК-БИ";
             treeNode2.ImageIndex = 1;
             treeNode2.Name = "NodeMeasuringDevice";
             treeNode2.SelectedImageIndex = 1;
@@ -130,7 +130,7 @@
             // 
             this.propertyGridMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.propertyGridMain.Location = new System.Drawing.Point(0, 0);
-            this.propertyGridMain.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.propertyGridMain.Margin = new System.Windows.Forms.Padding(2);
             this.propertyGridMain.Name = "propertyGridMain";
             this.propertyGridMain.Size = new System.Drawing.Size(350, 325);
             this.propertyGridMain.TabIndex = 0;
@@ -161,7 +161,7 @@
             this.HelpButton = true;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStripMain;
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "FormMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "КИП";

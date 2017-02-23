@@ -423,7 +423,7 @@ namespace NGK.MeasuringDeviceTech
             // Читаем данные из устройства.
             NGK.Forms.FormProgressBar frm = new NGK.Forms.FormProgressBar();
             frm.progressBar.Value = 0;
-            frm.labelMessage.Text = "Выполняется чтение данных из устройства БИ";
+            frm.labelMessage.Text = "Выполняется чтение данных из устройства НГК-БИ";
             frm.Show(this);
             //frm.StartPosition = FormStartPosition.CenterScreen;
             this.Cursor = Cursors.WaitCursor;
@@ -1543,7 +1543,7 @@ namespace NGK.MeasuringDeviceTech
             DialogResult rslt;
             NGK.Forms.FormProgressBar frm = new NGK.Forms.FormProgressBar();
             frm.progressBar.Value = 0;
-            frm.labelMessage.Text = "Выполняется запись данных в устройство БИ";
+            frm.labelMessage.Text = "Выполняется запись данных в устройство НГК-БИ";
             frm.Show(this);
             frm.StartPosition = FormStartPosition.CenterParent;
 
@@ -2427,7 +2427,7 @@ namespace NGK.MeasuringDeviceTech
                             }
                         default:
                             {
-                                MessageBox.Show(this, "Данный тип БИ не поддерживается ПО", 
+                                MessageBox.Show(this, "Данный тип НГК-БИ не поддерживается ПО", 
                                     "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                                 return;
                             }
@@ -2459,7 +2459,7 @@ namespace NGK.MeasuringDeviceTech
                     }
                 default:
                     {
-                        throw new Exception("Попытка создания устройства БИ с неопределённым типом");
+                        throw new Exception("Попытка создания устройства НГК-БИ с неопределённым типом");
                     }
             }
 

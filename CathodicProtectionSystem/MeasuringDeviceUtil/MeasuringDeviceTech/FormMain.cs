@@ -97,9 +97,6 @@ namespace NGK.MeasuringDeviceTech
         public const String mnuConnectionDisconnect = "mnuConnectionDisconnect";
         public const String mnuConnectionSaveSettings = "mnuConnectionSaveSettings";
         
-        public const String mnuSettings = "mnuSettings";
-        public const String mnuSettingsSettings = "mnuSettingsSettings";
-        
         public const String mnuHelp = "mnuHelp";
         public const String mnuHelpHelp = "mnuHelpHelp";
         public const String mnuHelpAbout = "mnuHelpAbout";
@@ -1989,20 +1986,6 @@ namespace NGK.MeasuringDeviceTech
             mnu.Click += new EventHandler(toolStripMenuItemConnectionSaveSettings_Click);
             ((ToolStripMenuItem)menu.Items["mnuConnection"]).DropDownItems.Add(mnu);
 
-            // Меню "Настройки"
-            mnu = new ToolStripMenuItem();
-            mnu.Name = "mnuSettings";
-            mnu.Text = "Настройки";
-            menu.Items.Add(mnu);
-
-            // Меню "Помощь" -> "Настройки"
-            mnu = new ToolStripMenuItem();
-            mnu.Name = "mnuSettingsSettings";
-            mnu.Text = "Настройки";
-            mnu.Enabled = false;
-            mnu.Click += new EventHandler(toolStripMenuItemSettings_Click);
-            ((ToolStripMenuItem)menu.Items["mnuSettings"]).DropDownItems.Add(mnu);
-
             // Меню "Помощь"
             mnu = new ToolStripMenuItem();
             mnu.Name = "mnuHelp";
@@ -2273,7 +2256,7 @@ namespace NGK.MeasuringDeviceTech
             button.ImageTransparentColor = System.Drawing.Color.Magenta;
             button.Name = "buttonSaveDevice";
             button.Size = new System.Drawing.Size(36, 36);
-            button.Text = "Сохранить устройство КИП";
+            button.Text = "Сохранить устройство НГК-КИП";
             button.Enabled = false;
             button.Click += new EventHandler(ToolStripButtonSaveDevice_Click);
             toolStrip.Items.Add(button);
@@ -2285,7 +2268,7 @@ namespace NGK.MeasuringDeviceTech
             button.ImageTransparentColor = System.Drawing.Color.Magenta;
             button.Name = "buttonNewDevice";
             button.Size = new System.Drawing.Size(36, 36);
-            button.Text = "Создать устройство КИП";
+            button.Text = "Создать устройство НГК-КИП";
             button.Enabled = false;
             button.Click += new EventHandler(ToolStripButtonNewDevice_Click);
             toolStrip.Items.Add(button);
@@ -2297,7 +2280,7 @@ namespace NGK.MeasuringDeviceTech
             button.ImageTransparentColor = System.Drawing.Color.Magenta;
             button.Name = "buttonDeleteDevice";
             button.Size = new System.Drawing.Size(36, 36);
-            button.Text = "Закрыть устройство КИП";
+            button.Text = "Закрыть устройство НГК-КИП";
             button.Enabled = false;
             button.Click += new EventHandler(ToolStripButtonDeleteDevice_Click);
             toolStrip.Items.Add(button);
