@@ -34,8 +34,8 @@ namespace NGK.MeasuringDeviceTech.Classes.MeasuringDevice
         [Browsable(true)]
         [ReadOnly(true)]
         [Category("Настройки сети")]
-        [Description("Адрес устройства БИ (при работе по технологическому кабелю)")]
-        [DisplayName(@"Адрес устройства БИ сервис")]
+        [Description("Адрес устройства НГК-БИ (при работе по технологическому кабелю)")]
+        [DisplayName(@"Адрес устройства НГК-БИ сервис")]
         [DefaultValue(typeof(Byte), "1")]
         [RefreshProperties(System.ComponentModel.RefreshProperties.All)]
         public Byte AddressSlave
@@ -55,8 +55,8 @@ namespace NGK.MeasuringDeviceTech.Classes.MeasuringDevice
         [Browsable(true)]
         [ReadOnly(true)]
         [Category("Системные данные")]
-        [Description("Вариант исполнения устройства БИ в составе КИП")]
-        [DisplayName(@"Тип устройства НГК")]
+        [Description("Вариант исполнения устройства НГК-БИ в составе НГК-КИП")]
+        [DisplayName(@"Тип устройства")]
         [TypeConverter(typeof(TypeConverterTypeOfDeviceNGK))]
         public TYPE_NGK_DEVICE TypeOfDevice
         {
@@ -543,8 +543,8 @@ namespace NGK.MeasuringDeviceTech.Classes.MeasuringDevice
         [Browsable(true)]
         [ReadOnly(true)]
         [Category("Измеряемые параметры")]
-        [Description("Напряжение питания БИ, В")]
-        [DisplayName("Напряжение питания БИ, В")]
+        [Description("Напряжение питания НГК-БИ, В")]
+        [DisplayName("Напряжение питания НГК-БИ, В")]
         [RefreshProperties(System.ComponentModel.RefreshProperties.All)]
         public float SupplyVoltage
         {
@@ -730,8 +730,8 @@ namespace NGK.MeasuringDeviceTech.Classes.MeasuringDevice
         [Browsable(true)]
         [ReadOnly(true)]
         [Category("Состояние блока измерений")]
-        [Description("Состояние напряжения притания устройства БИ,  Discretes Input	0x0001")]
-        [DisplayName("Состояние напряжения притания устройства БИ")]
+        [Description("Состояние напряжения притания устройства НГК-БИ,  Discretes Input	0x0001")]
+        [DisplayName("Состояние напряжения притания устройства НГК-БИ")]
         [TypeConverter(typeof(BooleanTypeConverter))]
         [RefreshProperties(System.ComponentModel.RefreshProperties.All)]
         public Boolean SupplyVoltageStatus
@@ -975,7 +975,7 @@ namespace NGK.MeasuringDeviceTech.Classes.MeasuringDevice
         [Browsable(true)]
         [ReadOnly(false)]
         [Category("Настройки измерений")]
-        [Description("Версии БИ(У)-01 измеряет питающее напряжение и напряжение встроенного элемента питания каждый раз после истечения периода измерения и перехода из режима «сна» в активный режим. 1...100 сек.")]
+        [Description("Версии НГК-БИ(У)-01 измеряет питающее напряжение и напряжение встроенного элемента питания каждый раз после истечения периода измерения и перехода из режима «сна» в активный режим. 1...100 сек.")]
         [DisplayName("Период измерения питающего напряжения, сек.")]
         [DefaultValue(typeof(UInt16),"0x000A")]
         [RefreshProperties(System.ComponentModel.RefreshProperties.All)]
@@ -1363,7 +1363,7 @@ namespace NGK.MeasuringDeviceTech.Classes.MeasuringDevice
         [Browsable(true)]
         [ReadOnly(true)]
         [Category("Системные данные")]
-        [Description("Установить системное время и дату в устройстве БИ")]
+        [Description("Установить системное время и дату в устройстве НГК-БИ")]
         [DisplayName("Дата и время")]
         [RefreshProperties(System.ComponentModel.RefreshProperties.All)]
         public DateTime DateTime
@@ -1396,7 +1396,7 @@ namespace NGK.MeasuringDeviceTech.Classes.MeasuringDevice
         /// </summary>
         [Browsable(true)]
         [ReadOnly(false)]
-        [Category("Настройки управления КИП")]
+        [Category("Настройки управления НГК-КИП")]
         [Description("Разрешение работы канала измерения поляризационного потенциала подземного трубопровода по методу вспомогательного")]
         [DisplayName("Измерение поляризационного потенциала")]
         [DefaultValue(true)]
@@ -1426,7 +1426,7 @@ namespace NGK.MeasuringDeviceTech.Classes.MeasuringDevice
         /// </summary>
         [Browsable(true)]
         [ReadOnly(false)]
-        [Category("Настройки управления КИП")]
+        [Category("Настройки управления НГК-КИП")]
         [Description("Разрешение работы канала измерения защитного потенциала")]
         [DisplayName("Измерение защитного потенциала")]
         [DefaultValue(true)]
@@ -1458,7 +1458,7 @@ namespace NGK.MeasuringDeviceTech.Classes.MeasuringDevice
         /// </summary>
         [Browsable(true)]
         [ReadOnly(false)]
-        [Category("Настройки управления КИП")]
+        [Category("Настройки управления НГК-КИП")]
         [Description("Разрешение работы канала измерения тока катодной защиты в точке дренажа методом измерения напряжения на внешнем шунте")]
         [DisplayName("Измерение защитного тока")]
         [DefaultValue(true)]
@@ -1490,7 +1490,7 @@ namespace NGK.MeasuringDeviceTech.Classes.MeasuringDevice
         /// </summary>
         [Browsable(true)]
         [ReadOnly(false)]
-        [Category("Настройки управления КИП")]
+        [Category("Настройки управления НГК-КИП")]
         [Description("Разрешение работы канала тока поляризации вспомогательного электрода")]
         [DisplayName("Измерение тока поляризации")]
         [DefaultValue(true)]
@@ -1520,7 +1520,7 @@ namespace NGK.MeasuringDeviceTech.Classes.MeasuringDevice
         /// </summary>
         [Browsable(true)]
         [ReadOnly(false)]
-        [Category("Настройки управления КИП")]
+        [Category("Настройки управления НГК-КИП")]
         [Description("Разрешение работы канала измерения наведённого переменного напряжения на трубопровод")]
         [DisplayName("Измерение наведённого напряжения")]
         [DefaultValue(true)]
@@ -1551,7 +1551,7 @@ namespace NGK.MeasuringDeviceTech.Classes.MeasuringDevice
         /// </summary>
         [Browsable(true)]
         [ReadOnly(false)]
-        [Category("Настройки управления КИП")]
+        [Category("Настройки управления НГК-КИП")]
         [Description("Разрешение работы расширенного диапазона X10 для канала измерения суммарного потенциала")]
         [DisplayName("Разрешение расширенного диапазона Х10")]
         [DefaultValue(false)]
@@ -1582,7 +1582,7 @@ namespace NGK.MeasuringDeviceTech.Classes.MeasuringDevice
         /// </summary>
         [Browsable(true)]
         [ReadOnly(false)]
-        [Category("Настройки управления КИП")]
+        [Category("Настройки управления НГК-КИП")]
         [Description("Разрешение передачи слова состояния")]
         [DisplayName("Разрешение передачи слова состояния")]
         [DefaultValue(false)]
@@ -1615,7 +1615,7 @@ namespace NGK.MeasuringDeviceTech.Classes.MeasuringDevice
         /// </summary>
         [Browsable(true)]
         [ReadOnly(false)]
-        [Category("Настройки управления КИП")]
+        [Category("Настройки управления НГК-КИП")]
         [Description("Разрешение работы канала измерения постоянного тока натекания (ток между трубой и электродом сравнения)")]
         [DisplayName("Разрешение измерения DC тока натекания")]
         [DefaultValue(false)]
@@ -1648,7 +1648,7 @@ namespace NGK.MeasuringDeviceTech.Classes.MeasuringDevice
         /// </summary>
         [Browsable(true)]
         [ReadOnly(false)]
-        [Category("Настройки управления КИП")]
+        [Category("Настройки управления НГК-КИП")]
         [Description("Разрешение работы канала измерения переменного тока натекания (ток между трубой и электродом сравнения)")]
         [DisplayName("Разрешение измерения AC тока натекания")]
         [DefaultValue(false)]
@@ -1699,9 +1699,9 @@ namespace NGK.MeasuringDeviceTech.Classes.MeasuringDevice
             sb.Append("СИСТЕМНЫЕ ДАННЫЕ:");
             sb.Append(Environment.NewLine);
             sb.Append(Environment.NewLine);
-            sb.Append("Тип БИ в составе КИП: БИ(У)-00");
+            sb.Append("Тип НГК-БИ в составе КИП: НГК-БИ(У)-00");
             sb.Append(Environment.NewLine);
-            sb.Append(String.Format("Серийный номер БИ в соствае КИП: {0}", this.SerialNumber.ToString()));
+            sb.Append(String.Format("Серийный номер НГК-БИ в соствае КИП: {0}", this.SerialNumber.ToString()));
             sb.Append(Environment.NewLine);
             sb.Append(String.Format("Код производителя: {0}", this.CodeManufacturer.ToString()));
             sb.Append(Environment.NewLine);
@@ -1714,7 +1714,7 @@ namespace NGK.MeasuringDeviceTech.Classes.MeasuringDevice
             sb.Append(Environment.NewLine);
             sb.Append(Environment.NewLine);
 
-            sb.Append("НАСТРОЙКИ УПРАВЛЕНИЯ КИП:");
+            sb.Append("Настройки управления НГК-КИП:");
             sb.Append(Environment.NewLine);
             sb.Append(Environment.NewLine);
             sb.Append(String.Format("Измерение защитного потенциала: {0}", this.ProtectivePotentialEn.ToString()));
@@ -1734,7 +1734,7 @@ namespace NGK.MeasuringDeviceTech.Classes.MeasuringDevice
             sb.Append("НАСТРОЙКИ СЕТИ:");
             sb.Append(Environment.NewLine);
             sb.Append(Environment.NewLine);
-            sb.Append(String.Format("Адрес устройства БИ сервис: {0}", this.AddressSlave.ToString()));
+            sb.Append(String.Format("Адрес устройства НГК-БИ сервис: {0}", this.AddressSlave.ToString()));
             sb.Append(Environment.NewLine);
             sb.Append(String.Format("Адрес/номер устройства: {0}", this.NetAddress.ToString()));
             sb.Append(Environment.NewLine);
@@ -1756,13 +1756,13 @@ namespace NGK.MeasuringDeviceTech.Classes.MeasuringDevice
             sb.Append(Environment.NewLine);
             sb.Append(String.Format("Период опроса канала 2, сек: {0}", this.PollingPeriodChannel2.ToString()));
             sb.Append(Environment.NewLine);
-            sb.Append(String.Format("Период опроса УСИКПСТ, сек: {0}", this.PollingPeriodUSIKPST.ToString()));
+            sb.Append(String.Format("Период опроса УС ИКП СТ, сек: {0}", this.PollingPeriodUSIKPST.ToString()));
             sb.Append(Environment.NewLine);
             sb.Append(String.Format("Токовый шунт, А: {0}", this.CurrentShuntValue.ToString()));
             sb.Append(Environment.NewLine);
             sb.Append(Environment.NewLine);
 
-            sb.Append("СОСТОЯНИЕ БИ В СОСТАВЕ НГК-КИП СМ(У):");
+            sb.Append("СОСТОЯНИЕ НГК-БИ В СОСТАВЕ НГК-КИП СМ(У):");
             sb.Append(Environment.NewLine);
             sb.Append(Environment.NewLine);
             sb.Append(String.Format("Датчик вскрытия: {0}", this.CaseOpen.ToString()));
@@ -1776,11 +1776,11 @@ namespace NGK.MeasuringDeviceTech.Classes.MeasuringDevice
             sb.Append("ИЗМЕРЯЕМЫЕ ПАРАМЕТРЫ:");
             sb.Append(Environment.NewLine);
             sb.Append(Environment.NewLine);
-            sb.Append(String.Format("Глубина коррозии УСИКПСТ, мкм: {0}", this.DepthOfCorrosion.ToString()));
+            sb.Append(String.Format("Глубина коррозии УС ИКП СТ, мкм: {0}", this.DepthOfCorrosion.ToString()));
             sb.Append(Environment.NewLine);
-            sb.Append(String.Format("Скорость коррозии УСИКПСТ, мкм: {0}", this.SpeedOfCorrosion.ToString()));
+            sb.Append(String.Format("Скорость коррозии УС ИКП СТ, мкм: {0}", this.SpeedOfCorrosion.ToString()));
             sb.Append(Environment.NewLine);
-            sb.Append(String.Format("Код состояния УСИКПСТ: {0}", this.StatusUSIKPST.ToString()));
+            sb.Append(String.Format("Код состояния УС ИКП СТ: {0}", this.StatusUSIKPST.ToString()));
             sb.Append(Environment.NewLine);
             sb.Append(String.Format("Датчик коррозии №1: {0}", this.CorrosionSensor1.ToString()));
             sb.Append(Environment.NewLine);
@@ -1796,7 +1796,7 @@ namespace NGK.MeasuringDeviceTech.Classes.MeasuringDevice
             sb.Append(Environment.NewLine);
             sb.Append(String.Format("Напряжение батареи, В: {0}", this.BattaryVoltage.ToString()));
             sb.Append(Environment.NewLine);
-            sb.Append(String.Format("Напряжение питания БИ, В: {0}", this.SupplyVoltage.ToString()));
+            sb.Append(String.Format("Напряжение питания НГК-БИ, В: {0}", this.SupplyVoltage.ToString()));
             sb.Append(Environment.NewLine);
             sb.Append(String.Format("Поляризационный потенциал, В: {0}", this.PolarizationPotential.ToString()));
             sb.Append(Environment.NewLine);
@@ -2230,7 +2230,7 @@ namespace NGK.MeasuringDeviceTech.Classes.MeasuringDevice
                 if (registers.Length != 2)
                 {
                     msg = String.Format(
-                        "Ответ БИ содержит количесво прочитанных регистров {0}, должно быть 2",
+                        "Ответ НГК-БИ содержит количесво прочитанных регистров {0}, должно быть 2",
                         registers.Length);
                     error = new OperationResult(OPERATION_RESULT.INCORRECT_ANSWER, msg);
                 }
@@ -2279,7 +2279,7 @@ namespace NGK.MeasuringDeviceTech.Classes.MeasuringDevice
                 if (registers.Length != 2)
                 {
                     msg = String.Format(
-                        "Ответ БИ содержит количесво прочитанных регистров {0}, должно быть 2",
+                        "Ответ НГК-БИ содержит количесво прочитанных регистров {0}, должно быть 2",
                         registers.Length);
                     error = new OperationResult(OPERATION_RESULT.INCORRECT_ANSWER, msg);
                 }
@@ -2295,7 +2295,7 @@ namespace NGK.MeasuringDeviceTech.Classes.MeasuringDevice
                         if (registers.Length != 2)
                         {
                             msg = String.Format(
-                                "Ответ БИ содержит количесво прочитанных регистров {0}, должно быть 2",
+                                "Ответ НГК-БИ содержит количесво прочитанных регистров {0}, должно быть 2",
                                 registers.Length);
                             error = new OperationResult(OPERATION_RESULT.INCORRECT_ANSWER, msg);
                         }
@@ -2383,7 +2383,7 @@ namespace NGK.MeasuringDeviceTech.Classes.MeasuringDevice
                 if (registers.Length != 1)
                 {
                     msg = String.Format(
-                        "Ответ БИ содержит количесво прочитанных регистров {0}, должен быть 1",
+                        "Ответ НГК-БИ содержит количесво прочитанных регистров {0}, должен быть 1",
                         registers.Length);
                     error = new OperationResult(OPERATION_RESULT.INCORRECT_ANSWER, msg);
                 }
@@ -2399,7 +2399,7 @@ namespace NGK.MeasuringDeviceTech.Classes.MeasuringDevice
                         if (registers.Length != 1)
                         {
                             msg = String.Format(
-                                "Ответ БИ содержит количесво прочитанных регистров {0}, должен быть 1",
+                                "Ответ НГК-БИ содержит количесво прочитанных регистров {0}, должен быть 1",
                                 registers.Length);
                             error = new OperationResult(OPERATION_RESULT.INCORRECT_ANSWER, msg);
                         }
@@ -2895,7 +2895,7 @@ namespace NGK.MeasuringDeviceTech.Classes.MeasuringDevice
                 if (registers.Length != 2)
                 {
                     msg = String.Format(
-                        "Ответ БИ содержит количесво прочитанных регистров {0}, должно быть 2",
+                        "Ответ НГК-БИ содержит количесво прочитанных регистров {0}, должно быть 2",
                         registers.Length);
                     error = new OperationResult(OPERATION_RESULT.INCORRECT_ANSWER, msg);
                 }
@@ -4336,8 +4336,8 @@ namespace NGK.MeasuringDeviceTech.Classes.MeasuringDevice
             out OperationResult error)
         {
             //throw new InvalidOperationException("Операция неподдреживается в БИ(У)-00");
-            error = new OperationResult(OPERATION_RESULT.INVALID_OPERATION, 
-                "Операция неподдреживается в БИ(У)-00");
+            error = new OperationResult(OPERATION_RESULT.INVALID_OPERATION,
+                "Операция неподдреживается в НГК-БИ(У)-00");
 
             //Modbus.OSIModel.Message.Result result;
             ////String msg;

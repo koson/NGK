@@ -28,12 +28,12 @@ namespace NGK.MeasuringDeviceTech.Classes.MeasuringDevice.Converters
             {
                 case TYPE_NGK_DEVICE.BI_BATTERY_POWER:
                     {
-                        str = "БИ(У)-01";
+                        str = "НГК-БИ(У)-01";
                         break; 
                     }
                 case TYPE_NGK_DEVICE.BI_MAIN_POWERED:
                     {
-                        str = "БИ(У)-00";
+                        str = "НГК-БИ(У)-00";
                         break; 
                     }
                 case TYPE_NGK_DEVICE.UNKNOWN_DEVICE:
@@ -57,12 +57,12 @@ namespace NGK.MeasuringDeviceTech.Classes.MeasuringDevice.Converters
             TYPE_NGK_DEVICE type;
             switch ((String)value)
             {
-                case "БИ(У)-00":
+                case "НГК-БИ(У)-00":
                     {
                         type = TYPE_NGK_DEVICE.BI_MAIN_POWERED;
                         break; 
                     }
-                case "БИ(У)-01":
+                case "НГК-БИ(У)-01":
                     {
                         type = TYPE_NGK_DEVICE.BI_BATTERY_POWER;
                         break; 

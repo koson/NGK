@@ -959,7 +959,7 @@ namespace NGK.MeasuringDeviceTech
                         }
                         break;
                     }
-                case @"Состояние напряжения притания устройства БИ":
+                case @"Состояние напряжения притания устройства НГК-БИ":
                     {
                         this.Cursor = Cursors.WaitCursor;
                         this._MeasuringDevice.Read_DI_SupplyVoltageStatus(ref _Host, out result);
@@ -1321,7 +1321,7 @@ namespace NGK.MeasuringDeviceTech
                         }
                         break;
                     }
-                case @"Напряжение питания БИ, В":
+                case @"Напряжение питания НГК-БИ, В":
                     {
                         this.Cursor = Cursors.WaitCursor;
                         this._MeasuringDevice.Read_IR_SupplyVoltage(ref _Host, out result);
@@ -1401,7 +1401,7 @@ namespace NGK.MeasuringDeviceTech
                         //    "Сообщение", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         break;
                     }
-                case @"Адрес устройства БИ сервис":
+                case @"Адрес устройства НГК-БИ сервис":
                     {
                         MessageBox.Show(this,
                             "Данный параметр в данный момент не доступен для чтения и носит информативный характер",
@@ -1439,7 +1439,7 @@ namespace NGK.MeasuringDeviceTech
                         }
                         break;
                     }
-                case "Тип устройства НГК":
+                case "Тип устройства":
                     {
                         MessageBox.Show(this,
                             "Данный параметр в данный момент не доступен для чтения",
@@ -2542,12 +2542,12 @@ namespace NGK.MeasuringDeviceTech
                         }
                     case (UInt16)TYPE_NGK_DEVICE.BI_BATTERY_POWER:
                         {
-                            _typeOfDevice = "Устройство БИ(У)-01";
+                            _typeOfDevice = "Устройство НГК-БИ(У)-01";
                             break;
                         }
                     case (UInt16)TYPE_NGK_DEVICE.BI_MAIN_POWERED:
                         {
-                            _typeOfDevice = "Устройство БИ(У)-00";
+                            _typeOfDevice = "Устройство НГК-БИ(У)-00";
                             break;
                         }
                     default:
@@ -2589,7 +2589,7 @@ namespace NGK.MeasuringDeviceTech
                                 }
                             default:
                                 {
-                                    MessageBox.Show(this, "Данный тип БИ не поддерживается ПО",
+                                    MessageBox.Show(this, "Данный тип НГК-БИ не поддерживается ПО",
                                         "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                                     return;
                                 }
