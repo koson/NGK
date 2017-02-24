@@ -971,7 +971,7 @@ namespace NGK.MeasuringDeviceTech
                         }
                         break;
                     }
-                case @"Скорость обмена СAN, кБ/сек":
+                case @"Скорость обмена СAN, кБ/с":
                     {
                         this.Cursor = Cursors.WaitCursor;
                         this._MeasuringDevice.Read_HR_BaudRateCAN(ref _Host, out result);
@@ -1001,7 +1001,7 @@ namespace NGK.MeasuringDeviceTech
                         }
                         break;
                     }
-                case @"Период измерений, сек.":
+                case @"Период измерений, с":
                     {
                         this.Cursor = Cursors.WaitCursor;
                         this._MeasuringDevice.Read_HR_MeasuringPeriod(ref _Host, out result);
@@ -1016,7 +1016,7 @@ namespace NGK.MeasuringDeviceTech
                         }
                         break;
                     }
-                case @"Период измерения питающего напряжения, сек.":
+                case @"Период измерения питающего напряжения, с":
                     {
                         this.Cursor = Cursors.WaitCursor; 
                         this._MeasuringDevice.Read_HR_MeasuringVoltagePeriod(ref _Host, out result);
@@ -1046,7 +1046,7 @@ namespace NGK.MeasuringDeviceTech
                         }
                         break;
                     }
-                case @"Период опроса БПИ, сек":
+                case @"Период опроса БПИ, с":
                     {
                         this.Cursor = Cursors.WaitCursor;
                         this._MeasuringDevice.Read_HR_PollingPeriodBPI(ref _Host, out result);
@@ -1061,7 +1061,7 @@ namespace NGK.MeasuringDeviceTech
                         }
                         break;
                     }
-                case @"Период опроса канала 1, сек":
+                case @"Период опроса канала 1, с":
                     {
                         this.Cursor = Cursors.WaitCursor;
                         this._MeasuringDevice.Read_HR_PollingPeriodChannel1(ref _Host, out result);
@@ -1076,7 +1076,7 @@ namespace NGK.MeasuringDeviceTech
                         }
                         break;
                     }
-                case @"Период опроса канала 2, сек":
+                case @"Период опроса канала 2, с":
                     {
                         this.Cursor = Cursors.WaitCursor;
                         this._MeasuringDevice.Read_HR_PollingPeriodChannel2(ref _Host, out result);
@@ -1091,7 +1091,7 @@ namespace NGK.MeasuringDeviceTech
                         }
                         break;
                     }
-                case @"Период опроса УСИКПСТ, сек":
+                case @"Период опроса УС ИКП СТ, с":
                     {
                         this.Cursor = Cursors.WaitCursor;
                         this._MeasuringDevice.Read_HR_PollingPeriodUSIKPST(ref _Host, out result);
@@ -1183,7 +1183,7 @@ namespace NGK.MeasuringDeviceTech
                         }
                         break;
                     }
-                case @"Глубина коррозии УСИКПСТ, мкм":
+                case @"Глубина коррозии УС ИКП СТ, мкм":
                     {
                         this.Cursor = Cursors.WaitCursor;
                         this._MeasuringDevice.Read_IR_DepthOfCorrosionUSIKPST(ref _Host, out result);
@@ -1288,7 +1288,7 @@ namespace NGK.MeasuringDeviceTech
                         }
                         break;
                     }
-                case @"Скорость коррозии УСИКПСТ, мкм":
+                case @"Скорость коррозии УС ИКП СТ, мкм":
                     {
                         this.Cursor = Cursors.WaitCursor;
                         this._MeasuringDevice.Read_IR_SpeedOfCorrosionUSIKPST(ref _Host, out result);
@@ -1303,7 +1303,7 @@ namespace NGK.MeasuringDeviceTech
                         }
                         break;
                     }
-                case @"Код состояния устройства УСИКПСТ":
+                case @"Код состояния устройства УС ИКП СТ":
                     {
                         this.Cursor = Cursors.WaitCursor;
                         this._MeasuringDevice.Read_IR_StatusUSIKPST(ref _Host, out result);
@@ -1436,7 +1436,7 @@ namespace NGK.MeasuringDeviceTech
                         }
                         break;
                     }
-                case "Тип устройства":
+                case "Тип НГК-БИ":
                     {
                         MessageBox.Show(this,
                             "Данный параметр в данный момент не доступен для чтения",
@@ -1552,7 +1552,7 @@ namespace NGK.MeasuringDeviceTech
                         }
                         break;
                     }
-                case @"Скорость обмена СAN, кБ/сек":
+                case @"Скорость обмена СAN, кБ/с":
                     {
                         this.Cursor = Cursors.WaitCursor;
                         this._MeasuringDevice.Write_HR_BaudRateCAN(ref _Host, out result);
@@ -1580,7 +1580,7 @@ namespace NGK.MeasuringDeviceTech
                         }
                         break;
                     }
-                case @"Период измерений, сек.":
+                case @"Период измерений, с":
                     {
                         this.Cursor = Cursors.WaitCursor;
                         this._MeasuringDevice.Write_HR_MeasuringPeriod(ref _Host, out result);
@@ -1608,7 +1608,7 @@ namespace NGK.MeasuringDeviceTech
                         }
                         break;
                     }
-                case @"Период опроса БПИ, сек":
+                case @"Период опроса БПИ, с":
                     {
                         this.Cursor = Cursors.WaitCursor;
                         this._MeasuringDevice.Write_HR_PollingPeriodBPI(ref _Host, out result);
@@ -1622,7 +1622,7 @@ namespace NGK.MeasuringDeviceTech
                         }
                         break;
                     }
-                case @"Период опроса канала 1, сек":
+                case @"Период опроса канала 1, с":
                     {
                         this.Cursor = Cursors.WaitCursor; 
                         this._MeasuringDevice.Write_HR_PollingPeriodChannel1(ref _Host, out result);
@@ -1636,7 +1636,7 @@ namespace NGK.MeasuringDeviceTech
                         }
                         break;
                     }
-                case @"Период опроса канала 2, сек":
+                case @"Период опроса канала 2, с":
                     {
                         this.Cursor = Cursors.WaitCursor;
                         this._MeasuringDevice.Write_HR_PollingPeriodChannel2(ref _Host, out result);
@@ -1650,7 +1650,7 @@ namespace NGK.MeasuringDeviceTech
                         }
                         break;
                     }
-                case @"Период опроса УСИКПСТ, сек":
+                case @"Период опроса УС ИКП СТ, с":
                     {
                         this.Cursor = Cursors.WaitCursor;
                         this._MeasuringDevice.Write_HR_PollingPeriodUSIKPST(ref _Host, out result);
@@ -1664,7 +1664,7 @@ namespace NGK.MeasuringDeviceTech
                         }
                         break;
                     }
-                case @"Период измерения питающего напряжения, сек.":
+                case @"Период измерения питающего напряжения, с":
                     {
                         this.Cursor = Cursors.WaitCursor;
                         this._MeasuringDevice.Write_HR_MeasuringVoltagePeriod(ref _Host, out result);
@@ -2428,42 +2428,51 @@ namespace NGK.MeasuringDeviceTech
                 }
                 else
                 {
-                    result = MessageBox.Show(this,
-                        "Устройство не инициализировано. Инициализировать?",
-                        "Сообщение",
-                        MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-
-                    // Ининициализируем устройство
-                    if (result == System.Windows.Forms.DialogResult.Yes)
+                    if (Program.ForInternalUsing)
                     {
-                        NGK.MeasuringDeviceTech.Forms.FormInitDevice frm =
-                            new Forms.FormInitDevice(_MeasuringDevice.GetDeviceType());
+                        result = MessageBox.Show(this,
+                            "Устройство не инициализировано. Инициализировать?",
+                            "Сообщение",
+                            MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
-                        result = frm.ShowDialog(this);
-
-                        if (result == System.Windows.Forms.DialogResult.OK)
+                        // Ининициализируем устройство
+                        if (result == System.Windows.Forms.DialogResult.Yes)
                         {
-                            // Записываем в устройство серийный номер
+                            NGK.MeasuringDeviceTech.Forms.FormInitDevice frm =
+                                new Forms.FormInitDevice(_MeasuringDevice.GetDeviceType());
 
-                            this.Cursor = Cursors.WaitCursor;
-                            _MeasuringDevice.Write_HR_SerialNumber(ref _Host,
-                                frm.SerialNumber, out error);
-                            this.Cursor = Cursors.Default;
+                            result = frm.ShowDialog(this);
 
-                            if (error.Result != OPERATION_RESULT.OK)
+                            if (result == System.Windows.Forms.DialogResult.OK)
                             {
-                                MessageBox.Show(this,
-                                    String.Format(
-                                    "При записи серийного номера произошла ошибка: {0}",
-                                    error.Message), "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            }
-                            else
-                            {
-                                MessageBox.Show(this,
-                                    "Cерийный номер успешно записан, устройство инициализировано",
-                                    "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                // Записываем в устройство серийный номер
+
+                                this.Cursor = Cursors.WaitCursor;
+                                _MeasuringDevice.Write_HR_SerialNumber(ref _Host,
+                                    frm.SerialNumber, out error);
+                                this.Cursor = Cursors.Default;
+
+                                if (error.Result != OPERATION_RESULT.OK)
+                                {
+                                    MessageBox.Show(this,
+                                        String.Format(
+                                        "При записи серийного номера произошла ошибка: {0}",
+                                        error.Message), "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                }
+                                else
+                                {
+                                    MessageBox.Show(this,
+                                        "Cерийный номер успешно записан, устройство инициализировано",
+                                        "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                }
                             }
                         }
+                    }
+                    else
+                    {
+                        MessageBox.Show(this, "Устройство не инициализировано",
+                            "Сообщение",
+                            MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                 }
             }

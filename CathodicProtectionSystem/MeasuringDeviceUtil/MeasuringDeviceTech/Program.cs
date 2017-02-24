@@ -10,6 +10,8 @@ namespace NGK.MeasuringDeviceTech
 {
     static class Program
     {
+        public static bool ForInternalUsing = false; // Разрешает всё функциональность программы
+
         private static TraceSource _Trace = new TraceSource(Application.ProductName);
         private static XmlWriterTraceListener _XmlLog;
         /// <summary>
