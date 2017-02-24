@@ -15,10 +15,8 @@ using Modbus.OSIModel.DataLinkLayer.Master.RTU.SerialPort;
 using Modbus.OSIModel.Message;
 using NGK.MeasuringDeviceTech.Classes.MeasuringDevice;
 
-//====================================================================================
 namespace NGK.MeasuringDeviceTech
 {
-    //================================================================================
     // "buttonSaveDevice"
     // "buttonNewDevice"
     // "buttonDeleteDevice"
@@ -44,7 +42,6 @@ namespace NGK.MeasuringDeviceTech
          public const String buttonStartMonitor = "buttonStartMonitor";
          public const String buttonStopMonitor = "buttonStopMonitor";
     }
-    //================================================================================
     //"mnuFile"
     //    "mnuFileCreate"
     //    "mnuFileOpen"
@@ -102,45 +99,38 @@ namespace NGK.MeasuringDeviceTech
         public const String mnuHelpAbout = "mnuHelpAbout";
 
     }
-    //================================================================================
+
     public partial class FormMain : Form
     {
-        //----------------------------------------------------------------------------
         #region Fields and Properties
-        //----------------------------------------------------------------------------
         /// <summary>
         /// Параметры коммандной строки. Передаются при запуске приложения из 
         /// коммандной строки с аргументами
         /// </summary>
         private String[] _CmdLineArgs;
-        //----------------------------------------------------------------------------
         /// <summary>
         /// Контектсное меню для элемента treeViewMain: NodeRoot -> NodeConnection
         /// </summary>
         private System.Windows.Forms.ContextMenuStrip _ContexMenuConnection;
-        //----------------------------------------------------------------------------
         /// <summary>
         /// Контектсное меню для элемента treeViewMain: NodeRoot -> NodeMeasuringDevice
         /// </summary>
         private System.Windows.Forms.ContextMenuStrip _ContexMenuDevice;
-        //----------------------------------------------------------------------------
         /// <summary>
         /// Контектсное меню для элемента propertyGridMain: Вызывается по клику правой
         /// кнопкой мыши по свойству объекта (параметру КИП)
         /// </summary>      
         private System.Windows.Forms.ContextMenuStrip _ContexMenuParameter;
-        //----------------------------------------------------------------------------
         /// <summary>
         /// Для выполения фоновых задач в асинхронном режиме
         /// </summary>
         private BackgroundWorker _BackgroundWorker;
-        //----------------------------------------------------------------------------
         private NGK.MeasuringDeviceTech.Classes.Print.TextDocumentPrinter _Printer;
-        //----------------------------------------------------------------------------
+
         #endregion
-        //----------------------------------------------------------------------------
+
         #region Constructors
-        //----------------------------------------------------------------------------
+
         /// <summary>
         /// Конструктор
         /// </summary>
@@ -152,7 +142,7 @@ namespace NGK.MeasuringDeviceTech
             // Сохраняем аргументы командной строки
             _CmdLineArgs = new String[0];
         }
-        //----------------------------------------------------------------------------
+ 
         /// <summary>
         /// Конструктор
         /// </summary>
@@ -168,9 +158,9 @@ namespace NGK.MeasuringDeviceTech
             // Сохраняем аргументы командной строки
             _CmdLineArgs = cmdLineArgs;
         }
-        //----------------------------------------------------------------------------
+
         #endregion
-        //----------------------------------------------------------------------------
+
         /// <summary>
         /// Обработчик события выбора узла
         /// </summary>
@@ -206,7 +196,6 @@ namespace NGK.MeasuringDeviceTech
                 }
             return;
         }
-        //----------------------------------------------------------------------------
         /// <summary>
         /// Обработчик меню "Подключить"
         /// </summary>
@@ -218,7 +207,6 @@ namespace NGK.MeasuringDeviceTech
             this.Connect();
             return;
         }
-        //----------------------------------------------------------------------------
         /// <summary>
         /// Обработчик меню "Отключить"
         /// </summary>
@@ -230,14 +218,6 @@ namespace NGK.MeasuringDeviceTech
             this.Disconnect();
             return;
         }
-        //----------------------------------------------------------------------------
-        //private Thread _thread;
-
-        //private void Method()
-        //{
-        //    throw new Exception("MyExceptionThread"); 
-        //}
-        //----------------------------------------------------------------------------
         /// <summary>
         /// Обработчик события загрузки формы
         /// </summary>
@@ -350,7 +330,6 @@ namespace NGK.MeasuringDeviceTech
 
             return;
         }
-        //----------------------------------------------------------------------------
         /// <summary>
         /// Обработчик меню. Завершаем приложение
         /// </summary>
@@ -377,7 +356,6 @@ namespace NGK.MeasuringDeviceTech
             Application.Exit();
             return;
         }
-        //----------------------------------------------------------------------------
         /// <summary>
         /// Обработчик события возникающего после закрытия формы
         /// </summary>
@@ -403,7 +381,6 @@ namespace NGK.MeasuringDeviceTech
                 // Не удалось сохранить.
             }
         }
-        //----------------------------------------------------------------------------
         /// <summary>
         /// Метод изменяет ширину колонок в контроле PropertyGrid
         /// </summary>
@@ -428,7 +405,6 @@ namespace NGK.MeasuringDeviceTech
 
             return;
         }
-        //----------------------------------------------------------------------------
         /// <summary>
         /// Метод возвращат ширину первой колонки PropertyGrid
         /// </summary>
@@ -450,7 +426,6 @@ namespace NGK.MeasuringDeviceTech
             
             return width;
         }
-        //----------------------------------------------------------------------------
         /// <summary>
         /// Обработчик меню "Прочитать данные"
         /// </summary>
@@ -461,7 +436,6 @@ namespace NGK.MeasuringDeviceTech
             this.DeviceRead();
             return;
         }
-        //----------------------------------------------------------------------------
         /// <summary>
         /// Обработчик меню "Записать данные"
         /// </summary>
@@ -472,7 +446,6 @@ namespace NGK.MeasuringDeviceTech
             this.DeviceWrite();
             return;
         }
-        //----------------------------------------------------------------------------
         /// <summary>
         /// Обработчик кнопки на панели инструментов "Прочитать данные"
         /// </summary>
@@ -485,7 +458,6 @@ namespace NGK.MeasuringDeviceTech
             this.DeviceRead();
             return;
         }
-        //----------------------------------------------------------------------------
         /// <summary>
         /// Обработчик кнопки на панели инструментов "Записать данные"
         /// </summary>
@@ -496,7 +468,6 @@ namespace NGK.MeasuringDeviceTech
             this.DeviceWrite();
             return;
         }
-        //----------------------------------------------------------------------------
         /// <summary>
         /// Обработчик меню открыть файл с образом КИП-а
         /// </summary>
@@ -507,7 +478,6 @@ namespace NGK.MeasuringDeviceTech
             this.OpenFile();
             return;
         }
-        //----------------------------------------------------------------------------
         /// <summary>
         /// Обработчик меню закрыть устройство.
         /// </summary>
@@ -518,7 +488,6 @@ namespace NGK.MeasuringDeviceTech
             this.DeleteDevice();
             return;
         }
-        //----------------------------------------------------------------------------
         /// <summary>
         /// Обработчик меню сохранить в файл
         /// </summary>
@@ -529,7 +498,6 @@ namespace NGK.MeasuringDeviceTech
             this.SaveFile();
             return;
         }
-        //----------------------------------------------------------------------------
         /// <summary>
         /// Обработчик меню "Сохранить как"
         /// </summary>
@@ -541,7 +509,6 @@ namespace NGK.MeasuringDeviceTech
                 MessageBoxButtons.OK, MessageBoxIcon.Information);
             return;
         }
-        //----------------------------------------------------------------------------
         /// <summary>
         /// Обработчик меню "Настройки подключения"
         /// </summary>
@@ -552,7 +519,6 @@ namespace NGK.MeasuringDeviceTech
             treeViewMain.SelectedNode = treeViewMain.Nodes["NodeRoot"].Nodes["NodeConnection"];
             return;
         }
-        //----------------------------------------------------------------------------
         /// <summary>
         /// Обработчик меню клика мышью по treeViewMain
         /// </summary>
@@ -594,7 +560,6 @@ namespace NGK.MeasuringDeviceTech
             //}
             //return;
         }
-        //----------------------------------------------------------------------------
         /// <summary>
         /// Обработчик контекстного меню. Сохраняем текущие настройки соединения.
         /// </summary>
@@ -606,7 +571,6 @@ namespace NGK.MeasuringDeviceTech
             SavePortSettings();
             return;
         }
-        //----------------------------------------------------------------------------
         /// <summary>
         /// Сохраняет настройки последовательного порта в 
         /// файл конфигурации приложения 
@@ -3245,7 +3209,8 @@ namespace NGK.MeasuringDeviceTech
                     if ((error.Result != OPERATION_RESULT.OK) &&
                         (error.Result != OPERATION_RESULT.INVALID_OPERATION))
                     {
-                        throw new Exception(error.Message);
+                        _BackgroundWorker.ReportProgress(55);
+                        //throw new Exception(error.Message);
                     }
                     else
                     {

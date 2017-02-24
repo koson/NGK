@@ -4116,7 +4116,7 @@ namespace NGK.MeasuringDeviceTech.Classes.MeasuringDevice
                                 registers[0];
                             error = new OperationResult(OPERATION_RESULT.OK, String.Empty);
                         }
-                        catch (Exception ex)
+                        catch //(Exception ex)
                         {
                             //error = new OperationResult(OPERATION_RESULT.FAILURE, ex.Message);
                             error = new OperationResult(OPERATION_RESULT.INCORRECT_ANSWER, 
