@@ -920,7 +920,7 @@ namespace NGK.MeasuringDeviceTech
                         }
                         break;
                     }
-                case @"Состояние напряжения притания устройства НГК-БИ":
+                case @"Состояние напряжения питания устройства НГК-БИ":
                     {
                         this.Cursor = Cursors.WaitCursor;
                         this._MeasuringDevice.Read_DI_SupplyVoltageStatus(ref _Host, out result);
