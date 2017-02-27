@@ -6,7 +6,7 @@ using NGK.CAN.ApplicationLayer.Network.Devices;
 
 namespace NGK.CorrosionMonitoringSystem.Models
 {
-    public interface IDeviceInfo
+    public interface IDeviceInfo: INotifyPropertyChanged
     {
         /// <summary>
         /// 

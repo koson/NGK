@@ -15,7 +15,7 @@ using WinForms = System.Windows.Forms;
 namespace NGK.CorrosionMonitoringSystem.Models
 {
     [Serializable]
-    public sealed class NgkCanDevice : INotifyPropertyChanged, IDeviceSummaryParameters, IDeviceInfo
+    public sealed class NgkCanDevice : IDeviceSummaryParameters, IDeviceInfo
     {
         #region Helper
 
@@ -485,7 +485,10 @@ namespace NGK.CorrosionMonitoringSystem.Models
         void OnDeviceChangedStatus()
         {
             if (DeviceChangedStatus != null)
+            {
+                OnPropertyChanged("Status");
                 DeviceChangedStatus(this, new EventArgs());
+            }
         }
 
         #endregion

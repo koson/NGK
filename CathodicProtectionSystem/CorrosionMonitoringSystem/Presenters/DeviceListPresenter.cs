@@ -10,6 +10,7 @@ using NGK.CorrosionMonitoringSystem.Managers;
 using System.Windows.Forms;
 using Mvp.View;
 using System.ComponentModel;
+using NGK.CorrosionMonitoringSystem.Services;
 
 namespace NGK.CorrosionMonitoringSystem.Presenters
 {
@@ -39,8 +40,29 @@ namespace NGK.CorrosionMonitoringSystem.Presenters
             }
 
             view.Devices = devices;
+            
             view.SelectedDeviceChanged += 
                 new EventHandler(EventHandler_view_SelectedDeviceChanged);
+
+            _Managers.CanNetworkService.StatusWasChanged += 
+                new EventHandler(EventHandler_CanNetworkService_StatusWasChanged);
+        }
+
+        private void EventHandler_CanNetworkService_StatusWasChanged(object sender, EventArgs e)
+        {
+            ICanNetworkService service = (ICanNetworkService)sender;
+            if (service.Status == Common.Controlling.Status.Running)
+            {
+                BindingList<IDeviceInfo> devices = new BindingList<IDeviceInfo>();
+
+                foreach (NgkCanDevice device in service.Devices)
+                {
+                    devices.Add(device);
+                }
+
+                ViewConcrete.Devices = null;
+                ViewConcrete.Devices = devices;
+            }
         }
 
         #endregion

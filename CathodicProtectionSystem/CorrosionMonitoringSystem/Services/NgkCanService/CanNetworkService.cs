@@ -129,8 +129,8 @@ namespace NGK.CorrosionMonitoringSystem.Services
 
         public override void OnStopping()
         {
-            _Timer.Stop();
             StopCanNetwork();
+            _Timer.Stop();            
         }
 
         public override void Suspend()
