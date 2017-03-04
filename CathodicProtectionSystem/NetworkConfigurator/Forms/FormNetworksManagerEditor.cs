@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using NGK.CAN.ApplicationLayer.Network.Master;
+using NGK.NetworkConfigurator.Forms;
 
 namespace NGK.NetworkConfigurator
 {
@@ -44,7 +45,7 @@ namespace NGK.NetworkConfigurator
             
             //this.UseWaitCursor = true;
 
-            this.NetworksManager = NgkCanNetworksManager.Instance;
+            NetworksManager = NgkCanNetworksManager.Instance;
 
             // Инициализация меню
             ToolStripMenuItem menuItem;
@@ -53,7 +54,7 @@ namespace NGK.NetworkConfigurator
             menuItem = new ToolStripMenuItem();
             menuItem.Name = "_MenuFile";
             menuItem.Text = "&Файл"; // & для подчёркивания буквы Ф и возможность выбра меню сочетанием клавишь ALT + Ф
-            this._MenuStripMain.Items.Add(menuItem);
+            _MenuStripMain.Items.Add(menuItem);
 
             // Члены меню "Файл"
             menuItem = new ToolStripMenuItem();
@@ -103,6 +104,17 @@ namespace NGK.NetworkConfigurator
             menuItem.Text = "&Выход";
             menuItem.Click += new EventHandler(EventHandler_MenuItem_Click);
             ((ToolStripMenuItem)this._MenuStripMain.Items["_MenuFile"]).DropDownItems.Add(menuItem);
+
+            menuItem = new ToolStripMenuItem();
+            menuItem.Name = "_MenuHelp";
+            menuItem.Text = "Помощь";
+            _MenuStripMain.Items.Add(menuItem);
+
+            menuItem = new ToolStripMenuItem();
+            menuItem.Name = "_MenuAbout";
+            menuItem.Text = "О программе";
+            menuItem.Click += new EventHandler(EventHandler_MenuItem_Click);
+            ((ToolStripMenuItem)_MenuStripMain.Items["_MenuHelp"]).DropDownItems.Add(menuItem);
 
             // Настраиваем PropertyGrid для редактирования конфигурации сетей.
             PropertyGrid grid = new PropertyGrid();
@@ -166,6 +178,12 @@ namespace NGK.NetworkConfigurator
                 case "_MenuExit":
                     {
                         this.Close();
+                        break;
+                    }
+                case "_MenuAbout":
+                    {
+                        FormAboutBox form = new FormAboutBox();
+                        form.ShowDialog(this);
                         break;
                     }
                 default:

@@ -36,16 +36,26 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Forms\NetworksManagerEditor.cs">
+    <Compile Include="Forms\FormAboutBox.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\NetworksManagerEditor.designer.cs">
-      <DependentUpon>NetworksManagerEditor.cs</DependentUpon>
+    <Compile Include="Forms\FormAboutBox.Designer.cs">
+      <DependentUpon>FormAboutBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormNetworksManagerEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormNetworksManagerEditor.designer.cs">
+      <DependentUpon>FormNetworksManagerEditor.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Forms\NetworksManagerEditor.resx">
-      <DependentUpon>NetworksManagerEditor.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\FormAboutBox.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>FormAboutBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormNetworksManagerEditor.resx">
+      <DependentUpon>FormNetworksManagerEditor.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
