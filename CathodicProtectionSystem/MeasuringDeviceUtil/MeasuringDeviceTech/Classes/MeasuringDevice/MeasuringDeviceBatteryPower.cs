@@ -4106,24 +4106,6 @@ namespace NGK.MeasuringDeviceTech.Classes.MeasuringDevice
                 BI_ADDRESSES_OF_INPUTREGISTERS.DepthOfCorrosionUSIKPST,
                 1, out registers);
 
-            //if (result.Error == Modbus.OSIModel.ApplicationLayer.Error.NoError)
-            //{
-            //    try
-            //    {
-            //        this.DepthOfCorrosion =
-            //            registers[0];
-            //        error = new OperationResult(OPERATION_RESULT.OK, String.Empty);
-            //    }
-            //    catch (Exception ex)
-            //    {
-            //        error = new OperationResult(OPERATION_RESULT.FAILURE, ex.Message);
-            //    }
-            //}
-            //else
-            //{
-            //    error = new OperationResult(OPERATION_RESULT.FAILURE, result.Description);
-            //}
-
             switch (result.Error)
             {
                 case Modbus.OSIModel.ApplicationLayer.Error.NoError:
@@ -4136,7 +4118,9 @@ namespace NGK.MeasuringDeviceTech.Classes.MeasuringDevice
                         }
                         catch (Exception ex)
                         {
-                            error = new OperationResult(OPERATION_RESULT.FAILURE, ex.Message);
+                            //error = new OperationResult(OPERATION_RESULT.FAILURE, ex.Message);
+                            error = new OperationResult(OPERATION_RESULT.INCORRECT_ANSWER, 
+                                "Возможно устройство УС ИКП СТ не подлючено или неисправно");
                         }
                         break;
                     }
