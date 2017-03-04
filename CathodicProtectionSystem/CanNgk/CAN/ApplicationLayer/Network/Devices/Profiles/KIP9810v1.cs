@@ -57,12 +57,12 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices.Profiles
             // Определяем сложные (составные) объекты:
             _ComplexParameters.Add(new ComplexParameter("SerialNumber", "Серийный номер",
                 "Серийный номер устройства", true, true, string.Empty, 
-                ObjectCategory.System, new SerialNumberConverter(),
+                ObjectCategory.System, new SerialNumberConverter(), (UInt64)0,
                 0x2003, 0x2004, 0x2005));
 
             _ObjectInfoList.Add(new ObjectInfo(this, 0x2000, "device_type", "Тип устройства",
                 true, true, true, "Тип устройства", String.Empty, ObjectCategory.System,
-                new NgkUInt16Convertor(ScalerTypes.x1), 9810));
+                new NgkUInt16Convertor(ScalerTypes.x1), (UInt16)this.DeviceType));
 
             _ObjectInfoList.Add(new ObjectInfo(this, 0x2001, "fw_version", "Версия ПО", 
                 true, true, true, "Версия ПО", String.Empty, ObjectCategory.System,
@@ -94,7 +94,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices.Profiles
                 new NgkUInt16Convertor(ScalerTypes.x1), (UInt32)0));
 
             _ObjectInfoList.Add(new ObjectInfo(this, 0x2007, "vendor_id", "Код производителя", 
-                true, true, true, "Код производителя", String.Empty, ObjectCategory.System, 
+                false, true, true, "Код производителя", String.Empty, ObjectCategory.System, 
                 new NgkUInt16Convertor(ScalerTypes.x1), (UInt32)0));
 
             _ObjectInfoList.Add(new ObjectInfo(this, 0x2008, "polarization_pot", 
@@ -103,7 +103,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices.Profiles
                 new NgkFloatConverter(ScalerTypes.x001), (UInt32)0));
 
             _ObjectInfoList.Add(new ObjectInfo(this, 0x2009, "protection_pot", "Защитный потенциал, В",
-                false, true, true, "U защитный","B", ObjectCategory.Measured,
+                false, true, true, "U защитный", "B", ObjectCategory.Measured,
                 new NgkFloatConverter(ScalerTypes.x001), (UInt32)0));
 
             _ObjectInfoList.Add(new ObjectInfo(this, 0x200A, "induced_ac", "Наведенное переменное напряжение, В", 
@@ -117,7 +117,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices.Profiles
             _ObjectInfoList.Add(new ObjectInfo(this, 0x200C, "polarization_cur", 
                 "Ток поляризации, mA",
                 false, true, true, "I поляризации", "A", ObjectCategory.Measured,
-                new NgkFloatConverter(ScalerTypes.x01), (UInt32)0)); 
+                new NgkFloatConverter(ScalerTypes.x001), (UInt32)0x7FFF)); 
 
             //uFloatNgk = new NgkUFloat(Precision.x001, 0);
             _ObjectInfoList.Add(new ObjectInfo(this, 0x200D, "aux_cur1", "Ток канала 1, mA",
@@ -131,11 +131,11 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices.Profiles
 
             _ObjectInfoList.Add(new ObjectInfo(this, 0x200F, "corrosion_depth", "Глубина коррозии, мкм",
                 false, true, true, "Глубина коррозии", "мкм", ObjectCategory.Measured, 
-                new NgkUInt16Convertor(ScalerTypes.x1), (UInt32)0));
+                new NgkUInt16Convertor(ScalerTypes.x1), (UInt32)0xFFFF));
 
             _ObjectInfoList.Add(new ObjectInfo(this, 0x2010, "corrosion_speed", "Скорость коррозии, мкм/год", 
                 false, true, true, "Скорость коррозии", "мкм/год", ObjectCategory.Measured,
-                new NgkUInt16Convertor(ScalerTypes.x1), (UInt32)0));
+                new NgkUInt16Convertor(ScalerTypes.x1), (UInt32)0xFFFF));
 
             _ObjectInfoList.Add(new ObjectInfo(this, 0x2011, "usipk_state", "Состояние УСИКПСТ",
                 false, true, true, "Состояние УСИКПСТ", String.Empty, ObjectCategory.Measured,
@@ -144,7 +144,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices.Profiles
             _ObjectInfoList.Add(new ObjectInfo(this, 0x2012, "supply_voltage", 
                 "Питающее напряжение, B", 
                 false, true, true, "Питающее напряжение", "B", ObjectCategory.Measured,
-                new NgkUFloatConvertor(ScalerTypes.x005), (UInt32)0));
+                new NgkUFloatConvertor(ScalerTypes.x005), (UInt32)0, null));
 
             _ObjectInfoList.Add(new ObjectInfo(this, 0x2013, "battery_voltage", 
                 "Напряжение батареи, B", 
@@ -200,20 +200,20 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices.Profiles
                 new NgkUInt16Convertor(ScalerTypes.x1), (UInt32)10));
 
             _ObjectInfoList.Add(new ObjectInfo(this, 0x2021, "usipk_period", "Период опроса УСИКПСТ, сек",
-                false, true, true, "Период опроса УСИКПСТ", "сек.", ObjectCategory.Configuration, 
-                new NgkUInt16Convertor(ScalerTypes.x10), (UInt32)10));
+                false, true, true, "Период опроса УСИКПСТ", "сек.", ObjectCategory.Configuration,
+                new NgkUInt16WithStatusDisabledConverter(ScalerTypes.x10), (UInt32)0xFFFF));
 
             _ObjectInfoList.Add(new ObjectInfo(this, 0x2022, "corr_sense_period", "Период опроса датчиков коррозии, сек",
                 false, true, true, "Период опроса датчиков коррозии", "сек.", ObjectCategory.Configuration,
-                new NgkUInt16Convertor(ScalerTypes.x10), (UInt32)0));
+                new NgkUInt16WithStatusDisabledConverter(ScalerTypes.x10), (UInt32)0));
 
             _ObjectInfoList.Add(new ObjectInfo(this, 0x2023, "aux1_period", "Период опроса канала 1, сек",
-                false, true, true, "Период опроса канала 1", "сек.", ObjectCategory.Configuration, 
-                new NgkUInt16Convertor(ScalerTypes.x10), (UInt32)0));
+                false, true, true, "Период опроса канала 1", "сек.", ObjectCategory.Configuration,
+                new NgkUInt16WithStatusDisabledConverter(ScalerTypes.x10), (UInt32)0));
 
             _ObjectInfoList.Add(new ObjectInfo(this, 0x2024, "aux2_period", "Период опроса канала 2, сек",
                 false, true, true, "Период опроса канала 2", "сек.", ObjectCategory.Configuration,
-                new NgkUInt16Convertor(ScalerTypes.x10), (UInt32)0));
+                new NgkUInt16WithStatusDisabledConverter(ScalerTypes.x10), (UInt32)0));
 
             _ObjectInfoList.Add(new ObjectInfo(this, 0x2026, "shunt_nom", "Номинал шунта, А", 
                 false, true, true, "Номинал шунта", "A", ObjectCategory.Configuration,
@@ -268,7 +268,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices.Profiles
                 new NgkUInt16Convertor(ScalerTypes.x1), (UInt32)0));
 
             _ObjectInfoList.Add(new ObjectInfo(this, 0x2031, "datetime", "Текущее время",
-                true, true, true, "Текущее время", String.Empty, ObjectCategory.System,
+                true, true, true, "Текущее время", String.Empty, ObjectCategory.Measured,
                 new NgkDateTimeConverter(), (new NgkDateTimeConverter()).ConvertToBasis(DateTime.Now)));
 
             //// Подключаем событие от объектного словаря
@@ -343,6 +343,48 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices.Profiles
             public const UInt16 serial_number3 = 0x2005;
             public const UInt16 vcard_chksum = 0x2006;
             public const UInt16 vendor_id = 0x2007;
+            public const UInt16 polarisation_pot = 0x2008;
+            public const UInt16 protection_pot = 0x2009;
+            public const UInt16 induced_ac = 0x200A;
+            public const UInt16 protection_cur = 0x200B;
+            public const UInt16 polarisation_cur = 0x200C;
+            public const UInt16 aux_cur1 = 0x200D;
+            public const UInt16 aux_cur2 = 0x200E;
+            public const UInt16 corrosion_depth = 0x200F;
+            public const UInt16 corrosion_speed = 0x2010;
+            public const UInt16 usikp_state = 0x2011;
+            public const UInt16 reserved1_supply_voltage = 0x2012;
+            public const UInt16 battery_voltage = 0x2013;
+            public const UInt16 int_temp = 0x2014;
+            public const UInt16 tamper = 0x2015;
+            public const UInt16 reserved2_supply_voltage_low = 0x2016;
+            public const UInt16 battery_voltage_low = 0x2017;
+            public const UInt16 corrosion_sense1 = 0x2018;
+            public const UInt16 corrosion_sense2 = 0x2019;
+            public const UInt16 corrosion_sense3 = 0x201A;
+            public const UInt16 polarisation_cur_dc = 0x201B;
+            public const UInt16 polarisation_cur_ac = 0x201C;
+            public const UInt16 reserved3 = 0x201D;
+            public const UInt16 meas_period = 0x201E;
+            public const UInt16 reserved4 = 0x201F;
+            public const UInt16 reserved5_meas_supply_period = 0x2020;
+            public const UInt16 usikp_period = 0x2021;
+            public const UInt16 corr_sense_period = 0x2022;
+            public const UInt16 aux1_period = 0x2023;
+            public const UInt16 aux2_period = 0x2024;
+            public const UInt16 reserved6 = 0x2025;
+            public const UInt16 shunt_nom = 0x2026;
+            public const UInt16 polarisation_pot_en = 0x2027;
+            public const UInt16 protection_pot_en = 0x2028;
+            public const UInt16 protection_cur_en = 0x2029;
+            public const UInt16 polarisation_cur_en = 0x202A;
+            public const UInt16 induced_ac_en = 0x202B;
+            public const UInt16 prot_pot_ext_range = 0x202C;
+            public const UInt16 polarisation_cur_dc_en = 0x202D;
+            public const UInt16 polarisation_cur_ac_en = 0x202E;
+            public const UInt16 status_flags_en = 0x202F;
+            public const UInt16 pdo_flags = 0x2030;
+            public const UInt16 datetime = 0x2031;
         }
         #endregion
     }
