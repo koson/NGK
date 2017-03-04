@@ -56,7 +56,7 @@ namespace NGK.MeasuringDeviceTech.Classes.MeasuringDevice
         [ReadOnly(true)]
         [Category("Системные данные")]
         [Description("Вариант исполнения устройства НГК-БИ в составе НГК-КИП")]
-        [DisplayName(@"Тип устройства")]
+        [DisplayName(@"Тип НГК-БИ")]
         [TypeConverter(typeof(TypeConverterTypeOfDeviceNGK))]
         public TYPE_NGK_DEVICE TypeOfDevice
         {
@@ -447,8 +447,8 @@ namespace NGK.MeasuringDeviceTech.Classes.MeasuringDevice
         [Browsable(true)]
         [ReadOnly(true)]
         [Category("Измеряемые параметры")]
-        [Description("Глубина коррозии датчика ИКП с устройства УСИКПСТ")]
-        [DisplayName("Глубина коррозии УСИКПСТ, мкм")]
+        [Description("Глубина коррозии датчика ИКП с устройства УС ИКП СТ")]
+        [DisplayName("Глубина коррозии УС ИКП СТ, мкм")]
         [RefreshProperties(System.ComponentModel.RefreshProperties.All)]
         public UInt16 DepthOfCorrosion
         {
@@ -484,8 +484,8 @@ namespace NGK.MeasuringDeviceTech.Classes.MeasuringDevice
         [Browsable(true)]
         [ReadOnly(true)]
         [Category("Измеряемые параметры")]
-        [Description("Скорость коррозии датчика ИКП с устройства УСИКПСТ")]
-        [DisplayName("Скорость коррозии УСИКПСТ, мкм")]
+        [Description("Скорость коррозии датчика ИКП с устройства УС ИКП СТ")]
+        [DisplayName("Скорость коррозии УС ИКП СТ, мкм")]
         [RefreshProperties(System.ComponentModel.RefreshProperties.All)]
         public float SpeedOfCorrosion
         {
@@ -513,8 +513,8 @@ namespace NGK.MeasuringDeviceTech.Classes.MeasuringDevice
         [Browsable(true)]
         [ReadOnly(true)]
         [Category("Измеряемые параметры")]
-        [Description("Состояние устройства УСИКПСТ Коды аварий приведены ниже:\n 0 - устройство в норме;\n 65535 - нет связи;\n 1 - некорректная функция (не поддерживается Устройством);\n 2 – зарезервировано;\n 3 - не подключен индикатор коррозионных процессов;\n 4 - верификация микросхемы ПЗУ Устройства выявила ошибки (режим конфигурирования);\n 5 - заданная скорость обмена не поддерживается Устройством (режим конфигурирования);\n 6 - данный тип индикатора не обслуживается;\n 7 – индикатор коррозионных процессов не инициализирован;\n 8 – текущая дата некорректна;\n 9 - невозможно определить состояние ИЭ ИКП.")]
-        [DisplayName("Код состояния устройства УСИКПСТ")]
+        [Description("Состояние устройства УС ИКП СТ Коды аварий приведены ниже:\n 0 - устройство в норме;\n 65535 - нет связи;\n 1 - некорректная функция (не поддерживается Устройством);\n 2 – зарезервировано;\n 3 - не подключен индикатор коррозионных процессов;\n 4 - верификация микросхемы ПЗУ Устройства выявила ошибки (режим конфигурирования);\n 5 - заданная скорость обмена не поддерживается Устройством (режим конфигурирования);\n 6 - данный тип индикатора не обслуживается;\n 7 – индикатор коррозионных процессов не инициализирован;\n 8 – текущая дата некорректна;\n 9 - невозможно определить состояние ИЭ ИКП.")]
+        [DisplayName("Код состояния устройства УС ИКП СТ")]
         [RefreshProperties(System.ComponentModel.RefreshProperties.All)]
         public UInt16 StatusUSIKPST
         {
@@ -551,7 +551,7 @@ namespace NGK.MeasuringDeviceTech.Classes.MeasuringDevice
             get { return _SupplyVoltage; }
             set
             {
-                _SupplyVoltage = (float)(value * 0.05);
+                _SupplyVoltage = (float)value; //(float)(value * 0.05);
                 // Генерируем событие
                 OnPropertyChanged(new PropertyChangedEventArgs("SupplyVoltage"));
             }
@@ -730,8 +730,8 @@ namespace NGK.MeasuringDeviceTech.Classes.MeasuringDevice
         [Browsable(true)]
         [ReadOnly(true)]
         [Category("Состояние блока измерений")]
-        [Description("Состояние напряжения притания устройства НГК-БИ,  Discretes Input	0x0001")]
-        [DisplayName("Состояние напряжения притания устройства НГК-БИ")]
+        [Description("Состояние напряжения питания устройства НГК-БИ,  Discretes Input	0x0001")]
+        [DisplayName("Состояние напряжения питания устройства НГК-БИ")]
         [TypeConverter(typeof(BooleanTypeConverter))]
         [RefreshProperties(System.ComponentModel.RefreshProperties.All)]
         public Boolean SupplyVoltageStatus
@@ -926,7 +926,7 @@ namespace NGK.MeasuringDeviceTech.Classes.MeasuringDevice
         [ReadOnly(false)]
         [Category("Настройки измерений")]
         [Description("Период измерений и передачи информации (по умолчанию 1 мин.). 0 – измерять постоянно. Бесконечный период с включенным режимом энергопотребления – передача данных только по запросу")]
-        [DisplayName("Период измерений, сек.")]
+        [DisplayName("Период измерений, с")]
         [RefreshProperties(System.ComponentModel.RefreshProperties.All)]
         [DefaultValue(typeof(UInt32), "0xFFFFFFFF")]
         [TypeConverter(typeof(NGK.MeasuringDeviceTech.Classes.MeasuringDevice.Converters.TypeConverterMeasuringPeriod))]
@@ -975,8 +975,8 @@ namespace NGK.MeasuringDeviceTech.Classes.MeasuringDevice
         [Browsable(true)]
         [ReadOnly(false)]
         [Category("Настройки измерений")]
-        [Description("Версии НГК-БИ(У)-01 измеряет питающее напряжение и напряжение встроенного элемента питания каждый раз после истечения периода измерения и перехода из режима «сна» в активный режим. 1...100 сек.")]
-        [DisplayName("Период измерения питающего напряжения, сек.")]
+        [Description("Версии НГК-БИ(У)-01 измеряет питающее напряжение и напряжение встроенного элемента питания каждый раз после истечения периода измерения и перехода из режима «сна» в активный режим. 1...100 с")]
+        [DisplayName("Период измерения питающего напряжения, с")]
         [DefaultValue(typeof(UInt16),"0x000A")]
         [RefreshProperties(System.ComponentModel.RefreshProperties.All)]
         public UInt16 MeasuringVoltagePeriod
@@ -1015,8 +1015,8 @@ namespace NGK.MeasuringDeviceTech.Classes.MeasuringDevice
         [Browsable(true)]
         [ReadOnly(false)]
         [Category("Настройки измерений")]
-        [Description("Период опроса УСИКПСТ от 10 сек до 7 сут.")]
-        [DisplayName("Период опроса УСИКПСТ, сек")]
+        [Description("Период опроса УС ИКП СТ от 10 с до 7 сут.")]
+        [DisplayName("Период опроса УС ИКП СТ, с")]
         [DefaultValue(typeof(UInt32), "655350")]
         [RefreshProperties(System.ComponentModel.RefreshProperties.All)]
         [Editor(typeof(Channel4_20TypeEditor),
@@ -1084,8 +1084,8 @@ namespace NGK.MeasuringDeviceTech.Classes.MeasuringDevice
         [Browsable(true)]
         [ReadOnly(false)]
         [Category("Настройки измерений")]
-        [Description("Период опроса датчика БПИ от 10 сек до 7 сут.")]
-        [DisplayName("Период опроса БПИ, сек")]
+        [Description("Период опроса датчика БПИ от 10 с до 7 сут.")]
+        [DisplayName("Период опроса БПИ, с")]
         [DefaultValue(typeof(UInt32), "655350")]
         [RefreshProperties(System.ComponentModel.RefreshProperties.All)]
         [Editor(typeof(Channel4_20TypeEditor),
@@ -1153,8 +1153,8 @@ namespace NGK.MeasuringDeviceTech.Classes.MeasuringDevice
         [Browsable(true)]
         [ReadOnly(false)]
         [Category("Настройки измерений")]
-        [Description("Период опроса канала 1 от 10 сек до 7 сут.")]
-        [DisplayName("Период опроса канала 1, сек")]
+        [Description("Период опроса канала 1 от 10 с до 7 сут.")]
+        [DisplayName("Период опроса канала 1, с")]
         [DefaultValue(typeof(UInt32), "655350")]
         [RefreshProperties(System.ComponentModel.RefreshProperties.All)]
         [Editor(typeof(Channel4_20TypeEditor),
@@ -1219,8 +1219,8 @@ namespace NGK.MeasuringDeviceTech.Classes.MeasuringDevice
         [Browsable(true)]
         [ReadOnly(false)]
         [Category("Настройки измерений")]
-        [Description("Период опроса канала 2 от 10 сек до 7 сут.")]
-        [DisplayName("Период опроса канала 2, сек")]
+        [Description("Период опроса канала 2 от 10 с до 7 сут.")]
+        [DisplayName("Период опроса канала 2, с")]
         [DefaultValue(typeof(UInt32), "655350")]
         [RefreshProperties(System.ComponentModel.RefreshProperties.All)]
         [Editor(typeof(Channel4_20TypeEditor), 
@@ -1285,8 +1285,8 @@ namespace NGK.MeasuringDeviceTech.Classes.MeasuringDevice
         [Browsable(true)]
         [ReadOnly(false)]
         [Category("Настройки сети")]
-        [Description("Скорость обмена кБ/сек в сети CAN")]
-        [DisplayName(@"Скорость обмена СAN, кБ/сек")]
+        [Description("Скорость обмена кБ/с в сети CAN")]
+        [DisplayName(@"Скорость обмена СAN, кБ/с")]
         [DefaultValue(typeof(CANBaudRate), "BR20K")]
         [RefreshProperties(System.ComponentModel.RefreshProperties.All)]
         public CANBaudRate BaudRateCAN
@@ -1738,25 +1738,25 @@ namespace NGK.MeasuringDeviceTech.Classes.MeasuringDevice
             sb.Append(Environment.NewLine);
             sb.Append(String.Format("Адрес/номер устройства: {0}", this.NetAddress.ToString()));
             sb.Append(Environment.NewLine);
-            sb.Append(String.Format("Скорость обмена CAN, кБ/сек: {0}", this.BaudRateCAN.ToString()));
+            sb.Append(String.Format("Скорость обмена CAN, кБ/с: {0}", this.BaudRateCAN.ToString()));
             sb.Append(Environment.NewLine);
             sb.Append(Environment.NewLine);
 
             sb.Append("НАСТРОЙКИ ИЗМЕРЕНИЙ:");
             sb.Append(Environment.NewLine);
             sb.Append(Environment.NewLine);
-            sb.Append(String.Format("Период измерений, сек: {0}", this.MeasuringPeriod.ToString()));
+            sb.Append(String.Format("Период измерений, с: {0}", this.MeasuringPeriod.ToString()));
             sb.Append(Environment.NewLine);
-            sb.Append(String.Format("Период опроса БПИ, сек: {0}", this.PollingPeriodBPI.ToString()));
+            sb.Append(String.Format("Период опроса БПИ, с: {0}", this.PollingPeriodBPI.ToString()));
             sb.Append(Environment.NewLine);
-            sb.Append(String.Format("Период измерения питающего напряжения, сек: {0}", 
+            sb.Append(String.Format("Период измерения питающего напряжения, с: {0}", 
                 this.MeasuringVoltagePeriod.ToString()));
             sb.Append(Environment.NewLine);
-            sb.Append(String.Format("Период опроса канала 1, сек: {0}", this.PollingPeriodChannel1.ToString()));
+            sb.Append(String.Format("Период опроса канала 1, с: {0}", this.PollingPeriodChannel1.ToString()));
             sb.Append(Environment.NewLine);
-            sb.Append(String.Format("Период опроса канала 2, сек: {0}", this.PollingPeriodChannel2.ToString()));
+            sb.Append(String.Format("Период опроса канала 2, с: {0}", this.PollingPeriodChannel2.ToString()));
             sb.Append(Environment.NewLine);
-            sb.Append(String.Format("Период опроса УС ИКП СТ, сек: {0}", this.PollingPeriodUSIKPST.ToString()));
+            sb.Append(String.Format("Период опроса УС ИКП СТ, с: {0}", this.PollingPeriodUSIKPST.ToString()));
             sb.Append(Environment.NewLine);
             sb.Append(String.Format("Токовый шунт, А: {0}", this.CurrentShuntValue.ToString()));
             sb.Append(Environment.NewLine);

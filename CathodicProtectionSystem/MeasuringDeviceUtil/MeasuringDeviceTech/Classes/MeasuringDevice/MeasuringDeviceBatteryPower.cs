@@ -605,7 +605,7 @@ namespace NGK.MeasuringDeviceTech.Classes.MeasuringDevice
         [Browsable(true)]
         [ReadOnly(true)]
         [Category("Измеряемые параметры")]
-        [Description("Температура встроенного датчика, гр.С Только для НГК-БИ-У-01")]
+        [Description("Температура встроенного датчика, гр.С Только для НГК-БИ(У)-01")]
         [DisplayName("Температура встроенного датчика, гр.С")]
         [RefreshProperties(System.ComponentModel.RefreshProperties.All)]
         public Int16 InternalTemperatureSensor
@@ -731,8 +731,8 @@ namespace NGK.MeasuringDeviceTech.Classes.MeasuringDevice
         [Browsable(true)]
         [ReadOnly(true)]
         [Category("Состояние блока измерений")]
-        [Description("Состояние напряжения питания устройства БИ,  Discretes Input	0x0001")]
-        [DisplayName("Состояние напряжения питания устройства БИ")]
+        [Description("Состояние напряжения питания устройства НГК-БИ,  Discretes Input	0x0001")]
+        [DisplayName("Состояние напряжения питания устройства НГК-БИ")]
         [TypeConverter(typeof(BooleanTypeConverter))]
         [RefreshProperties(System.ComponentModel.RefreshProperties.All)]
         public Boolean SupplyVoltageStatus
