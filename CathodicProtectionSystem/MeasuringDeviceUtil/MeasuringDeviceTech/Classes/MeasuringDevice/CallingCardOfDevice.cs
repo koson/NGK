@@ -25,8 +25,8 @@ namespace NGK.MeasuringDeviceTech.Classes.MeasuringDevice
         [Browsable(true)]
         [ReadOnly(true)]
         [Category("Системные данные")]
-        [Description("Вариант исполнения устройства БИ в составе КИП")]
-        [DisplayName(@"Тип БИ")]
+        [Description("Вариант исполнения устройства НГК-БИ в составе КИП")]
+        [DisplayName(@"Тип НГК-БИ")]
         public TYPE_NGK_DEVICE TypeOfDevice
         {
             get { return this._TypeOfDevice; }
@@ -178,7 +178,7 @@ namespace NGK.MeasuringDeviceTech.Classes.MeasuringDevice
                     if (registers.Length != 3)
                     {
                         msg = String.Format(
-                            "Ответ БИ содержит количество прочитанных регистров {0}, должно быть 3",
+                            "Ответ НГК-БИ содержит количество прочитанных регистров {0}, должно быть 3",
                             registers.Length);
                         error = new OperationResult(OPERATION_RESULT.FAILURE, msg);
                     }
@@ -238,7 +238,7 @@ namespace NGK.MeasuringDeviceTech.Classes.MeasuringDevice
                 if (registers.Length != 3)
                 {
                     msg = String.Format(
-                        "Ответ БИ содержит количесво прочитанных регистров {0}, должно быть 3",
+                        "Ответ НГК-БИ содержит количесво прочитанных регистров {0}, должно быть 3",
                         registers.Length);
                     error = new OperationResult(OPERATION_RESULT.FAILURE, msg);
                 }
@@ -286,7 +286,7 @@ namespace NGK.MeasuringDeviceTech.Classes.MeasuringDevice
                 if (registers.Length != 7)
                 {
                     msg = String.Format(
-                        "Ответ БИ содержит количесво прочитанных регистров {0}, должно быть 7",
+                        "Ответ НГК-БИ содержит количесво прочитанных регистров {0}, должно быть 7",
                         registers.Length);
                     card = null;
                     error = new OperationResult(OPERATION_RESULT.FAILURE, msg);

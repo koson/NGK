@@ -7,7 +7,7 @@ namespace NGK.MeasuringDeviceTech.Classes.MeasuringDevice
 {
     //==========================================================================================================
     /// <summary>
-    /// Тип устройсва БИ
+    /// Тип устройства БИ
     /// </summary>
     public enum TYPE_NGK_DEVICE: ushort
     {

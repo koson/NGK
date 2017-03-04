@@ -30,7 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Подключение", 2, 2);
-            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("КИП", 1, 1);
+            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("НГК-КИП", 1, 1);
             System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Система", 0, 0, new System.Windows.Forms.TreeNode[] {
             treeNode1,
             treeNode2});
@@ -51,10 +51,11 @@
             // 
             // statusStripMain
             // 
-            this.statusStripMain.Location = new System.Drawing.Point(0, 466);
+            this.statusStripMain.Location = new System.Drawing.Point(0, 374);
             this.statusStripMain.Name = "statusStripMain";
+            this.statusStripMain.Padding = new System.Windows.Forms.Padding(1, 0, 10, 0);
             this.statusStripMain.ShowItemToolTips = true;
-            this.statusStripMain.Size = new System.Drawing.Size(651, 22);
+            this.statusStripMain.Size = new System.Drawing.Size(488, 22);
             this.statusStripMain.TabIndex = 0;
             this.statusStripMain.Text = "statusStripMain";
             // 
@@ -63,7 +64,7 @@
             this.toolStripMain.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.toolStripMain.Location = new System.Drawing.Point(0, 24);
             this.toolStripMain.Name = "toolStripMain";
-            this.toolStripMain.Size = new System.Drawing.Size(651, 25);
+            this.toolStripMain.Size = new System.Drawing.Size(488, 25);
             this.toolStripMain.TabIndex = 2;
             this.toolStripMain.Text = "Панель инструментов";
             // 
@@ -71,6 +72,7 @@
             // 
             this.splitContainerMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitContainerMain.Location = new System.Drawing.Point(0, 49);
+            this.splitContainerMain.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.splitContainerMain.Name = "splitContainerMain";
             // 
             // splitContainerMain.Panel1
@@ -80,8 +82,9 @@
             // splitContainerMain.Panel2
             // 
             this.splitContainerMain.Panel2.Controls.Add(this.propertyGridMain);
-            this.splitContainerMain.Size = new System.Drawing.Size(651, 417);
-            this.splitContainerMain.SplitterDistance = 181;
+            this.splitContainerMain.Size = new System.Drawing.Size(488, 325);
+            this.splitContainerMain.SplitterDistance = 135;
+            this.splitContainerMain.SplitterWidth = 3;
             this.splitContainerMain.TabIndex = 3;
             // 
             // treeViewMain
@@ -90,6 +93,7 @@
             this.treeViewMain.ImageIndex = 0;
             this.treeViewMain.ImageList = this.imageListTreeView;
             this.treeViewMain.Location = new System.Drawing.Point(0, 0);
+            this.treeViewMain.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.treeViewMain.Name = "treeViewMain";
             treeNode1.ImageIndex = 2;
             treeNode1.Name = "NodeConnection";
@@ -99,7 +103,7 @@
             treeNode2.ImageIndex = 1;
             treeNode2.Name = "NodeMeasuringDevice";
             treeNode2.SelectedImageIndex = 1;
-            treeNode2.Text = "КИП";
+            treeNode2.Text = "НГК-КИП";
             treeNode2.ToolTipText = "Параметры устройства БИ";
             treeNode3.ImageIndex = 0;
             treeNode3.Name = "NodeRoot";
@@ -109,7 +113,7 @@
             treeNode3});
             this.treeViewMain.SelectedImageIndex = 0;
             this.treeViewMain.ShowNodeToolTips = true;
-            this.treeViewMain.Size = new System.Drawing.Size(181, 417);
+            this.treeViewMain.Size = new System.Drawing.Size(135, 325);
             this.treeViewMain.TabIndex = 0;
             this.treeViewMain.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeViewMain_AfterSelect);
             this.treeViewMain.MouseDown += new System.Windows.Forms.MouseEventHandler(this.treeViewMain_MouseDown);
@@ -126,15 +130,17 @@
             // 
             this.propertyGridMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.propertyGridMain.Location = new System.Drawing.Point(0, 0);
+            this.propertyGridMain.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.propertyGridMain.Name = "propertyGridMain";
-            this.propertyGridMain.Size = new System.Drawing.Size(466, 417);
+            this.propertyGridMain.Size = new System.Drawing.Size(350, 325);
             this.propertyGridMain.TabIndex = 0;
             // 
             // menuStripMain
             // 
             this.menuStripMain.Location = new System.Drawing.Point(0, 0);
             this.menuStripMain.Name = "menuStripMain";
-            this.menuStripMain.Size = new System.Drawing.Size(651, 24);
+            this.menuStripMain.Padding = new System.Windows.Forms.Padding(4, 2, 0, 2);
+            this.menuStripMain.Size = new System.Drawing.Size(488, 24);
             this.menuStripMain.TabIndex = 1;
             this.menuStripMain.Text = "menuStripMain";
             // 
@@ -145,9 +151,9 @@
             // 
             // FormMain
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(651, 488);
+            this.ClientSize = new System.Drawing.Size(488, 396);
             this.Controls.Add(this.splitContainerMain);
             this.Controls.Add(this.toolStripMain);
             this.Controls.Add(this.statusStripMain);
@@ -155,6 +161,7 @@
             this.HelpButton = true;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStripMain;
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "FormMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "КИП";
