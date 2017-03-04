@@ -9,10 +9,8 @@ using System.Text;
 using NGK.MeasuringDeviceTech.Classes.MeasuringDevice.Converters;
 using NGK.MeasuringDeviceTech.Classes.MeasuringDevice.UITypeEditors;
 
-//==============================================================================================================
 namespace NGK.MeasuringDeviceTech.Classes.MeasuringDevice
 {
-    //==========================================================================================================
     /// <summary>
     /// Класс реализует устройство БИ (блок измерений) на батарейном 
     /// (автономном) питании БИ(У)-01 код 9811.
@@ -21,14 +19,14 @@ namespace NGK.MeasuringDeviceTech.Classes.MeasuringDevice
     public class MeasuringDeviceBatteryPower : System.ComponentModel.INotifyPropertyChanged, IMeasuringDevice,
         System.Runtime.Serialization.IDeserializationCallback
     {
-        //------------------------------------------------------------------------------------------------------
+        #region Constructors
+        #endregion
+
         #region Fields and Properties
-        //------------------------------------------------------------------------------------------------------
-        /// <summary>
-        /// Адрес устройства БИ
-        /// </summary>
+
+        #region Visiting Card
+
         private Byte _AddressSlave = 1;
-        //------------------------------------------------------------------------------------------------------
         /// <summary>
         /// Адрес устройства БИ (при работе по технологическому кабелю)
         /// </summary>
@@ -44,9 +42,7 @@ namespace NGK.MeasuringDeviceTech.Classes.MeasuringDevice
             get { return _AddressSlave; }
             set { _AddressSlave = value; }
         }
-        //------------------------------------------------------------------------------------------------------
-        #region Input Register
-        //------------------------------------------------------------------------------------------------------
+
         /// <summary>
         /// Возвращает тип исполнения устройства БИ (на батарейном или основном питании)
         /// </summary>
@@ -63,18 +59,14 @@ namespace NGK.MeasuringDeviceTech.Classes.MeasuringDevice
         {
             get { return TYPE_NGK_DEVICE.BI_BATTERY_POWER; }
         }
-        //------------------------------------------------------------------------------------------------------
+
+        private float _SofwareVersion = 0;
         /// <summary>
         /// Версия ПО
         /// </summary>
         /// <remarks>
         /// Input Register 0x0001
         /// </remarks>
-        private float _SofwareVersion = 0;
-        //------------------------------------------------------------------------------------------------------
-        /// <summary>
-        /// Версия ПО
-        /// </summary>
         [Browsable(true)]
         [ReadOnly(true)]
         [Category("Системные данные")]
@@ -91,18 +83,14 @@ namespace NGK.MeasuringDeviceTech.Classes.MeasuringDevice
                 OnPropertyChanged(new PropertyChangedEventArgs("SofwareVersion"));
             }
         }
-        //------------------------------------------------------------------------------------------------------
+
+        private float _HardwareVersion = 0;
         /// <summary>
         /// Версия аппаратуры
         /// </summary>
         /// <remarks>
         /// Input Register 0x0002
         /// </remarks>
-        private float _HardwareVersion = 0;
-        //------------------------------------------------------------------------------------------------------
-        /// <summary>
-        /// Версия аппаратуры
-        /// </summary>
         [Browsable(true)]
         [ReadOnly(true)]
         [Category("Системные данные")]
@@ -119,18 +107,14 @@ namespace NGK.MeasuringDeviceTech.Classes.MeasuringDevice
                 OnPropertyChanged(new PropertyChangedEventArgs("HardwareVersion"));
             }
         }
-        //------------------------------------------------------------------------------------------------------
+
+        private UInt64 _SerialNumber = UInt64.MaxValue;
         /// <summary>
         /// Серийный номер устройства
         /// </summary>
         /// <remarks>
         /// Input register 0x000C и 0x000D
         /// </remarks>
-        private UInt64 _SerialNumber = UInt64.MaxValue;
-        /// <summary>
-        /// Серийный номер устройства
-        /// </summary>
-        //------------------------------------------------------------------------------------------------------
         [Browsable(true)]
         [ReadOnly(true)]
         [Category("Системные данные")]
@@ -148,12 +132,8 @@ namespace NGK.MeasuringDeviceTech.Classes.MeasuringDevice
                 OnPropertyChanged(new PropertyChangedEventArgs("SerialNumber"));
             }
         }
-        //------------------------------------------------------------------------------------------------------
-        /// <summary>
-        /// Контрольная сумма визитной карточки
-        /// </summary>
+
         private UInt16 _CRC16 = 0;
-        //------------------------------------------------------------------------------------------------------
         /// <summary>
         /// Контрольная сумма визитной карточки
         /// </summary>
@@ -169,12 +149,8 @@ namespace NGK.MeasuringDeviceTech.Classes.MeasuringDevice
             get { return _CRC16; }
             set { _CRC16 = value; }
         }
-        //------------------------------------------------------------------------------------------------------
-        /// <summary>
-        /// Код производителя 
-        /// </summary>
+
         private UInt16 _CodeManufacturer = 0;
-        //------------------------------------------------------------------------------------------------------
         /// <summary>
         /// Код производителя
         /// </summary>
@@ -195,7 +171,172 @@ namespace NGK.MeasuringDeviceTech.Classes.MeasuringDevice
                 OnPropertyChanged(new PropertyChangedEventArgs("CodeManufacturer"));
             }
         }
-        //------------------------------------------------------------------------------------------------------
+
+        #endregion
+
+        #region УС ИКП СТ
+        
+        private UInt16 _StatusUSIKPST;
+        /// <summary>
+        /// Состояние УС ИКП СТ
+        /// </summary>
+        /// <remarks>
+        /// Input Register 0x0009
+        /// 0x0000 - норма 0xFFFF – нет связи Либо код 
+        /// </remarks>
+        [Browsable(true)]
+        [ReadOnly(true)]
+        [Category("Параметры УС ИКП СТ")]
+        [Description("Состояние устройства УСИКПСТ Коды аварий приведены ниже:\n 0 - устройство в норме;\n 65535 - нет связи;\n 1 - некорректная функция (не поддерживается Устройством);\n 2 – зарезервировано;\n 3 - не подключен индикатор коррозионных процессов;\n 4 - верификация микросхемы ПЗУ Устройства выявила ошибки (режим конфигурирования);\n 5 - заданная скорость обмена не поддерживается Устройством (режим конфигурирования);\n 6 - данный тип индикатора не обслуживается;\n 7 – индикатор коррозионных процессов не инициализирован;\n 8 – текущая дата некорректна;\n 9 - невозможно определить состояние ИЭ ИКП.")]
+        [DisplayName("1. Код состояния устройства УС ИКП СТ")]
+        [RefreshProperties(System.ComponentModel.RefreshProperties.All)]
+        public UInt16 StatusUSIKPST
+        {
+            get { return _StatusUSIKPST; }
+            set
+            {
+                _StatusUSIKPST = value;
+                // Генерируем событие
+                OnPropertyChanged(new PropertyChangedEventArgs("StatusUSIKPST"));
+            }
+        }
+
+        private UInt16 _DepthOfCorrosion;
+        /// <summary>
+        /// Глубина коррозии датчика ИКП с устройства УС ИКП СТ
+        /// </summary>
+        /// <remarks>
+        /// Преробразовать из UInt16 в формат 0...1200 мкм
+        /// Input Register 0x0007
+        /// </remarks>
+        [Browsable(true)]
+        [ReadOnly(true)]
+        [Category("Параметры УС ИКП СТ")]
+        [Description("Глубина коррозии датчика ИКП с устройства УС ИКП СТ")]
+        [DisplayName("2. Глубина коррозии УС ИКП СТ, мкм")]
+        [RefreshProperties(System.ComponentModel.RefreshProperties.All)]
+        public UInt16 DepthOfCorrosion
+        {
+            get { return _DepthOfCorrosion; }
+            set
+            {
+                if (value > 0xFFFE)
+                {
+                    throw new ArgumentOutOfRangeException("DepthOfCorrosion",
+                        "Попытка присвоить параметру недопустимое значение. Диапазон допустимых значений 0x0000...0xFFFE");
+                }
+                else
+                {
+                    _DepthOfCorrosion = value;
+                    // Генерируем событие
+                    OnPropertyChanged(new PropertyChangedEventArgs("DepthOfCorrosion"));
+                }
+            }
+        }
+
+        private float _SpeedOfCorrosion;
+        /// <summary>
+        /// Cкорость коррозии датчика ИКП с устройства УС ИКП СТ
+        /// </summary>
+        /// <remarks>
+        /// Преробразовать из UInt16 в формат 0...65.534 мкМ/Год
+        /// Input Register 0x0008
+        /// </remarks>
+        [Browsable(true)]
+        [ReadOnly(true)]
+        [Category("Параметры УС ИКП СТ")]
+        [Description("Скорость коррозии датчика ИКП с устройства УС ИКП СТ")]
+        [DisplayName("3. Скорость коррозии УС ИКП СТ, мкм")]
+        [RefreshProperties(System.ComponentModel.RefreshProperties.All)]
+        public float SpeedOfCorrosion
+        {
+            get { return _SpeedOfCorrosion; }
+            set
+            {
+                _SpeedOfCorrosion = value;
+                // Генерируем событие
+                OnPropertyChanged(new PropertyChangedEventArgs("SpeedOfCorrosion"));
+            }
+        }
+
+        private Boolean _CorrosionSensor_1;
+        /// <summary>
+        /// Состояние пластины датчика "1" скорости коррозии
+        /// </summary>
+        /// <remarks>
+        /// Discretes Input	0x0003
+        /// </remarks>
+        [Browsable(true)]
+        [ReadOnly(true)]
+        [Category("Параметры УС ИКП СТ")]
+        [Description("Состояние пластины датчика №1 скорости коррозии")]
+        [DisplayName("4. Датчик коррозии №1")]
+        [TypeConverter(typeof(BooleanTypeConverter))]
+        [RefreshProperties(System.ComponentModel.RefreshProperties.All)]
+        public Boolean CorrosionSensor1
+        {
+            get { return _CorrosionSensor_1; }
+            set
+            {
+                _CorrosionSensor_1 = value;
+                // Генерируем событие
+                OnPropertyChanged(new PropertyChangedEventArgs("CorrosionSensor1"));
+            }
+        }
+
+        private Boolean _CorrosionSensor_2;
+        /// <summary>
+        /// Состояние пластины датчика "2" скорости коррозии
+        /// </summary>
+        /// <remarks>
+        /// Discretes Input	0x0004
+        /// </remarks>
+        [Browsable(true)]
+        [ReadOnly(true)]
+        [Category("Параметры УС ИКП СТ")]
+        [Description("Состояние пластины датчика №2 скорости коррозии")]
+        [DisplayName("5. Датчик коррозии №2")]
+        [TypeConverter(typeof(BooleanTypeConverter))]
+        [RefreshProperties(System.ComponentModel.RefreshProperties.All)]
+        public Boolean CorrosionSensor2
+        {
+            get { return _CorrosionSensor_2; }
+            set
+            {
+                _CorrosionSensor_2 = value;
+                // Генерируем событие
+                OnPropertyChanged(new PropertyChangedEventArgs("CorrosionSensor2"));
+            }
+        }
+
+        private Boolean _CorrosionSensor_3;
+        /// <summary>
+        /// Состояние пластины датчика "3" скорости коррозии
+        /// </summary>
+        /// <remarks>
+        /// Discretes Input	0x0005
+        /// </remarks>
+        [Browsable(true)]
+        [ReadOnly(true)]
+        [Category("Параметры УС ИКП СТ")]
+        [Description("Состояние пластины датчика №3 скорости коррозии")]
+        [DisplayName("6. Датчик коррозии №3")]
+        [TypeConverter(typeof(BooleanTypeConverter))]
+        [RefreshProperties(System.ComponentModel.RefreshProperties.All)]
+        public Boolean CorrosionSensor3
+        {
+            get { return _CorrosionSensor_3; }
+            set
+            {
+                _CorrosionSensor_3 = value;
+                // Генерируем событие
+                OnPropertyChanged(new PropertyChangedEventArgs("CorrosionSensor3"));
+            }
+        }
+
+        #endregion 
+
+        #region Input Registers
         /// <summary>
         /// Поляризационный потенциал
         /// </summary>
@@ -213,9 +354,9 @@ namespace NGK.MeasuringDeviceTech.Classes.MeasuringDevice
         /// </remarks>
         [Browsable(true)]
         [ReadOnly(true)]
-        [Category("Измеряемые параметры")]
+        [Category("Измеряемые параметры: Потенциалы")]
         [Description("Поляризационный потенциал подземного трубопровода по методу вспомогательного")]
-        [DisplayName("Поляризационный потенциал, В")]
+        [DisplayName("2. Поляризационный потенциал, В")]
         [RefreshProperties(System.ComponentModel.RefreshProperties.All)]
         public float PolarizationPotential
         {
@@ -245,9 +386,9 @@ namespace NGK.MeasuringDeviceTech.Classes.MeasuringDevice
         /// </remarks>
         [Browsable(true)]
         [ReadOnly(true)]
-        [Category("Измеряемые параметры")]
+        [Category("Измеряемые параметры: Потенциалы")]
         [Description("Защитный потенциал, В")]
-        [DisplayName("Защитный потенциал, В")]
+        [DisplayName("1. Защитный потенциал, В")]
         [RefreshProperties(System.ComponentModel.RefreshProperties.All)]
         public float ProtectivePotential
         {
@@ -276,9 +417,9 @@ namespace NGK.MeasuringDeviceTech.Classes.MeasuringDevice
         /// </remarks>
         [Browsable(true)]
         [ReadOnly(true)]
-        [Category("Измеряемые параметры")]
+        [Category("Измеряемые параметры: Контрольные напряжения")]
         [Description("Наведённое переменное напряжение на трубопровод от 0 до 100,0 В частотой 50Гц")]
-        [DisplayName("Наведённое напряжение, В")]
+        [DisplayName("1. Наведённое напряжение, В")]
         [RefreshProperties(System.ComponentModel.RefreshProperties.All)]
         public float InducedVoltage
         {
@@ -310,9 +451,9 @@ namespace NGK.MeasuringDeviceTech.Classes.MeasuringDevice
         /// </remarks>
         [Browsable(true)]
         [ReadOnly(true)]
-        [Category("Измеряемые параметры")]
+        [Category("Измеряемые параметры: Токи")]
         [Description("Ток катодной защиты в точке дренажа методом измерения напряжения на внешнем шунте")]
-        [DisplayName("Ток катодной защиты, А")]
+        [DisplayName("1. Ток катодной защиты, А")]
         [RefreshProperties(System.ComponentModel.RefreshProperties.All)]
         public float ProtectiveСurrent
         {
@@ -344,9 +485,9 @@ namespace NGK.MeasuringDeviceTech.Classes.MeasuringDevice
         /// </remarks>
         [Browsable(true)]
         [ReadOnly(true)]
-        [Category("Измеряемые параметры")]
+        [Category("Измеряемые параметры: Токи")]
         [Description("Ток поляризации вспомогательного электрода")]
-        [DisplayName("Ток поляризации, mA")]
+        [DisplayName("2. Ток поляризации, mA")]
         [RefreshProperties(System.ComponentModel.RefreshProperties.All)]
         public float PolarizationСurrent
         {
@@ -381,9 +522,9 @@ namespace NGK.MeasuringDeviceTech.Classes.MeasuringDevice
         /// </remarks>
         [Browsable(true)]
         [ReadOnly(true)]
-        [Category("Измеряемые параметры")]
+        [Category("Измеряемые параметры: Токи")]
         [Description("Ток измерительного канала 1")]
-        [DisplayName("Ток измерительного канала 1 (4-20), mA")]
+        [DisplayName("5. Ток измерительного канала 1 (4-20), mA")]
         [RefreshProperties(System.ComponentModel.RefreshProperties.All)]
         public float CurrentChannel1
         {
@@ -418,9 +559,9 @@ namespace NGK.MeasuringDeviceTech.Classes.MeasuringDevice
         /// </remarks>
         [Browsable(true)]
         [ReadOnly(true)]
-        [Category("Измеряемые параметры")]
+        [Category("Измеряемые параметры: Токи")]
         [Description("Ток измерительного канала 2")]
-        [DisplayName("Ток измерительного канала 2 (4-20), mA")]
+        [DisplayName("6. Ток измерительного канала 2 (4-20), mA")]
         [RefreshProperties(System.ComponentModel.RefreshProperties.All)]
         public float CurrentChannel2
         {
@@ -430,101 +571,6 @@ namespace NGK.MeasuringDeviceTech.Classes.MeasuringDevice
                 _CurrentChannel2 = value;
                 // Генерируем событие
                 OnPropertyChanged(new PropertyChangedEventArgs("CurrentChannel1"));
-            }
-        }
-        //------------------------------------------------------------------------------------------------------
-        /// <summary>
-        /// Глубина коррозии датчика ИКП с устройства УСИКПСТ
-        /// </summary>
-        /// <remarks>
-        /// Преробразовать из UInt16 в формат 0...1200 мкм
-        /// Input Register 0x0007
-        /// </remarks>
-        private UInt16 _DepthOfCorrosion;
-        //------------------------------------------------------------------------------------------------------
-        /// <summary>
-        /// Глубина коррозии датчика ИКП с устройства УСИКПСТ
-        /// </summary>
-        [Browsable(true)]
-        [ReadOnly(true)]
-        [Category("Измеряемые параметры")]
-        [Description("Глубина коррозии датчика ИКП с устройства УС ИКП СТ")]
-        [DisplayName("Глубина коррозии УС ИКП СТ, мкм")]
-        [RefreshProperties(System.ComponentModel.RefreshProperties.All)]
-        public UInt16 DepthOfCorrosion
-        {
-            get { return _DepthOfCorrosion; }
-            set
-            {
-                if (value > 0xFFFE)
-                {
-                    throw new ArgumentOutOfRangeException("DepthOfCorrosion",
-                        "Попытка присвоить параметру недопустимое значение. Диапазон допустимых значений 0x0000...0xFFFE");
-                }
-                else
-                {
-                    _DepthOfCorrosion = value;
-                    // Генерируем событие
-                    OnPropertyChanged(new PropertyChangedEventArgs("DepthOfCorrosion"));
-                }
-            }
-        }
-        //------------------------------------------------------------------------------------------------------
-        /// <summary>
-        /// Cкорость коррозии датчика ИКП с устройства УСИЛПСТ
-        /// </summary>
-        /// <remarks>
-        /// Преробразовать из UInt16 в формат 0...65.534 мкМ/Год
-        /// Input Register 0x0008
-        /// </remarks>
-        private float _SpeedOfCorrosion;
-        //------------------------------------------------------------------------------------------------------
-        /// <summary>
-        /// Cкорость коррозии датчика ИКП с устройства УСИКПСТ
-        /// </summary>
-        [Browsable(true)]
-        [ReadOnly(true)]
-        [Category("Измеряемые параметры")]
-        [Description("Скорость коррозии датчика ИКП с устройства УС ИКП СТ")]
-        [DisplayName("Скорость коррозии УС ИКП СТ, мкм")]
-        [RefreshProperties(System.ComponentModel.RefreshProperties.All)]
-        public float SpeedOfCorrosion
-        {
-            get { return _SpeedOfCorrosion; }
-            set
-            {
-                _SpeedOfCorrosion = value;
-                // Генерируем событие
-                OnPropertyChanged(new PropertyChangedEventArgs("SpeedOfCorrosion"));
-            }
-        }
-        //------------------------------------------------------------------------------------------------------
-        /// <summary>
-        /// Состояние УСИКПСТ
-        /// </summary>
-        private UInt16 _StatusUSIKPST;
-        //------------------------------------------------------------------------------------------------------
-        /// <summary>
-        /// Состояние УСИКПСТ
-        /// </summary>
-        /// <remarks>
-        /// Input Register 0x0009
-        /// 0x0000 - норма 0xFFFF – нет связи Либо код 
-        /// </remarks>
-        [Browsable(true)]
-        [ReadOnly(true)]
-        [Category("Измеряемые параметры")]
-        [Description("Состояние устройства УСИКПСТ Коды аварий приведены ниже:\n 0 - устройство в норме;\n 65535 - нет связи;\n 1 - некорректная функция (не поддерживается Устройством);\n 2 – зарезервировано;\n 3 - не подключен индикатор коррозионных процессов;\n 4 - верификация микросхемы ПЗУ Устройства выявила ошибки (режим конфигурирования);\n 5 - заданная скорость обмена не поддерживается Устройством (режим конфигурирования);\n 6 - данный тип индикатора не обслуживается;\n 7 – индикатор коррозионных процессов не инициализирован;\n 8 – текущая дата некорректна;\n 9 - невозможно определить состояние ИЭ ИКП.")]
-        [DisplayName("Код состояния устройства УС ИКП СТ")]
-        [RefreshProperties(System.ComponentModel.RefreshProperties.All)]
-        public UInt16 StatusUSIKPST
-        {
-            get { return _StatusUSIKPST; }
-            set
-            {
-                _StatusUSIKPST = value;
-                // Генерируем событие
-                OnPropertyChanged(new PropertyChangedEventArgs("StatusUSIKPST"));
             }
         }
         //------------------------------------------------------------------------------------------------------
@@ -543,9 +589,9 @@ namespace NGK.MeasuringDeviceTech.Classes.MeasuringDevice
         /// </summary>
         [Browsable(true)]
         [ReadOnly(true)]
-        [Category("Измеряемые параметры")]
+        [Category("Измеряемые параметры: Контрольные напряжения")]
         [Description("Напряжение питания НГК-БИ, В")]
-        [DisplayName("Напряжение питания НГК-БИ, В")]
+        [DisplayName("2. Напряжение питания НГК-БИ, В")]
         [RefreshProperties(System.ComponentModel.RefreshProperties.All)]
         public float SupplyVoltage
         {
@@ -573,9 +619,9 @@ namespace NGK.MeasuringDeviceTech.Classes.MeasuringDevice
         /// </summary>
         [Browsable(true)]
         [ReadOnly(true)]
-        [Category("Измеряемые параметры")]
+        [Category("Измеряемые параметры: Контрольные напряжения")]
         [Description("Напряжение батареи, В")]
-        [DisplayName("Напряжение батареи, В")]
+        [DisplayName("3. Напряжение батареи, В")]
         [RefreshProperties(System.ComponentModel.RefreshProperties.All)]
         public float BattaryVoltage
         {
@@ -604,9 +650,9 @@ namespace NGK.MeasuringDeviceTech.Classes.MeasuringDevice
         /// </summary>
         [Browsable(true)]
         [ReadOnly(true)]
-        [Category("Измеряемые параметры")]
+        [Category("Измеряемые параметры: Температуры")]
         [Description("Температура встроенного датчика, гр.С Только для НГК-БИ(У)-01")]
-        [DisplayName("Температура встроенного датчика, гр.С")]
+        [DisplayName("1. Температура встроенного датчика, гр.С")]
         [RefreshProperties(System.ComponentModel.RefreshProperties.All)]
         public Int16 InternalTemperatureSensor
         {
@@ -634,9 +680,9 @@ namespace NGK.MeasuringDeviceTech.Classes.MeasuringDevice
         /// </summary>
         [Browsable(true)]
         [ReadOnly(true)]
-        [Category("Измеряемые параметры")]
+        [Category("Измеряемые параметры: Токи")]
         [Description("Ток натекания постоянный, mA")]
-        [DisplayName("Ток натекания постоянный, mA")]
+        [DisplayName("4. Ток натекания постоянный, mA")]
         [RefreshProperties(System.ComponentModel.RefreshProperties.All)]
         public float LeakageСonstantСurrent
         {
@@ -664,9 +710,9 @@ namespace NGK.MeasuringDeviceTech.Classes.MeasuringDevice
         /// </summary>
         [Browsable(true)]
         [ReadOnly(true)]
-        [Category("Измеряемые параметры")]
+        [Category("Измеряемые параметры: Токи")]
         [Description("Ток натекания переменный, mA")]
-        [DisplayName("Ток натекания переменный, mA")]
+        [DisplayName("3. Ток натекания переменный, mA")]
         [RefreshProperties(System.ComponentModel.RefreshProperties.All)]
         public float ReferenceElectrodeAcСurrent
         {
@@ -778,94 +824,7 @@ namespace NGK.MeasuringDeviceTech.Classes.MeasuringDevice
                 OnPropertyChanged(new PropertyChangedEventArgs("BattaryStatus"));
             }
         }
-        //------------------------------------------------------------------------------------------------------
-        /// <summary>
-        /// Состояние пластины датчика "1" скорости коррозии
-        /// </summary>
-        /// <remarks>
-        /// Discretes Input	0x0003
-        /// </remarks>
-        private Boolean _CorrosionSensor_1;
-        //------------------------------------------------------------------------------------------------------
-        /// <summary>
-        /// Состояние пластины датчика "1" скорости коррозии
-        /// </summary>
-        [Browsable(true)]
-        [ReadOnly(true)]
-        [Category("Измеряемые параметры")]
-        [Description("Состояние пластины датчика №1 скорости коррозии")]
-        [DisplayName("Датчик коррозии №1")]
-        [TypeConverter(typeof(BooleanTypeConverter))]
-        [RefreshProperties(System.ComponentModel.RefreshProperties.All)]
-        public Boolean CorrosionSensor1
-        {
-            get { return _CorrosionSensor_1; }
-            set
-            {
-                _CorrosionSensor_1 = value;
-                // Генерируем событие
-                OnPropertyChanged(new PropertyChangedEventArgs("CorrosionSensor1"));
-            }
-        }
-        //------------------------------------------------------------------------------------------------------
-        /// <summary>
-        /// Состояние пластины датчика "2" скорости коррозии
-        /// </summary>
-        /// <remarks>
-        /// Discretes Input	0x0004
-        /// </remarks>
-        private Boolean _CorrosionSensor_2;
-        //------------------------------------------------------------------------------------------------------
-        /// <summary>
-        /// Состояние пластины датчика "2" скорости коррозии
-        /// </summary>
-        [Browsable(true)]
-        [ReadOnly(true)]
-        [Category("Измеряемые параметры")]
-        [Description("Состояние пластины датчика №2 скорости коррозии")]
-        [DisplayName("Датчик коррозии №2")]
-        [TypeConverter(typeof(BooleanTypeConverter))]
-        [RefreshProperties(System.ComponentModel.RefreshProperties.All)]
-        public Boolean CorrosionSensor2
-        {
-            get { return _CorrosionSensor_2; }
-            set
-            {
-                _CorrosionSensor_2 = value;
-                // Генерируем событие
-                OnPropertyChanged(new PropertyChangedEventArgs("CorrosionSensor2"));
-            }
-        }
-        //------------------------------------------------------------------------------------------------------
-        /// <summary>
-        /// Состояние пластины датчика "3" скорости коррозии
-        /// </summary>
-        /// <remarks>
-        /// Discretes Input	0x0005
-        /// </remarks>
-        private Boolean _CorrosionSensor_3;
-        //------------------------------------------------------------------------------------------------------
-        /// <summary>
-        /// Состояние пластины датчика "3" скорости коррозии
-        /// </summary>
-        [Browsable(true)]
-        [ReadOnly(true)]
-        [Category("Измеряемые параметры")]
-        [Description("Состояние пластины датчика №3 скорости коррозии")]
-        [DisplayName("Датчик коррозии №3")]
-        [TypeConverter(typeof(BooleanTypeConverter))]
-        [RefreshProperties(System.ComponentModel.RefreshProperties.All)]
-        public Boolean CorrosionSensor3
-        {
-            get { return _CorrosionSensor_3; }
-            set
-            {
-                _CorrosionSensor_3 = value;
-                // Генерируем событие
-                OnPropertyChanged(new PropertyChangedEventArgs("CorrosionSensor3"));
-            }
-        }
-        //------------------------------------------------------------------------------------------------------
+
         #endregion
         //------------------------------------------------------------------------------------------------------
         #region Holding Registers
@@ -1672,17 +1631,7 @@ namespace NGK.MeasuringDeviceTech.Classes.MeasuringDevice
         #endregion
         //------------------------------------------------------------------------------------------------------     
         #endregion
-        //------------------------------------------------------------------------------------------------------
-        #region Constructors
-        //------------------------------------------------------------------------------------------------------
-        /// <summary>
-        /// Конструктор по умолчанию
-        /// </summary>
-        public MeasuringDeviceBatteryPower()
-        { }
-        //------------------------------------------------------------------------------------------------------
-        #endregion
-        //------------------------------------------------------------------------------------------------------
+
         #region Methods
         //------------------------------------------------------------------------------------------------------
         /// <summary>
@@ -4488,7 +4437,7 @@ namespace NGK.MeasuringDeviceTech.Classes.MeasuringDevice
         #endregion
         //------------------------------------------------------------------------------------------------------
         #endregion
-        //------------------------------------------------------------------------------------------------------
+
         #region Члены INotifyPropertyChanged
         //------------------------------------------------------------------------------------------------------
         /// <summary>
@@ -4498,11 +4447,11 @@ namespace NGK.MeasuringDeviceTech.Classes.MeasuringDevice
         public event PropertyChangedEventHandler PropertyChanged;
         //------------------------------------------------------------------------------------------------------
         #endregion
-        //------------------------------------------------------------------------------------------------------
+
         #region Events
         //------------------------------------------------------------------------------------------------------
         #endregion
-        //------------------------------------------------------------------------------------------------------
+
         #region Члены IMeasuringDevice
         //------------------------------------------------------------------------------------------------------
         object IMeasuringDevice.Deserialize(string path)
@@ -4551,7 +4500,7 @@ namespace NGK.MeasuringDeviceTech.Classes.MeasuringDevice
         }
         //------------------------------------------------------------------------------------------------------
         #endregion
-        //------------------------------------------------------------------------------------------------------
+
         #region Члены IDeserializationCallback
         //------------------------------------------------------------------------------------------------------
         /// <summary>
@@ -4566,9 +4515,5 @@ namespace NGK.MeasuringDeviceTech.Classes.MeasuringDevice
         }
         //------------------------------------------------------------------------------------------------------
         #endregion
-        //------------------------------------------------------------------------------------------------------
-    } // End of class
-    //==========================================================================================================
-} // End of namespace
-//==============================================================================================================
-// End of file
+    }
+}
