@@ -2452,6 +2452,7 @@ namespace NGK.MeasuringDeviceTech
                         _Host = new 
                             Modbus.OSIModel.ApplicationLayer.Master.Device("NetworkModbus", 
                             (IDataLinkLayer)_SerialPort);
+                        _Host.TotalAttempts = 3;
                         _MeasuringDevice = device;
                         _MeasuringDevice.PropertyChanged +=
                             new PropertyChangedEventHandler(_MeasuringDevice_PropertyChanged);

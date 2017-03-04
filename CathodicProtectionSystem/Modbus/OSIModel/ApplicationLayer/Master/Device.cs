@@ -23,13 +23,13 @@ namespace Modbus.OSIModel.ApplicationLayer.Master
         /// <param name="dataLinkObject">Объект уровня DataLink Layer</param>
         public Device(String nameNetwork,
             Modbus.OSIModel.DataLinkLayer.Master.IDataLinkLayer dataLinkObject)
-        {            
+        {
             // Задаём имя сервера
             _name = nameNetwork;
 
             // Задаём объект уровня DataLinkLayer
             _dataLinkObject = dataLinkObject;
-            
+
             // Сервер находится в режиме простоя
             StopTransaction();
 
@@ -38,17 +38,14 @@ namespace Modbus.OSIModel.ApplicationLayer.Master
         #endregion
 
         #region Fields and Properties
-        //---------------------------------------------------------------------------
         /// <summary>
         /// Хранит объект уровня DataLink Layer (реализующий его интерфейс)
         /// </summary>
         private Modbus.OSIModel.DataLinkLayer.Master.IDataLinkLayer _dataLinkObject;
-        //---------------------------------------------------------------------------
         /// <summary>
         /// Название Modbus-сети
         /// </summary>
         private String _name;
-        //---------------------------------------------------------------------------
         /// <summary>
         /// Название Modbus-сети
         /// </summary>
@@ -57,17 +54,37 @@ namespace Modbus.OSIModel.ApplicationLayer.Master
             get { return _name; }
             set { _name = value; }
         }
-        //---------------------------------------------------------------------------
         /// <summary>
         /// Флаг, если установлен указывает, что сервер 
         /// находится в состоянии транзакции "запрос-ответ"
         /// </summary>
         private bool _flgBusy;
-        //---------------------------------------------------------------------------
+        /// <summary>
+        /// По умолчанию одна попытка запроса к удалённому устройтсву
+        /// </summary>
+        private int _TotalAttempts = 1;
+        /// <summary>
+        /// Количество попыток выполнения запроса к удалённому устройству
+        /// после чего выводится ошибка timeout
+        /// </summary>
+        public int TotalAttempts
+        {
+            get { return _TotalAttempts; }
+            set
+            {
+                if (value <= 0)
+                {
+                    throw new ArgumentOutOfRangeException("TotalAttempts",
+                        "Попытка установить недопустимое значение. " +
+                        "Количество попыток доступа к устройству не может быть меньше или равно нулю");
+                }
+                _TotalAttempts = value;
+            }
+        }
+
         #endregion
 
         #region Methods
-        //---------------------------------------------------------------------------
         /// <summary>
         /// Метод устанавливает состояние сервера 
         /// в транзацию "Запрос/ответ"
@@ -77,7 +94,6 @@ namespace Modbus.OSIModel.ApplicationLayer.Master
             _flgBusy = true;
             return;
         }
-        //---------------------------------------------------------------------------
         /// <summary>
         /// Метод устанавливает состояние сервера
         /// в режим простоя (транзация завершена)
@@ -87,7 +103,6 @@ namespace Modbus.OSIModel.ApplicationLayer.Master
             _flgBusy = false;
             return;
         }
-        //---------------------------------------------------------------------------
         /// <summary>
         /// Метод разбирает полученое сообщение и если 
         /// код функции содержит признак ошибки (единица в старшем разряде)
@@ -102,7 +117,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Master
         /// нет ошибок - false</returns>
         private Boolean IsError(
             Modbus.OSIModel.Message.Message request,
-            Modbus.OSIModel.Message.Message answer, 
+            Modbus.OSIModel.Message.Message answer,
             out Modbus.OSIModel.Message.Result result)
         {
             // Разбираем сообщение
@@ -115,8 +130,8 @@ namespace Modbus.OSIModel.ApplicationLayer.Master
                         {
                             result = new Modbus.OSIModel.Message.Result(Error.Acknowledge,
                                 "Подчиненный принял запрос и обрабатывает его, но это требует много времени. " +
-                                "Этот ответ предохраняет главного от генерации ошибки таймаута. " + 
-                                "Главный может выдать команду Poll Program Complete для обнаружения" + 
+                                "Этот ответ предохраняет главного от генерации ошибки таймаута. " +
+                                "Главный может выдать команду Poll Program Complete для обнаружения" +
                                 "завершения обработки команды.",
                                 request, answer);
                             break;
@@ -187,7 +202,6 @@ namespace Modbus.OSIModel.ApplicationLayer.Master
             }
 
         }
-        //---------------------------------------------------------------------------
         /// <summary>
         /// Функция 0х1. Чтение реле
         /// </summary>
@@ -203,107 +217,116 @@ namespace Modbus.OSIModel.ApplicationLayer.Master
             out State[] coils)
         {
             Modbus.OSIModel.Message.Message answer;
-            Modbus.OSIModel.Message.Result result;
+            Modbus.OSIModel.Message.Result result = null;
             Byte[] arrTemp = new Byte[2];
-            
+
             Array.Copy(request.PDUFrame.Data, 2, arrTemp, 0, 2);
 
             UInt16 quantity = Modbus.Convert.ConvertToUInt16(arrTemp);
             coils = new State[quantity];
 
-            while (_flgBusy)
+            if (_flgBusy == true)
             {
-                // Если идёт транзакция ждём окончания
+                throw new Exception(String.Format(
+                    "Попытка выполнить запрос (код функции 0x1) к серверу {0}, во время выполнения предыдущего",
+                    Name));
             }
 
-            // Устанавливаем начало транзакции
-            StartTransaction();
-    
-            // Отправляем запрос
-            Modbus.OSIModel.DataLinkLayer.RequestError error =
-                _dataLinkObject.SendMessage(request, out answer);
-
-            switch (error)
+            for (int count = 0; count < TotalAttempts; count++)
             {
-                case Modbus.OSIModel.DataLinkLayer.RequestError.NoError:
-                    {
-                        // Разбираем сообщение на предмет ошибок
-                        if (IsError(request, answer, out result))
-                        {
-                            // Ошибка была
-                            break;
-                        }
-                        else
-                        {
-                            // Ошибки нет возвращаем результат выполнения запроса
-                            // Проверяем содержимое посылки
-                            // Рассчитываем необходимое количество байт для передачи состояний реле
-                            int length = quantity / 8;
+                // Устанавливаем начало транзакции
+                StartTransaction();
 
-                            if (quantity % 8 != 0)
-                            {
-                                ++length;
-                            }
+                // Отправляем запрос
+                Modbus.OSIModel.DataLinkLayer.RequestError error =
+                    _dataLinkObject.SendMessage(request, out answer);
 
-                            if ((int)answer.PDUFrame.Data[0] != length)
+                switch (error)
+                {
+                    case Modbus.OSIModel.DataLinkLayer.RequestError.NoError:
+                        {
+                            // Разбираем сообщение на предмет ошибок
+                            if (IsError(request, answer, out result))
                             {
-                                result = new Message.Result(Error.DataFormatError,
-                                    String.Format(
-                                    "Количество байт {0} в сообщении не равно требуемому {1} для передачи состояний реле в количестве {2}",
-                                    answer.PDUFrame.Data[0], length, quantity),
-                                    request, answer);
+                                // Ошибка была
+                                break;
                             }
                             else
                             {
-                                Byte data, temp;
-                                
-                                for (int i = 0; i < answer.PDUFrame.Data[0]; i++)
+                                // Ошибки нет возвращаем результат выполнения запроса
+                                // Проверяем содержимое посылки
+                                // Рассчитываем необходимое количество байт для передачи состояний реле
+                                int length = quantity / 8;
+
+                                if (quantity % 8 != 0)
                                 {
-                                    data = answer.PDUFrame.Data[i + 1];
+                                    ++length;
+                                }
 
-                                    for (int y = 0; y < 8; y++)
+                                if ((int)answer.PDUFrame.Data[0] != length)
+                                {
+                                    result = new Message.Result(Error.DataFormatError,
+                                        String.Format(
+                                        "Количество байт {0} в сообщении не равно требуемому {1} для передачи состояний реле в количестве {2}",
+                                        answer.PDUFrame.Data[0], length, quantity),
+                                        request, answer);
+                                }
+                                else
+                                {
+                                    Byte data, temp;
+
+                                    for (int i = 0; i < answer.PDUFrame.Data[0]; i++)
                                     {
-                                        if (8 * i + y < quantity)
-                                        {
-                                            temp = (Byte)(data >> y);
+                                        data = answer.PDUFrame.Data[i + 1];
 
-                                            if ((temp & 0x01) == 0x01)
+                                        for (int y = 0; y < 8; y++)
+                                        {
+                                            if (8 * i + y < quantity)
                                             {
-                                                coils[(8 * i + y)] = State.On;
-                                            }
-                                            else
-                                            {
-                                                coils[(8 * i + y)] = State.Off;
+                                                temp = (Byte)(data >> y);
+
+                                                if ((temp & 0x01) == 0x01)
+                                                {
+                                                    coils[(8 * i + y)] = State.On;
+                                                }
+                                                else
+                                                {
+                                                    coils[(8 * i + y)] = State.Off;
+                                                }
                                             }
                                         }
                                     }
+
+                                    result = new Message.Result(Error.NoError, String.Empty,
+                                        request, answer);
                                 }
+                                break;
                             }
-                            result = new Message.Result(Error.NoError, String.Empty,
-                                request, answer);
-                            
+                        }
+                    case Modbus.OSIModel.DataLinkLayer.RequestError.TimeOut:
+                        {
+                            // Таймаут ответа
+                            result = new Modbus.OSIModel.Message.Result(Error.TimeOut,
+                                "Ответ не был получен в заданное время", request, null);
                             break;
                         }
-                    }
-                case Modbus.OSIModel.DataLinkLayer.RequestError.TimeOut:
-                    {
-                        // Таймаут ответа
-                        result = new Modbus.OSIModel.Message.Result(Error.TimeOut,
-                            "Ответ не был получен в заданное время", request, null);
-                        break;
-                    }
-                default:
-                    {
-                        // Ошибка уровня Datalink layer.
-                        result = new Modbus.OSIModel.Message.Result(Error.ReciveMessageError,
-                            error.ToString(), request, null);
-                        break;
-                    }
+                    default:
+                        {
+                            // Ошибка уровня Datalink layer.
+                            result = new Modbus.OSIModel.Message.Result(Error.ReciveMessageError,
+                                error.ToString(), request, null);
+                            break;
+                        }
+                }
+                StopTransaction();
+
+                // При таймауте запроса повторяем запрос 
+                if (result.Error != Error.TimeOut)
+                    break;
             }
-            StopTransaction();
+
             return result;
         }
-        //---------------------------------------------------------------------------
         /// <summary>
         /// Функция 0х1. Чтение реле
         /// </summary>
@@ -316,23 +339,23 @@ namespace Modbus.OSIModel.ApplicationLayer.Master
         /// <returns>Запрос на чтение реле</returns>
         public Modbus.OSIModel.Message.Result ReadCoils(
             byte addressSlave,
-            UInt16 startingAddress, 
-            UInt16 quantity, 
+            UInt16 startingAddress,
+            UInt16 quantity,
             out State[] coils)
         {
             Modbus.OSIModel.Message.Message request;
-            
+
             // Подготавливаем данные
             List<byte> array = new List<byte>();
             array.AddRange(Modbus.Convert.ConvertToBytes(startingAddress));
             array.AddRange(Modbus.Convert.ConvertToBytes(quantity));
-            
-            request = 
+
+            request =
                 new Modbus.OSIModel.Message.Message(addressSlave, 0x1, array.ToArray());
-            
+
             // Выполняем запрос
             Message.Result result = ReadCoils(request, out coils);
-            
+
             return result;
         }
         /// <summary>
@@ -349,7 +372,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Master
             UInt16 StartingAddress, UInt16 Quantity, out State[] inputs)
         {
             Modbus.OSIModel.Message.Message request, answer;
-            Modbus.OSIModel.Message.Result result;
+            Modbus.OSIModel.Message.Result result = null;
             inputs = null;
             String message;
 
@@ -369,101 +392,111 @@ namespace Modbus.OSIModel.ApplicationLayer.Master
                 new Modbus.OSIModel.Message.Message(AddressSlave, 0x2, array.ToArray());
 
             // Выполняем запрос
-            while (_flgBusy)
+            if (_flgBusy == true)
             {
-                // Если идёт транзакция ждём окончания
+                throw new Exception(String.Format(
+                    "Попытка выполнить запрос (код функции 0x2) к серверу {0}, во время выполнения предыдущего",
+                    Name));
             }
 
-            // Устанавливаем начало транзакции
-            StartTransaction();
-
-            // Отправляем запрос
-            Modbus.OSIModel.DataLinkLayer.RequestError error =
-                _dataLinkObject.SendMessage(request, out answer);
-
-            switch (error)
+            for (int count = 0; count < TotalAttempts; count++)
             {
-                case Modbus.OSIModel.DataLinkLayer.RequestError.NoError:
-                    {
-                        // Разбираем сообщение на предмет ошибок
-                        if (IsError(request, answer, out result))
-                        {
-                            // Ошибка была
-                            break;
-                        }
-                        else
-                        {
-                            // Ошибки нет возвращаем результат выполнения запроса
-                            // Проверяем содержимое посылки
-                            // Рассчитываем необходимое количество байт для передачи состояний дискретных входов
-                            int length = Quantity / 8;
 
-                            if (Quantity % 8 != 0)
-                            {
-                                ++length;
-                            }
+                // Устанавливаем начало транзакции
+                StartTransaction();
 
-                            if ((int)answer.PDUFrame.Data[0] != length)
+                // Отправляем запрос
+                Modbus.OSIModel.DataLinkLayer.RequestError error =
+                    _dataLinkObject.SendMessage(request, out answer);
+
+                switch (error)
+                {
+                    case Modbus.OSIModel.DataLinkLayer.RequestError.NoError:
+                        {
+                            // Разбираем сообщение на предмет ошибок
+                            if (IsError(request, answer, out result))
                             {
-                                result = new Message.Result(
-                                    Error.DataFormatError,
-                                    String.Format("Количество байт {0} в сообщении не равно требуемому {1} для передачи состояний реле в количестве {2}",
-                                    answer.PDUFrame.Data[0], 
-                                    length, 
-                                    Quantity),
-                                    request, 
-                                    answer);
+                                // Ошибка была
+                                break;
                             }
                             else
                             {
-                                Byte data, temp;
-                                inputs = new State[Quantity];
+                                // Ошибки нет возвращаем результат выполнения запроса
+                                // Проверяем содержимое посылки
+                                // Рассчитываем необходимое количество байт для передачи состояний дискретных входов
+                                int length = Quantity / 8;
 
-                                for (int i = 0; i < answer.PDUFrame.Data[0]; i++)
+                                if (Quantity % 8 != 0)
                                 {
-                                    data = answer.PDUFrame.Data[i + 1];
+                                    ++length;
+                                }
 
-                                    for (int y = 0; y < 8; y++)
+                                if ((int)answer.PDUFrame.Data[0] != length)
+                                {
+                                    result = new Message.Result(
+                                        Error.DataFormatError,
+                                        String.Format("Количество байт {0} в сообщении не равно требуемому {1} для передачи состояний реле в количестве {2}",
+                                        answer.PDUFrame.Data[0],
+                                        length,
+                                        Quantity),
+                                        request,
+                                        answer);
+                                }
+                                else
+                                {
+                                    Byte data, temp;
+                                    inputs = new State[Quantity];
+
+                                    for (int i = 0; i < answer.PDUFrame.Data[0]; i++)
                                     {
-                                        if (8 * i + y < Quantity)
-                                        {
-                                            temp = (Byte)(data >> y);
+                                        data = answer.PDUFrame.Data[i + 1];
 
-                                            if ((temp & 0x01) == 0x01)
+                                        for (int y = 0; y < 8; y++)
+                                        {
+                                            if (8 * i + y < Quantity)
                                             {
-                                                inputs[(8 * i + y)] = State.On;
-                                            }
-                                            else
-                                            {
-                                                inputs[(8 * i + y)] = State.Off;
+                                                temp = (Byte)(data >> y);
+
+                                                if ((temp & 0x01) == 0x01)
+                                                {
+                                                    inputs[(8 * i + y)] = State.On;
+                                                }
+                                                else
+                                                {
+                                                    inputs[(8 * i + y)] = State.Off;
+                                                }
                                             }
                                         }
                                     }
                                 }
+
+                                result = new Message.Result(Error.NoError, String.Empty,
+                                    request, answer);
+
+                                break;
                             }
-
-                            result = new Message.Result(Error.NoError, String.Empty,
-                                request, answer);
-
+                        }
+                    case Modbus.OSIModel.DataLinkLayer.RequestError.TimeOut:
+                        {
+                            // Таймаут ответа
+                            result = new Modbus.OSIModel.Message.Result(Error.TimeOut,
+                                "Ответ не был получен в заданное время", request, null);
                             break;
                         }
-                    }
-                case Modbus.OSIModel.DataLinkLayer.RequestError.TimeOut:
-                    {
-                        // Таймаут ответа
-                        result = new Modbus.OSIModel.Message.Result(Error.TimeOut,
-                            "Ответ не был получен в заданное время", request, null);
-                        break;
-                    }
-                default:
-                    {
-                        // Ошибка уровня Datalink layer.
-                        result = new Modbus.OSIModel.Message.Result(Error.ReciveMessageError,
-                            error.ToString(), request, null);
-                        break;
-                    }
+                    default:
+                        {
+                            // Ошибка уровня Datalink layer.
+                            result = new Modbus.OSIModel.Message.Result(Error.ReciveMessageError,
+                                error.ToString(), request, null);
+                            break;
+                        }
+                }
+                StopTransaction();
+
+                // При таймауте запроса повторяем запрос 
+                if (result.Error != Error.TimeOut)
+                    break;
             }
-            StopTransaction();
             return result;
         }
         /// <summary>
@@ -474,16 +507,17 @@ namespace Modbus.OSIModel.ApplicationLayer.Master
         /// <param name="values">Прочитанные занчения регистров</param>
         /// <returns>Результат выполения операции</returns>
         public Message.Result ReadHoldingRegisters(
-            Message.Message request, 
+            Message.Message request,
             out UInt16[] values)
         {
             Modbus.OSIModel.Message.Message answer;
-            Modbus.OSIModel.Message.Result result;
+            Modbus.OSIModel.Message.Result result = null;
 
             Byte[] arr = new byte[2];
             Array.Copy(request.PDUFrame.Data, 2, arr, 0, 2);
             UInt16 quantity = Modbus.Convert.ConvertToUInt16(arr);
 
+            values = new ushort[0];
 
             // Проверяем состояние сервера
             if (_flgBusy == true)
@@ -492,7 +526,8 @@ namespace Modbus.OSIModel.ApplicationLayer.Master
                     "Попытка выполнить запрос (код функции 0x3) к серверу {0}, во время выполнения предыдущего",
                     Name));
             }
-            else
+
+            for (int count = 0; count < TotalAttempts; count++)
             {
                 // Устанавливаем начало транзакции
                 StartTransaction();
@@ -564,8 +599,11 @@ namespace Modbus.OSIModel.ApplicationLayer.Master
                         }
                 }
                 StopTransaction();
-                return result;
+                // При таймауте запроса повторяем запрос 
+                if (result.Error != Error.TimeOut)
+                    break;
             }
+            return result;
         }
         /// <summary>
         /// Функция 0х3. Читает holding-регистры
@@ -577,11 +615,11 @@ namespace Modbus.OSIModel.ApplicationLayer.Master
         /// <param name="values">Значения прочитанных регистров</param>
         /// <returns>Результат выполения операции</returns>
         public Message.Result ReadHoldingRegisters(
-            byte AddressSlave, 
-            ushort StartingAddress, 
-            ushort Quantity, 
+            byte AddressSlave,
+            ushort StartingAddress,
+            ushort Quantity,
             out ushort[] values)
-        {            
+        {
             Message.PDU frame = new Message.PDU();
             frame.Function = 0x3;
             frame.AddDataBytesRange(Convert.ConvertToBytes(StartingAddress));
@@ -604,7 +642,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Master
         {
             string message;
             Modbus.OSIModel.Message.Message request;
-            
+
             // Данный запрос не может быть широковещательным
             if (addressSlave == 0)
             {
@@ -625,14 +663,13 @@ namespace Modbus.OSIModel.ApplicationLayer.Master
                 }
                 else
                 {
-                    message = String.Format("Количество регистров для чтения {0}, должно быть от 1...125", 
+                    message = String.Format("Количество регистров для чтения {0}, должно быть от 1...125",
                         quantity);
                     throw new ArgumentOutOfRangeException("quantity", message);
                 }
             }
             return request;
         }
-        //---------------------------------------------------------------------------
         /// <summary>
         /// Функция 0х4. Читает входные регистры
         /// </summary>
@@ -648,7 +685,9 @@ namespace Modbus.OSIModel.ApplicationLayer.Master
             string message;
             Modbus.OSIModel.Message.Message request;
             Modbus.OSIModel.Message.Message answer;
-            Modbus.OSIModel.Message.Result result;
+            Modbus.OSIModel.Message.Result result = null;
+
+            values = new ushort[0];
 
             // Данный запрос не может быть широковещательным
             if (AddressSlave == 0)
@@ -683,7 +722,8 @@ namespace Modbus.OSIModel.ApplicationLayer.Master
                     "Попытка выполнить запрос (код функции 0x4) к серверу {0}, во время выполнения предыдущего",
                     Name));
             }
-            else
+
+            for (int count = 0; count < TotalAttempts; count++)
             {
                 // Устанавливаем начало транзакции
                 StartTransaction();
@@ -755,8 +795,12 @@ namespace Modbus.OSIModel.ApplicationLayer.Master
                         }
                 }
                 StopTransaction();
-                return result;
+
+                // При таймауте запроса повторяем запрос 
+                if (result.Error != Error.TimeOut)
+                    break;
             }
+            return result;
         }
         /// <summary>
         /// Функция 0х5. Устанавливает реле в состояние вкл./выкл. 
@@ -766,12 +810,12 @@ namespace Modbus.OSIModel.ApplicationLayer.Master
         /// в котором нужно установить состояние реле</param>
         /// <param name="addressCoil">Адрес целевого реле</param>
         /// <param name="state">Состояние реле: 0х00FF-ON, 0x0000-OFF</param>
-        public Message.Result WriteSingleCoil(byte addressSlave, 
+        public Message.Result WriteSingleCoil(byte addressSlave,
             UInt16 addressCoil, ref State state)
         {
             string message;
             Modbus.OSIModel.Message.Message request, answer;
-            Modbus.OSIModel.Message.Result result;
+            Modbus.OSIModel.Message.Result result = null;
 
             // Проверяем состояние сервера
             if (_flgBusy == true)
@@ -783,7 +827,8 @@ namespace Modbus.OSIModel.ApplicationLayer.Master
                 //    "Попытка выполнить запрос (код функции 0x5) к серверу {0}, во время выполнения предыдущего",
                 //    Name));
             }
-            else
+
+            for (int i = 0; i < TotalAttempts; i++)
             {
                 // Данный запрос не может быть широковещательным
                 if (addressSlave == 0)
@@ -791,112 +836,112 @@ namespace Modbus.OSIModel.ApplicationLayer.Master
                     message = "Функция с кодом 0х5, не может быть отправлена как широковещательный запрос";
                     throw new Exception(message);
                 }
-                else
+
+                // Устанавливаем начало транзакции
+                StartTransaction();
+
+                // Подготавливаем данные
+                List<byte> array = new List<byte>();
+                array.AddRange(Modbus.Convert.ConvertToBytes(addressCoil));
+                //Byte[] state;
+
+                //if (ValueCoil == Modbus.Device.CoilState.ON)
+                //{
+                //    state = new byte[2] { 0xFF, 0x00 };
+                //    array.AddRange(state);
+                //}
+                //else
+                //{
+                //    state = new byte[2] { 0x00, 0x00 };
+                //    array.AddRange(state);
+                //}
+                array.AddRange(Modbus.Convert.StateToArray(state));
+
+                // Отправляем запрос
+                request = new Modbus.OSIModel.Message.Message(addressSlave, 0x5, array.ToArray());
+
+                // Отправляем запрос
+                Modbus.OSIModel.DataLinkLayer.RequestError error =
+                    _dataLinkObject.SendMessage(request, out answer);
+
+                switch (error)
                 {
-
-                    // Устанавливаем начало транзакции
-                    StartTransaction();
-
-                    // Подготавливаем данные
-                    List<byte> array = new List<byte>();
-                    array.AddRange(Modbus.Convert.ConvertToBytes(addressCoil));
-                    //Byte[] state;
-                    
-                    //if (ValueCoil == Modbus.Device.CoilState.ON)
-                    //{
-                    //    state = new byte[2] { 0xFF, 0x00 };
-                    //    array.AddRange(state);
-                    //}
-                    //else
-                    //{
-                    //    state = new byte[2] { 0x00, 0x00 };
-                    //    array.AddRange(state);
-                    //}
-                    array.AddRange(Modbus.Convert.StateToArray(state));
-
-                    // Отправляем запрос
-                    request = new Modbus.OSIModel.Message.Message(addressSlave, 0x5, array.ToArray());
-
-                    // Отправляем запрос
-                    Modbus.OSIModel.DataLinkLayer.RequestError error =
-                        _dataLinkObject.SendMessage(request, out answer);
-
-                    switch (error)
-                    {
-                        case Modbus.OSIModel.DataLinkLayer.RequestError.NoError:
+                    case Modbus.OSIModel.DataLinkLayer.RequestError.NoError:
+                        {
+                            // Разбираем сообщение на предмет ошибок
+                            if (IsError(request, answer, out result))
                             {
-                                // Разбираем сообщение на предмет ошибок
-                                if (IsError(request, answer, out result))
+                                // Ошибка была
+                                break;
+                            }
+                            else
+                            {
+                                // Ошибки нет возвращаем результат выполнения запроса
+                                // Проверяем длину данных
+                                if (answer.PDUFrame.Data.Length == 4)
                                 {
-                                    // Ошибка была
-                                    break;
-                                }
-                                else
-                                {
-                                    // Ошибки нет возвращаем результат выполнения запроса
-                                    // Проверяем длину данных
-                                    if (answer.PDUFrame.Data.Length == 4)
+                                    // Длина корректана проверяем
+                                    // адрес дискретного входа
+                                    List<Byte> arr = new List<byte>();
+                                    arr.Add(answer.PDUFrame.Data[0]);
+                                    arr.Add(answer.PDUFrame.Data[1]);
+                                    UInt16 value = Convert.ConvertToUInt16(arr.ToArray());
+                                    if (value == addressCoil)
                                     {
-                                        // Длина корректана проверяем
-                                        // адрес дискретного входа
-                                        List<Byte> arr = new List<byte>();
-                                        arr.Add(answer.PDUFrame.Data[0]);
-                                        arr.Add(answer.PDUFrame.Data[1]);
-                                        UInt16 value = Convert.ConvertToUInt16(arr.ToArray());
-                                        if (value == addressCoil)
-                                        {
-                                            // Адрес верный
-                                            // получаем новое состояние реле
-                                            arr.Clear();
-                                            arr.Add(answer.PDUFrame.Data[2]);
-                                            arr.Add(answer.PDUFrame.Data[3]);
-                                            state = Convert.ValueToState(arr.ToArray());
-                                            result = new Modbus.OSIModel.Message.Result(Error.NoError,
-                                                String.Empty, request, answer);
-                                        }
-                                        else
-                                        {
-                                            // Адрес дискретного входа отличается от адреса в запросе
-                                            result = new Modbus.OSIModel.Message.Result(Error.DataFormatError,
-                                                String.Format(
-                                                "Адрес реле в запросе {0} не соответствует адерсу реле в ответе {1}", 
-                                                addressCoil, value), 
-                                                request, answer);
-                                        }
+                                        // Адрес верный
+                                        // получаем новое состояние реле
+                                        arr.Clear();
+                                        arr.Add(answer.PDUFrame.Data[2]);
+                                        arr.Add(answer.PDUFrame.Data[3]);
+                                        state = Convert.ValueToState(arr.ToArray());
+                                        result = new Modbus.OSIModel.Message.Result(Error.NoError,
+                                            String.Empty, request, answer);
                                     }
                                     else
                                     {
-                                        // Некорректная длина данных в ответе
+                                        // Адрес дискретного входа отличается от адреса в запросе
                                         result = new Modbus.OSIModel.Message.Result(Error.DataFormatError,
                                             String.Format(
-                                            "Неверная длина данных {0} в ответе, а ожидается 4",
-                                            answer.PDUFrame.Data.Length),
+                                            "Адрес реле в запросе {0} не соответствует адерсу реле в ответе {1}",
+                                            addressCoil, value),
                                             request, answer);
                                     }
-                                    break;
                                 }
-                            }
-                        case Modbus.OSIModel.DataLinkLayer.RequestError.TimeOut:
-                            {
-                                // Таймаут ответа
-                                result = new Modbus.OSIModel.Message.Result(Error.TimeOut,
-                                    "Ответ не был получен в заданное время", request, null);
+                                else
+                                {
+                                    // Некорректная длина данных в ответе
+                                    result = new Modbus.OSIModel.Message.Result(Error.DataFormatError,
+                                        String.Format(
+                                        "Неверная длина данных {0} в ответе, а ожидается 4",
+                                        answer.PDUFrame.Data.Length),
+                                        request, answer);
+                                }
                                 break;
                             }
-                        default:
-                            {
-                                // Ошибка уровня Datalink layer.
-                                result = new Modbus.OSIModel.Message.Result(Error.ReciveMessageError,
-                                    error.ToString(), request, null);
-                                break;
-                            }
-                    }
-                    StopTransaction();
-                    return result;
+                        }
+                    case Modbus.OSIModel.DataLinkLayer.RequestError.TimeOut:
+                        {
+                            // Таймаут ответа
+                            result = new Modbus.OSIModel.Message.Result(Error.TimeOut,
+                                "Ответ не был получен в заданное время", request, null);
+                            break;
+                        }
+                    default:
+                        {
+                            // Ошибка уровня Datalink layer.
+                            result = new Modbus.OSIModel.Message.Result(Error.ReciveMessageError,
+                                error.ToString(), request, null);
+                            break;
+                        }
                 }
+                StopTransaction();
+
+                // При таймауте запроса повторяем запрос 
+                if (result.Error != Error.TimeOut)
+                    break;
             }
+            return result;
         }
-        //---------------------------------------------------------------------------
         /// <summary>
         /// Функция 0x6. Записывает значение в одиночный регистр
         /// хранения в удалённом устройстве
@@ -908,7 +953,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Master
             ref UInt16 value)
         {
             Modbus.OSIModel.Message.Message answer;
-            Modbus.OSIModel.Message.Result result;
+            Modbus.OSIModel.Message.Result result = null;
 
             // Проверяем состояние сервера
             if (_flgBusy == true)
@@ -921,7 +966,8 @@ namespace Modbus.OSIModel.ApplicationLayer.Master
                 //    "Попытка выполнить запрос (код функции 0x6) к серверу {0}, во время выполнения предыдущего",
                 //    Name));
             }
-            else
+
+            for (int i = 0; i < TotalAttempts; i++)
             {
                 // Устанавливаем начало транзакции
                 StartTransaction();
@@ -959,10 +1005,10 @@ namespace Modbus.OSIModel.ApplicationLayer.Master
                                     Byte[] arr = new Byte[2];
                                     Array.Copy(answer.PDUFrame.Data, 0, arr, 0, 2);
                                     value = Modbus.Convert.ConvertToUInt16(arr);
-                                    
+
                                     Array.Copy(request.PDUFrame.Data, 0, arr, 0, 2);
                                     UInt16 var = Modbus.Convert.ConvertToUInt16(arr);
-                                    
+
                                     if (value != var)
                                     {
                                         result = new Message.Result(Error.DataFormatError,
@@ -999,8 +1045,12 @@ namespace Modbus.OSIModel.ApplicationLayer.Master
                         }
                 }
                 StopTransaction();
-                return result;
+
+                // При таймауте запроса повторяем запрос 
+                if (result.Error != Error.TimeOut)
+                    break;
             }
+            return result;
         }
         /// <summary>
         /// Функция 0x6. Формирует запрос на запись регистра хранения
@@ -1012,12 +1062,12 @@ namespace Modbus.OSIModel.ApplicationLayer.Master
         /// <param name="value">значение регистра</param>
         /// <returns>Modus-запрос</returns>        
         public Message.Result WriteSingleRegister(
-            byte addressSlave, 
-            ushort addressRegister, 
+            byte addressSlave,
+            ushort addressRegister,
             ref ushort value)
         {
             Message.Message msg = Device.WriteSingleRegister(addressSlave, addressRegister, value);
-            return WriteSingleRegister(msg, ref value); 
+            return WriteSingleRegister(msg, ref value);
         }
         /// <summary>
         /// Функция 0x6. Формирует запрос на запись регистра хранения
@@ -1042,7 +1092,6 @@ namespace Modbus.OSIModel.ApplicationLayer.Master
             request = new Modbus.OSIModel.Message.Message(addressSlave, 0x6, array.ToArray());
             return request;
         }
-        //---------------------------------------------------------------------------
         /// <summary>
         /// Функция 0x7. Только для последовательной линии.
         /// Смысл функции не доконца понял.
@@ -1052,7 +1101,6 @@ namespace Modbus.OSIModel.ApplicationLayer.Master
         {
             throw new NotImplementedException();
         }
-        //---------------------------------------------------------------------------
         /// <summary>
         /// Функция 0х7. Только для последовательной линии.
         /// Диагностическая функция
@@ -1065,7 +1113,6 @@ namespace Modbus.OSIModel.ApplicationLayer.Master
         //{
         //    throw new NotImplementedException();
         //}
-        //---------------------------------------------------------------------------
         /// <summary>
         /// Функция 11. Только для последовательной линии.
         /// Не разбирался с этой функцией
@@ -1075,7 +1122,6 @@ namespace Modbus.OSIModel.ApplicationLayer.Master
         {
             throw new NotImplementedException();
         }
-        //---------------------------------------------------------------------------
         /// <summary>
         /// Функция 12 (0х0С). Только для последовательной линии.
         /// Не разбирался с этой функцией
@@ -1085,7 +1131,6 @@ namespace Modbus.OSIModel.ApplicationLayer.Master
         {
             throw new NotImplementedException();
         }
-        //---------------------------------------------------------------------------
         /// <summary>
         /// Функция 15 (0x0F). Устанавливет состояния массива реле 
         /// </summary>
@@ -1099,7 +1144,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Master
             String message;
             Message.Message request;
             Modbus.OSIModel.Message.Message answer;
-            Modbus.OSIModel.Message.Result result;
+            Modbus.OSIModel.Message.Result result = null;
 
             if ((coils.Length == 0) && (coils.Length > 0x7B1))
             {
@@ -1140,7 +1185,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Master
             data.Add((Byte)quantity); // Количество байт 
             // Значения регистров
             Byte dataByte;
-          
+
             for (int i = 0; i < quantity; i++)
             {
                 dataByte = 0;
@@ -1169,7 +1214,8 @@ namespace Modbus.OSIModel.ApplicationLayer.Master
                     String.Format("Попытка выполнить запрос (код функции 0x0F) к серверу {0}, во время выполнения предыдущего",
                     Name), null, null);
             }
-            else
+
+            for (int i = 0; i < TotalAttempts; i++)
             {
                 // Устанавливаем начало транзакции
                 StartTransaction();
@@ -1253,10 +1299,13 @@ namespace Modbus.OSIModel.ApplicationLayer.Master
                         }
                 }
                 StopTransaction();
-                return result;
-            }   
+
+                // При таймауте запроса повторяем запрос 
+                if (result.Error != Error.TimeOut)
+                    break;
+            }
+            return result;
         }
-        //---------------------------------------------------------------------------
         /// <summary>
         /// Функция 16 (0х10). Записывает значения массива регистров
         /// </summary>
@@ -1272,16 +1321,16 @@ namespace Modbus.OSIModel.ApplicationLayer.Master
             String message;
             Message.Message request;
             Modbus.OSIModel.Message.Message answer;
-            Modbus.OSIModel.Message.Result result;
+            Modbus.OSIModel.Message.Result result = null;
 
             if ((value.Length == 0) && (value.Length > 124))
             {
                 message = String.Format(
-                    "Длина блока регистров {0} выходит за пределы диапазона 1...124", 
+                    "Длина блока регистров {0} выходит за пределы диапазона 1...124",
                     value.Length);
                 throw new ArgumentOutOfRangeException("Quantity", message);
             }
-            
+
             // Проверяем выход блока данных за граници диапазона допустимых адресов
             if ((StartingAddress + value.Length) > 0xFFFF)
             {
@@ -1312,7 +1361,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Master
                     String.Format("Попытка выполнить запрос (код функции 0x10) к серверу {0}, во время выполнения предыдущего",
                     Name), null, null);
             }
-            else
+            for (int i = 0; i < TotalAttempts; i++)
             {
                 // Устанавливаем начало транзакции
                 StartTransaction();
@@ -1348,7 +1397,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Master
                                     Byte[] arr = new Byte[2];
                                     Array.Copy(answer.PDUFrame.Data, 0, arr, 0, 2);
                                     UInt16 var = Modbus.Convert.ConvertToUInt16(arr);
-                                    
+
                                     if (var != StartingAddress)
                                     {
                                         result = new Message.Result(Error.DataFormatError,
@@ -1396,8 +1445,12 @@ namespace Modbus.OSIModel.ApplicationLayer.Master
                         }
                 }
                 StopTransaction();
-                return result;
-            }           
+
+                // При таймауте запроса повторяем запрос 
+                if (result.Error != Error.TimeOut)
+                    break;
+            }
+            return result;
         }
         /// <summary>
         /// Функция 16 (0х10). Записывает значения массива регистров
@@ -1486,7 +1539,7 @@ namespace Modbus.OSIModel.ApplicationLayer.Master
             Byte code, Byte[] data)
         {
             Modbus.OSIModel.Message.Message request, answer;
-            Modbus.OSIModel.Message.Result result;
+            Modbus.OSIModel.Message.Result result = null;
 
             // Проверяем состояние сервера
             if (_flgBusy == true)
@@ -1495,12 +1548,13 @@ namespace Modbus.OSIModel.ApplicationLayer.Master
                     "Попытка выполнить запрос User defined к серверу {0}, во время выполнения предыдущего",
                     Name));
             }
-            else
+
+            for (int i = 0; i < TotalAttempts; i++)
             {
                 StartTransaction();
 
                 request = new Modbus.OSIModel.Message.Message(address, code, data);
- 
+
                 // Отправляем запрос
                 Modbus.OSIModel.DataLinkLayer.RequestError error =
                     _dataLinkObject.SendMessage(request, out answer);
@@ -1539,8 +1593,12 @@ namespace Modbus.OSIModel.ApplicationLayer.Master
                         }
                 }
                 StopTransaction();
-                return result;
+
+                // При таймауте запроса повторяем запрос 
+                if (result.Error != Error.TimeOut)
+                    break;
             }
+            return result;
         }
         /// <summary>
         /// Возвращает интерфейс объекта уровня Datalink layer
@@ -1557,10 +1615,12 @@ namespace Modbus.OSIModel.ApplicationLayer.Master
         {
             return _dataLinkObject;
         }
+
         public Boolean IsBusy()
         {
             return _flgBusy;
         }
+
         #endregion
     }
 }
