@@ -1757,7 +1757,7 @@ namespace NGK.MeasuringDeviceTech.Classes.MeasuringDevice
             sb.Append(Environment.NewLine);
             sb.Append(String.Format("Период опроса канала 2, с: {0}", this.PollingPeriodChannel2.ToString()));
             sb.Append(Environment.NewLine);
-            sb.Append(String.Format("Период опроса УС ИКП СТ, с: {0}", this.PollingPeriodUSIKPST.ToString()));
+            sb.Append(String.Format("Период опроса УСИКПСТ, с: {0}", this.PollingPeriodUSIKPST.ToString()));
             sb.Append(Environment.NewLine);
             sb.Append(String.Format("Токовый шунт, А: {0}", this.CurrentShuntValue.ToString()));
             sb.Append(Environment.NewLine);
