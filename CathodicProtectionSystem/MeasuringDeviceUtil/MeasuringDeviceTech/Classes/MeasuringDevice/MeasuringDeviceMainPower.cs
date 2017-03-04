@@ -186,7 +186,7 @@ namespace NGK.MeasuringDeviceTech.Classes.MeasuringDevice
         [ReadOnly(true)]
         [Category("Параметры УС ИКП СТ")]
         [Description("Состояние устройства УС ИКП СТ Коды аварий приведены ниже:\n 0 - устройство в норме;\n 65535 - нет связи;\n 1 - некорректная функция (не поддерживается Устройством);\n 2 – зарезервировано;\n 3 - не подключен индикатор коррозионных процессов;\n 4 - верификация микросхемы ПЗУ Устройства выявила ошибки (режим конфигурирования);\n 5 - заданная скорость обмена не поддерживается Устройством (режим конфигурирования);\n 6 - данный тип индикатора не обслуживается;\n 7 – индикатор коррозионных процессов не инициализирован;\n 8 – текущая дата некорректна;\n 9 - невозможно определить состояние ИЭ ИКП.")]
-        [DisplayName("Код состояния устройства УС ИКП СТ")]
+        [DisplayName("1. Код состояния устройства УС ИКП СТ")]
         [RefreshProperties(System.ComponentModel.RefreshProperties.All)]
         public UInt16 StatusUSIKPST
         {
@@ -210,7 +210,7 @@ namespace NGK.MeasuringDeviceTech.Classes.MeasuringDevice
         [ReadOnly(true)]
         [Category("Параметры УС ИКП СТ")]
         [Description("Глубина коррозии датчика ИКП с устройства УС ИКП СТ")]
-        [DisplayName("Глубина коррозии УС ИКП СТ, мкм")]
+        [DisplayName("2. Глубина коррозии УС ИКП СТ, мкм")]
         [RefreshProperties(System.ComponentModel.RefreshProperties.All)]
         public UInt16 DepthOfCorrosion
         {
@@ -243,7 +243,7 @@ namespace NGK.MeasuringDeviceTech.Classes.MeasuringDevice
         [ReadOnly(true)]
         [Category("Параметры УС ИКП СТ")]
         [Description("Скорость коррозии датчика ИКП с устройства УС ИКП СТ")]
-        [DisplayName("Скорость коррозии УС ИКП СТ, мкм")]
+        [DisplayName("3. Скорость коррозии УС ИКП СТ, мкм")]
         [RefreshProperties(System.ComponentModel.RefreshProperties.All)]
         public float SpeedOfCorrosion
         {
@@ -267,7 +267,7 @@ namespace NGK.MeasuringDeviceTech.Classes.MeasuringDevice
         [ReadOnly(true)]
         [Category("Параметры УС ИКП СТ")]
         [Description("Состояние пластины датчика №1 скорости коррозии")]
-        [DisplayName("Датчик коррозии №1")]
+        [DisplayName("4. Датчик коррозии №1")]
         [TypeConverter(typeof(BooleanTypeConverter))]
         [RefreshProperties(System.ComponentModel.RefreshProperties.All)]
         public Boolean CorrosionSensor1
@@ -292,7 +292,7 @@ namespace NGK.MeasuringDeviceTech.Classes.MeasuringDevice
         [ReadOnly(true)]
         [Category("Параметры УС ИКП СТ")]
         [Description("Состояние пластины датчика №2 скорости коррозии")]
-        [DisplayName("Датчик коррозии №2")]
+        [DisplayName("5. Датчик коррозии №2")]
         [TypeConverter(typeof(BooleanTypeConverter))]
         [RefreshProperties(System.ComponentModel.RefreshProperties.All)]
         public Boolean CorrosionSensor2
@@ -317,7 +317,7 @@ namespace NGK.MeasuringDeviceTech.Classes.MeasuringDevice
         [ReadOnly(true)]
         [Category("Параметры УС ИКП СТ")]
         [Description("Состояние пластины датчика №3 скорости коррозии")]
-        [DisplayName("Датчик коррозии №3")]
+        [DisplayName("6. Датчик коррозии №3")]
         [TypeConverter(typeof(BooleanTypeConverter))]
         [RefreshProperties(System.ComponentModel.RefreshProperties.All)]
         public Boolean CorrosionSensor3
@@ -334,7 +334,7 @@ namespace NGK.MeasuringDeviceTech.Classes.MeasuringDevice
         #endregion
 
         #region Input Registers
-        //------------------------------------------------------------------------------------------------------
+ 
         /// <summary>
         /// Поляризационный потенциал
         /// </summary>
@@ -343,7 +343,6 @@ namespace NGK.MeasuringDeviceTech.Classes.MeasuringDevice
         /// Input Register
         /// </remarks>
         private float _polarization_potential;
-        //------------------------------------------------------------------------------------------------------
         /// <summary>
         /// Поляризационный потенциал
         /// </summary>
@@ -354,7 +353,7 @@ namespace NGK.MeasuringDeviceTech.Classes.MeasuringDevice
         [ReadOnly(true)]
         [Category("Измеряемые параметры: Потенциалы")]
         [Description("Поляризационный потенциал подземного трубопровода по методу вспомогательного")]
-        [DisplayName("Поляризационный потенциал, В")]
+        [DisplayName("2. Поляризационный потенциал, В")]
         [RefreshProperties(System.ComponentModel.RefreshProperties.All)]
         public float PolarizationPotential
         {
@@ -366,7 +365,6 @@ namespace NGK.MeasuringDeviceTech.Classes.MeasuringDevice
                 OnPropertyChanged(new PropertyChangedEventArgs("PolarizationPotential"));
             }
         }
-        //------------------------------------------------------------------------------------------------------
         /// <summary>
         /// Защитный потенциал
         /// </summary>
@@ -386,7 +384,7 @@ namespace NGK.MeasuringDeviceTech.Classes.MeasuringDevice
         [ReadOnly(true)]
         [Category("Измеряемые параметры: Потенциалы")]
         [Description("Защитный потенциал, В")]
-        [DisplayName("Защитный потенциал, В")]
+        [DisplayName("1. Защитный потенциал, В")]
         [RefreshProperties(System.ComponentModel.RefreshProperties.All)]
         public float ProtectivePotential
         {
@@ -415,9 +413,9 @@ namespace NGK.MeasuringDeviceTech.Classes.MeasuringDevice
         /// </remarks>
         [Browsable(true)]
         [ReadOnly(true)]
-        [Category("Измеряемые параметры")]
+        [Category("Измеряемые параметры: Контрольные напряжения")]
         [Description("Наведённое переменное напряжение на трубопровод от 0 до 100,0 В частотой 50Гц")]
-        [DisplayName("Наведённое напряжение, В")]
+        [DisplayName("1. Наведённое напряжение, В")]
         [RefreshProperties(System.ComponentModel.RefreshProperties.All)]
         public float InducedVoltage
         {
@@ -451,7 +449,7 @@ namespace NGK.MeasuringDeviceTech.Classes.MeasuringDevice
         [ReadOnly(true)]
         [Category("Измеряемые параметры: Токи")]
         [Description("Ток катодной защиты в точке дренажа методом измерения напряжения на внешнем шунте")]
-        [DisplayName("Ток катодной защиты, А")]
+        [DisplayName("1. Ток катодной защиты, А")]
         [RefreshProperties(System.ComponentModel.RefreshProperties.All)]
         public float ProtectiveСurrent
         {
@@ -485,7 +483,7 @@ namespace NGK.MeasuringDeviceTech.Classes.MeasuringDevice
         [ReadOnly(true)]
         [Category("Измеряемые параметры: Токи")]
         [Description("Ток поляризации вспомогательного электрода")]
-        [DisplayName("Ток поляризации, mA")]
+        [DisplayName("2. Ток поляризации, mA")]
         [RefreshProperties(System.ComponentModel.RefreshProperties.All)]
         public float PolarizationСurrent
         {
@@ -522,7 +520,7 @@ namespace NGK.MeasuringDeviceTech.Classes.MeasuringDevice
         [ReadOnly(true)]
         [Category("Измеряемые параметры: Токи")]
         [Description("Ток измерительного канала 1")]
-        [DisplayName("Ток измерительного канала 1 (4-20), mA")]
+        [DisplayName("5. Ток измерительного канала 1 (4-20), mA")]
         [RefreshProperties(System.ComponentModel.RefreshProperties.All)]
         public float CurrentChannel1
         {
@@ -559,7 +557,7 @@ namespace NGK.MeasuringDeviceTech.Classes.MeasuringDevice
         [ReadOnly(true)]
         [Category("Измеряемые параметры: Токи")]
         [Description("Ток измерительного канала 2")]
-        [DisplayName("Ток измерительного канала 2 (4-20), mA")]
+        [DisplayName("6. Ток измерительного канала 2 (4-20), mA")]
         [RefreshProperties(System.ComponentModel.RefreshProperties.All)]
         public float CurrentChannel2
         {
@@ -587,9 +585,9 @@ namespace NGK.MeasuringDeviceTech.Classes.MeasuringDevice
         /// </summary>
         [Browsable(true)]
         [ReadOnly(true)]
-        [Category("Измеряемые параметры")]
+        [Category("Измеряемые параметры: Контрольные напряжения")]
         [Description("Напряжение питания НГК-БИ, В")]
-        [DisplayName("Напряжение питания НГК-БИ, В")]
+        [DisplayName("2. Напряжение питания НГК-БИ, В")]
         [RefreshProperties(System.ComponentModel.RefreshProperties.All)]
         public float SupplyVoltage
         {
@@ -617,9 +615,9 @@ namespace NGK.MeasuringDeviceTech.Classes.MeasuringDevice
         /// </summary>
         [Browsable(true)]
         [ReadOnly(true)]
-        [Category("Измеряемые параметры")]
+        [Category("Измеряемые параметры: Контрольные напряжения")]
         [Description("Напряжение батареи, В")]
-        [DisplayName("Напряжение батареи, В")]
+        [DisplayName("3. Напряжение батареи, В")]
         [RefreshProperties(System.ComponentModel.RefreshProperties.All)]
         public float BattaryVoltage
         {
@@ -680,7 +678,7 @@ namespace NGK.MeasuringDeviceTech.Classes.MeasuringDevice
         [ReadOnly(true)]
         [Category("Измеряемые параметры: Токи")]
         [Description("Ток натекания постоянный, mA")]
-        [DisplayName("Ток натекания постоянный, mA")]
+        [DisplayName("4. Ток натекания постоянный, mA")]
         [RefreshProperties(System.ComponentModel.RefreshProperties.All)]
         public float ReferenceElectrodDcСurrent
         {
@@ -710,7 +708,7 @@ namespace NGK.MeasuringDeviceTech.Classes.MeasuringDevice
         [ReadOnly(true)]
         [Category("Измеряемые параметры: Токи")]
         [Description("Ток натекания переменный, mA")]
-        [DisplayName("Ток натекания переменный, mA")]
+        [DisplayName("3. Ток натекания переменный, mA")]
         [RefreshProperties(System.ComponentModel.RefreshProperties.All)]
         public float ReferenceElectrodeAcСurrent
         {
@@ -725,7 +723,7 @@ namespace NGK.MeasuringDeviceTech.Classes.MeasuringDevice
         #endregion 
 
         #region Discrete Input
-        //------------------------------------------------------------------------------------------------------
+
         /// <summary>
         /// Датчик встрытия НГК-КИП СМ(У)
         /// </summary>
@@ -825,7 +823,7 @@ namespace NGK.MeasuringDeviceTech.Classes.MeasuringDevice
         #endregion
 
         #region Holding Registers
-        //------------------------------------------------------------------------------------------------------
+
         /// <summary>
         /// Номер устройства в стети CAN и адрес устройства в сети Modbus
         /// </summary>
@@ -1333,11 +1331,11 @@ namespace NGK.MeasuringDeviceTech.Classes.MeasuringDevice
                 OnPropertyChanged(new PropertyChangedEventArgs("DateTime"));
             }
         }
-        //------------------------------------------------------------------------------------------------------
+
         #endregion
 
         #region Coils
-        //------------------------------------------------------------------------------------------------------
+
         /// <summary>
         /// Флаг разрешения работы канала измерения поляризационного 
         /// потенциала подземного трубопровода по методу вспомогательного
@@ -1621,7 +1619,7 @@ namespace NGK.MeasuringDeviceTech.Classes.MeasuringDevice
                 OnPropertyChanged(new PropertyChangedEventArgs("AcCurrentRefereceElectrodeEn"));
             }
         }
-        //------------------------------------------------------------------------------------------------------
+
         #endregion
 
         #endregion
