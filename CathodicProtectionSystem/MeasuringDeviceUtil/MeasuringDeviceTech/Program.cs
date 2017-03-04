@@ -4,20 +4,14 @@ using System.Diagnostics;
 using System.Windows.Forms;
 using System.Security.Permissions;
 using AppLog.AppDump;
+using System.Reflection;
 
-//==============================================================================================================
 namespace NGK.MeasuringDeviceTech
 {
-    //==========================================================================================================
-    public enum EventID
-    { }
-    //==========================================================================================================
     static class Program
     {
-        //------------------------------------------------------------------------------------------------------
         private static TraceSource _Trace = new TraceSource(Application.ProductName);
         private static XmlWriterTraceListener _XmlLog;
-        //------------------------------------------------------------------------------------------------------
         /// <summary>
         /// Главная точка входа для приложения.
         /// </summary>
@@ -57,7 +51,6 @@ namespace NGK.MeasuringDeviceTech
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new FormMain(args)); 
         }
-        //------------------------------------------------------------------------------------------------------
         //private static void Application_ThreadException(
         //    object sender, 
         //    System.Threading.ThreadExceptionEventArgs e)
@@ -84,7 +77,6 @@ namespace NGK.MeasuringDeviceTech
         //        }
         //    }
         //}
-        //------------------------------------------------------------------------------------------------------
         // Handle the UI exceptions by showing a dialog box, and asking the user whether
         // or not they wish to abort execution.
         // NOTE: This exception cannot be kept from terminating the application - it can only 
@@ -139,9 +131,5 @@ namespace NGK.MeasuringDeviceTech
                 } 
             }
         }
-        //------------------------------------------------------------------------------------------------------
     }
-    //==========================================================================================================
 }
-//==============================================================================================================
-// End of file

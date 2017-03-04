@@ -35,8 +35,8 @@ namespace NGK.MeasuringDeviceTech.Classes.MeasuringDevice
         [Browsable(true)]
         [ReadOnly(true)]
         [Category("Настройки сети")]
-        [Description("Адрес устройства БИ (при работе по технологическому кабелю)")]
-        [DisplayName(@"Адрес устройства БИ сервис")]
+        [Description("Адрес устройства НГК-БИ (при работе по технологическому кабелю)")]
+        [DisplayName(@"Адрес устройства НГК-БИ сервис")]
         [DefaultValue(typeof(Byte), "1")]
         [RefreshProperties(System.ComponentModel.RefreshProperties.All)]
         public Byte AddressSlave
@@ -56,8 +56,8 @@ namespace NGK.MeasuringDeviceTech.Classes.MeasuringDevice
         [Browsable(true)]
         [ReadOnly(true)]
         [Category("Системные данные")]
-        [Description("Вариант исполнения устройства БИ в составе КИП")]
-        [DisplayName(@"Тип БИ")]
+        [Description("Вариант исполнения устройства НГК-БИ в составе НГК-КИП")]
+        [DisplayName(@"Тип НГК-БИ")]
         [TypeConverter(typeof(TypeConverterTypeOfDeviceNGK))]
         public TYPE_NGK_DEVICE TypeOfDevice
         {
@@ -544,8 +544,8 @@ namespace NGK.MeasuringDeviceTech.Classes.MeasuringDevice
         [Browsable(true)]
         [ReadOnly(true)]
         [Category("Измеряемые параметры")]
-        [Description("Напряжение питания БИ, В")]
-        [DisplayName("Напряжение питания БИ, В")]
+        [Description("Напряжение питания НГК-БИ, В")]
+        [DisplayName("Напряжение питания НГК-БИ, В")]
         [RefreshProperties(System.ComponentModel.RefreshProperties.All)]
         public float SupplyVoltage
         {
@@ -605,7 +605,7 @@ namespace NGK.MeasuringDeviceTech.Classes.MeasuringDevice
         [Browsable(true)]
         [ReadOnly(true)]
         [Category("Измеряемые параметры")]
-        [Description("Температура встроенного датчика, гр.С Только для БИ-У-01")]
+        [Description("Температура встроенного датчика, гр.С Только для НГК-БИ-У-01")]
         [DisplayName("Температура встроенного датчика, гр.С")]
         [RefreshProperties(System.ComponentModel.RefreshProperties.All)]
         public Int16 InternalTemperatureSensor
@@ -731,8 +731,8 @@ namespace NGK.MeasuringDeviceTech.Classes.MeasuringDevice
         [Browsable(true)]
         [ReadOnly(true)]
         [Category("Состояние блока измерений")]
-        [Description("Состояние напряжения притания устройства БИ,  Discretes Input	0x0001")]
-        [DisplayName("Состояние напряжения притания устройства БИ")]
+        [Description("Состояние напряжения притания устройства НГК-БИ,  Discretes Input	0x0001")]
+        [DisplayName("Состояние напряжения притания устройства НГК-БИ")]
         [TypeConverter(typeof(BooleanTypeConverter))]
         [RefreshProperties(System.ComponentModel.RefreshProperties.All)]
         public Boolean SupplyVoltageStatus
@@ -1367,7 +1367,7 @@ namespace NGK.MeasuringDeviceTech.Classes.MeasuringDevice
         [Browsable(true)]
         [ReadOnly(true)]
         [Category("Системные данные")]
-        [Description("Установить системное время и дату в устройстве БИ")]
+        [Description("Установить системное время и дату в устройстве НГК-БИ")]
         [DisplayName("Дата и время")]
         [RefreshProperties(System.ComponentModel.RefreshProperties.All)]
         public DateTime DateTime
@@ -1703,9 +1703,9 @@ namespace NGK.MeasuringDeviceTech.Classes.MeasuringDevice
             sb.Append("СИСТЕМНЫЕ ДАННЫЕ:");
             sb.Append(Environment.NewLine);
             sb.Append(Environment.NewLine);
-            sb.Append("Тип БИ в составе КИП: БИ(У)-01");
+            sb.Append("Тип НГК-БИ в составе НГК-КИП: БИ(У)-01");
             sb.Append(Environment.NewLine);
-            sb.Append(String.Format("Серийный номер БИ в соствае КИП: {0}", this.SerialNumber.ToString()));
+            sb.Append(String.Format("Серийный номер НГК-БИ в соствае НГК-КИП: {0}", this.SerialNumber.ToString()));
             sb.Append(Environment.NewLine);
             sb.Append(String.Format("Код производителя: {0}", this.CodeManufacturer.ToString()));
             sb.Append(Environment.NewLine);
@@ -1738,7 +1738,7 @@ namespace NGK.MeasuringDeviceTech.Classes.MeasuringDevice
             sb.Append("НАСТРОЙКИ СЕТИ:");
             sb.Append(Environment.NewLine);
             sb.Append(Environment.NewLine);
-            sb.Append(String.Format("Адрес устройства БИ сервис: {0}", this.AddressSlave.ToString()));
+            sb.Append(String.Format("Адрес устройства НГК-БИ сервис: {0}", this.AddressSlave.ToString()));
             sb.Append(Environment.NewLine);
             sb.Append(String.Format("Адрес/номер устройства: {0}", this.NetAddress.ToString()));
             sb.Append(Environment.NewLine);
@@ -1763,7 +1763,7 @@ namespace NGK.MeasuringDeviceTech.Classes.MeasuringDevice
             sb.Append(Environment.NewLine);
             sb.Append(Environment.NewLine);
 
-            sb.Append("СОСТОЯНИЕ БИ В СОСТАВЕ НГК-КИП СМ(У):");
+            sb.Append("СОСТОЯНИЕ НГК-БИ В СОСТАВЕ НГК-КИП СМ(У):");
             sb.Append(Environment.NewLine);
             sb.Append(Environment.NewLine);
             sb.Append(String.Format("Датчик вскрытия: {0}", this.CaseOpen.ToString()));
@@ -1797,7 +1797,7 @@ namespace NGK.MeasuringDeviceTech.Classes.MeasuringDevice
             sb.Append(Environment.NewLine);
             sb.Append(String.Format("Напряжение батареи, В: {0}", this.BattaryVoltage.ToString()));
             sb.Append(Environment.NewLine);
-            sb.Append(String.Format("Напряжение питания БИ, В: {0}", this.SupplyVoltage.ToString()));
+            sb.Append(String.Format("Напряжение питания НГК-БИ, В: {0}", this.SupplyVoltage.ToString()));
             sb.Append(Environment.NewLine);
             sb.Append(String.Format("Поляризационный потенциал, В: {0}", this.PolarizationPotential.ToString()));
             sb.Append(Environment.NewLine);
@@ -2260,7 +2260,7 @@ namespace NGK.MeasuringDeviceTech.Classes.MeasuringDevice
                 if (registers.Length != 2)
                 {
                     msg = String.Format(
-                        "Ответ БИ содержит количесво прочитанных регистров {0}, должно быть 2",
+                        "Ответ НГК-БИ содержит количесво прочитанных регистров {0}, должно быть 2",
                         registers.Length);
                     error = new OperationResult(OPERATION_RESULT.INCORRECT_ANSWER, msg);
                 }
@@ -2309,7 +2309,7 @@ namespace NGK.MeasuringDeviceTech.Classes.MeasuringDevice
                 if (registers.Length != 2)
                 {
                     msg = String.Format(
-                        "Ответ БИ содержит количесво прочитанных регистров {0}, должно быть 2",
+                        "Ответ НГК-БИ содержит количесво прочитанных регистров {0}, должно быть 2",
                         registers.Length);
                     error = new OperationResult(OPERATION_RESULT.INCORRECT_ANSWER, msg);
                 }
@@ -2325,7 +2325,7 @@ namespace NGK.MeasuringDeviceTech.Classes.MeasuringDevice
                         if (registers.Length != 2)
                         {
                             msg = String.Format(
-                                "Ответ БИ содержит количесво прочитанных регистров {0}, должно быть 2",
+                                "Ответ НГК-БИ содержит количесво прочитанных регистров {0}, должно быть 2",
                                 registers.Length);
                             error = new OperationResult(OPERATION_RESULT.INCORRECT_ANSWER, msg);
                         }
@@ -2366,8 +2366,8 @@ namespace NGK.MeasuringDeviceTech.Classes.MeasuringDevice
             ref Modbus.OSIModel.ApplicationLayer.Master.Device host,
             out OperationResult error)
         {
-            error = new OperationResult(OPERATION_RESULT.INVALID_OPERATION, 
-                "Операция не применима к версии БИ(У)-01");
+            error = new OperationResult(OPERATION_RESULT.INVALID_OPERATION,
+                "Операция не применима к версии НГК-БИ(У)-01");
             //throw new InvalidOperationException("Операция не применима к версии БИ(У)-01");
 
             //ushort[] registers;
@@ -2396,7 +2396,7 @@ namespace NGK.MeasuringDeviceTech.Classes.MeasuringDevice
         {
             //throw new InvalidOperationException("Операция не применима к версии БИ(У)-01");
             error = new OperationResult(OPERATION_RESULT.INVALID_OPERATION,
-                "Операция не применима к версии БИ(У)-01");
+                "Операция не применима к версии НГК-БИ(У)-01");
         }
         //----------------------------------------------------------------------------
         public void Write_HR_PollingPeriodUSIKPST(
@@ -2861,7 +2861,7 @@ namespace NGK.MeasuringDeviceTech.Classes.MeasuringDevice
                 if (registers.Length != 2)
                 {
                     msg = String.Format(
-                        "Ответ БИ содержит количесво прочитанных регистров {0}, должно быть 2",
+                        "Ответ НГК-БИ содержит количесво прочитанных регистров {0}, должно быть 2",
                         registers.Length);
                     error = new OperationResult(OPERATION_RESULT.INCORRECT_ANSWER, msg);
                 }
