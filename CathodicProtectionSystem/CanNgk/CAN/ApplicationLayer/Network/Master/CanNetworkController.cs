@@ -181,6 +181,11 @@ namespace NGK.CAN.ApplicationLayer.Network.Master
         /// <summary>
         /// Уникальныей идентификатор сети
         /// </summary>
+        [DisplayName("Идентификатор сети")]
+        [Description("Уникальный идентификатор контроллера сети")]
+        [ReadOnly(false)]
+        [Browsable(true)]
+        [Category("Сетевые настройки")]
         public UInt32 NetworkId
         {
             get { return _NetworkId; }
@@ -216,6 +221,11 @@ namespace NGK.CAN.ApplicationLayer.Network.Master
         /// <summary>
         /// Описание сети
         /// </summary>
+        [DisplayName("Наименование сети")]
+        [Description("Наименование сети CAN НГК-ЭХЗ")]
+        [ReadOnly(false)]
+        [Browsable(true)]
+        [Category("Сетевые настройки")]
         public String NetworkName
         {
             get { return _NetworkName; }
@@ -233,6 +243,11 @@ namespace NGK.CAN.ApplicationLayer.Network.Master
         /// <summary>
         /// Состояние сетевого контроллера
         /// </summary>
+        [DisplayName("Состояние контроллера сети")]
+        [Description("Состояние контроллера сети")]
+        [ReadOnly(true)]
+        [Browsable(true)]
+        [Category("Состояние")]
         public Status Status
         {
             get 
@@ -276,6 +291,12 @@ namespace NGK.CAN.ApplicationLayer.Network.Master
         /// </summary>
         /// <remarks>Должно настраивается при старте сервиса Start(). Сервис берёт значение из 
         /// конфигурационного файла</remarks>
+        [Browsable(true)]
+        [ReadOnly(false)]
+        [Category("Настройки")]
+        [DisplayName("Количество попыток доступа к устройству")]
+        [Description("Количество неудачных попыток доступа к устройству, " + 
+            "после чего устройство переходит в состояние неисправности.")]
         public Int32 TotalAttempts
         {
             get { return _TotalAttempts; }
@@ -294,6 +315,11 @@ namespace NGK.CAN.ApplicationLayer.Network.Master
         /// <summary>
         /// Период генерации сообщения SYNC в сеть, мсек
         /// </summary>
+        [Browsable(true)]
+        [ReadOnly(false)]
+        [Category("Настройки")]
+        [DisplayName("Период сигнала SYNC, мc")]
+        [Description("Период генерации сообщения SYNC в сеть")]
         public Double PeriodSync
         {
             get 
@@ -324,13 +350,24 @@ namespace NGK.CAN.ApplicationLayer.Network.Master
         /// <summary>
         /// Время последенй синхронизации сетевого времени
         /// </summary>
+        [DisplayName("Дата и время последней синхронизации времени")]
+        [Description("Возвращает время последней синхронизации сетевого времени")]
+        [ReadOnly(true)]
+        [Browsable(true)]
+        [Category("Сетевые настройки")]
         public DateTime SynchronisationLastTime
         {
             get { return ((ServicePdoReceive)_NetworkServices[ServiceType.PdoReceive]).LastTimeSynchronisation; }
         }
         /// <summary>
-        /// Период синхронизации сетевого времени (сек)
+        /// Период синхронизации сетевого времени (с)
         /// </summary>
+        [DisplayName("Интервал синхронизации времени, с")]
+        [Description("Интервал времени через корорый сервис ServicePdoReceive " +
+            "синхронизирует сетевое время, c")]
+        [ReadOnly(false)]
+        [Browsable(true)]
+        [Category("Сетевые настройки")]
         public int SynchronisationInterval
         {
             get
@@ -350,6 +387,11 @@ namespace NGK.CAN.ApplicationLayer.Network.Master
         /// <summary>
         /// CAN-порт для работы данной сети
         /// </summary>
+        [DisplayName("CAN порт")]
+        [Description("CAN порт для работы с сетью CAN")]
+        [ReadOnly(false)]
+        [Browsable(true)]
+        [Category("Сетевые настройки")]
         public ICanPort CanPort
         {
             set 
@@ -369,6 +411,11 @@ namespace NGK.CAN.ApplicationLayer.Network.Master
        /// <summary>
         /// Список сетевых сервисов конроллера
         /// </summary>
+        [DisplayName("Сетевые сервисы")]
+        [Description("Сетевые сервисы доступные в сетевом контроллере")]
+        [ReadOnly(true)]
+        [Browsable(true)]
+        [Category("Сетевые настройки")]
         public NetworkServicesCollection Services
         {
             get { return _NetworkServices; }
@@ -381,6 +428,11 @@ namespace NGK.CAN.ApplicationLayer.Network.Master
         /// <summary>
         /// Список сетевых устройств
         /// </summary>
+        [DisplayName("Устройства")]
+        [Description("Список сетевых устройств")]
+        [Category("Настройки")]
+        [ReadOnly(false)]
+        [Browsable(true)]
         public DevicesCollection Devices
         {
             get { return _DevicesList; }
