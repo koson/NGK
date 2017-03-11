@@ -154,6 +154,7 @@
     <Compile Include="CAN\DataLinkLayer\CanPort\ICanPort.cs" />
     <Compile Include="CAN\DataLinkLayer\CanPort\PortSettings.cs" />
     <Compile Include="CAN\DataLinkLayer\CanPort\ControllerInfo.cs" />
+    <Compile Include="CAN\DataLinkLayer\CanPort\VirtualPort\VirtualCanPort.cs" />
     <Compile Include="CAN\DataLinkLayer\Message\Error.cs" />
     <Compile Include="CAN\DataLinkLayer\Message\FrameFormat.cs" />
     <Compile Include="CAN\DataLinkLayer\Message\FrameType.cs" />

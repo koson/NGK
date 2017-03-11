@@ -6,6 +6,7 @@ using NGK.CAN.DataLinkLayer.Message;
 using NGK.CAN.ApplicationLayer.Network.Devices;
 using Common.Controlling;
 using Infrastructure.LogManager;
+using System.Diagnostics;
 
 namespace NGK.CAN.ApplicationLayer.Network.Master.Services
 {
@@ -393,10 +394,11 @@ namespace NGK.CAN.ApplicationLayer.Network.Master.Services
                 {
                     // ”стройство не найдено
                     msg = String.Format(
-                        "Network {0}: ѕришло сообщение от устройства с NodeId {1}, " +
-                        "данное устройство не найдено конфигурации в сети. Message - {2}",
+                        "Network {0}: Service Emcy. ѕришло сообщение от устройства с NodeId {1}, " +
+                        "данное устройство не найдено в конфигурации. Message - {2}",
                         this.NetworkController.NetworkName, msghelper.CobeId, message.ToString());
                     //Logger.Error(msg);
+                    Debug.WriteLine(msg, "Error");
                     continue;
                 }
 
