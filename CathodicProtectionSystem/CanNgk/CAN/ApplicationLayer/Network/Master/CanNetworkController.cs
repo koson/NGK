@@ -408,7 +408,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Master
         /// </summary>
         [NonSerialized]
         private NetworkServicesCollection _NetworkServices;
-       /// <summary>
+        /// <summary>
         /// Список сетевых сервисов конроллера
         /// </summary>
         [DisplayName("Сетевые сервисы")]
