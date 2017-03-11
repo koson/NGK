@@ -58,7 +58,8 @@ namespace NGK.CAN.ApplicationLayer.Network.Master
         [ReadOnly(false)]
         [Category("Настройки")]
         [DisplayName("Количество попыток доступа к устройству")]
-        [Description("Количество неудачных попыток доступа к устройству, после чего устройство переходит в состояние неисправности.")]
+        [Description("Количество неудачных попыток доступа к устройству," +
+            "после чего устройство переходит в состояние неисправности.")]
         Int32 TotalAttempts
         {
             get;
@@ -67,7 +68,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Master
         [Browsable(true)]
         [ReadOnly(false)]
         [Category("Настройки")]
-        [DisplayName("Период сигнала SYNC, мсек")]
+        [DisplayName("Период сигнала SYNC, мc")]
         [Description("Период генерации сообщения SYNC в сеть")]
         Double PeriodSync
         {
@@ -127,12 +128,12 @@ namespace NGK.CAN.ApplicationLayer.Network.Master
             get;
         }
         /// <summary>
-        /// Возвращает/устанавливает прериод времени (сек.) через
+        /// Возвращает/устанавливает прериод времени (с) через
         /// корорый сервис ServicePdoReceive синхронизирует сетевое время)
         /// </summary>
         [DisplayName("Интервал синхр. времени")]
-        [Description("Интервал времени (сек.) через корорый сервис ServicePdoReceive " +
-            "синхронизирует сетевое время")]
+        [Description("Интервал времени через корорый сервис ServicePdoReceive " +
+            "синхронизирует сетевое время, c")]
         [ReadOnly(true)]
         [Browsable(true)]
         [Category("Сетевые настройки")]
