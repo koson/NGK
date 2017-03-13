@@ -39,7 +39,8 @@ MVVM:
 1. http://www.youtube.com/watch?v=w5fjub6j3Io
 2. http://megadarja.blogspot.ru/2010/04/mvvm-wpf.html
 3. https://msdn.microsoft.com/ru-ru/magazine/dd419663.aspx
-
+Диалоги
+4. https://www.codeproject.com/articles/36745/showing-dialogs-when-using-the-mvvm-pattern
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Prism:
@@ -170,4 +171,5 @@ https://easyeda.com/
 
 
 https://dmkpress.com/catalog/computer/freeware/978-5-97060-483-0/
+https://dmkpress.com/catalog/electronics/components/978-5-94074-757-4/
 http://dfiles.ru/files/pv023fu7o
