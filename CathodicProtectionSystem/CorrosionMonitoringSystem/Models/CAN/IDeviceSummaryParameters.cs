@@ -25,7 +25,7 @@ namespace NGK.CorrosionMonitoringSystem.Models
         /// Поляризационный потенциал, В (0x2008)
         /// null - если измерение данного параметра отключено
         /// </summary>
-        [DisplayName("\"БОС\", B")]
+        [DisplayName("Потенциал \"БОС\", B")]
         [Description("Поляризационный потенциал, B")]
         [Browsable(true)]
         float? PolarisationPotential { get; }
@@ -40,7 +40,7 @@ namespace NGK.CorrosionMonitoringSystem.Models
         /// Защитный потенциал, В (0x2009)
         /// null - если измерение данного параметра отключено
         /// </summary>
-        [DisplayName("\"СОС\", B")]
+        [DisplayName("Потенциал \"СОС\", B")]
         [Description("Защитный потенциал, B")]
         [Browsable(true)]
         float? ProtectionPotential { get; }

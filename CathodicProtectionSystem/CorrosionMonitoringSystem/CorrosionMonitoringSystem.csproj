@@ -229,7 +229,6 @@
   <ItemGroup>
     <Content Include="ModbusRequests.txt" />
     <None Include="newtorkconfig.bin.nwc">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Resources\LOGO.jpg" />
   </ItemGroup>
