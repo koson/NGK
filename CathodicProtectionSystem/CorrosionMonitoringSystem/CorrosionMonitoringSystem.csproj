@@ -63,10 +63,11 @@
   <ItemGroup>
     <Compile Include="Models\CAN\IDeviceInfo.cs" />
     <Compile Include="Models\CAN\IDeviceSummaryParameters.cs" />
+    <Compile Include="Models\Modbus\RemappingTableKip9810.cs" />
     <Compile Include="Models\Modbus\RemappingTableKip9811.cs" />
     <Compile Include="Services\ModbusService\ModbusServiceContext.cs" />
     <Compile Include="Models\Modbus\ModbusAddressSpace\KIP9811AddressSpaceHelper.cs" />
-    <Compile Include="Models\Modbus\ModbusAddressSpace\KIP00.cs" />
+    <Compile Include="Models\Modbus\ModbusAddressSpace\KIP9810AddressSpaceHelper.cs" />
     <Compile Include="DL\CanNetworkServiceAdapter.cs" />
     <Compile Include="Models\Modbus\ModbusAddressSpace\KCCM.cs" />
     <Compile Include="DL\ModbusAdapterParameterContext.cs" />
@@ -229,6 +230,7 @@
   <ItemGroup>
     <Content Include="ModbusRequests.txt" />
     <None Include="newtorkconfig.bin.nwc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Resources\LOGO.jpg" />
   </ItemGroup>

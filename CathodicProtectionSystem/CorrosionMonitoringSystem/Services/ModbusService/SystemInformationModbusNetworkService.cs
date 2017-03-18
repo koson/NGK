@@ -244,7 +244,28 @@ namespace NGK.CorrosionMonitoringSystem.Services
                     }
                 case NGK.CAN.ApplicationLayer.Network.Devices.DeviceType.KIP_MAIN_POWERED_v1:
                     {
-                        throw new NotImplementedException();
+                        modbusDevice = CreateKIP00();
+                        ICanDeviceProfile profile = CanDevicePrototype.GetProfile(device.DeviceType);
+
+                        // Инициализируем
+                        modbusDevice.Number = fileNumber;
+                        modbusDevice.Records[KIP9811AddressSpaceHelper.VisitingCard.HardwareVersion].Value =
+                            (new NgkProductVersion(profile.HardwareVersion)).TotalVersion;
+                        modbusDevice.Records[KIP9811AddressSpaceHelper.VisitingCard.SoftwareVersion].Value =
+                            (new NgkProductVersion(profile.SoftwareVersion)).TotalVersion;
+                        modbusDevice.Records[KIP9811AddressSpaceHelper.VisitingCard.SerialNumberHigh].Value =
+                            System.Convert.ToUInt16(device.GetObject(KIP9811v1.Indexes.serial_number1));
+                        modbusDevice.Records[KIP9811AddressSpaceHelper.VisitingCard.SerialNumberMiddle].Value =
+                            System.Convert.ToUInt16(device.GetObject(KIP9811v1.Indexes.serial_number2));
+                        modbusDevice.Records[KIP9811AddressSpaceHelper.VisitingCard.SerialNumberLow].Value =
+                            System.Convert.ToUInt16(device.GetObject(KIP9811v1.Indexes.serial_number3));
+                        modbusDevice.Records[KIP9811AddressSpaceHelper.VisitingCard.CRC16].Value = 0; //TODO (сделать рассчёт CRC16)
+                        modbusDevice.Records[KIP9811AddressSpaceHelper.ServiceInformation.NetworkNumber].Value =
+                            System.Convert.ToUInt16(_CanNetworksTable[device.Network.NetworkName]);
+                        modbusDevice.Records[KIP9811AddressSpaceHelper.ServiceInformation.NetwrokAddress].Value =
+                            System.Convert.ToUInt16(device.NodeId);
+                        modbusDevice.Records[KIP9811AddressSpaceHelper.ServiceInformation.ConectionStatus].Value = 0; // 0-норма 1-ошибка
+                        break;
                     }
                 default:
                     {
@@ -278,16 +299,7 @@ namespace NGK.CorrosionMonitoringSystem.Services
             // Не реализованно - всегда 0
             file.Records.Add(new Record(0x0009, 0, "Номер сети"));
             file.Records.Add(new Record(0x000A, 1, "Сетевой адрес"));
-            file.Records.Add(new Record(0x000A, 1, "Наличие связи с устройством"));
-
-            // Добавляем данные специфичные для объектов словаря CAN устройства
-            file.Records.Add(new Record(0x0001, 0, "Версия ПО"));
-            file.Records.Add(new Record(0x0002, 0, "Версия Аппаратуры"));
-            file.Records.Add(new Record(0x0003, 0, "Серийный номер: High"));
-            file.Records.Add(new Record(0x0004, 0, "Серийный номер: Middle"));
-            file.Records.Add(new Record(0x0005, 0, "Серийный номер: Low"));
-            file.Records.Add(new Record(0x0006, 0, "CRC16"));
-            file.Records.Add(new Record(0x0007, 0, "Код производителя"));
+            file.Records.Add(new Record(0x000B, 1, "Наличие связи с устройством"));
 
             // Добавляем данные специфичные для объектов словаря CAN устройства
             file.Records.Add(new Record(0x000C, 0, "Регистр ошибок"));
@@ -429,7 +441,11 @@ namespace NGK.CorrosionMonitoringSystem.Services
                         RemappingTableKip9811.Copy(modbusDevice, canDevice);
                         break;
                     }
-                default: { throw new NotSupportedException(); }
+                default: 
+                    {
+                        RemappingTableKip9810.Copy(modbusDevice, canDevice);
+                        break; 
+                    }
             }
         }
         void OnStatusWasChanged()

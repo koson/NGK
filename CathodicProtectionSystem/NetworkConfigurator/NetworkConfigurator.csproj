@@ -9,6 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>NGK.NetworkConfigurator</RootNamespace>
     <AssemblyName>NetworkConfigurator</AssemblyName>
+    <ApplicationIcon>Resources\faviconMy.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
