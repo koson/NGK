@@ -62,6 +62,11 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices
         /// <summary>
         /// Словарь объектов устройства
         /// </summary>
+        [Browsable(false)]
+        [ReadOnly(true)]
+        [Category("Настройки")]
+        [DisplayName("Словарь объектов")]
+        [Description("Словарь объектов устройства")]
         public ObjectCollection ObjectDictionary
         {
             get { return _ObjectDictionary; }
@@ -70,6 +75,11 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices
         /// <summary>
         /// Тип устройства
         /// </summary>
+        [Browsable(true)]
+        [ReadOnly(true)]
+        [Category("Устройство")]
+        [DisplayName("Тип устройства")]
+        [Description("Тип устройства для сети CAN НГК-ЭХЗ")]
         public DeviceType DeviceType
         {
             get { return _DeviceType; }
@@ -78,6 +88,11 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices
         /// <summary>
         /// Серийный номер устройства
         /// </summary>
+        [Browsable(true)]
+        [ReadOnly(true)]
+        [Category("Устройство")]
+        [DisplayName("Серийный номер")]
+        [Description("Серийный номер устройства")]
         public UInt64 SerialNumber
         {
             get
@@ -121,6 +136,11 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices
         /// <summary>
         /// Возвращает визитную карточку устройства НГК
         /// </summary>
+        [Browsable(true)]
+        [ReadOnly(true)]
+        [Category("Устройство")]
+        [DisplayName("Визитная карточка")]
+        [Description("Основные идентификационные данные устройства")]
         public VisitingCard VisitingCard
         {
             get { return new VisitingCard(this); }
@@ -129,6 +149,11 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices
         /// <summary>
         /// Сетевой идентификатор устройства
         /// </summary>
+        [Browsable(true)]
+        [ReadOnly(false)]
+        [Category("Сетевые настройки")]
+        [DisplayName("Адрес")]
+        [Description("Сетевой идентификатор устройства")]
         public Byte NodeId
         {
             get { return _NodeId; }
@@ -149,6 +174,11 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices
         /// <summary>
         /// Статус устройства
         /// </summary>
+        [Browsable(true)]
+        [ReadOnly(true)]
+        [Category("Устройство")]
+        [DisplayName("Статус")]
+        [Description("Текущее состояние устройства")]
         public DeviceStatus Status
         {
             get 
@@ -172,6 +202,11 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices
         /// <summary>
         /// Сеть
         /// </summary>
+        [Browsable(true)]
+        [ReadOnly(true)]
+        [Category("Сетевые настройки")]
+        [DisplayName("Сеть CAN НГК-ЭХЗ")]
+        [Description("Сеть, которой принадлежит данное устройство")]
         public ICanNetworkController Network
         {
             get { return _Network; }
@@ -181,6 +216,11 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices
         /// <summary>
         /// Описание расположения устройства
         /// </summary>
+        [Browsable(true)]
+        [ReadOnly(false)]
+        [Category("Сетевые настройки")]
+        [DisplayName("Месторасположение")]
+        [Description("Наименование географического места расположения КИП")]
         public String LocationName
         {
             get { return _LocationName; }
@@ -190,6 +230,11 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices
         /// <summary>
         /// Интервал опроса устройства
         /// </summary>
+        [Browsable(true)]
+        [ReadOnly(false)]
+        [Category("Настройки")]
+        [DisplayName("Интервал опроса, с")]
+        [Description("Период опроса устройства")]
         public UInt32 PollingInterval
         {
             get { return _PollingInterval; }
@@ -199,6 +244,11 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices
         /// <summary>
         /// Площадь вспомогательного электрода
         /// </summary>
+        [Browsable(true)]
+        [ReadOnly(false)]
+        [Category("Настройки")]
+        [DisplayName("Площадь электрода, кв.мм")]
+        [Description("Площадь вспомогательного электрода, кв.мм")]
         public UInt16 ElectrodeArea
         {
             get { return _ElectrodeArea; }
@@ -216,11 +266,21 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices
         /// <summary>
         /// 
         /// </summary>
+        [Browsable(false)]
+        [ReadOnly(true)]
+        [Category("Устройство")]
+        [DisplayName("Профиль устройства")]
+        [Description("Профиль устройства")]
         public ICanDeviceProfile Profile
         {
             get { return _Profile; }
         }
-
+        
+        [Browsable(false)]
+        [ReadOnly(true)]
+        [Category("Устройство")]
+        [DisplayName("GUID")]
+        [Description("Уникальный идентификатор объекта")]
         public Guid Id
         {
             get { return _Id; }
@@ -228,6 +288,11 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices
 
         #region IEmcyErrors Members
 
+        [Browsable(true)]
+        [ReadOnly(true)]
+        [Category("Состояние устройства")]
+        [DisplayName("Вскрытие")]
+        [Description("Вскрытие корпуса устройтсва")]
         public bool Tamper
         {
             get
@@ -243,7 +308,12 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices
                 }
             }
         }
-  
+
+        [Browsable(true)]
+        [ReadOnly(true)]
+        [Category("Состояние устройства")]
+        [DisplayName("Неисправность осн. питания")]
+        [Description("Неисправность основного питания устройства")]  
         public bool MainSupplyPowerError
         {
             get
@@ -260,6 +330,11 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices
             }
         }
 
+        [Browsable(true)]
+        [ReadOnly(true)]
+        [Category("Состояние устройства")]
+        [DisplayName("Неисправность батареи")]
+        [Description("Неисправность батареи питания устройтсва")]
         public bool BatteryError
         {
             get
@@ -276,6 +351,11 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices
             }
         }
 
+        [Browsable(true)]
+        [ReadOnly(true)]
+        [Category("Состояние устройства")]
+        [DisplayName("Ошибка регистрации")]
+        [Description("Ошибка регистрации устройства в шлюзе (для КИП с автономным питанием)")]
         public bool RegistrationError
         {
             get
@@ -292,6 +372,11 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices
             }
         }
 
+        [Browsable(true)]
+        [ReadOnly(true)]
+        [Category("Состояние устройства")]
+        [DisplayName("Дублированный адрес")]
+        [Description("Ошибка - попытка регистрации КИП с одинаковыми адресами")]
         public bool DuplicateAddressError
         {
             get
@@ -308,6 +393,11 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices
             }
         }
 
+        [Browsable(false)]
+        [ReadOnly(true)]
+        [Category("Состояние устройства")]
+        [DisplayName("")]
+        [Description("")]
         public bool ConnectedServiceConnector
         {
             get

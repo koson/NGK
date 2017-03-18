@@ -38,7 +38,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices
         /// </summary>
         [Browsable(true)]
         [ReadOnly(false)]
-        [Category("Настройки")]
+        [Category("Устройство")]
         [DisplayName("Словарь объектов")]
         [Description("Словарь объектов устройства")]
         ObjectCollection ObjectDictionary 
@@ -51,7 +51,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices
         /// </summary>
         [Browsable(true)]
         [ReadOnly(true)]
-        [Category("Система")]
+        [Category("Устройство")]
         [DisplayName("Тип устройства")]
         [Description("Тип устройства для сети CAN НГК-ЭХЗ")]
         DeviceType DeviceType
@@ -64,7 +64,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices
         /// </summary>
         [Browsable(true)]
         [ReadOnly(false)]
-        [Category("Система")]
+        [Category("Устройство")]
         [DisplayName("Серийный номер")]
         [Description("Серийный номер устройства")]
         UInt64 SerialNumber
@@ -78,7 +78,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices
         /// </summary>
         [Browsable(true)]
         [ReadOnly(false)]
-        [Category("Система")]
+        [Category("Устройство")]
         [DisplayName("Визитная карточка")]
         [Description("Основные идентификационные данные устройства")]
         //[TypeConverter(typeof(VisitingCardTypeConverter))]
@@ -92,7 +92,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices
         /// </summary>
         [Browsable(true)]
         [ReadOnly(true)]
-        [Category("Система")]
+        [Category("Устройство")]
         [DisplayName("Статус")]
         [Description("Текущее состояние устройства")]
         DeviceStatus Status
@@ -138,7 +138,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices
         [Browsable(true)]
         [ReadOnly(false)]
         [Category("Настройки")]
-        [DisplayName("Интервал опроса, сек")]
+        [DisplayName("Интервал опроса, с")]
         [Description("Период опроса устройства")]
         UInt32 PollingInterval
         {
@@ -165,6 +165,11 @@ namespace NGK.CAN.ApplicationLayer.Network.Devices
         /// <summary>
         /// Уникальный идентификатор объекта
         /// </summary>
+        [Browsable(false)]
+        [ReadOnly(true)]
+        [Category("Устройство")]
+        [DisplayName("GUID")]
+        [Description("Уникальный идентификатор объекта")]
         Guid Id { get; }
 
         #endregion
