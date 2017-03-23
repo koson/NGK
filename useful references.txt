@@ -169,7 +169,23 @@ https://easyeda.com/
 х/ф "НОЧЬ ТАМПЛИЕРА" (Англия)
 Дислексия
 
+х/ф Знай наших (Поддубный)
+https://www.youtube.com/watch?v=MkMNB2r8ot8
+
 
 https://dmkpress.com/catalog/computer/freeware/978-5-97060-483-0/
 https://dmkpress.com/catalog/electronics/components/978-5-94074-757-4/
+Разработка приложений для Windows 8 с помощью HTML5 и JavaScript. Подробное руководство:
+http://dmkpress.com/catalog/computer/web/978-5-94074-921-9/
+РАЗРАБОТКА ОДНОСТРАНИЧНЫХ ВЕБ-ПРИЛОЖЕНИЙ
+http://dmkpress.com/catalog/computer/web/978-5-97060-072-6/
+Bootstrap в примерах
+http://www.ozon.ru/context/detail/id/137767302/
+
+Микромагнитоэлектроника. Том 2
+http://www.ozon.ru/context/detail/id/25457190/
+
+
 http://dfiles.ru/files/pv023fu7o
+Лямбда-выражения в Java 8
+https://dfiles.ru/files/klivk5lwe
