@@ -1,20 +1,31 @@
 я╗┐@ECHO OFF
+
+REM ╨Ф╨░╨╜╨╜╤Л╨╣ ╤Б╨║╤А╨╕╨┐ ╨┐╨╛╨┤╨│╨╛╤В╨░╨▓╨╗╨╕╨▓╨░╨╡╤В ╨╛╨┐╨╡╤А╨╡╤Ж╨╕╨╛╨╜╨╜╤Г╤О ╤Б╨╕╤Б╤В╨╡╨╝╤Г Windows XP Embedded ╨┤╨╗╤П ╨╕╤Б╨┐╨╛╨╗╤М╨╖╨╛╨▓╨░╨╜╨╕╤П ╤Б╨╕╤Б╤В╨╡╨╝╨╜╨╛╨│╨╛ ╤В╨╛╨╝╨░ ╨║╨░╨║ ╨╖╨░╤Й╨╕╤Й╤С╨╜╨╜╨╛╨│╨╛
+REM ╨Ю╤Б╨╜╨╛╨▓╨╜╤Л╨╡ ╤А╨╡╤Б╤Г╤А╤Б╤Л ╨┐╨╡╤А╨╡╨╜╨╛╤Б╤П╤В╤Б╤П ╨╜╨░ ╨╜╨╡╨╖╨░╤Й╨╕╤Й╤С╨╜╨╜╤Л╨╣ ╤В╨╛╨╝ (╨┐╨╡╤А╨╡╨╝╨╡╨╜╨╜╨░╤П Root)
+
 SET Root=E:\
 SET PathToLogs="%Root%System Logs"\
-REM Если PageFileMinSize=0 PageFileMaxSize=0 то размер файла подкачки выбирает операционная система
+REM ╨Х╤Б╨╗╨╕ PageFileMinSize=0 PageFileMaxSize=0 ╤В╨╛ ╨▓╤Л╨▒╨╛╤А ╤А╨░╨╖╨╝╨╡╤А╨░ ╤Д╨░╨╣╨╗╨░ ╨┐╨╛╨┤╨║╨░╤З╨║╨╕ ╨╛╤Б╤Г╤Й╨╡╤Б╤В╨▓╨╗╤П╨╡╤В ╨╛╨┐╨╡╤А╨░╤Ж╨╕╨╛╨╜╨╜╨░╤П ╤Б╨╕╤Б╤В╨╡╨╝╨░
 SET PageFileMinSize=0
 SET PageFileMaxSize=0
 SET TempDirectory=%Root%Temp\
 SET LocalSettingsDirectory="%TempDirectory%Local Settings"\
 
-@ECHO ON
-ECHO This script prepares operational system for use (Данный сценарий погдотовит систему для защиты основного тома от записи)
-REM Диалого Продолжить/выйти 
+@ECHO OFF
+ECHO This script prepares Windows XP Embedded for using with protected disk EWF
+CHOICE /C YN /M "Continue? Y - Yes, N - No"
+IF errorlevel 2 GOTO labelExit
+IF errorlevel 1 GOTO labelYes
+
+:labelExit
+	REM ╨Ч╨░╨▓╨╡╤А╤И╨╕╤В╤М ╨▓╤Л╨┐╨╛╨╗╨╜╨╡╨╜╨╕╨╡ ╤Б╤Ж╨╡╨╜╨░╤А╨╕╤П
+	EXIT 0; 
+:labelYes
 
 @ECHO OFF
-REM Перенос файлов системных журналов на незащищённый том
+REM ╨Я╨╡╤А╨╡╨╜╨╛╤Б ╤Д╨░╨╣╨╗╨╛╨▓ ╤Б╨╕╤Б╤В╨╡╨╝╨╜╤Л╤Е ╨╢╤Г╤А╨╜╨░╨╗╨╛╨▓ ╨╜╨░ ╨╜╨╡╨╖╨░╤Й╨╕╤Й╤С╨╜╨╜╤Л╨╣ ╤В╨╛╨╝
 @ECHO ON
-ECHO Removing system logs to unprotected disk (Перенос файлов системных журналов на незащищённый том)
+ECHO Removing system logs to unprotected disk
 REG ADD HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Eventlog\Application /v File /t REG_EXPAND_SZ /d %PathToLogs% /f
 REG ADD HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Eventlog\System /v File /t REG_EXPAND_SZ /d %PathToLogs% /f
 REG ADD HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Eventlog\Security /v File /t REG_EXPAND_SZ /d %PathToLogs% /f
@@ -23,38 +34,42 @@ XCOPY %SystemRoot%\System32\config\SecEvent.Evt %PathToLogs% /Y
 XCOPY %SystemRoot%\system32\config\SysEvent.Evt %PathToLogs% /Y
 
 @ECHO OFF
-REM Перенос файла подкачки на незащищённый том
+REM ╨Я╨╡╤А╨╡╨╜╨╛╤Б ╤Д╨░╨╣╨╗╨░ ╨┐╨╛╨┤╨║╨░╤З╨║╨╕ ╨╜╨░ ╨╜╨╡╨╖╨░╤Й╨╕╤Й╤С╨╜╨╜╤Л╨╣ ╤В╨╛╨╝
 @ECHO ON
-ECHO Current location of page files (Перенос файла подкачки на незащищённый том):
+ECHO Current location of page files:
 pagefileconfig /query
-ECHO Set new location Новое расположение файла
+ECHO Set new location
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management" /v PagingFiles /t REG_MULTI_SZ /d "%Root%pagefile.sys %PageFileMinSize% %PageFileMaxSize%" /f
 REM pagefileconfig /delete C:
 REM pagefileconfig /create E:
 pagefileconfig /query
 
 @ECHO OFF
-REM Перенос директорий временных файлов на незащищённый том
+REM ╨Я╨╡╤А╨╡╨╜╨╛╤Б ╨┤╨╕╤А╨╡╨║╤В╨╛╤А╨╕╨╣ ╨▓╤А╨╡╨╝╨╡╨╜╨╜╤Л╤Е ╤Д╨░╨╣╨╗╨╛╨▓ ╨╜╨░ ╨╜╨╡╨╖╨░╤Й╨╕╤Й╤С╨╜╨╜╤Л╨╣ ╤В╨╛╨╝
 @ECHO ON
-ECHO Removing directories of temporary files (Перенос директорий временных файлов на незащищённый том):
+ECHO Removing directories of temporary files:
 REG ADD "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders" /v Cache /t REG_EXPAND_SZ /d %TempDirectory% /f
 REG ADD "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Shell Folders" /v Cache /t REG_EXPAND_SZ /d %TempDirectory% /f
 REG ADD HKEY_CURRENT_USER\Environment /v TEMP /t REG_EXPAND_SZ /d %LocalSettingsDirectory% /f
 REG ADD HKEY_CURRENT_USER\Environment /v TMP /t REG_EXPAND_SZ /d %LocalSettingsDirectory% /f
 
 @ECHO OFF
-REM Отключение записи времени последнего доступа
+REM ╨Ю╤В╨║╨╗╤О╤З╨╡╨╜╨╕╨╡ ╨╖╨░╨┐╨╕╤Б╨╕ ╨▓╤А╨╡╨╝╨╡╨╜╨╕ ╨┐╨╛╤Б╨╗╨╡╨┤╨╜╨╡╨│╨╛ ╨┤╨╛╤Б╤В╤Г╨┐╨░
 @ECHO ON
-ECHO Disable last access time recording (Отключение записи времени последнего доступа);
+ECHO Disable last access time recording:
 REG ADD HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\FileSystem /v NtfsDisableLastAccessUpdate /t REG_DWORD /d 1 /f
 
 @ECHO OFF
-REM Отключение предварительной загрузки
+REM ╨Ю╤В╨║╨╗╤О╤З╨╡╨╜╨╕╨╡ ╨┐╤А╨╡╨┤╨▓╨░╤А╨╕╤В╨╡╨╗╤М╨╜╨╛╨╣ ╨╖╨░╨│╤А╤Г╨╖╨║╨╕
 @ECHO ON
-ECHO Disabling Preboot (Отключение предварительной загрузки):
+ECHO Disabling Preboot:
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management\PrefetchParameters" /v EnablePrefetcher /t REG_DWORD /d 0 /f
 
-PAUSE
 ECHO You should restart computer for apply changes
 ECHO Do you want restart?
+CHOICE /C YN /T 10 /D Y /M "Restart computer? Y - Yes, restart, N - No, exit without restart; Default settings: Yes, Timeout 10╤Б"
+IF errorlevel 2 GOTO labelExit
+IF errorlevel 1 GOTO labelRestart
+
+labelRestart:
 SHUTDOWN /r /d P:12:555 /t 0
