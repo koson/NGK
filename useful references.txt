@@ -189,6 +189,7 @@ http://www.ozon.ru/context/detail/id/25457190/
 http://dfiles.ru/files/pv023fu7o
 Лямбда-выражения в Java 8
 https://dfiles.ru/files/klivk5lwe
+http://forcoder.ru/other-langs/programmirovanie-na-yazyke-lua-1265
 
 // Иконки
 http://fontawesome.io/icon/stop/
