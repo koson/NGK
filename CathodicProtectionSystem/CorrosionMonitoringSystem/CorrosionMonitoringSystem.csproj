@@ -228,10 +228,10 @@
     <None Include="settings.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="ModbusRequests.txt" />
-    <None Include="newtorkconfig.bin.nwc">
+    <None Include="ModbusRequests.txt" />
+    <Content Include="newtorkconfig.bin.nwc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    </Content>
     <None Include="Resources\LOGO.jpg" />
   </ItemGroup>
   <ItemGroup>
