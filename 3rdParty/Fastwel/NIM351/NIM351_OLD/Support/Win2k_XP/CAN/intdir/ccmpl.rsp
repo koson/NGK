@@ -1,0 +1,6 @@
+/I ""..\..\src"" 
+ /D "__CAN_TEST__" /D "FDLL_IMPORTS" 
+ /D "WIN32" /D "NDEBUG" /D "_CONSOLE"  
+ /Od /FD /EHsc /MT /W1 /c /TP /errorReport:prompt  
+ /Fo"..\..\intdir\cantest\\" 
+ /Fd"..\..\intdir\cantest\cantest.pdb" 

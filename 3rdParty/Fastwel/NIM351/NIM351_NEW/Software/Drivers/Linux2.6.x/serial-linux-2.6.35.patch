@@ -1,0 +1,152 @@
+diff --git a/drivers/serial/8250.c b/drivers/serial/8250.c
+index 891e1dd..778afe0 100644
+--- a/drivers/serial/8250.c
++++ b/drivers/serial/8250.c
+@@ -49,6 +49,12 @@
+ #include "suncore.h"
+ #endif
+ 
++#define BOARD_CPB902	0x01
++#define BOARD_CPCLX	0x02
++#define BOARD_CPC307	0x04
++#define BOARD_CPC150	0x08
++#define BOARD_NIM351	0x10
++
+ /*
+  * Configuration:
+  *   share_irqs - whether we pass IRQF_SHARED to request_irq().  This option
+@@ -58,6 +64,8 @@ static unsigned int share_irqs = SERIAL8250_SHARE_IRQS;
+ 
+ static unsigned int nr_uarts = CONFIG_SERIAL_8250_RUNTIME_UARTS;
+ 
++static unsigned int board_type = 0;
++
+ static struct uart_driver serial8250_reg;
+ 
+ static int serial_index(struct uart_port *port)
+@@ -67,6 +75,36 @@ static int serial_index(struct uart_port *port)
+ 
+ static unsigned int skip_txen_test; /* force skip of txen test at init time */
+ 
++static int is_cpc150_high(struct uart_port *port)
++{
++	if (board_type & BOARD_CPC150)
++		if (port->iobase == 0x3e8 || port->iobase == 0x2e8)
++			return 1;
++	return 0;
++}
++
++/*
++ * Check board type and iobase for
++ *   0x100, 0x108, 0x110, 0x118
++ *   0x180, 0x188, 0x190, 0x198
++ *   0x200, 0x208, 0x210, 0x218
++ *   0x280, 0x288, 0x290, 0x298
++ */
++static int is_cpb902_high(struct uart_port *port)
++{
++	unsigned long base = port->iobase;
++
++	if (!(board_type & BOARD_CPB902))
++		return 0;
++
++	if (base & ~0x398)
++		return 0;
++	base >>= 8;
++	if (base == 1 || base == 2)
++		return 1;
++	return 0;
++}
++
+ /*
+  * Debugging.
+  */
+@@ -2003,6 +2041,10 @@ static int serial8250_startup(struct uart_port *port)
+ 		serial_outp(up, UART_LCR, 0xbf);
+ 
+ 		fctr = serial_inp(up, UART_FCTR) & ~(UART_FCTR_RX|UART_FCTR_TX);
++		if ((board_type & BOARD_CPC307) || (board_type & BOARD_NIM351)) {
++			/* Enable RS485 auto control on CPC307/NIM351 */
++			fctr |= UART_FCTR_RS485_AUTO;
++		}
+ 		serial_outp(up, UART_FCTR, fctr | UART_FCTR_TRGD | UART_FCTR_RX);
+ 		serial_outp(up, UART_TRG, UART_TRG_96);
+ 		serial_outp(up, UART_FCTR, fctr | UART_FCTR_TRGD | UART_FCTR_TX);
+@@ -2146,7 +2188,10 @@ dont_test_tx_en:
+ 	 * are set via set_termios(), which will be occurring imminently
+ 	 * anyway, so we don't enable them here.
+ 	 */
+-	up->ier = UART_IER_RLSI | UART_IER_RDI;
++	if (is_cpb902_high(&up->port))
++		up->ier = UART_IER_RDI;
++	else
++		up->ier = UART_IER_RLSI | UART_IER_RDI;
+ 	serial_outp(up, UART_IER, up->ier);
+ 
+ 	if (up->port.flags & UPF_FOURPORT) {
+@@ -2218,10 +2263,17 @@ static unsigned int serial8250_get_divisor(struct uart_port *port, unsigned int
+ 	 * SMSC SuperIO chips.
+ 	 */
+ 	if ((port->flags & UPF_MAGIC_MULTIPLIER) &&
+-	    baud == (port->uartclk/4))
++		baud == (port->uartclk/2))
++		/*
++		 * FIXME: according errata should be 0xA001,
++		 * but in this case the port dont work.
++		 */
++		quot = 0xC001;
++	else if ((port->flags & UPF_MAGIC_MULTIPLIER) &&
++		baud == (port->uartclk/4))
+ 		quot = 0x8001;
+ 	else if ((port->flags & UPF_MAGIC_MULTIPLIER) &&
+-		 baud == (port->uartclk/8))
++		baud == (port->uartclk/8))
+ 		quot = 0x8002;
+ 	else
+ 		quot = uart_get_divisor(port, baud);
+@@ -2270,7 +2322,7 @@ serial8250_set_termios(struct uart_port *port, struct ktermios *termios,
+ 	 */
+ 	baud = uart_get_baud_rate(port, termios, old,
+ 				  port->uartclk / 16 / 0xffff,
+-				  port->uartclk / 16);
++				  port->uartclk / (is_cpc150_high(port) ? 2 : 16));
+ 	quot = serial8250_get_divisor(port, baud);
+ 
+ 	/*
+@@ -2602,6 +2654,13 @@ static void serial8250_config_port(struct uart_port *port, int flags)
+ 		up->bugs |= UART_BUG_NOMSR;
+ #endif
+ 
++	if (is_cpb902_high(&up->port))
++		up->bugs |= UART_BUG_NOMSR;
++
++	if (is_cpc150_high(&up->port)) {
++		up->port.flags |= UPF_MAGIC_MULTIPLIER;
++	}
++
+ 	if (up->port.type != PORT_UNKNOWN && flags & UART_CONFIG_IRQ)
+ 		autoconfig_irq(up);
+ 
+@@ -3273,6 +3332,10 @@ EXPORT_SYMBOL(serial8250_resume_port);
+ MODULE_LICENSE("GPL");
+ MODULE_DESCRIPTION("Generic 8250/16x50 serial driver");
+ 
++module_param(board_type, uint, 0644);
++MODULE_PARM_DESC(board_type, "Set up the board type (0 - generic, "
++	"1 - CPB902, 2 - CPC304/108, 4 - CPC307, 8 - CPC150, 16 - NIM351)");
++
+ module_param(share_irqs, uint, 0644);
+ MODULE_PARM_DESC(share_irqs, "Share IRQs with other non-8250/16x50 devices"
+ 	" (unsafe)");
+diff --git a/include/linux/serial_reg.h b/include/linux/serial_reg.h
+index cf9327c..c4d649d 100644
+--- a/include/linux/serial_reg.h
++++ b/include/linux/serial_reg.h
+@@ -191,6 +191,7 @@
+ #define UART_FCTR_RTS_8DELAY	0x03
+ #define UART_FCTR_IRDA		0x04  /* IrDa data encode select */
+ #define UART_FCTR_TX_INT	0x08  /* Tx interrupt type select */
++#define UART_FCTR_RS485_AUTO	0x08  /* Auto RS485 direction control */
+ #define UART_FCTR_TRGA		0x00  /* Tx/Rx 550 trigger table select */
+ #define UART_FCTR_TRGB		0x10  /* Tx/Rx 650 trigger table select */
+ #define UART_FCTR_TRGC		0x20  /* Tx/Rx 654 trigger table select */

@@ -1,0 +1,21 @@
+# The sources for the Fastwel CPC304/108 SV Watchdog device driver:
+
+TARGETNAME=nim351
+TARGETTYPE=DRIVER
+TARGETPATH = obj
+
+INCLUDES=..\;..\..\
+
+C_DEFINES = $(C_DEFINES) /D__CAN_DRIVER__ /DKERNEL_DRIVER_CODE
+
+SOURCES=CanDrv.c\
+	CanIoctl.c\
+	CanIsr.c\
+	CanOpCls.c\
+	CanPnp.c\
+	CanRead.c\
+	CanUtils.c\
+	CanWrite.c\
+	registry.c\
+	sja1000.c
+
