@@ -21,6 +21,7 @@ namespace NGK.CAN.ApplicationLayer.Network.Master.Collections
         {
             return item.NetworkId;
         }
+
         #endregion
     }
 }

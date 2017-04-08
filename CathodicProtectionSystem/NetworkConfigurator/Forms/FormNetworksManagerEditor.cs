@@ -12,8 +12,20 @@ namespace NGK.NetworkConfigurator
 {
     public partial class NetworksManagerEditor : Form
     {
+        #region Constructors
+
+        public NetworksManagerEditor()
+        {
+            InitializeComponent();
+            Init();
+        }
+
+        #endregion
+
         #region Fields And Properties
-        NgkCanNetworksManager _NetworksManager;
+        
+        private NgkCanNetworksManager _NetworksManager;
+        
         public NgkCanNetworksManager NetworksManager
         {
             get { return _NetworksManager; }
@@ -23,18 +35,7 @@ namespace NGK.NetworkConfigurator
         /// Путь к файлу конфигурации
         /// </summary>
         private String _PathToFile;
-        #endregion
-
-        #region Constructors
-        /// <summary>
-        /// Конструктор по умолчанию
-        /// </summary>
-        public NetworksManagerEditor()
-        {
-            InitializeComponent();
-
-            Init();
-        }
+        
         #endregion
 
         #region Methods
@@ -360,6 +361,7 @@ namespace NGK.NetworkConfigurator
             }
             return;
         }
+        
         #endregion
     }
 }
