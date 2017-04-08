@@ -19,8 +19,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeyboradTestUtil", "Keybora
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CanPortNim351Terminal", "TestCanPortNim351\CanPortNim351Terminal.csproj", "{5805974B-8B2F-4B62-B6C7-4B9D2111083B}"
 EndProject
-Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "SetupCathodicProtectionSystem", "SetupCathodicProtectionSystem\SetupCathodicProtectionSystem.vdproj", "{213C0BE4-7AFF-4807-A9FC-EAE9E035460D}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fastwel", "Fastwel\Fastwel.csproj", "{7AE5D6FB-7807-4E1B-AE63-68760F6DA5F3}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PowerWin32", "PowerWin32\PowerWin32.csproj", "{61A07434-5F15-4719-991B-B884F1C3D212}"
@@ -42,6 +40,15 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Other", "Other", "{DFE4AD4D-BE1F-4E4A-8957-D1783E5434BF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Log", "Log\Log.csproj", "{8ED7A1A3-E261-4395-81A4-F2EC5565A4DF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Install and Deployment", "Install and Deployment", "{049CD2C7-3FBC-4038-9B1C-8D6EF8497E39}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "NetworkConfiguratorModule", "Install and Deployment\NetworkConfiguratorModule\NetworkConfiguratorModule.vdproj", "{290E5F4D-D7C9-4F98-BF45-F9D52CC6368F}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "SetupCathodicProtectionSystem", "Install and Deployment\SetupCathodicProtectionSystem\SetupCathodicProtectionSystem.vdproj", "{333CF629-EC64-4E97-8153-4EE375F7FE6A}"
+	ProjectSection(ProjectDependencies) = postProject
+		{290E5F4D-D7C9-4F98-BF45-F9D52CC6368F} = {290E5F4D-D7C9-4F98-BF45-F9D52CC6368F}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -81,8 +88,6 @@ Global
 		{5805974B-8B2F-4B62-B6C7-4B9D2111083B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5805974B-8B2F-4B62-B6C7-4B9D2111083B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5805974B-8B2F-4B62-B6C7-4B9D2111083B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{213C0BE4-7AFF-4807-A9FC-EAE9E035460D}.Debug|Any CPU.ActiveCfg = Debug
-		{213C0BE4-7AFF-4807-A9FC-EAE9E035460D}.Release|Any CPU.ActiveCfg = Release
 		{7AE5D6FB-7807-4E1B-AE63-68760F6DA5F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{7AE5D6FB-7807-4E1B-AE63-68760F6DA5F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7AE5D6FB-7807-4E1B-AE63-68760F6DA5F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -107,6 +112,12 @@ Global
 		{8ED7A1A3-E261-4395-81A4-F2EC5565A4DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8ED7A1A3-E261-4395-81A4-F2EC5565A4DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8ED7A1A3-E261-4395-81A4-F2EC5565A4DF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{290E5F4D-D7C9-4F98-BF45-F9D52CC6368F}.Debug|Any CPU.ActiveCfg = Debug
+		{290E5F4D-D7C9-4F98-BF45-F9D52CC6368F}.Debug|Any CPU.Build.0 = Debug
+		{290E5F4D-D7C9-4F98-BF45-F9D52CC6368F}.Release|Any CPU.ActiveCfg = Release
+		{333CF629-EC64-4E97-8153-4EE375F7FE6A}.Debug|Any CPU.ActiveCfg = Debug
+		{333CF629-EC64-4E97-8153-4EE375F7FE6A}.Debug|Any CPU.Build.0 = Debug
+		{333CF629-EC64-4E97-8153-4EE375F7FE6A}.Release|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -117,5 +128,7 @@ Global
 		{85119510-C6F4-45C9-B0D9-696245277286} = {DFE4AD4D-BE1F-4E4A-8957-D1783E5434BF}
 		{353EAE55-C3C6-47B9-9AC8-5059F9302421} = {5EB75C60-3E8E-493D-A95E-8C2680A877EC}
 		{4C4CE19F-961D-4D9A-B90C-BA154A34471D} = {5EB75C60-3E8E-493D-A95E-8C2680A877EC}
+		{290E5F4D-D7C9-4F98-BF45-F9D52CC6368F} = {049CD2C7-3FBC-4038-9B1C-8D6EF8497E39}
+		{333CF629-EC64-4E97-8153-4EE375F7FE6A} = {049CD2C7-3FBC-4038-9B1C-8D6EF8497E39}
 	EndGlobalSection
 EndGlobal
