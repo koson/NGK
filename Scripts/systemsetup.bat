@@ -2,6 +2,7 @@
 
 REM Данный скрип подготавливает опереционную систему Windows XP Embedded для использования системного тома как защищённого
 REM Основные ресурсы переносятся на незащищённый том (переменная Root)
+SetLocal EnableExtensions
 
 SET Root=E:\
 SET PathToLogs="%Root%System Logs"\
@@ -13,14 +14,29 @@ SET LocalSettingsDirectory="%TempDirectory%Local Settings"\
 
 @ECHO OFF
 ECHO This script prepares Windows XP Embedded for using with protected disk EWF
-CHOICE /C YN /M "Continue? Y - Yes, N - No"
-IF errorlevel 2 GOTO labelExit
-IF errorlevel 1 GOTO labelYes
 
-:labelExit
+REM The command CHOICE is not support with Windows XP
+REM CHOICE /C YN /M "Continue? Y - Yes, N - No"
+REM IF errorlevel 2 GOTO labelExit
+REM IF errorlevel 1 GOTO labelYes
+
+REM :labelExit
 	REM Завершить выполнение сценария
-	EXIT 0; 
-:labelYes
+REM	EXIT 0 
+REM :labelYes
+
+:StartScript
+SET /p promt=Continue? [Y\N]
+IF %promt%== Y GOTO YesContinue
+IF %promt%== y GOTO YesContinue
+IF %promt%== N GOTO NoExit
+IF %promt%== n GOTO NoExit
+ECHO You inputted wrong data! Try you again...
+GOTO StartScript
+:NoExit
+REM Завершить выполнение сценария
+EXIT 0
+:YesContinue:
 
 @ECHO OFF
 REM Перенос файлов системных журналов на незащищённый том
@@ -37,12 +53,13 @@ XCOPY %SystemRoot%\system32\config\SysEvent.Evt %PathToLogs% /Y
 REM Перенос файла подкачки на незащищённый том
 @ECHO ON
 ECHO Current location of page files:
-pagefileconfig /query
+CD /D C:\WINDOWS\system32
+CSCRIPT pagefileconfig.vbs /query
 ECHO Set new location
-REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management" /v PagingFiles /t REG_MULTI_SZ /d "%Root%pagefile.sys %PageFileMinSize% %PageFileMaxSize%" /f
-REM pagefileconfig /delete C:
-REM pagefileconfig /create E:
-pagefileconfig /query
+REM REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management" /v PagingFiles /t REG_MULTI_SZ /d "%Root%pagefile.sys %PageFileMinSize% %PageFileMaxSize%" /f
+CSCRIPT pagefileconfig.vbs /delete /VO C:
+CSCRIPT pagefileconfig.vbs /create /VO E:
+CSCRIPT pagefileconfig.vbs /query
 
 @ECHO OFF
 REM Перенос директорий временных файлов на незащищённый том
@@ -66,10 +83,11 @@ ECHO Disabling Preboot:
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management\PrefetchParameters" /v EnablePrefetcher /t REG_DWORD /d 0 /f
 
 ECHO You should restart computer for apply changes
-ECHO Do you want restart?
-CHOICE /C YN /T 10 /D Y /M "Restart computer? Y - Yes, restart, N - No, exit without restart; Default settings: Yes, Timeout 10с"
-IF errorlevel 2 GOTO labelExit
-IF errorlevel 1 GOTO labelRestart
+REM ECHO Do you want restart?
+REM CHOICE /C YN /T 10 /D Y /M "Restart computer? Y - Yes, restart, N - No, exit without restart; Default settings: Yes, Timeout 10с"
+REM IF errorlevel 2 GOTO labelExit
+REM IF errorlevel 1 GOTO labelRestart
+REM labelRestart:
 
-labelRestart:
+PAUSE
 SHUTDOWN /r /d P:12:555 /t 0
