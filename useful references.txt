@@ -136,6 +136,10 @@ https://msdn.microsoft.com/ru-ru/library/dn757057.aspx
 http://taco.visualstudio.com/en-us/docs/tutorial-typescript/
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+UWP:
+https://docs.microsoft.com/ru-ru/windows/uwp/get-started/whats-a-uwp
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 https://www.youtube.com/watch?v=tAazzvLUXBo
 Cntr + . для класса добавляет пространство имён.
 
