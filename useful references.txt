@@ -64,6 +64,7 @@ https://github.com/lomomike/WixInstallerExample
 http://www.codeproject.com/Articles/828914/A-Multiple-and-Selective-Configuration-Installer-f
 http://neilsleightholm.blogspot.ru/2012/05/wix-burn-tipstricks.html
 http://www.peshkov.biz/
+https://rsdn.org/article/install/wixfaq.xml
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Win embedded compact7
 http://www.youtube.com/watch?v=5jQw-zls_Bg
@@ -166,6 +167,8 @@ https://ru.wikipedia.org/wiki/%D0%A2%D0%B0%D0%BB%D0%B0%D0%BD%D1%82_(%D1%84%D0%B8
 Группы:
 Pixies
 Curtis Mayfield
+Макдауэлл, Миссисипи Фред
+
 https://www.youtube.com/watch?v=hSE_rWW8Kk0
 https://easyeda.com/
 х/ф "HOЛЬ ГРАДУСОВ" (Норвегия - Швеция)
