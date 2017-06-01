@@ -141,6 +141,11 @@ UWP:
 https://docs.microsoft.com/ru-ru/windows/uwp/get-started/whats-a-uwp
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ASP DotNet Core
+
+JWT:
+https://stormpath.com/blog/rest-api-mobile-dotnet-core
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 https://www.youtube.com/watch?v=tAazzvLUXBo
 Cntr + . дл€ класса добавл€ет пространство имЄн.
 
@@ -203,3 +208,6 @@ http://fontawesome.io/icon/stop/
 
 советский рок.
 https://www.youtube.com/watch?v=PWEPkZxWabk
+
+Lana Del Rey - Video Games
+Beady Belle Ч When My Anger Starts To Cry
