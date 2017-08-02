@@ -65,6 +65,8 @@ http://www.codeproject.com/Articles/828914/A-Multiple-and-Selective-Configuratio
 http://neilsleightholm.blogspot.ru/2012/05/wix-burn-tipstricks.html
 http://www.peshkov.biz/
 https://rsdn.org/article/install/wixfaq.xml
+
+https://developingsoftware.com/wix-toolset-install-windows-service/
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Win embedded compact7
 http://www.youtube.com/watch?v=5jQw-zls_Bg
